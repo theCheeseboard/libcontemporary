@@ -73,6 +73,40 @@ set(SOURCES
 
         thelibs_icons.qrc
         thelibs_translations.qrc)
+set(HEADERS
+        taboutdialog.h
+        tapplication.h
+        tcircularspinner.h
+        tconditionalwidget.h
+        tcsdtools.h
+        tdatetimepicker.h
+        tdocumenttabber.h
+        terrorflash.h
+        thelibsglobal.h
+        thelpmenu.h
+        ticon.h
+        tinputdialog.h
+        tjob.h
+        tjobmanager.h
+        tlocale.h
+        tlogger.h
+        tmessagebox.h
+        tpaintcalculator.h
+        tpopover.h
+        tpromise.h
+        tpropertyanimation.h
+        tscrim.h
+        tsettings.h
+        tshortcuthud.h
+        tstackedwidget.h
+        tstatusframe.h
+        tstylemanager.h
+        tswitch.h
+        tsystemsound.h
+        ttitlelabel.h
+        ttoast.h
+        tvariantanimation.h
+        tvirtualkeyboard.h)
 
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
@@ -97,6 +131,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 ENDIF()
 
 add_library(contemporary SHARED ${SOURCES})
+set_target_properties(contemporary PROPERTIES PUBLIC_HEADER ${HEADERS})
 
 target_link_libraries(contemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia PkgConfig::X11 PkgConfig::GsettingsQt)
 IF(${Unwind_FOUND})
@@ -121,3 +156,7 @@ ENDIF()
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     target_link_libraries(contemporary User32 Kernel32 DbgHelp windowsapp)
 ENDIF()
+
+install(TARGETS contemporary
+        PUBLIC_HEADER DESTINATION $(CMAKE_INSTALL_LIBDIR)/libcontemporary
+        LIBRARY DESTINATION $(CMAKE_INSTALL_INCLUDEDIR)/libcontemporary)
