@@ -9,6 +9,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -23,7 +24,7 @@ pkg_check_modules(Unwind IMPORTED_TARGET libunwind)
 pkg_check_modules(X11 IMPORTED_TARGET x11)
 pkg_check_modules(GsettingsQt IMPORTED_TARGET gsettings-qt)
 
-add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="/usr/lib")
+add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
 set(SOURCES
         taboutdialog.cpp
@@ -138,39 +139,56 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
             tnotification/tnotification-win.cpp)
 ENDIF()
 
-add_library(contemporary SHARED ${SOURCES} ${HEADERS})
-set_target_properties(contemporary PROPERTIES
+add_library(libcontemporary SHARED ${SOURCES} ${HEADERS})
+set_target_properties(libcontemporary PROPERTIES
         FRAMEWORK TRUE
         MACOSX_FRAMEWORK_IDENTIFIER com.vicr123.libcontemporary
         VERSION 6.0.0
 #        SOVERSION 6.0.0
         PUBLIC_HEADER "${HEADERS}")
 
-target_link_libraries(contemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia)
+target_link_libraries(libcontemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia)
 IF(${Unwind_FOUND})
-    target_link_libraries(contemporary PkgConfig::Unwind)
+    target_link_libraries(libcontemporary PkgConfig::Unwind)
     add_compile_definitions(HAVE_LIBUNWIND)
 ENDIF()
 
 IF(${X11_FOUND} AND ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    target_link_libraries(contemporary PkgConfig::X11)
+    target_link_libraries(libcontemporary PkgConfig::X11)
     add_compile_definitions(HAVE_X11)
 ENDIF()
 
 IF(${GsettingsQt_FOUND})
-    target_link_libraries(contemporary PkgConfig::GsettingsQt)
+    target_link_libraries(libcontemporary PkgConfig::GsettingsQt)
     add_compile_definitions(HAVE_GSETTINGS)
 ENDIF()
 
 IF(CF_FRAMEWORK_FOUND)
-    target_link_libraries(contemporary CF_FRAMEWORK COCOA_FRAMEWORK)
+    target_link_libraries(libcontemporary CF_FRAMEWORK COCOA_FRAMEWORK)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    target_link_libraries(contemporary User32 Kernel32 DbgHelp windowsapp)
+    target_link_libraries(libcontemporary User32 Kernel32 DbgHelp windowsapp)
 ENDIF()
 
-install(TARGETS contemporary
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libcontemporary
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(CMAKECONFIG_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/libcontemporary.framework/Resources/CMake)
+    set(HEADER_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
+    set(LIBRARY_INSTALL_DIR ../)
+ELSE()
+    set(CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/libcontemporary)
+    set(HEADER_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}/libcontemporary)
+    set(LIBRARY_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
+ENDIF()
+
+configure_package_config_file(libcontemporary-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libcontemporary-config.cmake
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PATH_VARS HEADER_INSTALL_DIR LIBRARY_INSTALL_DIR)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcontemporary-config.cmake
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+install(TARGETS libcontemporary
+        PUBLIC_HEADER DESTINATION ${HEADER_INSTALL_DIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+

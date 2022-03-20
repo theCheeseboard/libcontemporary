@@ -1,0 +1,40 @@
+set(LIBCONTEMPORARY_VERSION 6.0.0)
+
+@PACKAGE_INIT@
+
+set_and_check(LIBCONTEMPORARY_INCLUDE_DIRS "@PACKAGE_HEADER_INSTALL_DIR@")
+set_and_check(LIBCONTEMPORARY_LIBRARIES "@PACKAGE_LIBRARY_INSTALL_DIR@")
+
+#set(libcontemporary_INCLUDE_DIRS "/usr/local/lib/libcontemporary.framework/Headers")
+#set(libcontemporary_LIBRARIES "/usr/local/lib/libcontemporary.framework/libcontemporary")
+
+#message(DEBUG "hello world")
+#message(DEBUG "@PACKAGE_HEADER_INSTALL_DIR@")
+
+#
+#add_library(libcontemporary SHARED IMPORTED)
+#set_target_properties(libcontemporary PROPERTIES
+#    INTERFACE_INCLUDE_DIRECTORIES ${LIBCONTEMPORARY_INCLUDE_DIR}
+#)
+#
+#IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+#    set_target_properties(libcontemporary PROPERTIES
+#        IMPORTED_IMPLIB ${LIBCONTEMPORARY_INCLUDE_DIR}/libcontemporary.lib
+#        IMPORTED_LOCATION ${LIBCONTEMPORARY_INCLUDE_DIR}/libcontemporary.dll
+#    )
+#ENDIF()
+#
+#IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+#    set_target_properties(libcontemporary PROPERTIES
+#        IMPORTED_LOCATION ${LIBCONTEMPORARY_INCLUDE_DIR}/libcontemporary
+#    )
+#ENDIF()
+#
+#
+#IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+#    set_target_properties(libcontemporary PROPERTIES
+#        IMPORTED_LOCATION ${LIBCONTEMPORARY_INCLUDE_DIR}/liblibcontemporary.so
+#    )
+#ENDIF()
+
+check_required_components(LIBCONTEMPORARY)
