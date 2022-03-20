@@ -20,7 +20,7 @@
 #ifndef TPAINTCALCULATOR_H
 #define TPAINTCALCULATOR_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QObject>
 #include <QSharedDataPointer>
 

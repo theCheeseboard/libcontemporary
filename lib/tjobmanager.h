@@ -20,7 +20,7 @@
 #ifndef TJOBMANAGER_H
 #define TJOBMANAGER_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QObject>
 
 class tJob;

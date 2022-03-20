@@ -1,7 +1,7 @@
 #ifndef TMESSAGEBOX_H
 #define TMESSAGEBOX_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QMessageBox>
 
 class THELIBSSHARED_EXPORT tMessageBox : public QMessageBox

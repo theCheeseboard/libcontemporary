@@ -21,7 +21,7 @@
 #define TCSDTOOLS_H
 
 #include <QObject>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 class tPopover;
 class tToast;

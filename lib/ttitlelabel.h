@@ -20,7 +20,7 @@
 #ifndef TTITLELABEL_H
 #define TTITLELABEL_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QLabel>
 
 struct tTitleLabelPrivate;

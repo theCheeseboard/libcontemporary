@@ -1,7 +1,7 @@
 #ifndef TAPPLICATION_H
 #define TAPPLICATION_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QApplication>
 #include <QJsonObject>
 #include <QUrl>

@@ -1,7 +1,7 @@
 #ifndef NATIVEEVENTFILTER_H
 #define NATIVEEVENTFILTER_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QAbstractNativeEventFilter>
 #include <QObject>
 

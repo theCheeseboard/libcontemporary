@@ -20,7 +20,7 @@
 #ifndef TICON_H
 #define TICON_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QObject>
 #include <QIcon>
 #include <QLocale>

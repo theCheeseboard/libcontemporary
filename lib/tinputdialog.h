@@ -20,7 +20,7 @@
 #ifndef TINPUTDIALOG_H
 #define TINPUTDIALOG_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QLineEdit>
 
 namespace Ui {

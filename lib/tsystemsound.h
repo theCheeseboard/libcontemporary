@@ -21,7 +21,7 @@
 #define TSYSTEMSOUND_H
 
 #include <QObject>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 class THELIBSSHARED_EXPORT tSystemSound : public QObject
 {

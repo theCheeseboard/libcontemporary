@@ -20,13 +20,8 @@
 #ifndef TX11INFO_H
 #define TX11INFO_H
 
-#include "the-libs_global.h"
-
-#if defined(T_QT_5)
-    #include <QX11Info>
-#elif defined(T_QT_6)
-    #include "tapplication.h"
-#endif
+#include "libcontemporary_global.h"
+#include "tapplication.h"
 
 typedef unsigned long Window;
 class THELIBSSHARED_EXPORT tX11Info : public QObject {

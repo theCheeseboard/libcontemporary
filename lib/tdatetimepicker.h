@@ -22,7 +22,7 @@
 
 #include <QWidget>
 #include <QDateTime>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 struct tDateTimePickerPrivate;
 class THELIBSSHARED_EXPORT tDateTimePicker : public QWidget {

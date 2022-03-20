@@ -2,7 +2,7 @@
 #define TABOUTDIALOG_H
 
 #include <QDialog>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 namespace Ui {
     class tAboutDialog;

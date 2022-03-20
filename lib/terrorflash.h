@@ -2,7 +2,7 @@
 #define TERRORFLASH_H
 
 #include <QObject>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 struct tErrorFlashPrivate;
 class THELIBSSHARED_EXPORT tErrorFlash : public QObject

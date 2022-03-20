@@ -33,7 +33,7 @@ set(SOURCES
         tdatetimepicker.cpp
         tdocumenttabber.cpp
         terrorflash.cpp
-        thelibsglobal.cpp
+        libcontemporary_global.cpp
         thelpmenu.cpp
         ticon.cpp
         tinputdialog.cpp
@@ -62,6 +62,12 @@ set(SOURCES
         private/debuglogwindow.cpp
         private/nativeeventfilter.cpp
         private/translatorproxy.cpp
+        tcsdtools/csdbuttonbox.cpp
+        tcsdtools/csdsizegrip.cpp
+        tdatetimepicker/datetimepart.cpp
+        tdatetimepicker/datetimepartbutton.cpp
+        jobs/jobbutton.cpp
+        jobs/jobspopover.cpp
 
         taboutdialog.ui
         tdocumenttabber.ui
@@ -133,13 +139,13 @@ ENDIF()
 add_library(contemporary SHARED ${SOURCES})
 set_target_properties(contemporary PROPERTIES PUBLIC_HEADER ${HEADERS})
 
-target_link_libraries(contemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia PkgConfig::X11 PkgConfig::GsettingsQt)
+target_link_libraries(contemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia)
 IF(${Unwind_FOUND})
     target_link_libraries(contemporary PkgConfig::Unwind)
     add_compile_definitions(HAVE_LIBUNWIND)
 ENDIF()
 
-IF(${X11_FOUND})
+IF(${X11_FOUND} AND ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(contemporary PkgConfig::X11)
     add_compile_definitions(HAVE_X11)
 ENDIF()

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <functional>
 #include <QtConcurrent/QtConcurrent>
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 #include <QFuture>
 
 #define TPROMISE_CALL_NO_ARGS(fn) QMetaObject::invokeMethod(this, fn, Qt::QueuedConnection)

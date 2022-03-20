@@ -172,7 +172,7 @@ void tPopover::show(QWidget* parent) {
     d->wrapperDialog->resize(d->popoverWidget->size());
 
     QBoxLayout* l = new QBoxLayout(QBoxLayout::TopToBottom);
-    l->setMargin(0);
+    l->setContentsMargins(0, 0, 0, 0);
     l->addWidget(d->popoverWidget);
     d->wrapperDialog->setLayout(l);
 

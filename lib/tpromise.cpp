@@ -18,7 +18,7 @@
  *
  * *************************************/
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include "tpromise.h"
 
 template<> THELIBSSHARED_EXPORT void tPromise<void>::callNextFunction()

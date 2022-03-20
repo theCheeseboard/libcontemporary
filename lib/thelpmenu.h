@@ -20,7 +20,7 @@
 #ifndef THELPMENU_H
 #define THELPMENU_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QMenu>
 
 struct tHelpMenuPrivate;

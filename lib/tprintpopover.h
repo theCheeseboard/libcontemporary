@@ -20,7 +20,7 @@
 #ifndef TPRINTPOPOVER_H
 #define TPRINTPOPOVER_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QWidget>
 
 namespace Ui {

@@ -1,7 +1,7 @@
 #ifndef TVIRTUALKEYBOARD_H
 #define TVIRTUALKEYBOARD_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QObject>
 
 #ifdef T_OS_UNIX_NOT_MAC

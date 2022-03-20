@@ -20,7 +20,7 @@
 #ifndef TSWITCH_H
 #define TSWITCH_H
 
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 #include <QPushButton>
 
 class THELIBSSHARED_EXPORT tSwitch : public QPushButton {

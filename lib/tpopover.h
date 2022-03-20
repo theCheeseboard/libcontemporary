@@ -21,7 +21,7 @@
 #define TPOPOVER_H
 
 #include <QObject>
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 
 struct tPopoverPrivate;
 class THELIBSSHARED_EXPORT tPopover : public QObject {

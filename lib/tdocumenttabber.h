@@ -21,7 +21,7 @@
 #define TDOCUMENTTABBER_H
 
 #include <QWidget>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 namespace Ui {
     class tDocumentTabber;

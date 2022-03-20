@@ -20,7 +20,7 @@
 #ifndef TLOGGER_H
 #define TLOGGER_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QObject>
 #include <QDateTime>
 #include <QDebug>

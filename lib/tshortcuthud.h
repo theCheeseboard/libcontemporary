@@ -1,7 +1,7 @@
 #ifndef TSHORTCUTHUD_H
 #define TSHORTCUTHUD_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QWidget>
 #include <QShortcut>
 #include <QPaintEvent>

@@ -21,7 +21,7 @@
 #define TSETTINGS_H
 
 #include <QObject>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 struct tSettingsPrivate;
 struct tSettingsGlobals;

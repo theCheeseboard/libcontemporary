@@ -20,7 +20,7 @@
 #ifndef TJOB_H
 #define TJOB_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QObject>
 
 class THELIBSSHARED_EXPORT tJob : public QObject {

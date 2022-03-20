@@ -20,7 +20,7 @@
 #ifndef TCONDITIONALWIDGET_H
 #define TCONDITIONALWIDGET_H
 
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 #include <QWidget>
 
 struct tConditionalWidgetPrivate;

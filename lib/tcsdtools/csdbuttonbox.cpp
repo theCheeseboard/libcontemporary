@@ -21,7 +21,7 @@
 #include "ui_csdbuttonbox.h"
 #include "csdbuttonbox_p.h"
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QPainter>
 #include "tcsdtools.h"
 

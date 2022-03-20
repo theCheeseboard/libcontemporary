@@ -4,7 +4,7 @@
 #include <QVariantAnimation>
 #include <QDebug>
 #include <functional>
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 
 class THELIBSSHARED_EXPORT tVariantAnimation : public QVariantAnimation {
         Q_OBJECT

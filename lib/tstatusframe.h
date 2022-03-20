@@ -20,7 +20,7 @@
 #ifndef TSTATUSFRAME_H
 #define TSTATUSFRAME_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QFrame>
 
 namespace Ui {

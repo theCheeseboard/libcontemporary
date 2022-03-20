@@ -20,7 +20,7 @@
 #ifndef TSCRIM_H
 #define TSCRIM_H
 
-#include "the-libs_global.h"
+#include "libcontemporary_global.h"
 #include <QWidget>
 
 struct tScrimPrivate;
