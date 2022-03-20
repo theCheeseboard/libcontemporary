@@ -19,19 +19,20 @@
  * *************************************/
 #include "csdsizegrip.h"
 
-#include <QMouseEvent>
-#include <QEvent>
-#include <QPainter>
-#include <QDebug>
-#include <QWindow>
 #include "tcsdtools.h"
+#include <QDebug>
+#include <QEvent>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QWindow>
 
 #ifdef HAVE_X11
-    #include <QX11Info>
+    #include "tx11info.h"
     #include <X11/Xlib.h>
 #endif
 
-CsdSizeGrip::CsdSizeGrip(int side, QWidget* parent) : QWidget(parent) {
+CsdSizeGrip::CsdSizeGrip(int side, QWidget* parent) :
+    QWidget(parent) {
     connect(tCsdGlobal::instance(), &tCsdGlobal::csdsEnabledChanged, this, &CsdSizeGrip::csdsEnabledChanged);
     this->side = side;
     this->parentWidget = parent;
@@ -46,22 +47,22 @@ CsdSizeGrip::CsdSizeGrip(int side, QWidget* parent) : QWidget(parent) {
 void CsdSizeGrip::resizeGrip() {
     if (!tCsdGlobal::csdsEnabled()) return;
     if (this->parentWidget->isMaximized() || this->parentWidget->isFullScreen()) {
-        //Disable the size grips while maximised
+        // Disable the size grips while maximised
         this->setVisible(false);
     } else {
         this->setVisible(true);
         QRect geometry;
         switch (this->side) {
-            case 0: //Top
+            case 0: // Top
                 geometry = QRect(0, 0, parentWidget->width(), borderWidth());
                 break;
-            case 1: //Left
+            case 1: // Left
                 geometry = QRect(0, 0, borderWidth(), parentWidget->height());
                 break;
-            case 2: //Bottom
+            case 2: // Bottom
                 geometry = QRect(0, parentWidget->height() - borderWidth(), parentWidget->width(), borderWidth());
                 break;
-            case 3: //Right
+            case 3: // Right
                 geometry = QRect(parentWidget->width() - borderWidth(), 0, borderWidth(), parentWidget->height());
         }
         this->setGeometry(geometry);
@@ -80,94 +81,95 @@ void CsdSizeGrip::paintEvent(QPaintEvent* event) {
     painter.setBrush(Qt::transparent);
     painter.setBrush(this->palette().color(QPalette::WindowText));
     switch (this->side) {
-        case 0: //Top
+        case 0: // Top
             painter.drawLine(borderWidth() - 1, this->height() - 1, this->width() - borderWidth() * 2 + 2, this->height() - 1);
             break;
-        case 1: //Left
+        case 1: // Left
             painter.drawLine(this->width() - 1, borderWidth() - 1, this->width() - 1, this->height() - borderWidth() * 2 + 2);
             break;
-        case 2: //Bottom
+        case 2: // Bottom
             painter.drawLine(borderWidth() - 1, 0, this->width() - borderWidth() * 2 + 3, 0);
             break;
-        case 3: //Right
+        case 3: // Right
             painter.drawLine(0, borderWidth() - 1, 0, this->height() - borderWidth() * 2 + 2);
     }
 }
 
 void CsdSizeGrip::mousePressEvent(QMouseEvent* e) {
     if (e->button() == Qt::LeftButton) {
-        //Resize this window
+        // Resize this window
         Qt::Edges edge;
         switch (hitTest(e->pos())) {
-            case 0: //Top
+            case 0: // Top
                 edge = Qt::TopEdge;
                 break;
-            case 1: //Left
+            case 1: // Left
                 edge = Qt::LeftEdge;
                 break;
-            case 2: //Bottom
+            case 2: // Bottom
                 edge = Qt::BottomEdge;
                 break;
-            case 3: //Right
+            case 3: // Right
                 edge = Qt::RightEdge;
                 break;
-            case 4: //Upper right
+            case 4: // Upper right
                 edge = Qt::RightEdge | Qt::TopEdge;
                 break;
-            case 5: //Upper left
+            case 5: // Upper left
                 edge = Qt::LeftEdge | Qt::TopEdge;
                 break;
-            case 6: //Lower left
+            case 6: // Lower left
                 edge = Qt::LeftEdge | Qt::BottomEdge;
                 break;
-            case 7: //Lower right
+            case 7: // Lower right
                 edge = Qt::RightEdge | Qt::BottomEdge;
                 break;
         }
         if (this->window()->windowHandle()->startSystemResize(edge)) return;
 
 #ifdef HAVE_X11
-        if (QX11Info::isPlatformX11()) {
+
+        if (tX11Info::isPlatformX11()) {
             XEvent event;
             event.xclient.type = ClientMessage;
-            event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_WM_MOVERESIZE", False);
-            event.xclient.display = QX11Info::display();
-            event.xclient.window = this->window()->winId(); //Move the parent window of the widget
+            event.xclient.message_type = XInternAtom(tX11Info::display(), "_NET_WM_MOVERESIZE", False);
+            event.xclient.display = tX11Info::display();
+            event.xclient.window = this->window()->winId(); // Move the parent window of the widget
             event.xclient.format = 32;
             event.xclient.data.l[0] = e->globalPos().x();
             event.xclient.data.l[1] = e->globalPos().y();
 
             switch (hitTest(e->pos())) {
-                case 0: //Top
+                case 0: // Top
                     event.xclient.data.l[2] = 1;
                     break;
-                case 1: //Left
+                case 1: // Left
                     event.xclient.data.l[2] = 7;
                     break;
-                case 2: //Bottom
+                case 2: // Bottom
                     event.xclient.data.l[2] = 5;
                     break;
-                case 3: //Right
+                case 3: // Right
                     event.xclient.data.l[2] = 3;
                     break;
-                case 4: //Upper right
+                case 4: // Upper right
                     event.xclient.data.l[2] = 2;
                     break;
-                case 5: //Upper left
+                case 5: // Upper left
                     event.xclient.data.l[2] = 0;
                     break;
-                case 6: //Lower left
+                case 6: // Lower left
                     event.xclient.data.l[2] = 6;
                     break;
-                case 7: //Lower right
+                case 7: // Lower right
                     event.xclient.data.l[2] = 4;
                     break;
             }
             event.xclient.data.l[3] = Button1;
             event.xclient.data.l[4] = 0;
 
-            XUngrabPointer(QX11Info::display(), CurrentTime);
-            XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+            XUngrabPointer(tX11Info::display(), CurrentTime);
+            XSendEvent(tX11Info::display(), tX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
             return;
         }
 #endif
@@ -182,34 +184,34 @@ void CsdSizeGrip::mouseMoveEvent(QMouseEvent* e) {
     if (moving) {
         QRect geometry = parentWidget->window()->geometry();
         switch (hitTest(startPoint)) {
-            case 0: //Top
+            case 0: // Top
                 geometry.setTop(e->globalY() + startPoint.y());
                 break;
-            case 1: //Left
+            case 1: // Left
                 geometry.setLeft(e->globalX() + startPoint.x());
                 break;
-            case 2: //Bottom
+            case 2: // Bottom
                 geometry.setBottom(e->globalY() - startPoint.y());
                 break;
-            case 3: //Right
+            case 3: // Right
                 geometry.setRight(e->globalX() - startPoint.x());
                 break;
-            case 4: //Upper right
+            case 4: // Upper right
                 geometry.setTopRight(e->globalPos());
                 break;
-            case 5: //Upper left
+            case 5: // Upper left
                 geometry.setTopLeft(e->globalPos());
                 break;
-            case 6: //Lower left
+            case 6: // Lower left
                 geometry.setBottomLeft(e->globalPos());
                 break;
-            case 7: //Lower right
+            case 7: // Lower right
                 geometry.setBottomRight(e->globalPos());
                 break;
         }
         parentWidget->window()->setGeometry(geometry);
     } else {
-        //Set the cursor appropriately
+        // Set the cursor appropriately
         switch (hitTest(e->pos())) {
             case 0:
             case 2:
@@ -226,7 +228,6 @@ void CsdSizeGrip::mouseMoveEvent(QMouseEvent* e) {
             case 5:
             case 7:
                 this->setCursor(QCursor(Qt::SizeFDiagCursor));
-
         }
     }
 }
@@ -241,21 +242,21 @@ int CsdSizeGrip::borderWidth() {
 
 int CsdSizeGrip::hitTest(QPoint pos) {
     switch (side) {
-        case 0: //Top
-            if (pos.x() < borderWidth() * 2) return 5; //Upper left
-            if (pos.x() > this->width() - borderWidth() * 2) return 4; //Upper right
+        case 0:                                                        // Top
+            if (pos.x() < borderWidth() * 2) return 5;                 // Upper left
+            if (pos.x() > this->width() - borderWidth() * 2) return 4; // Upper right
             return 0;
-        case 1: //Left
-            if (pos.y() < borderWidth() * 2) return 5; //Upper left
-            if (pos.y() > this->height() - borderWidth() * 2) return 6; //Lower left
+        case 1:                                                         // Left
+            if (pos.y() < borderWidth() * 2) return 5;                  // Upper left
+            if (pos.y() > this->height() - borderWidth() * 2) return 6; // Lower left
             return 1;
-        case 2: //Bottom
-            if (pos.x() < borderWidth() * 2) return 6; //Lower left
-            if (pos.x() > this->width() - borderWidth() * 2) return 7; //Lower right
+        case 2:                                                        // Bottom
+            if (pos.x() < borderWidth() * 2) return 6;                 // Lower left
+            if (pos.x() > this->width() - borderWidth() * 2) return 7; // Lower right
             return 2;
-        case 3: //Right
-            if (pos.y() < borderWidth() * 2) return 4; //Upper right
-            if (pos.y() > this->height() - borderWidth() * 2) return 7; //Lower right
+        case 3:                                                         // Right
+            if (pos.y() < borderWidth() * 2) return 4;                  // Upper right
+            if (pos.y() > this->height() - borderWidth() * 2) return 7; // Lower right
             return 3;
     }
     return 0;

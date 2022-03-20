@@ -4,10 +4,9 @@
 #include <QLabel>
 #include <math.h>
 
-tShortcutHud::tShortcutHud(QWidget *parent) :
+tShortcutHud::tShortcutHud(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::tShortcutHud)
-{
+    ui(new Ui::tShortcutHud) {
     ui->setupUi(this);
 
     this->layout()->setContentsMargins(20 * theLibsGlobal::getDPIScaling(), 1, 20 * theLibsGlobal::getDPIScaling(), 0);
@@ -17,23 +16,22 @@ tShortcutHud::tShortcutHud(QWidget *parent) :
     resizeToParent();
 }
 
-tShortcutHud::~tShortcutHud()
-{
+tShortcutHud::~tShortcutHud() {
     delete ui;
 }
 
-void tintImage(QImage &image, QColor tint) {
-    //bool doPaint = true;
+void tintImage(QImage& image, QColor tint) {
+    // bool doPaint = true;
     int failNum = 0;
     for (int y = 0; y < image.height(); y++) {
         for (int x = 0; x < image.width(); x++) {
             QColor pixelCol = image.pixelColor(x, y);
-            //int blue = pixelCol.blue(), green = pixelCol.green(), red = pixelCol.red();
+            // int blue = pixelCol.blue(), green = pixelCol.green(), red = pixelCol.red();
             if ((pixelCol.blue() > pixelCol.green() - 10 && pixelCol.blue() < pixelCol.green() + 10) &&
-                    (pixelCol.green() > pixelCol.red() - 10 && pixelCol.green() < pixelCol.red() + 10)) {
+                (pixelCol.green() > pixelCol.red() - 10 && pixelCol.green() < pixelCol.red() + 10)) {
             } else {
                 failNum++;
-                //doPaint = false;
+                // doPaint = false;
             }
         }
     }
@@ -115,14 +113,14 @@ QPixmap tShortcutHud::getKeyIcon(QString key) {
         QFont font = this->font();
         QFontMetrics fontMetrics(font);
 
-        //font.setPointSizeF(floor(8));
+        // font.setPointSizeF(floor(8));
         while (QFontMetrics(font).height() > 14 * theLibsGlobal::getDPIScaling()) {
             font.setPointSizeF(font.pointSizeF() - 0.5);
         }
 
         QSize pixmapSize;
-        pixmapSize.setHeight(16 * theLibsGlobal::getDPIScaling());
-        pixmapSize.setWidth(qMax(fontMetrics.width(key) + 6 * theLibsGlobal::getDPIScaling(), 16 * theLibsGlobal::getDPIScaling()));
+        pixmapSize.setHeight(SC_DPI(16));
+        pixmapSize.setWidth(qMax(fontMetrics.horizontalAdvance(key) + SC_DPI(6), SC_DPI(16)));
 
         QPixmap px(pixmapSize);
         px.fill(Qt::transparent);
@@ -131,14 +129,14 @@ QPixmap tShortcutHud::getKeyIcon(QString key) {
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setPen(Qt::transparent);
         painter.setBrush(this->palette().color(QPalette::WindowText));
-        painter.drawRoundedRect(QRect(QPoint(0, 0), px.size()), 4 * theLibsGlobal::getDPIScaling(), 4 * theLibsGlobal::getDPIScaling());
+        painter.drawRoundedRect(QRect(QPoint(0, 0), px.size()), SC_DPI(4), SC_DPI(4));
 
         painter.setFont(font);
         painter.setPen(this->palette().color(QPalette::Window));
 
         QRect textRect;
         textRect.setHeight(fontMetrics.height());
-        textRect.setWidth(fontMetrics.width(key));
+        textRect.setWidth(fontMetrics.horizontalAdvance(key));
         textRect.moveCenter(QPoint(pixmapSize.width() / 2, pixmapSize.height() / 2));
 
         painter.drawText(textRect, Qt::AlignCenter, key);
@@ -174,9 +172,7 @@ void tShortcutHud::paintEvent(QPaintEvent* event) {
     painter.drawLine(0, 0, this->width(), 0);
 }
 
-
 tShortcutHud::ShortcutGroup::ShortcutGroup() {
-
 }
 
 tShortcutHud::ShortcutGroup::ShortcutGroup(QList<QShortcut*> shortcuts, QString shortcutText, ShortcutHudSide side) {

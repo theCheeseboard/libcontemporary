@@ -1,10 +1,9 @@
 #include "the-libs_global.h"
 
-#include <QDesktopWidget>
+#include "tsettings.h"
+#include <QDebug>
 #include <QDir>
 #include <QDirIterator>
-#include <QDebug>
-#include "tsettings.h"
 
 #include "private/nativeeventfilter.h"
 
@@ -27,18 +26,19 @@
 #endif
 
 struct theLibsGlobalPrivate {
-    bool powerStretch = false;
-    theLibsPrivate::NativeEventFilter* filter;
+        bool powerStretch = false;
+        theLibsPrivate::NativeEventFilter* filter;
 #ifdef T_OS_UNIX_NOT_MAC
-    QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
-    tSettings* contemporarySettings;
+        QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
+        tSettings* contemporarySettings;
 #endif
 };
 
-theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
+theLibsGlobal::theLibsGlobal() :
+    QObject(nullptr) {
     d = new theLibsGlobalPrivate();
 
-    //Install the native event filter
+    // Install the native event filter
     d->filter = new theLibsPrivate::NativeEventFilter(this);
     QApplication::instance()->installNativeEventFilter(d->filter);
     connect(d->filter, &theLibsPrivate::NativeEventFilter::powerStretchChanged, this, &theLibsGlobal::powerStretchChangedPrivate);
@@ -63,11 +63,11 @@ theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
         QDBusConnection::systemBus().connect("net.hadess.PowerProfiles", "/net/hadess/PowerProfiles", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(dbusPropertyChangedPrivate(QString, QMap<QString, QVariant>, QStringList)));
     }
 #elif defined(Q_OS_WIN)
-    //Register for power notifications
+    // Register for power notifications
     QWidget* powerNotificationHandleWidget = new QWidget();
     RegisterPowerSettingNotification(HWND(powerNotificationHandleWidget->winId()), &GUID_POWER_SAVING_STATUS, 0);
 
-    //Query power saver
+    // Query power saver
     SYSTEM_POWER_STATUS powerStatus;
     BOOL success = GetSystemPowerStatus(&powerStatus);
     if (success) {
@@ -112,9 +112,14 @@ bool theLibsGlobal::allowSystemAnimations() {
 }
 
 #ifdef QT_WIDGETS_LIB
+    #include <QScreen>
 double theLibsGlobal::getDPIScaling() {
+    #if defined(T_QT_5)
     double currentDPI = QApplication::desktop()->logicalDpiX();
     return currentDPI / DPI_100_PERCENT;
+    #elif defined(T_QT_6)
+    return QApplication::primaryScreen()->devicePixelRatio();
+    #endif
 }
 #endif
 
@@ -146,17 +151,17 @@ QColor theLibsGlobal::lineColor(QColor textColor) {
 
 #ifdef QT_WIDGETS_LIB
 void theLibsGlobal::tintImage(QImage& image, QColor tint) {
-    //bool doPaint = true;
+    // bool doPaint = true;
     int failNum = 0;
     for (int y = 0; y < image.height(); y++) {
         for (int x = 0; x < image.width(); x++) {
             QColor pixelCol = image.pixelColor(x, y);
-            //int blue = pixelCol.blue(), green = pixelCol.green(), red = pixelCol.red();
+            // int blue = pixelCol.blue(), green = pixelCol.green(), red = pixelCol.red();
             if ((pixelCol.blue() > pixelCol.green() - 10 && pixelCol.blue() < pixelCol.green() + 10) &&
                 (pixelCol.green() > pixelCol.red() - 10 && pixelCol.green() < pixelCol.red() + 10)) {
             } else {
                 failNum++;
-                //doPaint = false;
+                // doPaint = false;
             }
         }
     }

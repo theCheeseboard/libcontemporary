@@ -6,13 +6,11 @@
 
 QT       += widgets multimedia svg printsupport
 
-TARGET = the-libs
 TEMPLATE = lib
+TARGET = contemporary
 
 unix:!android {
     CONFIG += c++14
-
-    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$THELIBS_INSTALL_LIB\\\"
 
     system("pkg-config --version") {
         CONFIG += link_pkgconfig
@@ -28,7 +26,10 @@ unix:!android {
             message("Building with X11 support");
             PKGCONFIG += x11
             DEFINES += HAVE_X11
-            QT += x11extras
+
+            equals(QT_MAJOR_VERSION, 5) {
+                QT += x11extras
+            }
         } else {
             message("X11 not found on this system.");
         }
@@ -57,7 +58,7 @@ win32 {
     DEFINES += _WIN32_WINNT=0x0601 # Windows 7 or up
 }
 
-DEFINES += THELIBS_LIBRARY
+DEFINES += CNTP_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -114,7 +115,8 @@ SOURCES += tvariantanimation.cpp \
     tpopover.cpp \
     tmessagebox.cpp \
     tswitch.cpp \
-    tsystemsound.cpp
+    tsystemsound.cpp \
+    tx11info.cpp
 
 HEADERS += tvariantanimation.h\
     jobs/jobbutton.h \
@@ -161,7 +163,8 @@ HEADERS += tvariantanimation.h\
     tpopover.h \
     tmessagebox.h \
     tswitch.h \
-    tsystemsound.h
+    tsystemsound.h \
+    tx11info.h
 
 DBUS_ADAPTORS += jobs/com.vicr123.thelibs.tjob.Manager.xml jobs/com.vicr123.thelibs.tjob.Job.xml
 
@@ -173,20 +176,23 @@ include($$PWD/prifiles/gentranslations.pri)
 
 # Install rules
 header.files = *.h
-module.path = $$THELIBS_INSTALL_MODULES
+module.path = $$CNTP_INSTALL_MODULES
 prifiles.files = prifiles/*
 
+rootcontemporary.files = libcontemporary.pri
+rootcontemporary.path = $$CNTP_INSTALL_PREFIX/
+
 unix {
-    module.files = qt_thelib.pri
+    module.files = qt_libcontemporary.pri
 }
 
 unix:!macx:!android {
     QT += dbus
 
-    target.path = $$THELIBS_INSTALL_LIB
-    header.path = $$THELIBS_INSTALL_HEADERS/the-libs
+    target.path = $$CNTP_INSTALL_LIB
+    header.path = $$CNTP_INSTALL_HEADERS/the-libs
     module.files = qt_thelib.pri
-    prifiles.path = $$THELIBS_INSTALL_PREFIX/share/the-libs/pri
+    prifiles.path = $$CNTP_INSTALL_PREFIX/share/the-libs/pri
 
     HEADERS += tnotification/tnotification-linux.h \
         jobs/jobdbus.h \
@@ -198,23 +204,23 @@ unix:!macx:!android {
 }
 
 macx {
-    CONFIG(debug, debug|release): TARGET = the-libs_debug
+    CONFIG(debug, debug|release): TARGET = contemporary_debug
+    header.path = /usr/local/include/libcontemporary
+    prifiles.path = /usr/local/share/libcontemporary/pri
 
     target.path = /usr/local/lib
-    header.path = /usr/local/include/the-libs
-    prifiles.path = /usr/local/share/the-libs/pri
     module.files = qt_thelib_mac.pri
 
     SOURCES += tnotification/tnotification-mac.mm
 }
 
 win32 {
-    CONFIG(debug, debug|release): TARGET = the-libsd
-
     module.files = qt_thelib.pri
-    header.path = "C:/Program Files/thelibs/include"
-    target.path = "C:/Program Files/thelibs/lib"
-    prifiles.path = "C:/Program Files/thelibs/pri"
+
+    CONFIG(debug, debug|release): TARGET = libcontemporaryd
+    header.path = "C:/Program Files/libcontemporary/include"
+    target.path = "C:/Program Files/libcontemporary/lib"
+    prifiles.path = "C:/Program Files/libcontemporary/pri"
 
     SOURCES += tnotification/tnotification-win.cpp
     HEADERS += tnotification/tnotification-win.h
@@ -222,10 +228,11 @@ win32 {
 
 android {
     target.path = /libs/armeabi-v7a
-    header.path = /include/the-libs
     module.files = qt_thelib.pri
     module.path = /mkspecs/modules
-    prifiles.path = /share/the-libs/pri
+
+    header.path = /include/libcontemporary
+    prifiles.path = /share/libcontemporary/pri
 
     SOURCES += tnotification/tnotification-android.cpp
 }
@@ -233,13 +240,13 @@ android {
 INSTALLS += target module header prifiles
 
 DISTFILES += \
+    libcontemporary.pri \
     prifiles/buildmaster.pri \
     prifiles/gentranslations.pri \
     prifiles/installtranslations.pri \
     prifiles/checkblueprint.pri \
     prifiles/varset.pri \
-    qt_thelib.pri \
-    qt_thelib_mac.pri
+    qt_libcontemporary.pri
 
 FORMS += \
     jobs/jobspopover.ui \

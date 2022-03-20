@@ -1,9 +1,15 @@
 #ifndef THELIBS_GLOBAL_H
 #define THELIBS_GLOBAL_H
 
-#include <QtCore/qglobal.h>
 #include <QObject>
 #include <QSettings>
+#include <QtCore/qglobal.h>
+
+#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0) && QT_VERSION < QT_VERSION_CHECK(5, 99, 99)
+    #define T_QT_5
+#elif QT_VERSION > QT_VERSION_CHECK(6, 0, 0)
+    #define T_QT_6
+#endif
 
 #ifdef QT_WIDGETS_LIB
     #include <QApplication>
@@ -16,9 +22,9 @@
 #endif
 
 #ifdef T_OS_UNIX_NOT_MAC
+    #include <QDBusConnection>
     #include <QDBusMessage>
     #include <QDBusReply>
-    #include <QDBusConnection>
 #endif
 
 #if defined(THELIBS_LIBRARY)
@@ -65,7 +71,6 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
         theLibsGlobal();
 
         theLibsGlobalPrivate* d;
-
 };
 
 #endif // THELIBS_GLOBAL_H

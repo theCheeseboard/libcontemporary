@@ -19,106 +19,106 @@
  * *************************************/
 #include "datetimepart.h"
 
-#include <QPainter>
+#include "datetimepartbutton.h"
+#include "tvariantanimation.h"
 #include <QLocale>
+#include <QPainter>
 #include <QPushButton>
 #include <QWheelEvent>
-#include "tvariantanimation.h"
-#include "datetimepartbutton.h"
 
 struct DateTimePartPrivate {
-    int value;
-    int drawOffset = 0;
-    QChar valueType = 'm';
-    int sizeWidth;
-    int currentWheelDelta = 0;
+        int value;
+        int drawOffset = 0;
+        QChar valueType = 'm';
+        int sizeWidth;
+        int currentWheelDelta = 0;
 
-    int maxValueUser = -1;
+        int maxValueUser = -1;
 
-    DateTimePartButton *upButton, *downButton;
+        DateTimePartButton *upButton, *downButton;
 
-    QLocale locale;
+        QLocale locale;
 
-    QString textForValue(int value) {
-        switch (valueType.unicode()) {
-            case 'y':
-                return QString::number(value);
-            case 'd':
-            case 'h':
-            case 'H':
-            case 'm':
-            case 's':
-                return locale.toString(value).rightJustified(2, locale.zeroDigit());
-            case 'M':
-                return locale.monthName(value, QLocale::ShortFormat);
-            case 'a':
-                if (value == 0) {
-                    return locale.amText();
-                } else {
-                    return locale.pmText();
-                }
+        QString textForValue(int value) {
+            switch (valueType.unicode()) {
+                case 'y':
+                    return QString::number(value);
+                case 'd':
+                case 'h':
+                case 'H':
+                case 'm':
+                case 's':
+                    return locale.toString(value).rightJustified(2, locale.zeroDigit().at(0));
+                case 'M':
+                    return locale.monthName(value, QLocale::ShortFormat);
+                case 'a':
+                    if (value == 0) {
+                        return locale.amText();
+                    } else {
+                        return locale.pmText();
+                    }
+            }
+
+            return "(invalid)";
         }
 
-        return "(invalid)";
-    }
-
-    int minValue() {
-        switch (valueType.unicode()) {
-            case 'y':
-                return 1980;
-            case 'd':
-            case 'M':
-            case 'h':
-                return 1;
-            case 'H':
-            case 'm':
-            case 's':
-            case 'a':
-                return 0;
+        int minValue() {
+            switch (valueType.unicode()) {
+                case 'y':
+                    return 1980;
+                case 'd':
+                case 'M':
+                case 'h':
+                    return 1;
+                case 'H':
+                case 'm':
+                case 's':
+                case 'a':
+                    return 0;
+            }
+            return 0;
         }
-        return 0;
-    }
 
-    int maxValue() {
-        if (maxValueUser != -1) return maxValueUser;
-        switch (valueType.unicode()) {
-            case 'y':
-                return 2099;
-            case 'd':
-                return 30; //TODO: set depending on month
-            case 'h':
-                return 12;
-            case 'H':
-                return 23;
-            case 'm':
-            case 's':
-                return 59;
-            case 'M':
-                return 12;
-            case 'a':
-                return 1;
+        int maxValue() {
+            if (maxValueUser != -1) return maxValueUser;
+            switch (valueType.unicode()) {
+                case 'y':
+                    return 2099;
+                case 'd':
+                    return 30; // TODO: set depending on month
+                case 'h':
+                    return 12;
+                case 'H':
+                    return 23;
+                case 'm':
+                case 's':
+                    return 59;
+                case 'M':
+                    return 12;
+                case 'a':
+                    return 1;
+            }
+            return 0;
         }
-        return 0;
-    }
 
-    bool wrapAroundValue() {
-        switch (valueType.unicode()) {
-            case 'h':
-            case 'H':
-            case 'm':
-            case 's':
-            case 'a':
-                return true;
+        bool wrapAroundValue() {
+            switch (valueType.unicode()) {
+                case 'h':
+                case 'H':
+                case 'm':
+                case 's':
+                case 'a':
+                    return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    QString altText;
-    bool performOppositeAnimation = false;
+        QString altText;
+        bool performOppositeAnimation = false;
 };
 
-DateTimePart::DateTimePart(QWidget *parent) : QLabel(parent)
-{
+DateTimePart::DateTimePart(QWidget* parent) :
+    QLabel(parent) {
     d = new DateTimePartPrivate();
 
     this->setMouseTracking(true);
@@ -152,7 +152,7 @@ DateTimePart::~DateTimePart() {
     delete d;
 }
 
-void DateTimePart::paintEvent(QPaintEvent *event) {
+void DateTimePart::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     painter.setFont(this->font());
     painter.setPen(this->palette().color(QPalette::WindowText));
@@ -162,7 +162,7 @@ void DateTimePart::paintEvent(QPaintEvent *event) {
     painter.drawText(QRect(0, d->drawOffset + this->height(), this->width(), this->height()), Qt::AlignCenter, d->altText);
 
     if (d->upButton->isVisible()) {
-        //Draw borders
+        // Draw borders
         painter.drawLine(0, 0, 0, this->height());
         painter.drawLine(this->width() - 1, 0, this->width() - 1, this->height());
     }
@@ -203,17 +203,17 @@ int DateTimePart::value() {
 void DateTimePart::setValueType(QChar valueType) {
     d->valueType = valueType;
 
-    //Find the correct width
+    // Find the correct width
     int maxWidth = 0;
     for (int i = d->minValue(); i <= d->maxValue(); i++) {
-        maxWidth = qMax(maxWidth, this->fontMetrics().width(d->textForValue(i)));
+        maxWidth = qMax(maxWidth, this->fontMetrics().horizontalAdvance(d->textForValue(i)));
     }
-    d->sizeWidth = maxWidth + 6; //margin
+    d->sizeWidth = maxWidth + 6; // margin
 
     this->updateGeometry();
 }
 
-void DateTimePart::enterEvent(QEvent *event) {
+void DateTimePart::enterEvent(QEvent* event) {
     int buttonHeight = SC_DPI(32);
     QSize buttonSize = QSize(this->width(), buttonHeight);
     QPoint topLeft = d->upButton->parentWidget()->mapFromGlobal(this->mapToGlobal(QPoint(0, 0)));
@@ -230,11 +230,11 @@ void DateTimePart::enterEvent(QEvent *event) {
     this->update();
 }
 
-void DateTimePart::leaveEvent(QEvent *event) {
+void DateTimePart::leaveEvent(QEvent* event) {
     calculateLeave();
 }
 
-bool DateTimePart::eventFilter(QObject *watched, QEvent *event) {
+bool DateTimePart::eventFilter(QObject* watched, QEvent* event) {
     if (event->type() == QEvent::Leave) {
         calculateLeave();
     }
@@ -260,7 +260,7 @@ void DateTimePart::increment() {
             val = d->minValue();
             d->performOppositeAnimation = true;
         } else {
-            return; //Don't do anything
+            return; // Don't do anything
         }
     }
     this->setValue(val);
@@ -273,7 +273,7 @@ void DateTimePart::decrement() {
             val = d->maxValue();
             d->performOppositeAnimation = true;
         } else {
-            return; //Don't do anything
+            return; // Don't do anything
         }
     }
     this->setValue(val);
@@ -317,7 +317,7 @@ QSize DateTimePart::sizeHint() const {
     return sz;
 }
 
-void DateTimePart::wheelEvent(QWheelEvent *event) {
+void DateTimePart::wheelEvent(QWheelEvent* event) {
     event->accept();
     d->currentWheelDelta += event->angleDelta().y();
 
@@ -331,7 +331,7 @@ void DateTimePart::wheelEvent(QWheelEvent *event) {
     }
 }
 
-void DateTimePart::keyPressEvent(QKeyEvent *event) {
+void DateTimePart::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Up) {
         increment();
     } else if (event->key() == Qt::Key_Down) {
