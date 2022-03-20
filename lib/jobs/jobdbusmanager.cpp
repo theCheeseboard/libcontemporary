@@ -25,7 +25,7 @@
 #include "tjobmanager.h"
 #include "jobdbus.h"
 
-#include "manager_adaptor.h"
+#include "manageradaptor.h"
 
 struct JobDbusManagerPrivate {
     QList<QDBusObjectPath> jobs;

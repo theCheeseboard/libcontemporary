@@ -19,7 +19,7 @@
  * *************************************/
 #include "jobdbus.h"
 
-#include "job_adaptor.h"
+#include "jobadaptor.h"
 #include "tjob.h"
 
 struct JobDbusPrivate {
