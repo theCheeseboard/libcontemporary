@@ -22,36 +22,19 @@
 #include <X11/Xlib.h>
 
 bool tX11Info::isPlatformX11() {
-#if defined(T_QT_5)
-    return QX11Info::isPlatformX11();
-#elif defined(T_QT_6)
     return true;
-#endif
-    return false;
 }
 
 Display* tX11Info::display() {
-#if defined(T_QT_5)
-    return QX11Info::display();
-#elif defined(T_QT_6)
     return qApp->nativeInterface<QNativeInterface::QX11Application>()->display();
-#endif
 }
 
 Window tX11Info::appRootWindow() {
-#if defined(T_QT_5)
-    return QX11Info::appRootWindow();
-#elif defined(T_QT_6)
     return DefaultRootWindow(qApp->nativeInterface<QNativeInterface::QX11Application>()->display());
-#endif
 }
 
 unsigned long tX11Info::appTime() {
-#if defined(T_QT_5)
-    return QX11Info::appTime();
-#elif defined(T_QT_6)
     return CurrentTime;
-#endif
 }
 
 tX11Info::tX11Info(QObject* parent) :

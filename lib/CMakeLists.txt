@@ -60,6 +60,7 @@ set(SOURCES
         ttoast.cpp
         tvariantanimation.cpp
         tvirtualkeyboard.cpp
+        tx11info.cpp
         private/debuglogpopover.cpp
         private/debuglogwindow.cpp
         private/nativeeventfilter.cpp
@@ -68,6 +69,7 @@ set(SOURCES
         tcsdtools/csdsizegrip.cpp
         tdatetimepicker/datetimepart.cpp
         tdatetimepicker/datetimepartbutton.cpp
+        tnotification/tnotification-common.cpp
         jobs/jobbutton.cpp
         jobs/jobspopover.cpp
 
@@ -100,6 +102,7 @@ set(HEADERS
         "tlocale.h"
         "tlogger.h"
         "tmessagebox.h"
+        "tnotification.h"
         "tpaintcalculator.h"
         "tpopover.h"
         "tpromise.h"
@@ -115,7 +118,8 @@ set(HEADERS
         "ttitlelabel.h"
         "ttoast.h"
         "tvariantanimation.h"
-        "tvirtualkeyboard.h")
+        "tvirtualkeyboard.h"
+        "tx11info.h")
 
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
