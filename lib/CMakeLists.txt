@@ -181,14 +181,19 @@ ELSE()
     set(LIBRARY_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
 ENDIF()
 
-configure_package_config_file(libcontemporary-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libcontemporary-config.cmake
-        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}
+configure_package_config_file(libcontemporaryConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libcontemporaryConfig.cmake
+        INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
         PATH_VARS HEADER_INSTALL_DIR LIBRARY_INSTALL_DIR)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcontemporary-config.cmake
         DESTINATION ${CMAKECONFIG_INSTALL_DIR})
 install(TARGETS libcontemporary
+        EXPORT libcontemporaryTargets
         PUBLIC_HEADER DESTINATION ${HEADER_INSTALL_DIR}
+        INCLUDES DESTINATION ${HEADER_INSTALL_DIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
+install(EXPORT libcontemporaryTargets
+        FILE libcontemporaryTargets.cmake
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR})
