@@ -2,53 +2,20 @@ set(libContemporary_VERSION 6.0.0)
 
 @PACKAGE_INIT@
 
-#set_and_check(libContemporary_INCLUDE_DIRS @PACKAGE_HEADER_INSTALL_DIR@)
-#set_and_check(libContemporary_LIBRARIES @PACKAGE_LIBRARY_INSTALL_DIR@)
-
 include("${CMAKE_CURRENT_LIST_DIR}/libcontemporaryTargets.cmake")
-#include("${CMAKE_CURRENT_LIST_DIR}/libcontemporaryTargets-debug.cmake")
+
+file(GLOB EXTRA_FUNCTIONS "${_DIR}/cmake-scripts/*.cmake")
+foreach(f ${EXTRA_FUNCTIONS})
+    include(${f})
+endforeach()
+
+define_property(TARGET PROPERTY CNTP_DATA_SUBDIR
+    BRIEF_DOCS "Path within data directory to place standard data (usually the application name)"
+    FULL_DOCS "Path within data directory to place standard data (usually the application name)")
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(Unwind IMPORTED_TARGET libunwind)
 pkg_check_modules(X11 IMPORTED_TARGET x11)
 pkg_check_modules(GsettingsQt IMPORTED_TARGET gsettings-qt)
-
-#add_library(libContemporary SHARED IMPORTED)
-#set_target_properties(libContemporary PROPERTIES
-#    IMPORTED_LOCATION ${libContemporary_LIBRARIES}
-#)
-#target_include_directories(libContemporary SYSTEM ${libContemporary_INCLUDE_DIRS})
-
-#set(libcontemporary_INCLUDE_DIRS "/usr/local/lib/libcontemporary.framework/Headers")
-#set(libcontemporary_LIBRARIES "/usr/local/lib/libcontemporary.framework/libcontemporary")
-
-#message(DEBUG "hello world")
-#message(DEBUG "@PACKAGE_HEADER_INSTALL_DIR@")
-
-#
-#add_library(libcontemporary SHARED IMPORTED)
-#set_target_properties(libcontemporary PROPERTIES
-#    INTERFACE_INCLUDE_DIRECTORIES ${LIBCONTEMPORARY_INCLUDE_DIR}
-#)
-#
-#IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-#    set_target_properties(libcontemporary PROPERTIES
-#        IMPORTED_IMPLIB ${LIBCONTEMPORARY_INCLUDE_DIR}/libcontemporary.lib
-#        IMPORTED_LOCATION ${LIBCONTEMPORARY_INCLUDE_DIR}/libcontemporary.dll
-#    )
-#ENDIF()
-#
-#IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-#    set_target_properties(libcontemporary PROPERTIES
-#        IMPORTED_LOCATION ${LIBCONTEMPORARY_INCLUDE_DIR}/libcontemporary
-#    )
-#ENDIF()
-#
-#
-#IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-#    set_target_properties(libcontemporary PROPERTIES
-#        IMPORTED_LOCATION ${LIBCONTEMPORARY_INCLUDE_DIR}/liblibcontemporary.so
-#    )
-#ENDIF()
 
 check_required_components(libContemporary)

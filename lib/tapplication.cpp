@@ -125,7 +125,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
 #endif
 
-    d->versions.append({"the-libs", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
+    d->versions.append({"libContemporary", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
     d->versions.append({"Qt", QString(qVersion())});
 
     if (this->currentPlatform() == Flatpak) {

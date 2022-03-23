@@ -189,7 +189,9 @@ configure_package_config_file(libcontemporaryConfig.cmake.in ${CMAKE_CURRENT_BIN
         INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
         PATH_VARS HEADER_INSTALL_DIR LIBRARY_INSTALL_DIR)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcontemporary-config.cmake
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcontemporaryConfig.cmake
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+install(DIRECTORY cmake-scripts
         DESTINATION ${CMAKECONFIG_INSTALL_DIR})
 install(TARGETS libcontemporary
         EXPORT libcontemporaryTargets

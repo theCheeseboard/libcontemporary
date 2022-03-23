@@ -1,0 +1,5 @@
+function(cntp_translate target)
+    cntp_generate_translations(${target})
+    cntp_build_translations(${target})
+    cntp_install_translations(${target})
+endfunction()
