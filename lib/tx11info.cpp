@@ -19,22 +19,39 @@
  * *************************************/
 #include "tx11info.h"
 
+#ifdef HAVE_TX11INFO
 #include <X11/Xlib.h>
+#endif
 
 bool tX11Info::isPlatformX11() {
-    return true;
+#ifdef HAVE_TX11INFO
+    if (qApp->nativeInterface<QNativeInterface::QX11Application>()) return true;
+#endif
+    return false;
 }
 
 Display* tX11Info::display() {
+#ifdef HAVE_TX11INFO
     return qApp->nativeInterface<QNativeInterface::QX11Application>()->display();
+#else
+    return nullptr;
+#endif
 }
 
 Window tX11Info::appRootWindow() {
+#ifdef HAVE_TX11INFO
     return DefaultRootWindow(qApp->nativeInterface<QNativeInterface::QX11Application>()->display());
+#else
+    return 0;
+#endif
 }
 
 unsigned long tX11Info::appTime() {
+#ifdef HAVE_TX11INFO
     return CurrentTime;
+#else
+    return 0;
+#endif
 }
 
 tX11Info::tX11Info(QObject* parent) :

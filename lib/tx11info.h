@@ -23,6 +23,14 @@
 #include "libcontemporary_global.h"
 #include "tapplication.h"
 
+#if QT_CONFIG(xcb) || defined(Q_CLANG_QDOC)
+#define HAVE_TX11INFO
+#endif
+
+#ifndef HAVE_TX11INFO
+typedef void Display;
+#endif
+
 typedef unsigned long Window;
 class THELIBSSHARED_EXPORT tX11Info : public QObject {
         Q_OBJECT
