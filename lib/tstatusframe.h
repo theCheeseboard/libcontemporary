@@ -28,7 +28,7 @@ namespace Ui {
 }
 
 struct tStatusFramePrivate;
-class THELIBSSHARED_EXPORT tStatusFrame : public QFrame {
+class LIBCONTEMPORARY_EXPORT tStatusFrame : public QFrame {
         Q_OBJECT
         Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
         Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)

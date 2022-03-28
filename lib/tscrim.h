@@ -24,7 +24,7 @@
 #include <QWidget>
 
 struct tScrimPrivate;
-class THELIBSSHARED_EXPORT tScrim : public QWidget {
+class LIBCONTEMPORARY_EXPORT tScrim : public QWidget {
         Q_OBJECT
     public:
         explicit tScrim(QWidget* parent = nullptr);

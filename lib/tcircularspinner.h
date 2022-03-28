@@ -27,7 +27,7 @@
 #include <QTimer>
 #include <tvariantanimation.h>
 
-class THELIBSSHARED_EXPORT tCircularSpinner : public QWidget
+class LIBCONTEMPORARY_EXPORT tCircularSpinner : public QWidget
 {
         Q_OBJECT
     public:

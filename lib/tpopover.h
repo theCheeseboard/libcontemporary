@@ -24,7 +24,7 @@
 #include <libcontemporary_global.h>
 
 struct tPopoverPrivate;
-class THELIBSSHARED_EXPORT tPopover : public QObject {
+class LIBCONTEMPORARY_EXPORT tPopover : public QObject {
         Q_OBJECT
     public:
         explicit tPopover(QWidget* popoverWidget, QObject* parent = nullptr);

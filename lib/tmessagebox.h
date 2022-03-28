@@ -24,7 +24,7 @@
 #include "libcontemporary_global.h"
 #include <QMessageBox>
 
-class THELIBSSHARED_EXPORT tMessageBox : public QMessageBox
+class LIBCONTEMPORARY_EXPORT tMessageBox : public QMessageBox
 {
     Q_OBJECT
     public:

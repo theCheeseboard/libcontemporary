@@ -23,7 +23,7 @@
 #include <libcontemporary_global.h>
 #include <QPushButton>
 
-class THELIBSSHARED_EXPORT tSwitch : public QPushButton {
+class LIBCONTEMPORARY_EXPORT tSwitch : public QPushButton {
         Q_OBJECT
 
         Q_PROPERTY(QString OnText READ OnText WRITE setOnText NOTIFY OnTextChanged)

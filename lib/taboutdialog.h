@@ -28,7 +28,7 @@ namespace Ui {
     class tAboutDialog;
 }
 
-class THELIBSSHARED_EXPORT tAboutDialog : public QDialog
+class LIBCONTEMPORARY_EXPORT tAboutDialog : public QDialog
 {
         Q_OBJECT
 

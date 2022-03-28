@@ -25,7 +25,7 @@
 #include "libcontemporary_global.h"
 
 struct tErrorFlashPrivate;
-class THELIBSSHARED_EXPORT tErrorFlash : public QObject
+class LIBCONTEMPORARY_EXPORT tErrorFlash : public QObject
 {
         Q_OBJECT
     public:

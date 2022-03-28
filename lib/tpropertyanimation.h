@@ -24,7 +24,7 @@
 #include <QObject>
 #include "tvariantanimation.h"
 
-class THELIBSSHARED_EXPORT tPropertyAnimation : public tVariantAnimation
+class LIBCONTEMPORARY_EXPORT tPropertyAnimation : public tVariantAnimation
 {
     Q_OBJECT
 

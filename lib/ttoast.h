@@ -32,7 +32,7 @@
 #include "tpropertyanimation.h"
 
 struct tToastPrivate;
-class THELIBSSHARED_EXPORT tToast : public QObject
+class LIBCONTEMPORARY_EXPORT tToast : public QObject
 {
     Q_OBJECT
 

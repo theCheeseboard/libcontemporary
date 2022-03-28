@@ -25,6 +25,7 @@ pkg_check_modules(X11 IMPORTED_TARGET x11)
 pkg_check_modules(GsettingsQt IMPORTED_TARGET gsettings-qt)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+add_compile_definitions(LIBCONTEMPORARY_LIBRARY)
 
 set(SOURCES
         taboutdialog.cpp
@@ -56,6 +57,8 @@ set(SOURCES
         tstylemanager.cpp
         tswitch.cpp
         tsystemsound.cpp
+        tstandardlabel.cpp
+        tsubtitlelabel.cpp
         ttitlelabel.cpp
         ttoast.cpp
         tvariantanimation.cpp
@@ -119,7 +122,9 @@ set(HEADERS
         "ttoast.h"
         "tvariantanimation.h"
         "tvirtualkeyboard.h"
-        "tx11info.h")
+        "tx11info.h"
+        "tstandardlabel.h"
+        "tsubtitlelabel.h")
 
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)

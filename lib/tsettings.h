@@ -25,7 +25,7 @@
 
 struct tSettingsPrivate;
 struct tSettingsGlobals;
-class THELIBSSHARED_EXPORT tSettings : public QObject {
+class LIBCONTEMPORARY_EXPORT tSettings : public QObject {
         Q_OBJECT
     public:
         explicit tSettings(QObject* parent = nullptr);

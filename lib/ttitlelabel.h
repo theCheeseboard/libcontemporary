@@ -24,7 +24,7 @@
 #include <QLabel>
 
 struct tTitleLabelPrivate;
-class THELIBSSHARED_EXPORT tTitleLabel : public QLabel {
+class LIBCONTEMPORARY_EXPORT tTitleLabel : public QLabel {
         Q_OBJECT
         Q_PROPERTY(bool backButtonShown READ backButtonShown WRITE setBackButtonShown NOTIFY backButtonShownChanged)
         Q_PROPERTY(bool backButtonIsMenu READ backButtonIsMenu WRITE setBackButtonIsMenu NOTIFY backButtonIsMenuChanged)

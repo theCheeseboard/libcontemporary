@@ -47,10 +47,10 @@
     #include <QDBusReply>
 #endif
 
-#if defined(THELIBS_LIBRARY)
-    #define THELIBSSHARED_EXPORT Q_DECL_EXPORT
+#if defined(LIBCONTEMPORARY_LIBRARY)
+    #define LIBCONTEMPORARY_EXPORT Q_DECL_EXPORT
 #else
-    #define THELIBSSHARED_EXPORT Q_DECL_IMPORT
+    #define LIBCONTEMPORARY_EXPORT Q_DECL_IMPORT
 #endif
 
 #define THE_LIBS_API_VERSION 9
@@ -65,7 +65,7 @@
 #endif
 
 struct libContemporaryCommonPrivate;
-class THELIBSSHARED_EXPORT libContemporaryCommon : public QObject {
+class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
         Q_OBJECT
 
     public:

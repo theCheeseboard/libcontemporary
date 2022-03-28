@@ -26,7 +26,7 @@
 class tPopover;
 class tToast;
 struct tCsdGlobalPrivate;
-class THELIBSSHARED_EXPORT tCsdGlobal : public QObject {
+class LIBCONTEMPORARY_EXPORT tCsdGlobal : public QObject {
         Q_OBJECT
     public:
         enum WindowControlSide {
@@ -53,7 +53,7 @@ class THELIBSSHARED_EXPORT tCsdGlobal : public QObject {
 
 struct tCsdToolsPrivate;
 struct ResizeWidget;
-class THELIBSSHARED_EXPORT tCsdTools : public QObject {
+class LIBCONTEMPORARY_EXPORT tCsdTools : public QObject {
         Q_OBJECT
     public:
         explicit tCsdTools(QObject* parent = nullptr);

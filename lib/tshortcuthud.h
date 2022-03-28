@@ -31,7 +31,7 @@ namespace Ui {
     class tShortcutHud;
 }
 
-class THELIBSSHARED_EXPORT tShortcutHud : public QWidget
+class LIBCONTEMPORARY_EXPORT tShortcutHud : public QWidget
 {
         Q_OBJECT
 

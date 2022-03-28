@@ -25,7 +25,7 @@
 #include "libcontemporary_global.h"
 
 struct tDateTimePickerPrivate;
-class THELIBSSHARED_EXPORT tDateTimePicker : public QWidget {
+class LIBCONTEMPORARY_EXPORT tDateTimePicker : public QWidget {
         Q_OBJECT
     public:
         explicit tDateTimePicker(QWidget* parent = nullptr);

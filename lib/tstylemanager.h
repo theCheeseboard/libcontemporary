@@ -24,7 +24,7 @@
 #include <QObject>
 
 struct tStyleManagerPrivate;
-class THELIBSSHARED_EXPORT tStyleManager : public QObject {
+class LIBCONTEMPORARY_EXPORT tStyleManager : public QObject {
         Q_OBJECT
     public:
         static tStyleManager* instance();

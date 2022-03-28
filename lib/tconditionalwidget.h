@@ -24,7 +24,7 @@
 #include <QWidget>
 
 struct tConditionalWidgetPrivate;
-class THELIBSSHARED_EXPORT tConditionalWidget : public QWidget {
+class LIBCONTEMPORARY_EXPORT tConditionalWidget : public QWidget {
         Q_OBJECT
     public:
         explicit tConditionalWidget(QWidget* parent = nullptr);

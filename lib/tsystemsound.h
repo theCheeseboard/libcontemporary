@@ -23,7 +23,7 @@
 #include <QObject>
 #include "libcontemporary_global.h"
 
-class THELIBSSHARED_EXPORT tSystemSound : public QObject
+class LIBCONTEMPORARY_EXPORT tSystemSound : public QObject
 {
         Q_OBJECT
     public:

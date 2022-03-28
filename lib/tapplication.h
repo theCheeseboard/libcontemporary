@@ -28,7 +28,7 @@
 
 struct tApplicationPrivate;
 
-class THELIBSSHARED_EXPORT tApplication : public QApplication {
+class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         Q_OBJECT
     public:
         explicit tApplication(int& argc, char** argv);

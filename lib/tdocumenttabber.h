@@ -29,7 +29,7 @@ namespace Ui {
 
 class tStackedWidget;
 struct tDocumentTabberPrivate;
-class THELIBSSHARED_EXPORT tDocumentTabber : public QWidget {
+class LIBCONTEMPORARY_EXPORT tDocumentTabber : public QWidget {
         Q_OBJECT
 
     public:
@@ -45,7 +45,7 @@ class THELIBSSHARED_EXPORT tDocumentTabber : public QWidget {
         void updateTabs();
 };
 
-class THELIBSSHARED_EXPORT tDocumentTabberDocument : public QWidget {
+class LIBCONTEMPORARY_EXPORT tDocumentTabberDocument : public QWidget {
         Q_OBJECT
 
     public:

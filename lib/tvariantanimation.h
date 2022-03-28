@@ -26,7 +26,7 @@
 #include <functional>
 #include "libcontemporary_global.h"
 
-class THELIBSSHARED_EXPORT tVariantAnimation : public QVariantAnimation {
+class LIBCONTEMPORARY_EXPORT tVariantAnimation : public QVariantAnimation {
         Q_OBJECT
 
     public:

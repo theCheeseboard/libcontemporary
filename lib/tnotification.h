@@ -35,7 +35,7 @@
 #endif
 
 struct tNotificationPrivateByOS;
-class THELIBSSHARED_EXPORT tNotification : public QObject {
+class LIBCONTEMPORARY_EXPORT tNotification : public QObject {
         Q_OBJECT
     public:
         enum Urgency {

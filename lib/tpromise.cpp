@@ -21,7 +21,7 @@
 #include "libcontemporary_global.h"
 #include "tpromise.h"
 
-template<> THELIBSSHARED_EXPORT void tPromise<void>::callNextFunction()
+template<> LIBCONTEMPORARY_EXPORT void tPromise<void>::callNextFunction()
 {
     if (d->resolvedValue.error != "") {
         d->state = tPromisePrivate<void>::Errored;
@@ -38,7 +38,7 @@ template<> THELIBSSHARED_EXPORT void tPromise<void>::callNextFunction()
     if (d->deleteAfter) this->deleteLater();
 }
 
-template<> THELIBSSHARED_EXPORT tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
+template<> LIBCONTEMPORARY_EXPORT tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
 {
     tPromise<void>* promise = new tPromise<void>;
 

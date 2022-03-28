@@ -27,7 +27,7 @@
 
 struct tLoggerPrivate;
 struct tLogWriterPrivate;
-class THELIBSSHARED_EXPORT tLogger : public QObject {
+class LIBCONTEMPORARY_EXPORT tLogger : public QObject {
         Q_OBJECT
     public:
         ~tLogger();
@@ -64,7 +64,7 @@ class THELIBSSHARED_EXPORT tLogger : public QObject {
         tLoggerPrivate* d;
 };
 
-class THELIBSSHARED_EXPORT tLogWriter {
+class LIBCONTEMPORARY_EXPORT tLogWriter {
     public:
         tLogWriter(QString context, QtMsgType severity, QString file, int line, QString function);
         ~tLogWriter();

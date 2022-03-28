@@ -25,7 +25,7 @@
 
 class tJob;
 struct tJobManagerPrivate;
-class THELIBSSHARED_EXPORT tJobManager : public QObject {
+class LIBCONTEMPORARY_EXPORT tJobManager : public QObject {
         Q_OBJECT
     public:
         ~tJobManager();

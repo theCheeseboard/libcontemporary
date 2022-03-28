@@ -28,7 +28,7 @@ namespace Ui {
 }
 
 struct tInputDialogPrivate;
-class THELIBSSHARED_EXPORT tInputDialog : public QWidget {
+class LIBCONTEMPORARY_EXPORT tInputDialog : public QWidget {
         Q_OBJECT
 
     public:

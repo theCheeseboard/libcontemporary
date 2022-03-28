@@ -25,7 +25,7 @@
 #include <QSharedDataPointer>
 
 struct tPaintCalculatorPrivate;
-class THELIBSSHARED_EXPORT tPaintCalculator {
+class LIBCONTEMPORARY_EXPORT tPaintCalculator {
     public:
         tPaintCalculator();
         tPaintCalculator(const tPaintCalculator& other);
@@ -61,7 +61,7 @@ class THELIBSSHARED_EXPORT tPaintCalculator {
 };
 
 struct tPaintCalculatorScoperPrivate;
-class THELIBSSHARED_EXPORT tPaintCalculatorScoper {
+class LIBCONTEMPORARY_EXPORT tPaintCalculatorScoper {
     public:
         tPaintCalculatorScoper(tPaintCalculator* paintCalculator);
         ~tPaintCalculatorScoper();

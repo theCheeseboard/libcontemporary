@@ -25,7 +25,7 @@
 #include <QIcon>
 #include <QLocale>
 
-class THELIBSSHARED_EXPORT tIcon : public QObject {
+class LIBCONTEMPORARY_EXPORT tIcon : public QObject {
         Q_OBJECT
     public:
         static QIcon fromTheme(QString iconName);

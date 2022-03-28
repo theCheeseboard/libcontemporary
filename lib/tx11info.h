@@ -32,7 +32,7 @@ typedef void Display;
 #endif
 
 typedef unsigned long Window;
-class THELIBSSHARED_EXPORT tX11Info : public QObject {
+class LIBCONTEMPORARY_EXPORT tX11Info : public QObject {
         Q_OBJECT
     public:
         static bool isPlatformX11();

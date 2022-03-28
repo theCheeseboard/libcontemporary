@@ -23,7 +23,7 @@
 #include "libcontemporary_global.h"
 #include <QObject>
 
-class THELIBSSHARED_EXPORT tJob : public QObject {
+class LIBCONTEMPORARY_EXPORT tJob : public QObject {
         Q_OBJECT
     public:
         explicit tJob(QObject* parent = nullptr);

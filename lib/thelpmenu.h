@@ -24,7 +24,7 @@
 #include <QMenu>
 
 struct tHelpMenuPrivate;
-class THELIBSSHARED_EXPORT tHelpMenu : public QMenu {
+class LIBCONTEMPORARY_EXPORT tHelpMenu : public QMenu {
         Q_OBJECT
     public:
         explicit tHelpMenu(QWidget* parent);
