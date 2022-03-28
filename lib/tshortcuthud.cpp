@@ -29,7 +29,7 @@ tShortcutHud::tShortcutHud(QWidget* parent) :
     ui(new Ui::tShortcutHud) {
     ui->setupUi(this);
 
-    this->layout()->setContentsMargins(20 * theLibsGlobal::getDPIScaling(), 1, 20 * theLibsGlobal::getDPIScaling(), 0);
+    this->layout()->setContentsMargins(20 * libContemporaryCommon::getDPIScaling(), 1, 20 * libContemporaryCommon::getDPIScaling(), 0);
 
     parent->setMouseTracking(true);
     parent->installEventFilter(this);
@@ -70,7 +70,7 @@ void tShortcutHud::newShortcut(QShortcut* shortcut, QString shortcutText, Shortc
 
 void tShortcutHud::newShortcut(ShortcutGroup group) {
     QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
-    layout->setSpacing(10 * theLibsGlobal::getDPIScaling());
+    layout->setSpacing(10 * libContemporaryCommon::getDPIScaling());
 
     for (QShortcut* shortcut : group.shortcuts()) {
         QKeySequence key = shortcut->key();
@@ -82,7 +82,7 @@ void tShortcutHud::newShortcut(ShortcutGroup group) {
         });
 
         QBoxLayout* keyLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-        layout->setSpacing(3 * theLibsGlobal::getDPIScaling());
+        layout->setSpacing(3 * libContemporaryCommon::getDPIScaling());
         layout->addLayout(keyLayout);
 
         QStringList keys = keyText.split("+");
@@ -105,7 +105,7 @@ void tShortcutHud::newShortcut(ShortcutGroup group) {
 }
 
 QPixmap tShortcutHud::getKeyIcon(QString key) {
-    QPixmap squarePx(QSize(16, 16) * theLibsGlobal::getDPIScaling());
+    QPixmap squarePx(QSize(16, 16) * libContemporaryCommon::getDPIScaling());
     squarePx.fill(Qt::transparent);
 
     QPainter sqPainter(&squarePx);
@@ -115,9 +115,9 @@ QPixmap tShortcutHud::getKeyIcon(QString key) {
     sqPainter.drawRoundedRect(QRect(QPoint(0, 0), squarePx.size()), 50, 50, Qt::RelativeSize);
 
     QRect squareIconRect;
-    squareIconRect.setWidth(12 * theLibsGlobal::getDPIScaling());
-    squareIconRect.setHeight(12 * theLibsGlobal::getDPIScaling());
-    squareIconRect.moveCenter(QPoint(8, 8) * theLibsGlobal::getDPIScaling());
+    squareIconRect.setWidth(12 * libContemporaryCommon::getDPIScaling());
+    squareIconRect.setHeight(12 * libContemporaryCommon::getDPIScaling());
+    squareIconRect.moveCenter(QPoint(8, 8) * libContemporaryCommon::getDPIScaling());
 
     if (key == "Left") {
         QImage image = QIcon::fromTheme("go-previous").pixmap(squareIconRect.size()).toImage();
@@ -134,7 +134,7 @@ QPixmap tShortcutHud::getKeyIcon(QString key) {
         QFontMetrics fontMetrics(font);
 
         // font.setPointSizeF(floor(8));
-        while (QFontMetrics(font).height() > 14 * theLibsGlobal::getDPIScaling()) {
+        while (QFontMetrics(font).height() > 14 * libContemporaryCommon::getDPIScaling()) {
             font.setPointSizeF(font.pointSizeF() - 0.5);
         }
 
@@ -181,7 +181,7 @@ bool tShortcutHud::eventFilter(QObject* watched, QEvent* event) {
 }
 
 void tShortcutHud::resizeToParent() {
-    this->setFixedHeight(32 * theLibsGlobal::getDPIScaling());
+    this->setFixedHeight(32 * libContemporaryCommon::getDPIScaling());
     this->setFixedWidth(this->parentWidget()->width());
     this->move(0, this->parentWidget()->height() - this->height());
 }

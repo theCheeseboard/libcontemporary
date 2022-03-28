@@ -57,19 +57,24 @@
 #define THE_LIBS_VERSION "6.0"
 
 #ifdef QT_WIDGETS_LIB
-    #define SC_DPI(pixels) static_cast<int>(pixels * theLibsGlobal::getDPIScaling())
-    #define SC_DPI_T(value, type) static_cast<type>(value * theLibsGlobal::getDPIScaling())
+    #define SC_DPI(pixels) \
+        static_cast<int>(pixels * libContemporaryCommon::getDPIScaling())
+    #define SC_DPI_T(value, type) static_cast<type>(value * libContemporaryCommon::getDPIScaling())
+    #define SC_DPI_W(pixels, widget) static_cast<int>(pixels * libContemporaryCommon::getDPIScaling(widget))
+    #define SC_DPI_WT(value, type, widget) static_cast<type>(value * libContemporaryCommon::getDPIScaling(widget))
 #endif
 
-struct theLibsGlobalPrivate;
-class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
+struct libContemporaryCommonPrivate;
+class THELIBSSHARED_EXPORT libContemporaryCommon : public QObject {
         Q_OBJECT
 
     public:
-        static theLibsGlobal* instance();
+        static libContemporaryCommon * instance();
 
 #ifdef QT_WIDGETS_LIB
+        [[deprecated("getDPIScaling is deprecated, use the overload that takes a QPaintDevice (or SC_DPI_W)")]]
         static double getDPIScaling();
+        static double getDPIScaling(const QPaintDevice* paintDevice);
         static void tintImage(QImage& image, QColor tint);
 #endif
         static QStringList searchInPath(QString executable);
@@ -88,9 +93,9 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
         void powerStretchChanged(bool isOn);
 
     private:
-        theLibsGlobal();
+        libContemporaryCommon();
 
-        theLibsGlobalPrivate* d;
+        libContemporaryCommonPrivate* d;
 };
 
 #endif // THELIBS_GLOBAL_H

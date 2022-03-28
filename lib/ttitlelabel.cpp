@@ -115,7 +115,7 @@ void tTitleLabel::paintEvent(QPaintEvent* event) {
 
     if (d->drawBottomBorder) {
         QPainter painter(this);
-        painter.setPen(theLibsGlobal::lineColor(this->palette().color(QPalette::WindowText)));
+        painter.setPen(libContemporaryCommon::lineColor(this->palette().color(QPalette::WindowText)));
         painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
     }
 }

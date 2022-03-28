@@ -130,7 +130,7 @@ void tToast::show(QWidget* parent) {
 
 void tToast::dismiss() {
     QWidget* parent = d->toastWidget->parentWidget();
-    if (parent != NULL) {
+    if (parent != nullptr) {
         if (!timerStopped) {
             d->hideTimer->stop();
             timerStopped = true;

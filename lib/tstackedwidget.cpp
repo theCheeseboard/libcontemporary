@@ -60,7 +60,7 @@ void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
 
 void tStackedWidget::doSetCurrentIndex(int index) {
     //Check if Power Stretch is on or if animations are disabled
-    if (theLibsGlobal::instance()->powerStretchEnabled() || !theLibsGlobal::instance()->allowSystemAnimations()) {
+    if (libContemporaryCommon::instance()->powerStretchEnabled() || !libContemporaryCommon::instance()->allowSystemAnimations()) {
         //Forego animations; power stretch is on
         QStackedWidget::setCurrentIndex(index);
     } else {

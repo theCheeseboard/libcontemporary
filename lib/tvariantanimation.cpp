@@ -30,7 +30,7 @@ tVariantAnimation::~tVariantAnimation() {
 
 void tVariantAnimation::start(QAbstractAnimation::DeletionPolicy policy) {
     if (this->state() != Running) {
-        if ((!theLibsGlobal::instance()->allowSystemAnimations() || theLibsGlobal::instance()->powerStretchEnabled()) && !forceAnim) {
+        if ((!libContemporaryCommon::instance()->allowSystemAnimations() || libContemporaryCommon::instance()->powerStretchEnabled()) && !forceAnim) {
             QVariant newValue;
             int newTime;
             if (this->direction() == Forward) {

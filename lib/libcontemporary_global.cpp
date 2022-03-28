@@ -45,23 +45,23 @@
     #include <QDBusInterface>
 #endif
 
-struct theLibsGlobalPrivate {
+struct libContemporaryCommonPrivate {
         bool powerStretch = false;
-        theLibsPrivate::NativeEventFilter* filter;
+        libContemporaryPrivate::NativeEventFilter* filter;
 #ifdef T_OS_UNIX_NOT_MAC
         QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
         tSettings* contemporarySettings;
 #endif
 };
 
-theLibsGlobal::theLibsGlobal() :
+libContemporaryCommon::libContemporaryCommon() :
     QObject(nullptr) {
-    d = new theLibsGlobalPrivate();
+    d = new libContemporaryCommonPrivate();
 
     // Install the native event filter
-    d->filter = new theLibsPrivate::NativeEventFilter(this);
+    d->filter = new libContemporaryPrivate::NativeEventFilter(this);
     QApplication::instance()->installNativeEventFilter(d->filter);
-    connect(d->filter, &theLibsPrivate::NativeEventFilter::powerStretchChanged, this, &theLibsGlobal::powerStretchChangedPrivate);
+    connect(d->filter, &libContemporaryPrivate::NativeEventFilter::powerStretchChanged, this, &libContemporaryCommon::powerStretchChangedPrivate);
 
 #ifdef T_OS_UNIX_NOT_MAC
     d->contemporarySettings = new tSettings("theSuite", "contemporary_widget", this);
@@ -97,33 +97,33 @@ theLibsGlobal::theLibsGlobal() :
 #endif
 }
 
-theLibsGlobal* theLibsGlobal::instance() {
-    static theLibsGlobal* appInst;
+libContemporaryCommon *libContemporaryCommon::instance() {
+    static libContemporaryCommon * appInst;
     if (appInst == nullptr) {
-        appInst = new theLibsGlobal;
+        appInst = new libContemporaryCommon;
     }
 
     return appInst;
 }
 
-bool theLibsGlobal::powerStretchEnabled() {
+bool libContemporaryCommon::powerStretchEnabled() {
     return d->powerStretch;
 }
 
-void theLibsGlobal::powerStretchChangedPrivate(bool isOn) {
+void libContemporaryCommon::powerStretchChangedPrivate(bool isOn) {
     d->powerStretch = isOn;
 
     emit powerStretchChanged(isOn);
 }
 
-void theLibsGlobal::dbusPropertyChangedPrivate(QString interfaceName, QMap<QString, QVariant> changedProperties, QStringList invalidatedProperties) {
+void libContemporaryCommon::dbusPropertyChangedPrivate(QString interfaceName, QMap<QString, QVariant> changedProperties, QStringList invalidatedProperties) {
     if (interfaceName == "net.hadess.PowerProfiles" && changedProperties.contains("ActiveProfile")) {
         d->powerStretch = changedProperties.value("ActiveProfile").toString() == "power-saver";
         emit powerStretchChanged(d->powerStretch);
     }
 }
 
-bool theLibsGlobal::allowSystemAnimations() {
+bool libContemporaryCommon::allowSystemAnimations() {
 #ifdef T_OS_UNIX_NOT_MAC
     return d->themeSettings->value("accessibility/systemAnimations", true).toBool();
 #else
@@ -133,17 +133,12 @@ bool theLibsGlobal::allowSystemAnimations() {
 
 #ifdef QT_WIDGETS_LIB
     #include <QScreen>
-double theLibsGlobal::getDPIScaling() {
-    #if defined(T_QT_5)
-    double currentDPI = QApplication::desktop()->logicalDpiX();
-    return currentDPI / DPI_100_PERCENT;
-    #elif defined(T_QT_6)
+double libContemporaryCommon::getDPIScaling() {
     return QApplication::primaryScreen()->devicePixelRatio();
-    #endif
 }
 #endif
 
-QStringList theLibsGlobal::searchInPath(QString executable) {
+QStringList libContemporaryCommon::searchInPath(QString executable) {
     QStringList executables;
     QStringList pathDirs = QString(qgetenv("PATH")).split(":");
     for (QString dir : pathDirs) {
@@ -160,7 +155,7 @@ QStringList theLibsGlobal::searchInPath(QString executable) {
     return executables;
 }
 
-QColor theLibsGlobal::lineColor(QColor textColor) {
+QColor libContemporaryCommon::lineColor(QColor textColor) {
 #ifdef T_OS_UNIX_NOT_MAC
     if (instance()->d->contemporarySettings->value("Lines/reduceIntensity").toBool()) {
         textColor.setAlpha(127);
@@ -170,7 +165,7 @@ QColor theLibsGlobal::lineColor(QColor textColor) {
 }
 
 #ifdef QT_WIDGETS_LIB
-void theLibsGlobal::tintImage(QImage& image, QColor tint) {
+void libContemporaryCommon::tintImage(QImage& image, QColor tint) {
     // bool doPaint = true;
     int failNum = 0;
     for (int y = 0; y < image.height(); y++) {
@@ -192,5 +187,9 @@ void theLibsGlobal::tintImage(QImage& image, QColor tint) {
         painter.fillRect(0, 0, image.width(), image.height(), tint);
         painter.end();
     }
+}
+double libContemporaryCommon::getDPIScaling(const QPaintDevice *paintDevice) {
+    if (!paintDevice) return QApplication::primaryScreen()->devicePixelRatio();
+    return paintDevice->devicePixelRatio();
 }
 #endif

@@ -25,7 +25,7 @@
 #include <QAbstractNativeEventFilter>
 #include <QObject>
 
-namespace theLibsPrivate {
+namespace libContemporaryPrivate {
     class NativeEventFilter : public QObject,
                               public QAbstractNativeEventFilter {
             Q_OBJECT
@@ -47,6 +47,6 @@ namespace theLibsPrivate {
             bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result);
 #endif
     };
-} // namespace theLibsPrivate
+} // namespace libContemporaryPrivate
 
 #endif // NATIVEEVENTFILTER_H

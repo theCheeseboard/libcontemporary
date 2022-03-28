@@ -26,7 +26,7 @@
     #include <Windows.h>
 #endif
 
-using namespace theLibsPrivate;
+using namespace libContemporaryPrivate;
 
 NativeEventFilter::NativeEventFilter(QObject* parent) :
     QObject(parent), QAbstractNativeEventFilter() {
@@ -57,7 +57,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* mes
 #endif
 
 #ifdef T_QT_6
-bool theLibsPrivate::NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) {
+bool libContemporaryPrivate::NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) {
     return filter(eventType, message);
 }
 #endif
