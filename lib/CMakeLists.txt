@@ -25,7 +25,6 @@ pkg_check_modules(X11 IMPORTED_TARGET x11)
 pkg_check_modules(GsettingsQt IMPORTED_TARGET gsettings-qt)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
-add_compile_definitions(LIBCONTEMPORARY_LIBRARY)
 
 set(SOURCES
         taboutdialog.cpp
@@ -157,6 +156,8 @@ set_target_properties(libcontemporary PROPERTIES
         PUBLIC_HEADER "${HEADERS}")
 
 target_link_libraries(libcontemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia)
+target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
+
 IF(${Unwind_FOUND})
     target_link_libraries(libcontemporary PkgConfig::Unwind)
     add_compile_definitions(HAVE_LIBUNWIND)

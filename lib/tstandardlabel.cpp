@@ -27,7 +27,7 @@ void tStandardLabel::setType(tStandardLabel::StandardLabelType type) {
     switch (type) {
         case Subtitle: {
             font.setBold(true);
-            font.setCapitalization(QFont::SmallCaps);
+            font.setCapitalization(QFont::AllUppercase);
             break;
         }
         default:
