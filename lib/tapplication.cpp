@@ -149,7 +149,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     d->versions.append({"Qt", QString(qVersion())});
 
     if (this->currentPlatform() == Flatpak) {
-        this->addLibraryPath("/app/lib/qt/plugins");
+        this->addLibraryPath("/app/plugins");
     }
 }
 
