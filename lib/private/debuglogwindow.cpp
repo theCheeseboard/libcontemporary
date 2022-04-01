@@ -201,7 +201,7 @@ DebugLogModel::~DebugLogModel() {
 void DebugLogModel::addLogItem(tLogger::LogItem logItem) {
     if (!d->logs.isEmpty()) {
         DebugLogModelPrivate::DebugLogLogItem lastItem = d->logs.last();
-        if (lastItem.base.text == logItem.text && lastItem.base.context == lastItem.base.context && lastItem.base.severity == logItem.severity) {
+        if (lastItem.base.text == logItem.text && lastItem.base.context == logItem.context && lastItem.base.severity == logItem.severity) {
             ++lastItem.repeat;
             d->logs.replace(d->logs.count() - 1, lastItem);
             emit dataChanged(index(d->logs.count() - 1), index(d->logs.count(), columnCount()));

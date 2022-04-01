@@ -28,7 +28,7 @@ tSwitch::tSwitch(QWidget* parent) : QPushButton(parent) {
     this->setCheckable(true);
     this->setFixedSize(this->sizeHint());
 
-    innerRect = QRect(0, 0, this->height(), this->width());
+    innerRect = QRect(0, 0, this->width(), this->height());
 }
 
 QPalette::ColorGroup tSwitch::IsActiveColorRole() {

@@ -27,7 +27,7 @@ namespace Ui {
     class tPrintPopover;
 }
 
-class THELIBSSHARED_EXPORT tPrintPopoverCustomPrintSettingsWidget : public QWidget {
+class LIBCONTEMPORARY_EXPORT tPrintPopoverCustomPrintSettingsWidget : public QWidget {
         Q_OBJECT
 
     public:
@@ -40,7 +40,7 @@ class THELIBSSHARED_EXPORT tPrintPopoverCustomPrintSettingsWidget : public QWidg
 
 class QPrinter;
 struct tPrintPopoverPrivate;
-class THELIBSSHARED_EXPORT tPrintPopover : public QWidget {
+class LIBCONTEMPORARY_EXPORT tPrintPopover : public QWidget {
         Q_OBJECT
 
     public:

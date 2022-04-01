@@ -11,7 +11,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Svg Network Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Svg Network Multimedia PrintSupport)
 find_package(PkgConfig REQUIRED)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
@@ -43,6 +43,7 @@ set(SOURCES
         tpaintcalculator.cpp
         tpopover.cpp
         tpromise.cpp
+        tprintpopover.cpp
         tpropertyanimation.cpp
         tscrim.cpp
         tsettings.cpp
@@ -104,6 +105,7 @@ set(HEADERS
         "tpaintcalculator.h"
         "tpopover.h"
         "tpromise.h"
+        "tprintpopover.h"
         "tpropertyanimation.h"
         "tscrim.h"
         "tsettings.h"
@@ -151,7 +153,7 @@ set_target_properties(libcontemporary PROPERTIES
 #        SOVERSION 6.0.0
         PUBLIC_HEADER "${HEADERS}")
 
-target_link_libraries(libcontemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia)
+target_link_libraries(libcontemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport)
 target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
 
 IF(${Unwind_FOUND})

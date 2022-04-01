@@ -145,12 +145,33 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
 #endif
 
+    if (this->currentPlatform() == Flatpak) this->addLibraryPath("/app/plugins");
+
     d->versions.append({"libContemporary", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
     d->versions.append({"Qt", QString(qVersion())});
 
-    if (this->currentPlatform() == Flatpak) {
-        this->addLibraryPath("/app/plugins");
+    QString platformString;
+    switch (this->currentPlatform()) {
+        case TheDesk:
+            platformString = tr("Linux");
+            break;
+        case Flatpak:
+            platformString = tr("Flatpak");
+            break;
+        case Windows:
+            platformString = tr("Microsoft Windows");
+            break;
+        case WindowsAppPackage:
+            platformString = tr("Microsoft Windows Store");
+            break;
+        case MacOS:
+            platformString = tr("macOS");
+            break;
+        case OtherPlatform:
+            platformString = tr("Unknown");
+            break;
     }
+    d->versions.append({tr("Platform"), platformString});
 }
 
 bool tApplication::event(QEvent* event) {

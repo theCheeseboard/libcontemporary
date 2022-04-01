@@ -90,6 +90,6 @@ class LIBCONTEMPORARY_EXPORT tLogWriter {
 #define tWarn(context) (tLogWriter(context, QtWarningMsg, static_cast<const char*>(__FILE__), __LINE__, static_cast<const char*>(Q_FUNC_INFO)))
 #define tCritical(context) (tLogWriter(context, QtCriticalMsg, static_cast<const char*>(__FILE__), __LINE__, static_cast<const char*>(Q_FUNC_INFO)))
 
-Q_DECLARE_METATYPE(tLogger::LogItem);
+Q_DECLARE_METATYPE(tLogger::LogItem)
 
-#endif // TDEBUG_H
+#endif // TLOGGER_H

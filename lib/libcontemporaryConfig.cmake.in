@@ -15,7 +15,7 @@ define_property(TARGET PROPERTY CNTP_DATA_SUBDIR
     BRIEF_DOCS "Path within data directory to place standard data (usually the application name)"
     FULL_DOCS "Path within data directory to place standard data (usually the application name)")
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Svg Network Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Svg Network Multimedia PrintSupport)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(Unwind IMPORTED_TARGET libunwind)
 pkg_check_modules(X11 IMPORTED_TARGET x11)
