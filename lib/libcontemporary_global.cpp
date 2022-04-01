@@ -134,7 +134,11 @@ bool libContemporaryCommon::allowSystemAnimations() {
 #ifdef QT_WIDGETS_LIB
     #include <QScreen>
 double libContemporaryCommon::getDPIScaling() {
+#ifdef Q_OS_MAC
+    return 1;
+#else
     return QApplication::primaryScreen()->devicePixelRatio();
+#endif
 }
 #endif
 
