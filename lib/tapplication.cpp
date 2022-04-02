@@ -165,7 +165,11 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
             platformString = tr("Microsoft Windows Store");
             break;
         case MacOS:
-            platformString = tr("macOS");
+#if TARGET_CPU_ARM64
+            platformString = tr("macOS - Apple Silicon");
+#elif TARGET_CPU_X86_64
+            platformString = tr("macOS - Intel");
+#endif
             break;
         case OtherPlatform:
             platformString = tr("Unknown");

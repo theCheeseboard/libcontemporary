@@ -19,6 +19,7 @@ function(cntp_init_plugin parent target cxx-standard share-subdir)
     cntp_get_target_share_dir_name(SHARE_DIR ${parent})
 
     set_target_properties(${target} PROPERTIES
-            CNTP_DATA_SUBDIR ${SHARE_DIR}/${share-subdir})
+            CNTP_DATA_SUBDIR ${SHARE_DIR}/${share-subdir}
+            CNTP_PARENT_TARGET ${parent})
     add_dependencies(${parent} ${target})
 endfunction()
