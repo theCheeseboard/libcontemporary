@@ -6,7 +6,7 @@ const installu = require('./installu');
 const fs = require('fs');
 
 test('links library', async () => {
-    jest.setTimeout(300000);
+    jest.setTimeout(600000);
 
     await installu({
         packages: ["libtag", "libmusicbrainz"]
