@@ -5700,6 +5700,7 @@ module.exports = from;
 
 const core = __webpack_require__(470);
 const exec = __webpack_require__(986);
+const io = __webpack_require__(1);
 const fs = __webpack_require__(225);
 const https = __webpack_require__(549).https;
 const tar = __webpack_require__(120);
@@ -5729,7 +5730,14 @@ async function lipoIfRequired(arm, system) {
 
 module.exports = async function(options) {
     let homebrewPath = "./homebrew";
-    if (process.env["CI"]) homebrewPath = "/opt/homebrew";
+    if (process.env["CI"]) {
+        homebrewPath = "/opt/homebrew";
+        await exec.exec("sudo", ["chmod", "777", "/opt"], {
+            silent: true
+        });
+
+        await io.mkdirP('/opt/homebrew');
+    }
 
     //Download brew tarball
     console.log("Downloading Homebrew...");
