@@ -4780,6 +4780,8 @@ const gunzip = __webpack_require__(169);
 const path = __webpack_require__(622);
 const clone = __webpack_require__(98);
 
+const mergeExts = ["", "dylib", "a"];
+
 function getHttps(url) {
     return new Promise((res, rej) => {
         let httpsObject = https.get(url, response => {
@@ -4891,7 +4893,9 @@ module.exports = async function(options) {
 
         await Promise.all(bottlePaths.map(async bottlePath => {
             //Untar all bottles to the cellar
-            let extractStream = legacyFs.createReadStream(bottlePath).pipe(gunzip()).pipe(tar.extract(armCellar));
+            let extractStream = legacyFs.createReadStream(bottlePath).pipe(gunzip()).pipe(tar.extract(armCellar, {
+                ignore: name => !mergeExts.includes(path.extname(name))
+            }));
             await new Promise(res => extractStream.on("finish", res));
         }));
 

@@ -10,6 +10,8 @@ const gunzip = require('gunzip-maybe');
 const path = require('path');
 const clone = require('git-clone/promise');
 
+const mergeExts = ["", "dylib", "a"];
+
 function getHttps(url) {
     return new Promise((res, rej) => {
         let httpsObject = https.get(url, response => {
@@ -121,7 +123,9 @@ module.exports = async function(options) {
 
         await Promise.all(bottlePaths.map(async bottlePath => {
             //Untar all bottles to the cellar
-            let extractStream = legacyFs.createReadStream(bottlePath).pipe(gunzip()).pipe(tar.extract(armCellar));
+            let extractStream = legacyFs.createReadStream(bottlePath).pipe(gunzip()).pipe(tar.extract(armCellar, {
+                ignore: name => !mergeExts.includes(path.extname(name))
+            }));
             await new Promise(res => extractStream.on("finish", res));
         }));
 
