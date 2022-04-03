@@ -10,7 +10,7 @@ const gunzip = require('gunzip-maybe');
 const path = require('path');
 const clone = require('git-clone/promise');
 
-const mergeExts = ["", "dylib", "a"];
+const mergeExts = ["", ".dylib", ".a"];
 
 function getHttps(url) {
     return new Promise((res, rej) => {
@@ -117,9 +117,6 @@ module.exports = async function(options) {
         bottlePaths = bottlePaths.filter((path, index) => {
             return bottlePaths.indexOf(path) === index;
         })
-
-        console.log("Bottles to install: ");
-        console.log(bottlePaths);
 
         await Promise.all(bottlePaths.map(async bottlePath => {
             //Untar all bottles to the cellar

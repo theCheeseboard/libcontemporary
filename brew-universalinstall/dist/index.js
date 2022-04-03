@@ -4780,7 +4780,7 @@ const gunzip = __webpack_require__(169);
 const path = __webpack_require__(622);
 const clone = __webpack_require__(98);
 
-const mergeExts = ["", "dylib", "a"];
+const mergeExts = ["", ".dylib", ".a"];
 
 function getHttps(url) {
     return new Promise((res, rej) => {
@@ -4887,9 +4887,6 @@ module.exports = async function(options) {
         bottlePaths = bottlePaths.filter((path, index) => {
             return bottlePaths.indexOf(path) === index;
         })
-
-        console.log("Bottles to install: ");
-        console.log(bottlePaths);
 
         await Promise.all(bottlePaths.map(async bottlePath => {
             //Untar all bottles to the cellar
