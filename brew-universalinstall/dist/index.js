@@ -5766,7 +5766,7 @@ module.exports = async function(options) {
             });
 
             let armBrewOutput = "";
-            await exec.exec(armBrew, ["fetch", "--deps", "--force-bottle", "--bottle-tag=arm64_big_sur", pk], {
+            await exec.exec(armBrew, ["fetch", "--deps", "--bottle-tag=arm64_big_sur", pk], {
                 listeners: {
                     stdout: data => armBrewOutput += data.toString()
                 },
