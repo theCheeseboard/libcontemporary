@@ -70,7 +70,7 @@ module.exports = async function(options) {
                 listeners: {
                     stdout: data => armBrewOutput += data.toString()
                 },
-                silent: true
+                silent: false
             });
 
             for (let line of armBrewOutput.split("\n")) {
