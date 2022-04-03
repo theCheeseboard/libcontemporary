@@ -5786,7 +5786,7 @@ module.exports = async function(options) {
         console.log(bottlePaths);
 
         await exec.exec(armBrew, ["install", ...bottlePaths], {
-            silent: true
+            silent: false
         });
 
         console.log("Merging libraries");
