@@ -39,6 +39,9 @@ module.exports = async function(options) {
         await io.mkdirP('/opt/homebrew');
     }
 
+    let tempPackages = path.resolve("./bottles");
+    await io.mkdirP(tempPackages);
+
     //Download brew tarball
     console.log("Downloading Homebrew...");
     let brewTarData = stream.Readable.from(await getHttps("https://github.com/Homebrew/brew/tarball/master"));
@@ -86,14 +89,15 @@ module.exports = async function(options) {
             return bottlePaths.indexOf(path) === index;
         })
 
+        bottlePaths = await Promise.all(bottlePaths.map(async bottle => {
+            let name = path.basename(bottle);
+            let newName = path.resolve(tempPackages, name);
+            await fs.rename(bottle, newName);
+            return newName;
+        }));
+
         console.log("Bottles to install: ");
         console.log(bottlePaths);
-
-
-        let brewDownloads = dir.files("/Users/runner/Library/Caches/Homebrew/downloads", {
-            sync: true
-        });
-        console.log(brewDownloads);
 
         await exec.exec(armBrew, ["install", ...bottlePaths], {
             silent: false
@@ -115,6 +119,11 @@ module.exports = async function(options) {
     } finally {
         console.log(`Removing ARM homebrew`);
         await fs.rm(path.resolve(homebrewPath), {
+            recursive: true
+        });
+
+        console.log(`Removing temporary bottles`);
+        await fs.rm(path.resolve(tempPackages), {
             recursive: true
         });
     }
