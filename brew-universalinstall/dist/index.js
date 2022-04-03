@@ -5769,32 +5769,32 @@ module.exports = async function(options) {
             });
 
             let armBrewOutput = "";
-            let renameOps = [];
             await exec.exec(armBrew, ["fetch", "--deps", "--bottle-tag=arm64_big_sur", pk], {
                 listeners: {
-                    stdout: data => {
-                        armBrewOutput += data.toString();
-
-                        let currentOutput = armBrewOutput.split("\n");
-                        while (currentOutput.length > 1) {
-                            let line = currentOutput.shift();
-                            if (line.startsWith("Downloaded to:")) {
-                                let bottlePath = line.split(" ")[2];
-                                let name = path.basename(bottlePath);
-                                let newName = path.resolve(tempPackages, name);
-                                if (!bottlePaths.includes(newName)) renameOps.push(fs.rename(bottlePath, newName));
-                                bottlePaths.push(newName);
-                            }
-                        }
-                        armBrewOutput = currentOutput[0];
-                    }
+                    stdout: data => armBrewOutput += data.toString()
                 },
                 silent: false
             });
-            await Promise.all(renameOps);
+
+            for (let line of armBrewOutput.split("\n")) {
+                if (line.startsWith("Downloaded to:")) {
+                    bottlePaths.push(line.split(" ")[2]);
+                }
+            }
 
             await x86install;
         }
+
+        bottlePaths = bottlePaths.filter((path, index) => {
+            return bottlePaths.indexOf(path) === index;
+        })
+
+        bottlePaths = await Promise.all(bottlePaths.map(async bottle => {
+            let name = path.basename(bottle);
+            let newName = path.resolve(tempPackages, name);
+            await fs.rename(bottle, newName);
+            return newName;
+        }));
 
         console.log("Bottles to install: ");
         console.log(bottlePaths);
