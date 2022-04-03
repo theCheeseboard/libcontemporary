@@ -66,7 +66,7 @@ module.exports = async function(options) {
             });
 
             let armBrewOutput = "";
-            await exec.exec(armBrew, ["fetch", "--force", "--deps", "--bottle-tag=arm64_big_sur", pk], {
+            await exec.exec(armBrew, ["fetch", "--deps", "--force-bottle", "--bottle-tag=arm64_big_sur", pk], {
                 listeners: {
                     stdout: data => armBrewOutput += data.toString()
                 },
@@ -81,6 +81,10 @@ module.exports = async function(options) {
 
             await x86install;
         }
+
+        bottlePaths = bottlePaths.filter((path, index) => {
+            return bottlePaths.indexOf(path) === index;
+        })
 
         console.log("Bottles to install: ");
         console.log(bottlePaths);
