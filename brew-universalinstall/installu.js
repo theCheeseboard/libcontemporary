@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const io = require('@actions/io');
 const fs = require('fs/promises');
 const https = require('follow-redirects').https;
 const tar = require('tar-fs');
@@ -34,6 +35,8 @@ module.exports = async function(options) {
         await exec.exec("sudo", ["chmod", "777", "/opt"], {
             silent: true
         });
+
+        await io.mkdirP('/opt/homebrew');
     }
 
     //Download brew tarball
