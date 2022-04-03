@@ -89,6 +89,12 @@ module.exports = async function(options) {
         console.log("Bottles to install: ");
         console.log(bottlePaths);
 
+
+        let brewDownloads = dir.files("/Users/runner/Library/Caches/Homebrew/downloads", {
+            sync: true
+        });
+        console.log(brewDownloads);
+
         await exec.exec(armBrew, ["install", ...bottlePaths], {
             silent: false
         });
