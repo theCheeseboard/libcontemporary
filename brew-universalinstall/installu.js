@@ -29,7 +29,12 @@ async function lipoIfRequired(arm, system) {
 
 module.exports = async function(options) {
     let homebrewPath = "./homebrew";
-    if (process.env["CI"]) homebrewPath = "/opt/homebrew";
+    if (process.env["CI"]) {
+        homebrewPath = "/opt/homebrew";
+        await exec.exec("sudo", ["chmod", "777", "/opt"], {
+            silent: true
+        });
+    }
 
     //Download brew tarball
     console.log("Downloading Homebrew...");
