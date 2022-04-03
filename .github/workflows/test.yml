@@ -20,4 +20,4 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./brew-universalinstall
       with:
-        packages: ['qt']
+        packages: 'qt'

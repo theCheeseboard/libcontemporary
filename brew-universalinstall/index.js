@@ -3,7 +3,7 @@ const installu = require('./installu');
 
 async function run() {
   try { 
-    const packages = core.getInput("packages");
+    const packages = core.getInput("packages").split(":");
     installu({
       packages: packages
     });
