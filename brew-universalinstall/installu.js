@@ -2,13 +2,13 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const io = require('@actions/io');
 const fs = require('fs/promises');
+const legacyFs = require('fs');
 const https = require('follow-redirects').https;
 const tar = require('tar-fs');
 const stream = require('stream');
 const gunzip = require('gunzip-maybe');
 const path = require('path');
 const clone = require('git-clone/promise');
-const dir = require('node-dir');
 
 function getHttps(url) {
     return new Promise((res, rej) => {
@@ -22,42 +22,64 @@ function getHttps(url) {
 }
 
 async function lipoIfRequired(arm, system) {
+    console.log(`Merging: arm: ${arm}, sys: ${system}`);
     await exec.exec("lipo", ["-create", arm, system, "-output", system], {
         ignoreReturnCode: true,
         silent: true
     });
 }
 
+async function walkDirectory(dir) {
+    let dirContents = await fs.readdir(dir, {
+        withFileTypes: true
+    });
+
+    dirContents = await Promise.all(dirContents.map(async dirent => {
+        let name = path.resolve(dir, dirent.name);
+        if (dirent.isSymbolicLink()) {
+            return [];
+        } else if (dirent.isDirectory()) {
+            return await walkDirectory(name);
+        } else {
+            return name;
+        }
+    }));
+    return dirContents.flat();
+}
+
 module.exports = async function(options) {
     let homebrewPath = "./homebrew";
-    if (process.env["CI"]) {
-        homebrewPath = "/opt/homebrew";
-        await exec.exec("sudo", ["chmod", "777", "/opt"], {
-            silent: true
-        });
-
-        await io.mkdirP('/opt/homebrew');
-    }
+//     if (process.env["CI"]) {
+//         homebrewPath = "/opt/homebrew";
+//         await exec.exec("sudo", ["chmod", "777", "/opt"], {
+//             silent: true
+//         });
+//
+//         await io.mkdirP('/opt/homebrew');
+//     }
 
     //Download brew tarball
-    console.log("Downloading Homebrew...");
-    let brewTarData = stream.Readable.from(await getHttps("https://github.com/Homebrew/brew/tarball/master"));
-    let pipeStream = brewTarData.pipe(gunzip()).pipe(tar.extract(homebrewPath));
-    await new Promise(res => pipeStream.on("finish", res));
+//     console.log("Downloading Homebrew...");
+//     let brewTarData = stream.Readable.from(await getHttps("https://github.com/Homebrew/brew/tarball/master"));
+//     let pipeStream = brewTarData.pipe(gunzip()).pipe(tar.extract(homebrewPath));
+//     await new Promise(res => pipeStream.on("finish", res));
+
+    let armCellar = path.resolve(homebrewPath);
+    await io.mkdirP(armCellar);
 
     try {
-        let armBrewRoot = path.resolve(homebrewPath, (await fs.readdir(path.resolve(homebrewPath)))[0]);
-        console.log(`ARM Homebrew installed at ${armBrewRoot}`);
+//         let armBrewRoot = path.resolve(homebrewPath, (await fs.readdir(path.resolve(homebrewPath)))[0]);
+//         console.log(`ARM Homebrew installed at ${armBrewRoot}`);
 
-        console.log("Shallow tapping homebrew/core");
-        await clone("https://github.com/Homebrew/homebrew-core.git", path.resolve(armBrewRoot, "Library/Taps/homebrew/homebrew-core"), {
-            shallow: true
-        });
+//         console.log("Shallow tapping homebrew/core");
+//         await clone("https://github.com/Homebrew/homebrew-core.git", path.resolve(armBrewRoot, "Library/Taps/homebrew/homebrew-core"), {
+//             shallow: true
+//         });
 
-        let armBrew = path.resolve(armBrewRoot, "bin/brew");
+//         let armBrew = path.resolve(armBrewRoot, "bin/brew");
 
         let bottlePaths = [];
-
+        let bottleNames = [];
         for (let pk of options.packages) {
             console.log(`Processing package ${pk}`);
             //Install x86_64 version
@@ -67,19 +89,27 @@ module.exports = async function(options) {
             await x86install;
 
             let armBrewOutput = "";
-            await exec.exec(armBrew, ["fetch", "--deps", "--bottle-tag=arm64_big_sur", pk], {
+            await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_big_sur", pk], {
                 listeners: {
-                    stdout: data => armBrewOutput += data.toString()
+                     stdout: data => {
+                         armBrewOutput += data.toString();
+
+                         let currentOutput = armBrewOutput.split("\n");
+                         while (currentOutput.length > 1) {
+                             let line = currentOutput.shift();
+                             if (line.startsWith("Fetching: ")) {
+                                 bottleNames = line.substr(10).split(", ");
+                             } else if (line.startsWith("Downloaded to:") || (line.startsWith("Already downloaded:") && line.endsWith(".bottle.tar.gz"))) {
+                                 let downloadedFile = line.split(" ")[2];
+                                 console.log(`Downloaded ${bottleNames[bottlePaths.length]}`);
+                                 bottlePaths.push(downloadedFile);
+                             }
+                         }
+                         armBrewOutput = currentOutput[0];
+                     }
                 },
-                silent: false
+                silent: true
             });
-
-            for (let line of armBrewOutput.split("\n")) {
-                if (line.startsWith("Downloaded to:")) {
-                    bottlePaths.push(line.split(" ")[2]);
-                }
-            }
-
         }
 
         bottlePaths = bottlePaths.filter((path, index) => {
@@ -89,32 +119,28 @@ module.exports = async function(options) {
         console.log("Bottles to install: ");
         console.log(bottlePaths);
 
+        await Promise.all(bottlePaths.map(async bottlePath => {
+            //Untar all bottles to the cellar
+            let extractStream = legacyFs.createReadStream(bottlePath).pipe(gunzip()).pipe(tar.extract(armCellar));
+            await new Promise(res => extractStream.on("finish", res));
+        }));
 
-        let brewDownloads = dir.files("/Users/runner/Library/Caches/Homebrew/downloads", {
-            sync: true
-        });
-        console.log(brewDownloads);
-
-        await exec.exec(armBrew, ["install", ...bottlePaths], {
-            silent: false
-        });
+//         await exec.exec(armBrew, ["install", ...bottlePaths], {
+//             silent: false
+//         });
 
         console.log("Merging libraries");
 
         //Walk the directory and lipo files together
-        let brewFiles = dir.files(path.resolve(armBrewRoot, "Cellar"), {
-            sync: true
-        });
+        let brewFiles = await walkDirectory(armCellar);
 
-        let promises = [];
         for (let library of brewFiles) {
-            let rel = path.relative(armBrewRoot, library);
-            promises.push(lipoIfRequired(library, path.resolve("/usr/local", rel)));
+            let rel = path.relative(armCellar, library);
+            await lipoIfRequired(library, path.resolve("/usr/local/Cellar", rel));
         }
-        await Promise.all(promises);
     } finally {
         console.log(`Removing ARM homebrew`);
-        await fs.rm(path.resolve(homebrewPath), {
+        await fs.rm(path.resolve(armCellar), {
             recursive: true
         });
     }

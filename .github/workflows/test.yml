@@ -1,4 +1,4 @@
-name: "units-test"
+name: "GitHub Actions Workflow Unit Tests"
 on:
   push:
     branches:
