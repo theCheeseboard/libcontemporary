@@ -51,35 +51,11 @@ async function walkDirectory(dir) {
 
 module.exports = async function(options) {
     let homebrewPath = "./homebrew";
-//     if (process.env["CI"]) {
-//         homebrewPath = "/opt/homebrew";
-//         await exec.exec("sudo", ["chmod", "777", "/opt"], {
-//             silent: true
-//         });
-//
-//         await io.mkdirP('/opt/homebrew');
-//     }
-
-    //Download brew tarball
-//     console.log("Downloading Homebrew...");
-//     let brewTarData = stream.Readable.from(await getHttps("https://github.com/Homebrew/brew/tarball/master"));
-//     let pipeStream = brewTarData.pipe(gunzip()).pipe(tar.extract(homebrewPath));
-//     await new Promise(res => pipeStream.on("finish", res));
 
     let armCellar = path.resolve(homebrewPath);
     await io.mkdirP(armCellar);
 
     try {
-//         let armBrewRoot = path.resolve(homebrewPath, (await fs.readdir(path.resolve(homebrewPath)))[0]);
-//         console.log(`ARM Homebrew installed at ${armBrewRoot}`);
-
-//         console.log("Shallow tapping homebrew/core");
-//         await clone("https://github.com/Homebrew/homebrew-core.git", path.resolve(armBrewRoot, "Library/Taps/homebrew/homebrew-core"), {
-//             shallow: true
-//         });
-
-//         let armBrew = path.resolve(armBrewRoot, "bin/brew");
-
         let bottlePaths = [];
         let bottleNames = [];
         for (let pk of options.packages) {
@@ -121,14 +97,11 @@ module.exports = async function(options) {
         await Promise.all(bottlePaths.map(async bottlePath => {
             //Untar all bottles to the cellar
             let extractStream = legacyFs.createReadStream(bottlePath).pipe(gunzip()).pipe(tar.extract(armCellar, {
+                //TODO: also detect headers and resources with a framework and filter those out
                 ignore: name => !mergeExts.includes(path.extname(name))
             }));
             await new Promise(res => extractStream.on("finish", res));
         }));
-
-//         await exec.exec(armBrew, ["install", ...bottlePaths], {
-//             silent: false
-//         });
 
         console.log("Merging libraries");
 

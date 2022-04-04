@@ -7,7 +7,10 @@ on:
 jobs:
   # unit tests
   units:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        platform: [macos-latest]
+    runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v2
     - run: npm ci
@@ -15,9 +18,15 @@ jobs:
 
   # test action works running from the graph  
   test:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        platform: [macos-latest]
+    runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v2
     - uses: ./brew-universalinstall
       with:
-        packages: 'qt'
+        packages: 'qt:cmake:ninja'
+    - uses: ./build-project
+      with:
+        project: 'vicr123/libcontemporary'

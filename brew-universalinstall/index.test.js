@@ -1,13 +1,12 @@
 const process = require('process');
-const cp = require('child_process');
-const path = require('path');
 const exec = require('@actions/exec');
 const installu = require('./installu');
 const fs = require('fs');
 
-test('links library', async () => {
-    jest.setTimeout(600000);
+jest.setTimeout(600000);
+const testIfRequired = process.platform === "darwin" ? test : test.skip;
 
+testIfRequired('links library', async () => {
     await installu({
         packages: ["libtag", "libmusicbrainz"]
     });
@@ -25,7 +24,8 @@ test('links library', async () => {
         await exec.exec("lipo", ["-archs", item], {
             listeners: {
                 stdout: data => lipoOutput += data.toString()
-            }
+            },
+            silent: true
         });
 
         let archs = lipoOutput.trim().split(" ");

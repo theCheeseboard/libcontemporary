@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "./build.sh",
     "test": "./test.sh"
   },
   "repository": {
@@ -16,5 +17,19 @@
   "bugs": {
     "url": "https://github.com/vicr123/libcontemporary/issues"
   },
-  "homepage": "https://github.com/vicr123/libcontemporary#readme"
+  "homepage": "https://github.com/vicr123/libcontemporary#readme",
+  "dependencies": {
+    "@actions/core": "^1.1.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/io": "^1.1.2",
+    "follow-redirects": "^1.14.9",
+    "git-clone": "^0.2.0",
+    "gunzip-maybe": "^1.4.2",
+    "tar-fs": "^2.1.1"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0"
+  }
 }

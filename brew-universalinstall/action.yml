@@ -1,7 +1,7 @@
 name: 'Homebrew Universal Install'
 description: 'Install a Homebrew package as a universal binary'
 inputs:
-  packages:  # id of input
+  packages:
     description: 'Packages to install'
     required: true
 runs:

@@ -2,11 +2,5 @@
 
 set -e
 
-for dir in *; do
-    if [ -f $dir/package.json ]; then
-        pushd $dir
-        npm ci
-        npm run test
-        popd
-    fi
-done
+export PATH=$(pwd)/node_modules/.bin:$PATH
+jest --runInBand
