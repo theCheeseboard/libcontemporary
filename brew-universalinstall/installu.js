@@ -25,6 +25,8 @@ function getHttps(url) {
 
 async function lipoIfRequired(arm, system) {
     console.log(`Merging: arm: ${arm}, sys: ${system}`);
+
+    //TODO: Maybe also use install_name_tool to adjust from /opt/homebrew to /usr/local
     await exec.exec("lipo", ["-create", arm, system, "-output", system], {
         ignoreReturnCode: true,
         silent: true

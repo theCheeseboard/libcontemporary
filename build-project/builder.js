@@ -15,7 +15,7 @@ module.exports = async options => {
 
     try {
         let buildDir = path.resolve(gitRoot, "build");
-        io.mkdirP(buildDir);
+        await io.mkdirP(buildDir);
 
         let cmakeArgs = [
             path.resolve(gitRoot, "CMakeLists.txt"),
