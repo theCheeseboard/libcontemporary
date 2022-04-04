@@ -2253,22 +2253,17 @@ module.exports = async options => {
         await io.mkdirP(buildDir);
 
         let cmakeArgs = [
-            path.resolve(gitRoot, "CMakeLists.txt"),
+            "-S", path.resolve(gitRoot),
+            "-B", buildDir,
             "-GNinja"
         ];
         if (process.platform === "darwin") {
             cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
         }
 
-        await exec.exec(`cmake`, cmakeArgs, {
-            cwd: buildDir
-        });
-        await exec.exec(`ninja`, [], {
-            cwd: buildDir
-        });
-        await exec.exec(`ninja install`, [], {
-            cwd: buildDir
-        });
+        await exec.exec(`cmake`, cmakeArgs);
+        await exec.exec(`cmake`, ["--build", buildDir]);
+        await exec.exec(`cmake`, ["--install", buildDir]);
     } finally {
         await fs.rm(gitRoot, {
             recursive: true
