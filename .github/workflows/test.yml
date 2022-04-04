@@ -30,3 +30,4 @@ jobs:
     - uses: ./build-project
       with:
         project: 'vicr123/libcontemporary'
+        commitish: 'blueprint'
