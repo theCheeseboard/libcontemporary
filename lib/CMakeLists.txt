@@ -182,20 +182,26 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(CMAKECONFIG_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/libcontemporary.framework/Resources/CMake)
+    get_target_property(LIBCONTEMPORARY_VERSION libcontemporary VERSION)
+
+    set(CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/libcontemporary.framework/Resources/CMake)
     set(HEADER_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
     set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/libcontemporary.framework/Headers)
-    set(LIBRARY_INSTALL_DIR ../)
 ELSE()
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/libcontemporary)
     set(HEADER_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}/libcontemporary)
     set(INCLUDE_INSTALL_DIR ${HEADER_INSTALL_DIR})
-    set(LIBRARY_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
 ENDIF()
 
+install(TARGETS libcontemporary
+        EXPORT libcontemporaryTargets
+        PUBLIC_HEADER DESTINATION ${HEADER_INSTALL_DIR}
+        INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
 configure_package_config_file(libcontemporaryConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libcontemporaryConfig.cmake
-        INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
-        PATH_VARS HEADER_INSTALL_DIR LIBRARY_INSTALL_DIR)
+        INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR})
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcontemporaryConfig.cmake
         DESTINATION ${CMAKECONFIG_INSTALL_DIR})
@@ -204,10 +210,3 @@ install(DIRECTORY cmake-scripts
 install(EXPORT libcontemporaryTargets
         FILE libcontemporaryTargets.cmake
         DESTINATION ${CMAKECONFIG_INSTALL_DIR})
-
-install(TARGETS libcontemporary
-        EXPORT libcontemporaryTargets
-        PUBLIC_HEADER DESTINATION ${HEADER_INSTALL_DIR}
-        INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
