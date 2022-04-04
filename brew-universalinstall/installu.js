@@ -103,14 +103,14 @@ module.exports = async function(options) {
                 ignore: name => {
                     let ext = path.extname(name);
                     let base = path.basename(name);
-                    if (mergeExts.includes(ext)) return true;
-                    if (["LICENSE", "COPYING", "CHANGES", "TODO", "CONTRIBUTING", "README", "AUTHORS", "NEWS", "INSTALL"].includes(base)) return false;
-                    if (name.includes("/include")) return false;
-                    if (name.includes("/Headers")) return false;
-                    if (name.includes("/gems")) return false;
-                    if (name.includes("/node_modules")) return false;
-                    if (name.includes("/bash_completion.d")) return false;
-                    return base === "";
+                    if (mergeExts.includes(ext)) return false;
+                    if (["LICENSE", "COPYING", "CHANGES", "TODO", "CONTRIBUTING", "README", "AUTHORS", "NEWS", "INSTALL"].includes(base)) return true;
+                    if (name.includes("/include")) return true;
+                    if (name.includes("/Headers")) return true;
+                    if (name.includes("/gems")) return true;
+                    if (name.includes("/node_modules")) return true;
+                    if (name.includes("/bash_completion.d")) return true;
+                    return base !== "";
                 }
         }));
             await new Promise(res => extractStream.on("finish", res));
