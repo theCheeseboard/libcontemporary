@@ -9436,6 +9436,7 @@ module.exports = async function(options) {
                     if (name.includes("/gems")) return true;
                     if (name.includes("/node_modules")) return true;
                     if (name.includes("/bash_completion.d")) return true;
+                    if (name.includes("/site-packages")) return true;
                     return ext !== "";
                 }
         }));
