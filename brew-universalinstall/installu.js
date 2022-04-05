@@ -43,7 +43,9 @@ async function lipoIfRequired(arm, system) {
     })
 
     for (let args of installNameToolArgs) {
-        await exec.exec("install_name_tool", args);
+        await exec.exec("install_name_tool", args, {
+            ignoreReturnCode: true
+        });
     }
 }
 
