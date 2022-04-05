@@ -31,6 +31,11 @@ add_executable(cntp-trdesktop ${SOURCES} ${HEADERS})
 set_target_properties(cntp-trdesktop PROPERTIES
         MACOSX_BUNDLE FALSE)
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set_target_properties(cntp-trdesktop PROPERTIES
+            INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR})
+ENDIF()
+
 target_link_libraries(cntp-trdesktop Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia libcontemporary)
 
 install(TARGETS cntp-trdesktop
