@@ -42,6 +42,8 @@ module.exports = async options => {
             await exec.exec("install_name_tool", ["-add_rpath", "/usr/local/lib", "/usr/local/bin/cntp-macdeploy"]);
             await exec.exec("cntp-macdeploy", [target]);
 
+            console.log("Creating disk image...");
+
             let output = `${process.env["HOME"]}/${executableName}.dmg`;
             await createDmg({
                 target: output,
