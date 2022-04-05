@@ -17,7 +17,7 @@ function createDmg(properties) {
 }
 
 module.exports = async options => {
-    let config = ProjectConfig.getProjectConfig(".");
+    let config = await ProjectConfig.getProjectConfig(".");
     let outputDir = path.resolve(".", "build", options.subdir);
 
     let foundFiles = (await fs.readdir(outputDir)).filter(filename => {
@@ -28,7 +28,7 @@ module.exports = async options => {
                 return filename.endsWith(".exe")
             //Linux?
         }
-    });
+    }).map(filename => path.resolve(outputDir, filename));
 
     if (foundFiles.length !== 1) throw new Error(`Expected one app, found ${foundFiles.length}`);
 

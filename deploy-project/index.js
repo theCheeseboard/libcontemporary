@@ -5,7 +5,7 @@ async function run() {
     try {
         const subdir = core.getInput("subdir");
         let options = {
-            target: subdir
+            subdir: subdir
         };
 
         await deploy(options);
