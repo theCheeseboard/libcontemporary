@@ -11,11 +11,40 @@ const mergeExts = [".dylib", ".a"];
 async function lipoIfRequired(arm, system) {
     console.log(`Merging: arm: ${arm}, sys: ${system}`);
 
-    //TODO: Maybe also use install_name_tool to adjust from /opt/homebrew to /usr/local
     await exec.exec("lipo", ["-create", arm, system, "-output", system], {
         ignoreReturnCode: true,
         silent: true
     });
+
+    let installNameToolArgs = [];
+    let otoolOutput = "";
+    await exec.exec("otool", ["-L", arm], {
+        silent: true,
+        listeners: {
+            stdout: data => {
+                otoolOutput += data.toString();
+
+                let currentOutput = otoolOutput.split("\n");
+                while (currentOutput.length > 1) {
+                    let line = currentOutput.shift().trim();
+                    if (line.includes("@@HOMEBREW_PREFIX@@")) {
+                        let lib = line.substring(0, line.indexOf(" (compatibility"));
+                        installNameToolArgs.push([
+                            "-change",
+                            lib,
+                            lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
+                            system
+                        ]);
+                    }
+                }
+                otoolOutput = currentOutput[0];
+            }
+        }
+    })
+
+    for (let args of installNameToolArgs) {
+        await exec.exec("install_name_tool", args);
+    }
 }
 
 async function walkDirectory(dir) {
