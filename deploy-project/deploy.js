@@ -4,11 +4,11 @@ const io = require("@actions/io");
 const process = require("process");
 const exec = require("@actions/exec");
 const fs = require("fs/promises")
-const appdmg = require("appdmg");
 const ProjectConfig = require("../project-config");
 
 function createDmg(properties) {
     return new Promise((res, rej) => {
+        const appdmg = require("appdmg");
         let dmg = appdmg(properties);
 
         dmg.on('finish', res);
