@@ -2,10 +2,11 @@ name: 'Build Contemporary'
 description: 'Build and install a libcontemporary project'
 inputs:
   project:
-    description: 'Project slug to build'
+    description: 'Project slug to build or "." to build current project'
     required: true
   commitish:
     description: 'Tag/branch/etc. to build'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'

@@ -1,27 +1,12 @@
-const core = require('@actions/core');
 const exec = require('@actions/exec');
 const io = require('@actions/io');
 const fs = require('fs/promises');
 const legacyFs = require('fs');
-const https = require('follow-redirects').https;
 const tar = require('tar-fs');
-const stream = require('stream');
 const gunzip = require('gunzip-maybe');
 const path = require('path');
-const clone = require('git-clone/promise');
 
 const mergeExts = [".dylib", ".a"];
-
-function getHttps(url) {
-    return new Promise((res, rej) => {
-        let httpsObject = https.get(url, response => {
-            let data = Buffer.alloc(0);
-            response.on('data', d => data = Buffer.concat([data, d]));
-            response.on('close', () => res(data));
-        });
-        httpsObject.on('error', e => rej(e));
-    });
-}
 
 async function lipoIfRequired(arm, system) {
     console.log(`Merging: arm: ${arm}, sys: ${system}`);

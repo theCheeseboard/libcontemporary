@@ -7,11 +7,16 @@ const process = require('process');
 const clone = require('git-clone/promise');
 
 module.exports = async options => {
-    let gitRoot = path.resolve(".", path.basename(options.project));
+    let gitRoot;
+    if (options.project === ".") {
+        gitRoot = path.resolve(".");
+    } else {
+        gitRoot = path.resolve(".", path.basename(options.project));
 
-    let gitOptions = {};
-    if (options.commitish) gitOptions.checkout = options.commitish;
-    await clone(`https://github.com/${options.project}.git`, gitRoot, gitOptions);
+        let gitOptions = {};
+        if (options.commitish) gitOptions.checkout = options.commitish;
+        await clone(`https://github.com/${options.project}.git`, gitRoot, gitOptions);
+    }
 
     try {
         let buildDir = path.resolve(gitRoot, "build");
@@ -31,8 +36,10 @@ module.exports = async options => {
         await exec.exec(`cmake`, ["--build", buildDir]);
         await exec.exec(`cmake`, ["--install", buildDir]);
     } finally {
-        await fs.rm(gitRoot, {
-            recursive: true
-        });
+        if (options.project !== ".") {
+            await fs.rm(gitRoot, {
+                recursive: true
+            });
+        }
     }
 }
