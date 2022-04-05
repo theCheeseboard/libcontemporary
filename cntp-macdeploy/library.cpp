@@ -86,6 +86,11 @@ void Library::lipo(QMap<QString, QString> toMerge, QString output) {
             libFile = libFileInfo.absoluteFilePath();
         }
 
+        if (!QFile::exists(libFile)) {
+            QTextStream(stderr) << libFile << " does not exist. The application bundle may not be complete.\n";
+            continue;
+        }
+
         QTemporaryFile temporary;
         temporary.open();
         QString tempFile = temporary.fileName();
