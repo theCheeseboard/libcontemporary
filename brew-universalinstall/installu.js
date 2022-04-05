@@ -11,12 +11,8 @@ const mergeExts = [".dylib", ".a"];
 async function lipoIfRequired(arm, system) {
     console.log(`Merging: arm: ${arm}, sys: ${system}`);
 
-    await exec.exec("lipo", ["-create", arm, system, "-output", system], {
-        ignoreReturnCode: true,
-        silent: true
-    });
-
     let installNameToolArgs = [];
+    let success = true;
     let otoolOutput = "";
     await exec.exec("otool", ["-L", arm], {
         silent: true,
@@ -33,8 +29,10 @@ async function lipoIfRequired(arm, system) {
                             "-change",
                             lib,
                             lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
-                            system
+                            arm
                         ]);
+                    } else if (line.includes("not an object file")) {
+                        success = false;
                     }
                 }
                 otoolOutput = currentOutput[0];
@@ -42,9 +40,16 @@ async function lipoIfRequired(arm, system) {
         }
     })
 
-    for (let args of installNameToolArgs) {
-        await exec.exec("install_name_tool", args, {
-            ignoreReturnCode: true
+    if (success) {
+        for (let args of installNameToolArgs) {
+            await exec.exec("install_name_tool", args, {
+                ignoreReturnCode: true
+            });
+        }
+
+        await exec.exec("lipo", ["-create", arm, system, "-output", system], {
+            ignoreReturnCode: true,
+            silent: true
         });
     }
 }
