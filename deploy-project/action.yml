@@ -1,0 +1,13 @@
+name: 'Deploy Project'
+description: 'Deploy the current project'
+inputs:
+  subdir:
+    description: 'Subdirectory for app to be deployed'
+    default: "."
+    required: false
+outputs:
+  package:
+    description: 'Output package for upload as artifact'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

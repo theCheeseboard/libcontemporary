@@ -12,7 +12,7 @@ async function run() {
 
     if (commitish) options.commitish = commitish;
 
-    builder(options);
+    await builder(options);
   } catch (error) {
     core.setFailed(error.message);
   }

@@ -4,7 +4,7 @@ const installu = require('./installu');
 async function run() {
   try { 
     const packages = core.getInput("packages").split(":");
-    installu({
+    await installu({
       packages: packages
     });
   } catch (error) {

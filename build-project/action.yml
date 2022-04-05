@@ -1,4 +1,4 @@
-name: 'Build Contemporary'
+name: 'Build Project'
 description: 'Build and install a libcontemporary project'
 inputs:
   project:

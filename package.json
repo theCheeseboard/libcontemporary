@@ -22,13 +22,14 @@
     "@actions/core": "^1.1.1",
     "@actions/exec": "^1.1.1",
     "@actions/io": "^1.1.2",
+    "@vercel/ncc": "^0.33.3",
+    "appdmg": "^0.6.4",
     "follow-redirects": "^1.14.9",
     "git-clone": "^0.2.0",
     "gunzip-maybe": "^1.4.2",
     "tar-fs": "^2.1.1"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.22.3",
     "eslint": "^7.4.0",
     "jest": "^26.1.0"
   }
