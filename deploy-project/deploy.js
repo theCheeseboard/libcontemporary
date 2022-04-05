@@ -38,6 +38,8 @@ module.exports = async options => {
     switch (process.platform) {
         case "darwin": {
             //Run cntp-macdeploy and then create the disk image
+            //HACK: Add /usr/local/lib to the RPATH
+            await exec.exec("install_name_tool", ["-add_rpath", "/usr/local/lib", "/usr/local/bin/cntp-macdeploy"]);
             await exec.exec("cntp-macdeploy", [target]);
 
             let output = `${process.env["HOME"]}/${executableName}.dmg`;
