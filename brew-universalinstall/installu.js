@@ -11,7 +11,7 @@ const mergeExts = [".dylib", ".a"];
 function libname(lib) {
     let name = path.basename(lib);
     if (name.includes(".")) name = name.substring(0, name.indexOf("."));
-    return namel
+    return name;
 }
 
 async function lipoIfRequired(arm, system) {
