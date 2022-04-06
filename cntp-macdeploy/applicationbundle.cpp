@@ -136,6 +136,8 @@ bool ApplicationBundle::doMakeSelfContained() {
                     //Resolve the loader path from the current library name
                     Library* originatingLibrary = d->libraries.value(Library::extractIdentifierFromPath(iterator.filePath()));
                     library = library.replace("@loader_path", QFileInfo(originatingLibrary->libraryPath(arch)).dir().absolutePath());
+                    QTextStream(stdout) << "Resolving @loader_path for " << originatingLibrary << "\n";
+                    QTextStream(stdout) << "Resolved to " << library << "\n";
                 }
 
                 QString identifier = Library::extractIdentifierFromPath(library);
