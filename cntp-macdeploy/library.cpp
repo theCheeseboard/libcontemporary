@@ -132,6 +132,7 @@ void Library::lipo(QMap<QString, QString> toMerge, QString output) {
 }
 
 QString Library::libraryPath(QString arch) {
+    if (arch.isEmpty()) arch = "x86_64";
     return d->paths.value(arch);
 }
 
