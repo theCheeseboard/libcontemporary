@@ -30,11 +30,9 @@ async function lipoIfRequired(arm, system) {
                     if (line.includes("@@HOMEBREW_PREFIX@@")) {
                         let lib = line.substring(0, line.indexOf(" (compatibility"));
                         if (libname(lib) === libname(arm)) {
-                            let dir = path.dirname(lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"));
-
                             installNameToolArgs.push([
                                 "-id",
-                                path.resolve(dir, path.basename(arm)),
+                                lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
                                 arm
                             ]);
                         } else {
