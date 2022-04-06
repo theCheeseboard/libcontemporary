@@ -9,11 +9,8 @@ const path = require('path');
 const mergeExts = [".dylib", ".a"];
 
 async function lipoIfRequired(arm, system) {
-    console.log(`Merging: arm: ${arm}, sys: ${system}`);
-
     let installNameToolArgs = [];
     let success = true;
-    let isFirst = true;
     let otoolOutput = "";
     await exec.exec("otool", ["-L", arm], {
         silent: true,
@@ -26,13 +23,12 @@ async function lipoIfRequired(arm, system) {
                     let line = currentOutput.shift().trim();
                     if (line.includes("@@HOMEBREW_PREFIX@@")) {
                         let lib = line.substring(0, line.indexOf(" (compatibility"));
-                        if (isFirst) {
+                        if (path.basename(lib) === path.basename(arm)) {
                             installNameToolArgs.push([
                                 "-id",
                                 lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
                                 arm
                             ]);
-                            isFirst = false;
                         } else {
                             installNameToolArgs.push([
                                 "-change",
@@ -51,6 +47,8 @@ async function lipoIfRequired(arm, system) {
     })
 
     if (success) {
+        console.log(`Merging: arm: ${arm}, sys: ${system}`);
+
         for (let args of installNameToolArgs) {
             await exec.exec("install_name_tool", args, {
                 ignoreReturnCode: true
