@@ -8,6 +8,12 @@ const path = require('path');
 
 const mergeExts = [".dylib", ".a"];
 
+function libname(lib) {
+    let name = path.basename(lib);
+    if (name.includes(".")) name = name.substring(0, name.indexOf("."));
+    return namel
+}
+
 async function lipoIfRequired(arm, system) {
     let installNameToolArgs = [];
     let success = true;
@@ -23,7 +29,7 @@ async function lipoIfRequired(arm, system) {
                     let line = currentOutput.shift().trim();
                     if (line.includes("@@HOMEBREW_PREFIX@@")) {
                         let lib = line.substring(0, line.indexOf(" (compatibility"));
-                        if (path.basename(lib) === path.basename(arm)) {
+                        if (libname(lib) === libname(arm)) {
                             installNameToolArgs.push([
                                 "-id",
                                 lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
