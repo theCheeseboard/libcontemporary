@@ -40,6 +40,11 @@ QString Library::extractIdentifierFromPath(QString path) {
 }
 
 void Library::addLibraryPath(QString arch, QString path) {
+    if (arch == "") {
+        addLibraryPath("arm64", path);
+        addLibraryPath("x86_64", path);
+        return;
+    }
     if (d->paths.contains(arch)) return;
 
     if (path.contains(".framework/")) {
