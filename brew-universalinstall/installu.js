@@ -13,6 +13,7 @@ async function lipoIfRequired(arm, system) {
 
     let installNameToolArgs = [];
     let success = true;
+    let isFirst = true;
     let otoolOutput = "";
     await exec.exec("otool", ["-L", arm], {
         silent: true,
@@ -25,12 +26,21 @@ async function lipoIfRequired(arm, system) {
                     let line = currentOutput.shift().trim();
                     if (line.includes("@@HOMEBREW_PREFIX@@")) {
                         let lib = line.substring(0, line.indexOf(" (compatibility"));
-                        installNameToolArgs.push([
-                            "-change",
-                            lib,
-                            lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
-                            arm
-                        ]);
+                        if (isFirst) {
+                            installNameToolArgs.push([
+                                "-id",
+                                lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
+                                arm
+                            ]);
+                            isFirst = false;
+                        } else {
+                            installNameToolArgs.push([
+                                "-change",
+                                lib,
+                                lib.replace("@@HOMEBREW_PREFIX@@", "/usr/local"),
+                                arm
+                            ]);
+                        }
                     } else if (line.includes("not an object file")) {
                         success = false;
                     }
