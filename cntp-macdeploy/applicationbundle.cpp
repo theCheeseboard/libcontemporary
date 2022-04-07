@@ -227,11 +227,9 @@ void ApplicationBundle::copySystemPlugins(QStringList plugins) {
     QString pluginDir = qmakeProc.readAll().trimmed();
 
     QStringList systemDirArchs = Library::archs(QDir(pluginDir).absoluteFilePath("platforms/libqcocoa.dylib"));
-    if (systemDirArchs.contains("arm64")) {
-        systemPluginDirs.insert("arm64", pluginDir);
-    } else {
-        systemPluginDirs.insert(systemDirArchs.first(), pluginDir);
-    }
+    if (systemDirArchs.contains("arm64")) systemPluginDirs.insert("arm64", pluginDir);
+    if (systemDirArchs.contains("x86_64")) systemPluginDirs.insert("x86_64", pluginDir);
+    if (systemDirArchs.isEmpty()) systemPluginDirs.insert(systemDirArchs.first(), pluginDir);
 
     //Special handling for Homebrew on Rosetta
     if (pluginDir.startsWith("/opt/homebrew") && systemDirArchs.contains("arm64")) {
