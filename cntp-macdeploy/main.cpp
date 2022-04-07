@@ -59,6 +59,7 @@ int main(int argc, char** argv) {
         }
     }
 
+    output << "Copying support libraries...\n";
     QStringList supportLibraryPaths;
     QDir rootProjectDir = bundle.bundleDir().absoluteFilePath("../../");
     for (QString markerFile : Common::findInPaths(".cntp-is-support-library", {rootProjectDir.absolutePath()})) {
@@ -70,18 +71,6 @@ int main(int argc, char** argv) {
             supportLibraryPaths.append(frameworkFileInfo.dir().absolutePath());
         }
     }
-
-//    output << "Running macdeployqt...\n";
-//    output.flush();
-//    QProcess macdeployProc;
-//    QStringList macdeployArgs;
-//    macdeployArgs.append(dir.absolutePath());
-//    for (QString path : supportLibraryPaths) {
-//        macdeployArgs.append(QStringLiteral("-libpath=%1").arg(path));
-//    }
-//    macdeployProc.setProcessChannelMode(QProcess::ForwardedChannels);
-//    macdeployProc.start("macdeployqt", macdeployArgs);
-//    macdeployProc.waitForFinished(-1);
 
     output << "Making bundle self contained...\n";
     output.flush();

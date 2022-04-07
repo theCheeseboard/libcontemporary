@@ -51,7 +51,7 @@ QDir ApplicationBundle::bundleDir(ApplicationBundle::BundleDirectories directory
             dir = d->dir.absoluteFilePath("Contents/Frameworks");
             break;
         case QtStylePlugins:
-            dir = d->dir.absoluteFilePath("Contents/PlugIns/styles");
+            dir = d->dir.absoluteFilePath("Contents/Resources/QtPlugins/styles");
             break;
         case ExecutableBinary:
             dir = d->dir.absoluteFilePath("Contents/MacOS");
