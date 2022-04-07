@@ -43,6 +43,22 @@ async function lipoIfRequired(arm, system) {
                                 arm
                             ]);
                         }
+                    } else if (line.includes("@@HOMEBREW_CELLAR@@")) {
+                        let lib = line.substring(0, line.indexOf(" (compatibility"));
+                        if (libname(lib) === libname(arm)) {
+                            installNameToolArgs.push([
+                                "-id",
+                                lib.replace("@@HOMEBREW_CELLAR@@", "/usr/local/Cellar"),
+                                arm
+                            ]);
+                        } else {
+                            installNameToolArgs.push([
+                                "-change",
+                                lib,
+                                lib.replace("@@HOMEBREW_CELLAR@@", "/usr/local/Cellar"),
+                                arm
+                            ]);
+                        }
                     } else if (line.includes("not an object file")) {
                         success = false;
                     }
