@@ -13,6 +13,7 @@
 #include <QEventLoop>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QSettings>
 #include "library.h"
 
 struct ApplicationBundlePrivate {
@@ -41,7 +42,7 @@ QDir ApplicationBundle::bundleDir(ApplicationBundle::BundleDirectories directory
             dir = d->dir.absoluteFilePath("Contents/Resources");
             break;
         case QtPlugins:
-            dir = d->dir.absoluteFilePath("Contents/PlugIns");
+            dir = d->dir.absoluteFilePath("Contents/Resources/QtPlugins");
             break;
         case ApplicationPlugins:
             dir = d->dir.absoluteFilePath("Contents/Resources/Plugins");
@@ -92,6 +93,7 @@ void ApplicationBundle::makeSelfContained() {
     });
 
     installContemporaryIcons();
+    installQtConfigurationFile();
 
     //Continuously attempt to make the bundle self-contained until no more changes have been made
     while (!doMakeSelfContained());
@@ -276,4 +278,13 @@ void ApplicationBundle::installContemporaryIcons() {
     zipProc.waitForFinished();
 
     this->bundleDir(IconResources).rename(QStringLiteral("contemporary-icons-%1").arg(version.remove('v')), "contemporary-icons");
+}
+
+void ApplicationBundle::installQtConfigurationFile() {
+    QSettings qtConfigurationFile(this->bundleDir(Resources).absoluteFilePath("qt.conf"), QSettings::IniFormat);
+    qtConfigurationFile.setValue("Paths/Plugins", "Resources/QtPlugins");
+    qtConfigurationFile.setValue("Paths/Imports", "Resources/qml");
+    qtConfigurationFile.setValue("Qml2Imports/Imports", "Resources/qml");
+
+    qtConfigurationFile.sync();
 }

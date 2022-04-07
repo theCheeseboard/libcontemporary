@@ -47,6 +47,7 @@ private:
     QStringList rpaths(QString filePath);
     void copySystemPlugins(QStringList plugins);
     void installContemporaryIcons();
+    void installQtConfigurationFile();
     void installNameTool(QString oldPath, QString newPath, QString filePath);
 };
 
