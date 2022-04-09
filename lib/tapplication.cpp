@@ -388,7 +388,7 @@ LONG WINAPI tApplicationPrivate::crashTrapHandler(PEXCEPTION_POINTERS exceptionI
 
     QProcess* process = new QProcess();
     process->setEnvironment(QProcess::systemEnvironment());
-    process->start(QDir(tApplication::applicationDirPath()).absoluteFilePath("bonkers.exe") + " " + args.join(" "), QProcess::Unbuffered | QProcess::WriteOnly);
+    process->start(QDir(tApplication::applicationDirPath()).absoluteFilePath("bonkers.exe"), args, QProcess::Unbuffered | QProcess::WriteOnly);
 
     //Write out crash information
     QStringList bt;

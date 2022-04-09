@@ -29,6 +29,7 @@
 
 #ifdef QT_WIDGETS_LIB
     #include <QPainter>
+    #include <QWidget>
 #endif
 
 #ifdef Q_OS_MAC

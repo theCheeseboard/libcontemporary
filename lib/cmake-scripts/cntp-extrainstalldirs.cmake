@@ -1,7 +1,15 @@
 function(cntp_define_build_dirs)
-    find_path(QMAKE_PATH qmake6)
+
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+        find_path(QMAKE_PATH qmake6.exe
+                HINTS ${CMAKE_PREFIX_PATH}
+                PATH_SUFFIXES bin)
+    ELSE()
+        find_path(QMAKE_PATH qmake6)
+    ENDIF()
+
     IF(${QMAKE_PATH} STREQUAL "QMAKE_PATH-NOTFOUND")
-        message(FATAL_ERROR "Couldn't call qmake. Ensure Qt 6 is installed correctly and qtpaths is located in your PATH.")
+        message(FATAL_ERROR "Couldn't call qmake. Ensure Qt 6 is installed correctly and qmake6 is located in your PATH.")
     ENDIF()
 
     set(QMAKE_PATH ${QMAKE_PATH}/qmake6)
@@ -24,6 +32,10 @@ function(cntp_define_build_dirs)
     string(STRIP "${PLUGIN_INSTALLATION_DIR}" PLUGIN_INSTALLATION_DIR)
     file(TO_CMAKE_PATH "${PLUGIN_INSTALLATION_DIR}" PLUGIN_INSTALLATION_DIR)
 
-    file(RELATIVE_PATH PLUGIN_INSTALLATION_DIR "${QT_PREFIX_DIR}" "${PLUGIN_INSTALLATION_DIR}")
-    set(CNTP_INSTALL_PLUGINS ${CMAKE_INSTALL_PREFIX}/${PLUGIN_INSTALLATION_DIR} PARENT_SCOPE)
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+        set(CNTP_INSTALL_PLUGINS ${PLUGIN_INSTALLATION_DIR} PARENT_SCOPE)
+    ELSE()
+        file(RELATIVE_PATH PLUGIN_INSTALLATION_DIR "${QT_PREFIX_DIR}" "${PLUGIN_INSTALLATION_DIR}")
+        set(CNTP_INSTALL_PLUGINS ${CMAKE_INSTALL_PREFIX}/${PLUGIN_INSTALLATION_DIR} PARENT_SCOPE)
+    ENDIF()
 endfunction()
