@@ -11,14 +11,18 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
+file(GLOB EXTRA_FUNCTIONS "${CMAKE_CURRENT_LIST_DIR}/cmake-scripts/*.cmake")
+foreach(f ${EXTRA_FUNCTIONS})
+    include(${f})
+endforeach()
+
 find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Svg Network Multimedia PrintSupport)
-find_package(PkgConfig REQUIRED)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
 
-pkg_check_modules(Unwind IMPORTED_TARGET libunwind)
-pkg_check_modules(X11 IMPORTED_TARGET x11)
-pkg_check_modules(GsettingsQt IMPORTED_TARGET gsettings-qt)
+cntp_find_pkgconfig(Unwind libunwind)
+cntp_find_pkgconfig(X11 x11)
+cntp_find_pkgconfig(GsettingsQt gsettings-qt)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
