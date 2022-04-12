@@ -1,5 +1,6 @@
 const path = require("path");
 const core = require("@actions/core");
+const io = require("@actions/io");
 const process = require("process");
 const exec = require("@actions/exec");
 const fs = require("fs/promises")
@@ -40,7 +41,6 @@ module.exports = async options => {
             //HACK: Add /usr/local/lib to the RPATH
             await exec.exec("install_name_tool", ["-add_rpath", "/usr/local/lib", "/usr/local/bin/cntp-macdeploy"]);
             await exec.exec("cntp-macdeploy", [target]);
-            await exec.exec("codesign", ["--force", "--deep", "-s", "-", target]);
 
             console.log("Creating disk image...");
 
