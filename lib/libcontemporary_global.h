@@ -69,20 +69,46 @@ class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
         Q_OBJECT
 
     public:
+        /// Get the application instance of the class so you can connect to signals
+        /// \return The application instance of libContemporaryCommon
         static libContemporaryCommon * instance();
 
 #ifdef QT_WIDGETS_LIB
+        /// Get the screen scaling ratio
+        /// \deprecated Use the overload that takes a QPaintDevice instead
+        /// \return The screen scaling ratio
         [[deprecated("getDPIScaling is deprecated, use the overload that takes a QPaintDevice (or SC_DPI_W)")]]
         static double getDPIScaling();
+
+        /// Get the screen scaling ratio
+        /// \param paintDevice The device to get the scaling ratio for
+        /// \return The screen scaling ratio
+        /// \note Use the SC_DPI_W macro for a more convenient way to scale a number
         static double getDPIScaling(const QPaintDevice* paintDevice);
+
+        /// Tint an icon
+        /// \param image The icon to tint
+        /// \param tint The colour to tint the icon with
         static void tintImage(QImage& image, QColor tint);
 #endif
+
+        /// Search for an executable in the system PATH environment variable
+        /// \param executable Executable to search for
+        /// \return List of executables that were found. If no executables were found, the list will be empty.
         static QStringList searchInPath(QString executable);
 
+        /// Get the preferred colour for drawing lines
+        /// \param textColor The contextual text colour
+        /// \return The colour to draw lines in
         static QColor lineColor(QColor textColor);
 
     public Q_SLOTS:
+        /// Get whether Power Stretch (or system equivalent) is enabled.
+        /// \return True if Power Stretch is enabled
         bool powerStretchEnabled();
+
+        /// Get whether animations should be used
+        /// \return True if animations should be used
         bool allowSystemAnimations();
 
     private Q_SLOTS:
@@ -90,6 +116,8 @@ class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
         void dbusPropertyChangedPrivate(QString interfaceName, QMap<QString, QVariant> changedProperties, QStringList invalidatedProperties);
 
     Q_SIGNALS:
+        /// Emitted when Power Stretch (or system equivalent) is changed by the system
+        /// \param isOn True if Power Stretch is enabled
         void powerStretchChanged(bool isOn);
 
     private:

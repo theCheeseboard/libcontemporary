@@ -10,5 +10,17 @@ function(cntp_translate target)
         QM_FILES_OUTPUT_VARIABLE QM_FILES
     )
 
-   install(FILES ${QM_FILES} DESTINATION "translations")
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        # Do something
+    ENDIF()
+
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+        install(FILES ${QM_FILES}
+                DESTINATION "translations")
+    ENDIF()
+
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        install(FILES ${QM_FILES}
+                DESTINATION ${SHARE_DIR}/translations)
+    ENDIF()
 endfunction()
