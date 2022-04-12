@@ -134,7 +134,8 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(SOURCES ${SOURCES}
             tcsdtools/csdbuttonbox-objc.mm
             tcsdtools/tcsdtools-objc.mm
-            tnotification/tnotification-mac.mm)
+            tnotification/tnotification-mac.mm
+            private/nsalertmac.mm)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")

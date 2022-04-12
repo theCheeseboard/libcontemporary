@@ -24,6 +24,7 @@
 #include "libcontemporary_global.h"
 #include <QMessageBox>
 
+struct tMessageBoxPrivate;
 class LIBCONTEMPORARY_EXPORT tMessageBox : public QMessageBox
 {
     Q_OBJECT
@@ -36,8 +37,13 @@ class LIBCONTEMPORARY_EXPORT tMessageBox : public QMessageBox
     public slots:
         void setWindowTitle(QString windowTitle);
         void setText(QString text);
+        void setParent(QWidget* widget);
 
         int exec();
+        void open();
+
+    private:
+        tMessageBoxPrivate* d;
 };
 
 #endif // TMESSAGEBOX_H
