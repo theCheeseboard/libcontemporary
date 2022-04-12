@@ -100,10 +100,15 @@ void ApplicationBundle::makeSelfContained() {
 }
 
 void ApplicationBundle::sign(QString identity) {
-    QProcess signProc;
-    signProc.setProcessChannelMode(QProcess::ForwardedChannels);
-    signProc.start("codesign", {"--force", "--deep", "-s", identity, d->dir.absolutePath()});
-    signProc.waitForFinished(-1);
+    QDirIterator iterator(d->dir.absolutePath(), QDir::Files, QDirIterator::Subdirectories);
+    while (iterator.hasNext()) {
+        iterator.next();
+
+        QProcess signProc;
+        signProc.setProcessChannelMode(QProcess::ForwardedChannels);
+        signProc.start("codesign", {"--force", "-s", identity, iterator.filePath()});
+        signProc.waitForFinished(-1);
+    }
 }
 
 bool ApplicationBundle::doMakeSelfContained() {
