@@ -72,6 +72,7 @@ void tWindowTabberButton::init() {
         d->actionsWidget->setFixedWidth(value.toInt());
     });
     d->actionsWidget->setFixedWidth(0);
+
 }
 
 tWindowTabberButton::~tWindowTabberButton() {

@@ -7,6 +7,7 @@
 #include <QBoxLayout>
 #include <QTimer>
 #include <QScrollBar>
+#include <QToolButton>
 #include "tlogger.h"
 #include "twindowtabberbutton.h"
 #include "tapplication.h"
@@ -15,6 +16,8 @@ struct tWindowTabberPrivate {
     QList<tWindowTabberButton*> buttons;
     QBoxLayout* tabLayout;
     QScrollArea* scrollArea;
+
+    QToolButton* newTabButton;
 
     bool scrollLeft = false;
     QTimer* scrollTimer;
@@ -35,7 +38,7 @@ tWindowTabber::tWindowTabber(QWidget *parent) {
 
     d->scrollArea = new QScrollArea(this);
     d->scrollArea->setFrameShape(QScrollArea::NoFrame);
-    d->scrollArea->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+    d->scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
     d->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->scrollArea->setWidget(new QWidget());
@@ -44,10 +47,19 @@ tWindowTabber::tWindowTabber(QWidget *parent) {
     d->scrollArea->widget()->setLayout(spacerLayout);
     tApplication::instance()->installEventFilter(this);
 
+    d->newTabButton = new QToolButton(this);
+    d->newTabButton->setIcon(QIcon::fromTheme("list-add"));
+    d->newTabButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    d->newTabButton->setText(tr("New Tab"));
+    d->newTabButton->setToolTip(tr("New Tab"));
+    d->newTabButton->setVisible(false);
+    connect(d->newTabButton, &QToolButton::clicked, this, &tWindowTabber::newTabRequested);
+
     QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d->scrollArea);
+    layout->addWidget(d->newTabButton);
     this->setLayout(layout);
 
     libContemporaryCommon::fixateHeight(d->scrollArea, [=]{return fontMetrics().height() + SC_DPI_W(12, this);});
@@ -74,6 +86,7 @@ void tWindowTabber::setCurrent(tWindowTabberButton *button) {
         tabberButton->setSelected(button == tabberButton);
     }
 }
+
 bool tWindowTabber::eventFilter(QObject *watched, QEvent *event) {
     if (QWidget* widget = qobject_cast<QWidget*>(watched)) {
         if ((d->scrollArea->isAncestorOf(widget) || widget == d->scrollArea) && (event->type() == QEvent::MouseMove || event->type() == QEvent::Leave)) {
@@ -100,4 +113,14 @@ bool tWindowTabber::eventFilter(QObject *watched, QEvent *event) {
         }
     }
     return QObject::eventFilter(watched, event);
+}
+
+void tWindowTabber::setShowNewTabButton(bool showNewTabButton) {
+    d->newTabButton->setVisible(showNewTabButton);
+}
+
+void tWindowTabber::removeButton(tWindowTabberButton *button) {
+    d->tabLayout->removeWidget(button);
+    d->buttons.removeOne(button);
+    button->deleteLater();
 }
