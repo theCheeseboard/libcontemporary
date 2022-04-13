@@ -6,11 +6,12 @@
 #define LIBCONTEMPORARY_TWINDOWTABBERBUTTON_H
 
 #include <QWidget>
+#include "libcontemporary_global.h"
 
 struct tWindowTabberButtonPrivate;
 class QStackedWidget;
 class tWindowTabber;
-class tWindowTabberButton : public QWidget {
+class LIBCONTEMPORARY_EXPORT tWindowTabberButton : public QWidget {
     Q_OBJECT
 public:
     tWindowTabberButton(tWindowTabber *parent = nullptr);
