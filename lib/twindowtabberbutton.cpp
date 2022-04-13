@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QToolButton>
 #include <QAction>
-#include <QStackedWidget>
+#include "tstackedwidget.h"
 #include "twindowtabber.h"
 #include "tvariantanimation.h"
 
@@ -35,7 +35,7 @@ tWindowTabberButton::tWindowTabberButton(const QIcon& icon, const QString& text)
     this->setText(text);
 }
 
-tWindowTabberButton::tWindowTabberButton(const QIcon &icon, const QString &text, QStackedWidget *toTrack, QWidget *widgetToTrack) {
+tWindowTabberButton::tWindowTabberButton(const QIcon &icon, const QString &text, tStackedWidget *toTrack, QWidget *widgetToTrack) {
     this->init();
     this->setIcon(icon);
     this->setText(text);
@@ -128,8 +128,8 @@ void tWindowTabberButton::setParent(tWindowTabber *tabber) {
     }
 }
 
-void tWindowTabberButton::syncWithStackedWidget(QStackedWidget *stackedWidget, QWidget *widget) {
-    connect(stackedWidget, &QStackedWidget::currentChanged, this, [=](int tab) {
+void tWindowTabberButton::syncWithStackedWidget(tStackedWidget *stackedWidget, QWidget *widget) {
+    connect(stackedWidget, &tStackedWidget::currentChanged, this, [=](int tab) {
         if (stackedWidget->widget(tab) == widget) this->setSelected(true);
     });
     connect(this, &tWindowTabberButton::activated, stackedWidget, [=] {

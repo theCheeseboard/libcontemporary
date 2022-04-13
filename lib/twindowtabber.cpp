@@ -26,6 +26,9 @@ struct tWindowTabberPrivate {
 tWindowTabber::tWindowTabber(QWidget *parent) {
     d = new tWindowTabberPrivate();
 
+    QPalette pal = this->palette();
+    pal.setColor(QPalette::Window, Qt::transparent);
+
     d->tabLayout = new QBoxLayout(QBoxLayout::LeftToRight);
     d->tabLayout->setSpacing(0);
     d->tabLayout->setContentsMargins(0, 0, 0, 0);
@@ -37,6 +40,7 @@ tWindowTabber::tWindowTabber(QWidget *parent) {
     spacerLayout->addStretch();
 
     d->scrollArea = new QScrollArea(this);
+    d->scrollArea->setPalette(pal);
     d->scrollArea->setFrameShape(QScrollArea::NoFrame);
     d->scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
     d->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -62,7 +66,7 @@ tWindowTabber::tWindowTabber(QWidget *parent) {
     layout->addWidget(d->newTabButton);
     this->setLayout(layout);
 
-    libContemporaryCommon::fixateHeight(d->scrollArea, [=]{return fontMetrics().height() + SC_DPI_W(12, this);});
+    libContemporaryCommon::fixateHeight(d->scrollArea, [=]{return fontMetrics().height() + SC_DPI_W(28, this);});
 
     d->scrollTimer = new QTimer(this);
     connect(d->scrollTimer, &QTimer::timeout, this, [=] {

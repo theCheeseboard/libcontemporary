@@ -9,14 +9,14 @@
 #include "libcontemporary_global.h"
 
 struct tWindowTabberButtonPrivate;
-class QStackedWidget;
+class tStackedWidget;
 class tWindowTabber;
 class LIBCONTEMPORARY_EXPORT tWindowTabberButton : public QWidget {
     Q_OBJECT
 public:
     tWindowTabberButton(tWindowTabber *parent = nullptr);
     tWindowTabberButton(const QIcon& icon, const QString& text);
-    tWindowTabberButton(const QIcon& icon, const QString& text, QStackedWidget* toTrack, QWidget* widgetToTrack);
+    tWindowTabberButton(const QIcon& icon, const QString& text, tStackedWidget *toTrack, QWidget* widgetToTrack);
     virtual ~tWindowTabberButton();
 
     void setText(const QString& text);
@@ -24,7 +24,7 @@ public:
     void setSelected(bool selected);
 
     void setParent(tWindowTabber* tabber);
-    void syncWithStackedWidget(QStackedWidget* stackedWidget, QWidget* widget);
+    void syncWithStackedWidget(tStackedWidget *stackedWidget, QWidget* widget);
 
     signals:
         void activated();
