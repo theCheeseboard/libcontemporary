@@ -30,6 +30,7 @@
 #ifdef QT_WIDGETS_LIB
     #include <QPainter>
     #include <QWidget>
+    #include <QWindow>
 #endif
 
 #ifdef Q_OS_MAC
@@ -197,4 +198,12 @@ double libContemporaryCommon::getDPIScaling(const QPaintDevice *paintDevice) {
     if (!paintDevice) return QApplication::primaryScreen()->devicePixelRatio();
     return paintDevice->devicePixelRatio();
 }
+
+void libContemporaryCommon::fixateHeight(QWidget *widget, std::function<int()> calculateHeight) {
+    connect(widget->window()->windowHandle(), &QWindow::screenChanged, widget, [=] {
+        widget->setFixedHeight(calculateHeight());
+    });
+    widget->setFixedHeight(calculateHeight());
+}
+
 #endif

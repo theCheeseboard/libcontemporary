@@ -33,7 +33,6 @@ set(SOURCES
         tconditionalwidget.cpp
         tcsdtools.cpp
         tdatetimepicker.cpp
-        tdocumenttabber.cpp
         terrorflash.cpp
         libcontemporary_global.cpp
         thelpmenu.cpp
@@ -63,6 +62,8 @@ set(SOURCES
         ttoast.cpp
         tvariantanimation.cpp
         tvirtualkeyboard.cpp
+        twindowtabber.cpp
+        twindowtabberbutton.cpp
         tx11info.cpp
         private/debuglogpopover.cpp
         private/debuglogwindow.cpp
@@ -77,7 +78,6 @@ set(SOURCES
         jobs/jobspopover.cpp
 
         taboutdialog.ui
-        tdocumenttabber.ui
         tinputdialog.ui
         tshortcuthud.ui
         tstatusframe.ui
@@ -94,7 +94,6 @@ set(HEADERS
         "tconditionalwidget.h"
         "tcsdtools.h"
         "tdatetimepicker.h"
-        "tdocumenttabber.h"
         "terrorflash.h"
         "libcontemporary_global.h"
         "thelpmenu.h"
@@ -123,6 +122,8 @@ set(HEADERS
         "ttoast.h"
         "tvariantanimation.h"
         "tvirtualkeyboard.h"
+        "twindowtabber.h"
+        "twindowtabberbutton.h"
         "tx11info.h"
         "tstandardlabel.h"
         "tsubtitlelabel.h")
