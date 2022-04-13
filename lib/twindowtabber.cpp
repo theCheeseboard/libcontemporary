@@ -66,7 +66,13 @@ tWindowTabber::tWindowTabber(QWidget *parent) {
     layout->addWidget(d->newTabButton);
     this->setLayout(layout);
 
-    libContemporaryCommon::fixateHeight(d->scrollArea, [=]{return fontMetrics().height() + SC_DPI_W(28, this);});
+    libContemporaryCommon::fixateHeight(d->scrollArea, [=]{
+#ifdef Q_OS_MAC
+        return fontMetrics().height() + SC_DPI_W(12, this);
+#else
+        return fontMetrics().height() + SC_DPI_W(28, this);
+#endif
+    });
 
     d->scrollTimer = new QTimer(this);
     connect(d->scrollTimer, &QTimer::timeout, this, [=] {
