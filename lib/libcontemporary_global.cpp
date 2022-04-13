@@ -195,6 +195,9 @@ void libContemporaryCommon::tintImage(QImage& image, QColor tint) {
     }
 }
 double libContemporaryCommon::getDPIScaling(const QPaintDevice *paintDevice) {
+#ifdef Q_OS_MAC
+    return 1;
+#endif
     if (!paintDevice) return QApplication::primaryScreen()->devicePixelRatio();
     return paintDevice->devicePixelRatio();
 }
