@@ -11,16 +11,27 @@ function(cntp_translate target)
     )
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        # Do something
+        cntp_get_target_share_subdir_name(SHARE_DIR_CHILD ${target})
+        foreach(file IN LISTS QM_FILES)
+            get_target_property(INSTALL_TARGET ${target} CNTP_PARENT_TARGET)
+            if(INSTALL_TARGET STREQUAL "INSTALL_TARGET-NOTFOUND")
+                set(INSTALL_TARGET ${target})
+            endif()
+
+            target_sources(${INSTALL_TARGET} PRIVATE ${file})
+            set_source_files_properties(${file} PROPERTIES
+                    MACOSX_PACKAGE_LOCATION Resources/translations/${SHARE_DIR_CHILD})
+        endforeach()
     ENDIF()
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+        cntp_get_target_share_subdir_name(SHARE_DIR_CHILD ${target})
         install(FILES ${QM_FILES}
-                DESTINATION "translations")
+                DESTINATION translations/${SHARE_DIR_CHILD})
     ENDIF()
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         install(FILES ${QM_FILES}
-                DESTINATION ${SHARE_DIR}/translations)
+                DESTINATION ${CMAKE_INSTALL_DATADIR}/${SHARE_DIR}/translations)
     ENDIF()
 endfunction()

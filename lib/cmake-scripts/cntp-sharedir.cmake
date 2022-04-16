@@ -4,10 +4,21 @@ function(cntp_get_target_share_dir_name destination target)
     get_target_property(SHARE_DIR ${target} CNTP_DATA_SUBDIR)
 
     if(SHARE_DIR STREQUAL "SHARE_DIR-NOTFOUND")
-        message(FATAL_ERROR "Please define CNTP_DATA_SUBDIR on the target ${target}")
+        message(FATAL_ERROR "Please invoke cntp_init on the target ${target}")
     endif()
 
     set(${destination} ${SHARE_DIR} PARENT_SCOPE)
+endfunction()
+
+function(cntp_get_target_share_subdir_name destination target)
+    get_target_property(SHARE_DIR ${target} CNTP_DATA_SUBDIR_WITHOUT_PARENT)
+
+    if(SHARE_DIR STREQUAL "SHARE_DIR-NOTFOUND")
+        set(${destination} "." PARENT_SCOPE)
+    else()
+        set(${destination} ${SHARE_DIR} PARENT_SCOPE)
+    endif()
+
 endfunction()
 
 function(cntp_get_target_share_dir destination target)
