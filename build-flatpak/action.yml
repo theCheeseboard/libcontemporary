@@ -22,6 +22,7 @@ runs:
     - uses: actions/checkout@v2
     # Docker is required by the docker/setup-qemu-action which enables emulation
     - name: Install Docker dependency
+      shell: bash
       run: |
         dnf -y install docker
     - name: Set up QEMU
