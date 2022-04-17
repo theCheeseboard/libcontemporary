@@ -9,3 +9,7 @@ add_subdirectory(cntp-trdesktop)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     add_subdirectory(cntp-macdeploy)
 ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    add_subdirectory(cntp-windeploy)
+ENDIF()
