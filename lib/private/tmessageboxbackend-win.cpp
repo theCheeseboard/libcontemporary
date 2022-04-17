@@ -34,7 +34,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
     const QString& informativeText, 
     const QString& detailedText,
     const QString& checkboxText,
-    const QHash<tMessageBoxButton *, tMessageBoxButtonInfo *> &buttonMap) {
+    const tOrderedMap<tMessageBoxButton *, tMessageBoxButtonInfo *> &buttonMap) {
     d->td.cbSize = sizeof(TASKDIALOGCONFIG);
     d->td.hInstance = nullptr;
     d->td.dwFlags = TDF_EXPAND_FOOTER_AREA;
@@ -103,7 +103,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
         return id;
     };
 
-    for (auto it = buttonMap.constKeyValueBegin(); it != buttonMap.constKeyValueEnd(); it++) {
+    for (auto it = buttonMap.begin(); it != buttonMap.end(); it++) {
         auto [button, info] = *it;
         int buttonId;
         if (info->label.isEmpty()) {

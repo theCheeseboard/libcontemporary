@@ -19,7 +19,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
                               const QString &informativeText,
                               const QString &detailedText,
                               const QString &checkboxText,
-                              const QHash<tMessageBoxButton *, tMessageBoxButtonInfo *> &buttonMap) {
+                              const tOrderedMap<tMessageBoxButton *, tMessageBoxButtonInfo *> &buttonMap) {
     if (icon.isNull()) {
         d->box.setIcon(style);
     } else {
@@ -36,7 +36,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
         checkbox->setText(checkboxText);
     }
 
-    for (auto it = buttonMap.constKeyValueBegin(); it != buttonMap.constKeyValueEnd(); it++) {
+    for (auto it = buttonMap.begin(); it != buttonMap.end(); it++) {
         auto tButton = it->first;
         auto info = it->second;
         QPushButton *pushButton;

@@ -7,7 +7,7 @@
 
 #include "tmessagebox.h"
 #include <QMessageBox>
-#include <QMap>
+#include "torderedmap.h"
 #include <QPushButton>
 
 class tMessageBoxButtonInfo : public QObject {
@@ -37,7 +37,7 @@ public:
         const QString &informativeText,
         const QString &detailedText,
         const QString &checkboxText,
-        const QHash<tMessageBoxButton*, tMessageBoxButtonInfo*>& buttonMap);
+        const tOrderedMap<tMessageBoxButton*, tMessageBoxButtonInfo*>& buttonMap);
 
     void open(QWidget* parent);
 

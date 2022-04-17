@@ -23,12 +23,12 @@
 
 #include "tapplication.h"
 #include <QPainter>
-#include <QHash>
+#include "torderedmap.h"
 
 struct tMessageBoxPrivate {
     QMessageBox::Icon iconStyle = QMessageBox::NoIcon;
     QIcon icon;
-    QHash<tMessageBoxButton *, tMessageBoxButtonInfo *> buttonMap;
+    tOrderedMap<tMessageBoxButton *, tMessageBoxButtonInfo *> buttonMap;
     tMessageBoxButton *defaultButton{};
 
     QString titleText;
@@ -58,7 +58,7 @@ tMessageBoxButton *tMessageBox::addStandardButton(QMessageBox::StandardButton bu
     auto button = new tMessageBoxButton(this);
     auto info = new tMessageBoxButtonInfo(button);
     info->buttonType = buttonType;
-    d->buttonMap.insert(button, info);
+    d->buttonMap.append(button, info);
     return button;
 }
 
@@ -67,7 +67,7 @@ tMessageBoxButton *tMessageBox::addButton(const QString &label, QMessageBox::But
     auto info = new tMessageBoxButtonInfo(button);
     info->label = label;
     info->buttonStyle = buttonStyle;
-    d->buttonMap.insert(button, info);
+    d->buttonMap.append(button, info);
     return button;
 }
 
@@ -111,7 +111,7 @@ void tMessageBox::initBackend(tMessageBoxBackend& backend) {
         auto button = new tMessageBoxButton(this);
         auto info = new tMessageBoxButtonInfo(button);
         info->buttonType = QMessageBox::StandardButton::Ok;
-        d->buttonMap.insert(button, info);
+        d->buttonMap.append(button, info);
     }
 
     backend.init(d->iconStyle,

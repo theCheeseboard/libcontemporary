@@ -107,6 +107,7 @@ set(HEADERS
         "tlogger.h"
         "tmessagebox.h"
         "tnotification.h"
+        "torderedmap.h"
         "tpaintcalculator.h"
         "tpopover.h"
         "tpromise.h"
@@ -139,7 +140,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             tcsdtools/tcsdtools-objc.mm
             tnotification/tnotification-mac.mm
             private/nsalertmac.mm
-            private/tmessageboxbackend-qt.cpp)
+            private/tmessageboxbackend-mac.mm)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
