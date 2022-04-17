@@ -14,7 +14,6 @@ module.exports = async options => {
         gitRoot = path.resolve(".", path.basename(options.project));
 
         let gitOptions = {
-            shallow: true,
             args: ["--recursive"]
         };
         if (options.commitish) gitOptions.checkout = options.commitish;
