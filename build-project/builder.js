@@ -13,11 +13,15 @@ module.exports = async options => {
     } else {
         gitRoot = path.resolve(".", path.basename(options.project));
 
-        let gitOptions = {
-            args: ["--recursive"]
-        };
+        let gitOptions = {};
         if (options.commitish) gitOptions.checkout = options.commitish;
         await clone(`https://github.com/${options.project}.git`, gitRoot, gitOptions);
+        await exec.exec("git", ["submodule", "init"], {
+            cwd: gitRoot
+        });
+        await exec.exec("git", ["submodule", "update"], {
+            cwd: gitRoot
+        });
     }
 
     try {
