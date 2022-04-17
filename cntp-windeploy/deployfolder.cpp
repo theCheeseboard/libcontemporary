@@ -5,9 +5,17 @@
 #include <QSettings>
 #include <QProcess>
 #include <QDirIterator>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QEventLoop>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QBuffer>
 #include "deployfolder.h"
 #include "systemlibrarydatabase.h"
 #include "common.h"
+#include <quazip/quazip/quazip.h>
+#include <quazip/quazip/quazipfile.h>
 
 struct DeployFolderPrivate {
     QDir dir;
@@ -96,33 +104,89 @@ void DeployFolder::copySystemPlugins(QStringList plugins) {
 }
 
 void DeployFolder::installContemporaryIcons() {
-//    QTemporaryDir tempDir;
-//    QNetworkAccessManager mgr;
-//    QEventLoop loop;
-//
-//    QNetworkReply* ghReply = mgr.get(QNetworkRequest(QUrl("https://api.github.com/repos/vicr123/contemporary-icons/releases/latest")));
-//    connect(ghReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-//    loop.exec();
-//
-//    QJsonObject githubRoot = QJsonDocument::fromJson(ghReply->readAll()).object();
-//    QString version = githubRoot.value("tag_name").toString();
-//    QString zipUrl = QStringLiteral("https://github.com/vicr123/contemporary-icons/archive/refs/tags/%1.zip").arg(version);
-//
-//    QNetworkReply* zipReply = mgr.get(QNetworkRequest(QUrl(zipUrl)));
-//    connect(zipReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-//    loop.exec();
-//
-//    QFile zipFile(tempDir.filePath("archive.zip"));
-//    zipFile.open(QFile::WriteOnly);
-//    zipFile.write(zipReply->readAll());
-//    zipFile.close();
-//
-//    QProcess zipProc;
-//    zipProc.setWorkingDirectory(this->bundleDir(IconResources).absolutePath());
-//    zipProc.start("unzip", {zipFile.fileName()});
-//    zipProc.waitForFinished();
-//
-//    this->bundleDir(IconResources).rename(QStringLiteral("contemporary-icons-%1").arg(version.remove('v')), "contemporary-icons");
+    //QTemporaryDir tempDir;
+    QNetworkAccessManager mgr;
+    QEventLoop loop;
+
+    QNetworkReply* ghReply = mgr.get(QNetworkRequest(QUrl("https://api.github.com/repos/vicr123/contemporary-icons/releases/latest")));
+    connect(ghReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    QJsonObject githubRoot = QJsonDocument::fromJson(ghReply->readAll()).object();
+    QString version = githubRoot.value("tag_name").toString();
+    QString zipUrl = QStringLiteral("https://github.com/vicr123/contemporary-icons/archive/refs/tags/%1.zip").arg(version);
+
+    QNetworkReply* zipReply = mgr.get(QNetworkRequest(QUrl(zipUrl)));
+    connect(zipReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    QByteArray zipContents = zipReply->readAll();
+    QBuffer zipBuf(&zipContents);
+
+    QuaZip qz(&zipBuf);
+    QuaZipFileInfo64 *fileInfo = new QuaZipFileInfo64();
+    qz.open(QuaZip::mdUnzip);
+
+    std::function<void(QString)> processItem = [&](QString target) {
+        qz.getCurrentFileInfo(fileInfo);
+        QuaZipFile qzFile(&qz);
+        if (fileInfo->name.endsWith("/")) {
+            QDir(target).mkpath(".");
+        } else if (fileInfo->isSymbolicLink()) {
+            qzFile.open(QFile::ReadOnly);
+            QString symlinkTarget = qzFile.readAll();
+            qzFile.close();
+
+            //QFileInfo symlinkTargetInfo(fileInfo->name);
+            //QString targetInZip = symlinkTargetInfo.dir().relativeFilePath(symlinkTarget);
+
+            QString targetInZip = QUrl(fileInfo->name).resolved(QUrl(symlinkTarget)).path();
+
+            qz.setCurrentFile(targetInZip);
+            if (!qz.hasCurrentFile()) {
+                //Bail
+                //QTextStream(stderr) << fileInfo->name << " is a symlink -> " << symlinkTarget << " but the symlink target was not found.\n";
+                return;
+            }
+            processItem(target);
+        } else {
+            QFile outputFile(target);
+            outputFile.open(QFile::WriteOnly);
+            qzFile.open(QFile::ReadOnly);
+            outputFile.write(qzFile.readAll());
+            qzFile.close();
+            outputFile.close();
+        }
+    };
+
+    for (bool haveMore = qz.goToFirstFile(); haveMore; haveMore = qz.goToNextFile()) {
+        qz.getCurrentFileInfo(fileInfo);
+
+        QString target = fileInfo->name;
+        target.replace(QStringLiteral("contemporary-icons-%1").arg(version.remove('v')), "contemporary-icons");
+        target = this->destinationDir(DeployFolderDirectories::IconResources).absoluteFilePath(target);
+
+        QString returnFile = fileInfo->name;
+        processItem(target);
+        qz.setCurrentFile(returnFile);
+    }
+    delete fileInfo;
+    if (qz.getZipError() != UNZ_OK) {
+        QTextStream(stderr) << "Could not extract Contemporary icons.\n";
+    }
+    qz.close();
+
+    //QFile zipFile(tempDir.filePath("archive.zip"));
+    //zipFile.open(QFile::WriteOnly);
+    //zipFile.write(zipReply->readAll());
+    //zipFile.close();
+
+    //QProcess zipProc;
+    //zipProc.setWorkingDirectory(this->bundleDir(IconResources).absolutePath());
+    //zipProc.start("unzip", {zipFile.fileName()});
+    //zipProc.waitForFinished();
+
+    //this->bundleDir(IconResources).rename(QStringLiteral("contemporary-icons-%1").arg(version.remove('v')), "contemporary-icons");
 }
 
 void DeployFolder::installQtConfigurationFile() {
