@@ -13,7 +13,10 @@ module.exports = async options => {
     } else {
         gitRoot = path.resolve(".", path.basename(options.project));
 
-        let gitOptions = {};
+        let gitOptions = {
+            shallow: true,
+            args: ["--recursive"]
+        };
         if (options.commitish) gitOptions.checkout = options.commitish;
         await clone(`https://github.com/${options.project}.git`, gitRoot, gitOptions);
     }
