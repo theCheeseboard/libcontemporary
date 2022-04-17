@@ -24,26 +24,43 @@
 #include "libcontemporary_global.h"
 #include <QMessageBox>
 
-struct tMessageBoxPrivate;
-class LIBCONTEMPORARY_EXPORT tMessageBox : public QMessageBox
-{
+class tMessageBox;
+class tMessageBoxBackend;
+
+class LIBCONTEMPORARY_EXPORT tMessageBoxButton final : public QObject {
     Q_OBJECT
-    public:
-        explicit tMessageBox(QWidget *parent = nullptr);
-        ~tMessageBox();
+public:
+    explicit tMessageBoxButton(QObject *parent) : QObject(parent) { }
+signals:
+    void buttonPressed(bool checkboxChecked);
+};
 
-    signals:
+struct tMessageBoxPrivate;
+class LIBCONTEMPORARY_EXPORT tMessageBox final : public QObject {
+    Q_OBJECT
+public:
+    explicit tMessageBox(QWidget *parent = nullptr);
+    ~tMessageBox();
 
-    public slots:
-        void setWindowTitle(QString windowTitle);
-        void setText(QString text);
-        void setParent(QWidget* widget);
+    void setIcon(QMessageBox::Icon style);
+    void setIcon(const QIcon &icon);
 
-        int exec();
-        void open();
+    tMessageBoxButton *addStandardButton(QMessageBox::StandardButton buttonType);
+    tMessageBoxButton *addButton(const QString &label, QMessageBox::ButtonRole buttonStyle);
 
-    private:
-        tMessageBoxPrivate* d;
+    void setDefaultButton(tMessageBoxButton *button);
+    void setTitleBarText(const QString &text);
+    void setMessageText(const QString &text);
+    void setInformativeText(const QString &text);
+    void setDetailedText(const QString &text);
+    void setCheckboxText(const QString &text);
+
+    void show(bool deleteOnClose = false);
+    void exec(bool deleteOnClose = false);
+
+private:
+    tMessageBoxPrivate *d;
+    void initBackend(tMessageBoxBackend &backend);
 };
 
 #endif // TMESSAGEBOX_H

@@ -19,107 +19,129 @@
  ******************************************************************************/
 
 #include "tmessagebox.h"
+#include "private/tmessageboxbackend.h"
 
 #include "tapplication.h"
 #include <QPainter>
-
-#ifdef Q_OS_MAC
-#include "private/nsalertmac.h"
-#endif
+#include <QHash>
 
 struct tMessageBoxPrivate {
-#ifdef Q_OS_MAC
-    NsAlertMac* nsAlert;
-#endif
+    QMessageBox::Icon iconStyle = QMessageBox::NoIcon;
+    QIcon icon;
+    QHash<tMessageBoxButton *, tMessageBoxButtonInfo *> buttonMap;
+    tMessageBoxButton *defaultButton{};
+
+    QString titleText;
+    QString messageText;
+    QString informativeText;
+    QString detailedText;
+    QString checkboxText;
 };
 
-tMessageBox::tMessageBox(QWidget *parent) : QMessageBox(parent)
-{
+tMessageBox::tMessageBox(QWidget *parent) : QObject(parent) {
     d = new tMessageBoxPrivate;
-#ifdef Q_OS_MAC
-    d->nsAlert = new NsAlertMac(this);
-    d->nsAlert->setParentWindow(parent);
-    connect(d->nsAlert, &NsAlertMac::finished, this, &tMessageBox::finished);
-    connect(d->nsAlert, &NsAlertMac::accepted, this, &tMessageBox::accepted);
-#endif
 }
 
 tMessageBox::~tMessageBox() {
     delete d;
 }
 
-void tMessageBox::setWindowTitle(QString windowTitle) {
-    QMessageBox::setWindowTitle(windowTitle);
-#ifdef Q_OS_MAC
-    d->nsAlert->setTitle(windowTitle);
-#endif
+void tMessageBox::setIcon(QMessageBox::Icon style) {
+    d->iconStyle = style;
 }
 
-void tMessageBox::setText(QString text) {
-    QMessageBox::setText(text);
-#ifdef Q_OS_MAC
-    d->nsAlert->setText(text);
-#endif
+void tMessageBox::setIcon(const QIcon &icon) {
+    d->icon = icon;
 }
 
-int tMessageBox::exec() {
-#ifdef Q_OS_MAC
-//    if (icon() == Warning && !tApplication::applicationIcon().isNull()) {
-//        //Overlay the application icon over the warning icon
-//        QIcon warningIcon = tApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning);
-//        int iconSizeInt = tApplication::style()->pixelMetric(QStyle::PM_MessageBoxIconSize);
-//
-//        QSize iconSize(iconSizeInt, iconSizeInt);
-//
-//        QPixmap newPixmap(iconSize);
-//        newPixmap.fill(Qt::transparent);
-//
-//        QPainter painter(&newPixmap);
-//        painter.drawPixmap(0, 0, warningIcon.pixmap(iconSize));
-//
-//        QSize appIconSize = iconSize / 2;
-//        painter.drawPixmap(appIconSize.width(), appIconSize.height(), tApplication::applicationIcon().pixmap(appIconSize));
-//
-//        painter.end();
-//        setIconPixmap(newPixmap);
-//    }
-
-    d->nsAlert->setIcon(this->icon());
-    for (int button = QMessageBox::FirstButton; button != QMessageBox::LastButton; button <<= 1) {
-        if (this->standardButtons() & button) d->nsAlert->addStandardButton(static_cast<QMessageBox::StandardButton>(button));
-    }
-
-    for (QAbstractButton* button : this->buttons()) {
-        QPushButton* newButton = d->nsAlert->addButton(button->text());
-        connect(newButton, &QPushButton::clicked, button, &QPushButton::click);
-    }
-
-    return d->nsAlert->exec();
-#endif
-
-    return QMessageBox::exec();
+tMessageBoxButton *tMessageBox::addStandardButton(QMessageBox::StandardButton buttonType) {
+    auto button = new tMessageBoxButton(this);
+    auto info = new tMessageBoxButtonInfo(button);
+    info->buttonType = buttonType;
+    d->buttonMap.insert(button, info);
+    return button;
 }
 
-void tMessageBox::open() {
-#ifdef Q_OS_MAC
-    d->nsAlert->setIcon(this->icon());
-    for (int button = QMessageBox::FirstButton; button != QMessageBox::LastButton; button <<= 1) {
-        if (this->standardButtons() & button) d->nsAlert->addStandardButton(static_cast<QMessageBox::StandardButton>(button));
-    }
-
-    for (QAbstractButton* button : this->buttons()) {
-        QPushButton* newButton = d->nsAlert->addButton(button->text());
-        connect(newButton, &QPushButton::clicked, button, &QPushButton::click);
-    }
-
-    return d->nsAlert->open();
-#endif
-    QMessageBox::open();
+tMessageBoxButton *tMessageBox::addButton(const QString &label, QMessageBox::ButtonRole buttonStyle) {
+    auto button = new tMessageBoxButton(this);
+    auto info = new tMessageBoxButtonInfo(button);
+    info->label = label;
+    info->buttonStyle = buttonStyle;
+    d->buttonMap.insert(button, info);
+    return button;
 }
 
-void tMessageBox::setParent(QWidget *widget) {
-#ifdef Q_OS_MAC
-    d->nsAlert->setParentWindow(widget);
-#endif
-    QMessageBox::setParent(widget);
+void tMessageBox::setDefaultButton(tMessageBoxButton *button) {
+    if (!d->buttonMap.contains(button)) {
+        // bug in caller; pretend this didn't happen
+        return;
+    }
+
+    if (d->defaultButton) {
+        d->buttonMap.value(d->defaultButton)->isDefault = false;
+    }
+
+    d->defaultButton = button;
+    d->buttonMap.value(button)->isDefault = true;
+}
+
+void tMessageBox::setTitleBarText(const QString& text) {
+    d->titleText = text;
+}
+
+void tMessageBox::setMessageText(const QString &text) {
+    d->messageText = text;
+}
+
+void tMessageBox::setInformativeText(const QString& text) {
+    d->informativeText = text;
+}
+
+void tMessageBox::setDetailedText(const QString &text) {
+    d->detailedText = text;
+}
+
+void tMessageBox::setCheckboxText(const QString &text) {
+    d->checkboxText = text;
+}
+
+
+void tMessageBox::initBackend(tMessageBoxBackend& backend) {
+    if (d->buttonMap.isEmpty()) {
+        auto button = new tMessageBoxButton(this);
+        auto info = new tMessageBoxButtonInfo(button);
+        info->buttonType = QMessageBox::StandardButton::Ok;
+        d->buttonMap.insert(button, info);
+    }
+
+    backend.init(d->iconStyle,
+                 d->icon,
+                 d->titleText,
+                 d->messageText,
+                 d->informativeText,
+                 d->detailedText,
+                 d->checkboxText,
+                 d->buttonMap);
+    backend.open(qobject_cast<QWidget *>(parent()));
+}
+
+void tMessageBox::show(bool deleteOnClose) {
+    auto backend = new tMessageBoxBackend(this);
+    initBackend(*backend);
+    if (deleteOnClose) {
+        connect(backend, &tMessageBoxBackend::canBeDestroyed, this, &tMessageBox::deleteLater);
+    }
+}
+
+void tMessageBox::exec(bool deleteOnClose) {
+    QEventLoop eventLoop;
+    tMessageBoxBackend backend(nullptr);
+    initBackend(backend);
+    connect(&backend, &tMessageBoxBackend::canBeDestroyed, &eventLoop, &QEventLoop::quit);
+
+    if (deleteOnClose) {
+        connect(&backend, &tMessageBoxBackend::canBeDestroyed, this, &tMessageBox::deleteLater);
+    }
+
+    eventLoop.exec();
 }

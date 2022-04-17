@@ -85,7 +85,9 @@ set(SOURCES
         private/debuglogwindow.ui
 
         thelibs_icons.qrc
-        thelibs_translations.qrc)
+        thelibs_translations.qrc
+
+        "private/tmessageboxbackend.h")
 
 set(HEADERS
         "taboutdialog.h"
@@ -135,19 +137,24 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             tcsdtools/csdbuttonbox-objc.mm
             tcsdtools/tcsdtools-objc.mm
             tnotification/tnotification-mac.mm
-            private/nsalertmac.mm)
+            private/nsalertmac.mm
+            private/tmessageboxbackend-qt.cpp)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(SOURCES ${SOURCES}
             tnotification/tnotification-linux.cpp
             jobs/jobdbus.cpp
-            jobs/jobdbusmanager.cpp)
+            jobs/jobdbusmanager.cpp
+            private/tmessageboxbackend-qt.cpp)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(SOURCES ${SOURCES}
-            tnotification/tnotification-win.cpp)
+            tnotification/tnotification-win.cpp
+            private/tmessageboxbackend-win.cpp
+            private/tmessageboxbackend-win.h
+    )
 ENDIF()
 
 add_library(libcontemporary SHARED ${SOURCES} ${HEADERS})
@@ -183,7 +190,7 @@ IF(CF_FRAMEWORK_FOUND)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    target_link_libraries(libcontemporary User32 Kernel32 DbgHelp windowsapp)
+    target_link_libraries(libcontemporary User32 Kernel32 Comctl32 DbgHelp windowsapp)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
