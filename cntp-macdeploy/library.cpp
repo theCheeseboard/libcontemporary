@@ -21,8 +21,6 @@ Library::Library(QString identifier, ApplicationBundle* bundle, QObject *parent)
     d = new LibraryPrivate;
     d->identifier = identifier;
     d->bundle = bundle;
-
-    QTextStream(stdout) << "Registered library " << identifier << "\n";
 }
 
 Library::~Library() {
@@ -52,7 +50,6 @@ void Library::addLibraryPath(QString arch, QString path) {
         path = path.left(path.indexOf(".framework/") + 11);
     }
     d->paths.insert(arch, path);
-    QTextStream(stdout) << "Adding library path " << d->identifier << ": " << path << " (" << arch << ")\n";
 }
 
 QString Library::outputPath() {
