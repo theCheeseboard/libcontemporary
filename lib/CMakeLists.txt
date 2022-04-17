@@ -33,7 +33,6 @@ set(SOURCES
         tconditionalwidget.cpp
         tcsdtools.cpp
         tdatetimepicker.cpp
-        tdocumenttabber.cpp
         terrorflash.cpp
         libcontemporary_global.cpp
         thelpmenu.cpp
@@ -63,6 +62,8 @@ set(SOURCES
         ttoast.cpp
         tvariantanimation.cpp
         tvirtualkeyboard.cpp
+        twindowtabber.cpp
+        twindowtabberbutton.cpp
         tx11info.cpp
         private/debuglogpopover.cpp
         private/debuglogwindow.cpp
@@ -77,7 +78,6 @@ set(SOURCES
         jobs/jobspopover.cpp
 
         taboutdialog.ui
-        tdocumenttabber.ui
         tinputdialog.ui
         tshortcuthud.ui
         tstatusframe.ui
@@ -96,7 +96,6 @@ set(HEADERS
         "tconditionalwidget.h"
         "tcsdtools.h"
         "tdatetimepicker.h"
-        "tdocumenttabber.h"
         "terrorflash.h"
         "libcontemporary_global.h"
         "thelpmenu.h"
@@ -125,6 +124,8 @@ set(HEADERS
         "ttoast.h"
         "tvariantanimation.h"
         "tvirtualkeyboard.h"
+        "twindowtabber.h"
+        "twindowtabberbutton.h"
         "tx11info.h"
         "tstandardlabel.h"
         "tsubtitlelabel.h")
@@ -157,13 +158,14 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     )
 ENDIF()
 
-add_library(libcontemporary SHARED ${SOURCES} ${HEADERS})
+add_library(libcontemporary SHARED ${SOURCES})
+cntp_target_public_headers(libcontemporary
+        DESTINATION_DIRECTORY libcontemporary
+        HEADERS ${HEADERS})
 set_target_properties(libcontemporary PROPERTIES
         FRAMEWORK TRUE
         MACOSX_FRAMEWORK_IDENTIFIER com.vicr123.libcontemporary
-        VERSION 6.0.0
-#        SOVERSION 6.0.0
-        PUBLIC_HEADER "${HEADERS}")
+        VERSION 6.0.0)
 
 target_link_libraries(libcontemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport)
 target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
@@ -197,19 +199,14 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     get_target_property(LIBCONTEMPORARY_VERSION libcontemporary VERSION)
 
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/libcontemporary.framework/Resources/CMake)
-    set(HEADER_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
-    set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/libcontemporary.framework/Headers)
 ELSE()
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/libcontemporary)
-    set(HEADER_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}/libcontemporary)
-    set(INCLUDE_INSTALL_DIR ${HEADER_INSTALL_DIR})
 ENDIF()
 
 install(TARGETS libcontemporary
         EXPORT libcontemporaryTargets
-        PUBLIC_HEADER DESTINATION ${HEADER_INSTALL_DIR}
-        INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        INCLUDES DESTINATION ${libcontemporary_INCLUDE_DIR}
         FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 configure_package_config_file(libcontemporaryConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libcontemporaryConfig.cmake

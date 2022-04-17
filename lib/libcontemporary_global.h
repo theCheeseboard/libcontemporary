@@ -90,6 +90,11 @@ class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
         /// \param image The icon to tint
         /// \param tint The colour to tint the icon with
         static void tintImage(QImage& image, QColor tint);
+
+        /// Fixate the height of a widget when the DPI changes
+        /// \param widget The widget to fixate the height of
+        /// \param calculateHeight Function to calculate the desired height
+        static void fixateHeight(QWidget* widget, std::function<int()> calculateHeight);
 #endif
 
         /// Search for an executable in the system PATH environment variable
