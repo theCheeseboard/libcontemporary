@@ -79,6 +79,15 @@ module.exports = async options => {
             core.setOutput("package", output);
             break;
         }
+        case "win32": {
+            let deployDir = path.resolve(outputDir, "deploy");
+            await io.mkdirP(deployDir);
+            await io.cp(target, deployDir + "/");
+            await exec.exec("cntp-windeploy", [deployDir])
+
+            core.setOutput("package", deployDir);
+            break;
+        }
     }
 
     // await exec.exec(`cmake`, ["--build", buildDir]);
