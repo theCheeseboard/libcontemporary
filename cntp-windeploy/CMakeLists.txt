@@ -9,8 +9,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
 
 set(BUILD_SHARED_LIBS OFF)
-set(QUAZIP_INSTALL OFF)
-add_subdirectory(quazip)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Network)
 
@@ -18,16 +16,18 @@ set(SOURCES
         main.cpp
         deployfolder.cpp
         common.cpp
-        systemlibrarydatabase.cpp)
+        systemlibrarydatabase.cpp
+        unzip.cpp)
 
 set(HEADERS
         deployfolder.h
         common.h
-        systemlibrarydatabase.h)
+        systemlibrarydatabase.h
+        unzip.h)
 
 add_executable(cntp-windeploy ${SOURCES} ${HEADERS})
 
-target_link_libraries(cntp-windeploy libcontemporary Qt6::Network QuaZip)
+target_link_libraries(cntp-windeploy libcontemporary Qt6::Network)
 
 install(TARGETS cntp-windeploy
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
