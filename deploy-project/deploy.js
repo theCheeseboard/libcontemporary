@@ -83,7 +83,7 @@ module.exports = async options => {
             let deployDir = path.resolve(outputDir, "deploy");
             await io.mkdirP(deployDir);
             await io.cp(target, deployDir + "/");
-            await exec.exec("cntp-windeploy", [deployDir])
+            await exec.exec("C:/Program Files (x86)/libcontemporary/bin/cntp-windeploy.exe", [deployDir])
 
             core.setOutput("package", deployDir);
             break;
