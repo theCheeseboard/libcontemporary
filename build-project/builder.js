@@ -71,7 +71,12 @@ module.exports = async options => {
             console.log(JSON.stringify(properties, null, 4));
 
             //Add required variables to the PATH
-            core.addPath(path.resolve(properties["CMAKE_INSTALL_PREFIX"], properties["CMAKE_INSTALL_BINDIR"]));
+            if (properties["CMAKE_INSTALL_PREFIX"] && properties["CMAKE_INSTALL_BINDIR"]) {
+                core.addPath(path.resolve(properties["CMAKE_INSTALL_PREFIX"], properties["CMAKE_INSTALL_BINDIR"]));
+            }
+            if (properties["BIN_INSTALL_DIR"]) {
+                core.addPath(properties["BIN_INSTALL_DIR"]);
+            }
         }
     } finally {
         if (options.project !== ".") {
