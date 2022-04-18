@@ -67,6 +67,9 @@ module.exports = async options => {
                 }
             });
 
+            console.log("Extracted properties from CMakeCache");
+            console.log(JSON.stringify(properties, null, 4));
+
             //Add required variables to the PATH
             core.addPath(path.resolve(properties["CMAKE_INSTALL_PREFIX"], properties["CMAKE_INSTALL_BINDIR"]));
         }
