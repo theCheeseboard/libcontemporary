@@ -37,7 +37,7 @@ module.exports = async options => {
             cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
         } else if (process.platform === 'win32') {
-
+            cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
         }
 
         if (options.extraCmakeArgs) {
@@ -50,6 +50,26 @@ module.exports = async options => {
         await exec.exec(`cmake`, cmakeArgs);
         await exec.exec(`cmake`, ["--build", buildDir]);
         await exec.exec(`cmake`, ["--install", buildDir]);
+
+        if (process.platform === 'win32') {
+            //Add the bin dir to the PATH
+            let cmakeCacheContents = path.resolve(buildDir, "CMakeCache.txt");
+            let cmakeCache = await fs.readFile(cmakeCacheContents, {
+                encoding: "utf8"
+            });
+
+            let cmakeCacheLines = cmakeCache.split(/\r?\n/);
+            let properties = {};
+            cmakeCacheLines.forEach(line => {
+                if (line.includes(":") && line.includes("=")) {
+                    let key = line.substring(0, line.indexOf(":"));
+                    properties[key] = line.substring(line.indexOf("=") + 1);
+                }
+            });
+
+            //Add required variables to the PATH
+            core.addPath(path.resolve(properties["CMAKE_INSTALL_PREFIX"], properties["CMAKE_INSTALL_BINDIR"]));
+        }
     } finally {
         if (options.project !== ".") {
             await fs.rm(gitRoot, {
