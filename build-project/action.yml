@@ -7,6 +7,10 @@ inputs:
   commitish:
     description: 'Tag/branch/etc. to build'
     required: false
+  extra-cmake-args:
+    description: 'Extra CMake args for project'
+    required: false
+    default: ''
 runs:
   using: 'node16'
   main: 'dist/index.js'
