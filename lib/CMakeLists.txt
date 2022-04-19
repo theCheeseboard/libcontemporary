@@ -22,7 +22,7 @@ find_library(COCOA_FRAMEWORK Cocoa)
 
 cntp_find_pkgconfig(Unwind libunwind)
 cntp_find_pkgconfig(X11 x11)
-cntp_find_pkgconfig(GsettingsQt gsettings-qt)
+#cntp_find_pkgconfig(GsettingsQt gsettings-qt)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
@@ -173,20 +173,20 @@ target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
 
 IF(${Unwind_FOUND})
     target_link_libraries(libcontemporary PkgConfig::Unwind)
-    add_compile_definitions(HAVE_LIBUNWIND)
+    target_compile_definitions(libcontemporary PRIVATE HAVE_LIBUNWIND)
 ENDIF()
 
 IF(${X11_FOUND})
     IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         target_link_libraries(libcontemporary PkgConfig::X11)
-        add_compile_definitions(HAVE_X11)
+        target_compile_definitions(libcontemporary PRIVATE HAVE_X11)
     ENDIF()
 ENDIF()
 
-IF(${GsettingsQt_FOUND})
-    target_link_libraries(libcontemporary PkgConfig::GsettingsQt)
-    add_compile_definitions(HAVE_GSETTINGS)
-ENDIF()
+#IF(${GsettingsQt_FOUND})
+#    target_link_libraries(libcontemporary PkgConfig::GsettingsQt)
+#    target_compile_definitions(libcontemporary PRIVATE HAVE_GSETTINGS)
+#ENDIF()
 
 IF(CF_FRAMEWORK_FOUND)
     target_link_libraries(libcontemporary CF_FRAMEWORK COCOA_FRAMEWORK)

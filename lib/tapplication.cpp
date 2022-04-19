@@ -19,21 +19,21 @@
  ******************************************************************************/
 
 #include "tapplication.h"
-#include <QFileOpenEvent>
-#include <QTranslator>
-#include <QSysInfo>
-#include <QPainter>
-#include <QSvgRenderer>
-#include <QProcess>
+#include "private/translatorproxy.h"
+#include "tlogger.h"
 #include <QDir>
-#include <QJsonObject>
+#include <QFileOpenEvent>
 #include <QJsonDocument>
-#include <QSharedMemory>
+#include <QJsonObject>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include <QPainter>
+#include <QProcess>
+#include <QSharedMemory>
+#include <QSvgRenderer>
+#include <QSysInfo>
 #include <QThread>
-#include "tlogger.h"
-#include "private/translatorproxy.h"
+#include <QTranslator>
 
 #ifdef T_OS_UNIX_NOT_MAC
     #include <signal.h>
@@ -44,10 +44,10 @@
 #endif
 
 #ifdef Q_OS_WIN
-    #include <Windows.h>
-    #include <DbgHelp.h>
-    #include <appmodel.h>
     #include "tnotification/tnotification-win.h"
+    #include <DbgHelp.h>
+    #include <Windows.h>
+    #include <appmodel.h>
 #endif
 
 #ifdef HAVE_LIBUNWIND
@@ -60,60 +60,61 @@
 #endif
 
 struct tApplicationPrivate {
-    QTranslator translator;
-    QStringList pluginTranslators;
-    QStringList libraryTranslators;
-    QList<TranslatorProxy*> applicationTranslators;
-    tApplication* applicationInstance;
+        QTranslator translator;
+        QStringList pluginTranslators;
+        QStringList libraryTranslators;
+        QList<TranslatorProxy*> applicationTranslators;
+        tApplication* applicationInstance;
 
-    bool crashHandlingEnabled = false;
-    QIcon applicationIcon;
+        bool crashHandlingEnabled = false;
+        QIcon applicationIcon;
 
-    QString shareDir;
-    QString genericName;
-    QPixmap aboutDialogSplashGraphic;
-    QList<QPair<QString, QString>> versions;
-    QStringList copyrightLines;
-    tApplication::KnownLicenses license = tApplication::Other;
-    QString copyrightHolder, copyrightYear;
-    QMap<tApplication::UrlType, QUrl> applicationUrls;
+        QString shareDir;
+        QString genericName;
+        QPixmap aboutDialogSplashGraphic;
+        QList<QPair<QString, QString>> versions;
+        QStringList copyrightLines;
+        tApplication::KnownLicenses license = tApplication::Other;
+        QString copyrightHolder, copyrightYear;
+        QMap<tApplication::UrlType, QUrl> applicationUrls;
 
-    QSharedMemory* singleInstanceMemory = nullptr;
-    QLocalServer* singleInstanceServer = nullptr;
+        QSharedMemory* singleInstanceMemory = nullptr;
+        QLocalServer* singleInstanceServer = nullptr;
 
 #ifdef T_OS_UNIX_NOT_MAC
-    static void crashTrapHandler(int sig);
+        static void crashTrapHandler(int sig);
 #elif defined(Q_OS_WIN)
-    static LONG WINAPI crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo);
-    PCONTEXT crashCtx = nullptr;
+        static LONG WINAPI crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo);
+        PCONTEXT crashCtx = nullptr;
 
-    bool hasCheckedIsRunningAsUwp = false;
-    bool isRunningAsUwp = false;
+        bool hasCheckedIsRunningAsUwp = false;
+        bool isRunningAsUwp = false;
 
-    QString winClassId;
+        QString winClassId;
 #else
-    static void crashTrapHandler();
+        static void crashTrapHandler();
 #endif
 
-    static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
-        tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
-//        tApplication::d->oldMessageHandler(messageType, context, message);
-    }
+        static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
+            tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
+            //        tApplication::d->oldMessageHandler(messageType, context, message);
+        }
 
-    QtMessageHandler oldMessageHandler;
+        QtMessageHandler oldMessageHandler;
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
 
-tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
+tApplication::tApplication(int& argc, char** argv) :
+    QApplication(argc, argv) {
     d = new tApplicationPrivate();
     d->applicationInstance = this;
 
     d->oldMessageHandler = qInstallMessageHandler(&tApplicationPrivate::qtMessageHandler);
 
-    //Mark some strings for translation
+    // Mark some strings for translation
     if (false) {
-        //macOS Application Menu
+        // macOS Application Menu
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services");
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1");
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others");
@@ -122,7 +123,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1");
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1");
 
-        //QCommandLineParser
+        // QCommandLineParser
         (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Displays version information.");
         (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Displays this help.");
         (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Unknown option '%1'.");
@@ -187,13 +188,13 @@ bool tApplication::event(QEvent* event) {
         QFileOpenEvent* openEvent = (QFileOpenEvent*) event;
         emit openFile(openEvent->file());
     } else if (event->type() == QEvent::LocaleChange) {
-        //Reinstall the-libs translator
+        // Reinstall the-libs translator
         d->translator.load(QLocale().name(), ":/the-libs/translations/");
 
-        //Reinstall the application translators
+        // Reinstall the application translators
         installTranslators();
 
-        //Tell everyone the translations have changed
+        // Tell everyone the translations have changed
         emit updateTranslators();
     } else if (event->type() == QEvent::ApplicationActivate) {
 #ifdef Q_OS_MAC
@@ -213,7 +214,7 @@ QStringList tApplication::exportBacktrace(void* data) {
     unw_getcontext(&ctx);
     unw_init_local(&cur, &ctx);
 
-    //Start unwinding
+    // Start unwinding
     while (unw_step(&cur) > 0) {
         unw_word_t offset;
         unw_word_t pc;
@@ -222,17 +223,17 @@ QStringList tApplication::exportBacktrace(void* data) {
 
         char sym[256];
         if (unw_get_proc_name(&cur, sym, sizeof(sym), &offset) == 0) {
-            //Demangle the name depending on the current compiler
+            // Demangle the name depending on the current compiler
             QString functionName;
-#if defined(__GNUG__)
-            //We're using a gcc compiler
+    #if defined(__GNUG__)
+            // We're using a gcc compiler
             int status;
             char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
             if (status == 0) functionName = QString::fromLocal8Bit(demangled);
             std::free(demangled);
-#elif defined(_MSC_VER)
-            //We're using msvc
-#endif
+    #elif defined(_MSC_VER)
+                // We're using msvc
+    #endif
 
             if (functionName == "") {
                 functionName = QString::fromLocal8Bit(sym);
@@ -270,7 +271,7 @@ QStringList tApplication::exportBacktrace(void* data) {
     frame.AddrStack.Offset = ctx.Rsp;
     frame.AddrStack.Mode = AddrModeFlat;
 
-    //Start walking
+    // Start walking
     while (StackWalk(IMAGE_FILE_MACHINE_AMD64, proc, thread, &frame, &ctx, NULL, SymFunctionTableAccess, SymGetModuleBase, NULL)) {
         char buffer[sizeof(SYMBOL_INFO) + maxNameLen * sizeof(TCHAR)];
         PSYMBOL_INFO symbol = reinterpret_cast<PSYMBOL_INFO>(buffer);
@@ -278,7 +279,7 @@ QStringList tApplication::exportBacktrace(void* data) {
         symbol->MaxNameLen = maxNameLen;
         SymFromAddr(proc, frame.AddrPC.Offset, &displacement, symbol);
 
-        //Unmangle the name
+        // Unmangle the name
         char name[maxNameLen];
         if (!UnDecorateSymbolName(symbol->Name, reinterpret_cast<PSTR>(name), maxNameLen, UNDNAME_COMPLETE)) {
             memcpy(name, symbol->Name, maxNameLen);
@@ -300,7 +301,7 @@ tApplication::~tApplication() {
     if (d->singleInstanceServer) {
         d->singleInstanceServer->close();
 
-        //There's a race condition here...
+        // There's a race condition here...
         QThread::sleep(1);
     }
 }
@@ -324,18 +325,17 @@ void writeCrashSysInfo(QStringList& bt) {
 #ifdef T_OS_UNIX_NOT_MAC
 void tApplicationPrivate::crashTrapHandler(int sig) {
     signal(sig, SIG_DFL);
-    //Attempt to start Bonkers to tell the user that the app has crashed
+    // Attempt to start Bonkers to tell the user that the app has crashed
     QStringList args = {
         "--appname", "\"" + tApplication::applicationName() + "\"",
         "--apppath", "\"" + tApplication::applicationFilePath() + "\"",
-        "--bt"
-    };
+        "--bt"};
 
     QProcess* process = new QProcess();
     process->setEnvironment(QProcess::systemEnvironment());
     process->start(QStringLiteral(SYSTEM_LIBRARY_DIRECTORY).append("/bonkers"), args, QProcess::Unbuffered | QProcess::WriteOnly);
 
-    //Write out crash information
+    // Write out crash information
     QStringList bt;
     writeCrashSysInfo(bt);
 
@@ -369,32 +369,30 @@ void tApplicationPrivate::crashTrapHandler(int sig) {
     bt.append(" ");
     bt.append("Backtrace:");
 
-    //Get a backtrace
+    // Get a backtrace
     bt.append(tApplication::exportBacktrace());
     process->write(bt.join("\n").toUtf8());
     process->closeWriteChannel();
     process->waitForBytesWritten();
 
-    //Reset the signal and re-raise it
+    // Reset the signal and re-raise it
     raise(sig);
 }
 #endif
 
 #ifdef Q_OS_WIN
 LONG WINAPI tApplicationPrivate::crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo) {
-
-    //Attempt to start Bonkers to tell the user that the app has crashed
+    // Attempt to start Bonkers to tell the user that the app has crashed
     QStringList args = {
         "--appname", "\"" + tApplication::applicationName() + "\"",
         "--apppath", "\"" + tApplication::applicationFilePath() + "\"",
-        "--bt"
-    };
+        "--bt"};
 
     QProcess* process = new QProcess();
     process->setEnvironment(QProcess::systemEnvironment());
     process->start(QDir(tApplication::applicationDirPath()).absoluteFilePath("bonkers.exe"), args, QProcess::Unbuffered | QProcess::WriteOnly);
 
-    //Write out crash information
+    // Write out crash information
     QStringList bt;
     writeCrashSysInfo(bt);
 
@@ -403,25 +401,25 @@ LONG WINAPI tApplicationPrivate::crashTrapHandler(PEXCEPTION_POINTERS exceptionI
     bt.append(" ");
     bt.append("Backtrace:");
 
-    //Get a backtrace
+    // Get a backtrace
     bt.append(tApplication::exportBacktrace(exceptionInfo->ContextRecord));
     process->write(bt.join("\n").toUtf8());
     process->closeWriteChannel();
     process->waitForBytesWritten();
 
-    //Reset the signal and re-raise it
+    // Reset the signal and re-raise it
 
     return EXCEPTION_EXECUTE_HANDLER;
 }
 #endif
 
 void tApplication::registerCrashTrap() {
-    //macOS has its own crash trap handler so we don't do anything for macOS
+    // macOS has its own crash trap handler so we don't do anything for macOS
 
 #ifdef T_OS_UNIX_NOT_MAC
-    //Check that the crash handler exists
+    // Check that the crash handler exists
     if (QFile(QStringLiteral(SYSTEM_LIBRARY_DIRECTORY).append("/bonkers")).exists()) {
-        //Enable the crash trap
+        // Enable the crash trap
         d->crashHandlingEnabled = true;
 
         signal(SIGSEGV, tApplicationPrivate::crashTrapHandler);
@@ -433,9 +431,9 @@ void tApplication::registerCrashTrap() {
 #endif
 
 #ifdef Q_OS_WIN
-    //Check that the crash handler exists
+    // Check that the crash handler exists
     if (QFile(QDir(this->applicationDirPath()).absoluteFilePath("bonkers.exe")).exists()) {
-        //Enable the crash trap
+        // Enable the crash trap
         d->crashHandlingEnabled = true;
 
         SetUnhandledExceptionFilter(tApplicationPrivate::crashTrapHandler);
@@ -477,7 +475,7 @@ void tApplication::installTranslators() {
 #if defined(Q_OS_MAC)
     QString translationsPath = macOSBundlePath() + "/Contents/Resources/translations/";
 
-    //macOS gives weird language/region combinations sometimes so extra logic might be required
+    // macOS gives weird language/region combinations sometimes so extra logic might be required
     if (!localTranslator->load(locale, "", "", translationsPath)) {
         localTranslator->load(locale.name(), translationsPath);
     }
@@ -503,7 +501,7 @@ void tApplication::installTranslators() {
 #if defined(Q_OS_MAC)
         QString translationsPath = macOSBundlePath() + "/Contents/Resources/Plugins/" + plugin + "/translations/";
 
-        //macOS gives weird language/region combinations sometimes so extra logic might be required
+        // macOS gives weird language/region combinations sometimes so extra logic might be required
         if (!translator->load(locale, "", "", translationsPath)) {
             translator->load(locale.name(), translationsPath);
         }
@@ -517,7 +515,15 @@ void tApplication::installTranslators() {
         d->applicationTranslators.append(translatorProxy);
     }
 
-    this->setLayoutDirection(locale.textDirection());
+    if (qEnvironmentVariableIsSet("THELIBS_TEXT_DIRECTION")) {
+        if (qEnvironmentVariable("THELIBS_TEXT_DIRECTION").toUpper() == "RTL") {
+            this->setLayoutDirection(Qt::RightToLeft);
+        } else {
+            this->setLayoutDirection(Qt::LeftToRight);
+        }
+    } else {
+        this->setLayoutDirection(locale.textDirection());
+    }
 }
 
 void tApplication::addPluginTranslator(QString pluginName) {
@@ -641,8 +647,7 @@ QStringList tApplication::copyrightLines() {
         case Lgpl2_1OrLater:
             copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 2.1, or later")));
             break;
-        case Other:
-            ;
+        case Other:;
     }
 
     if (!d->copyrightHolder.isEmpty()) {
@@ -660,7 +665,7 @@ void tApplication::ensureSingleInstance(QJsonObject launchData) {
     QString sharedMemoryName = QStringList({"the-libs-single-instance", organizationName(), applicationName()}).join("_");
 
 #ifdef Q_OS_UNIX
-    //Mitigate crashes by discarding the memory if it is not being used
+    // Mitigate crashes by discarding the memory if it is not being used
     d->singleInstanceMemory = new QSharedMemory(sharedMemoryName);
     d->singleInstanceMemory->attach();
     delete d->singleInstanceMemory;
@@ -671,19 +676,19 @@ void tApplication::ensureSingleInstance(QJsonObject launchData) {
     if (d->singleInstanceMemory->create(sharedMemoryName.length())) {
         QLocalServer::removeServer(sharedMemoryName);
         d->singleInstanceServer = new QLocalServer();
-        connect(d->singleInstanceServer, &QLocalServer::newConnection, [ = ] {
+        connect(d->singleInstanceServer, &QLocalServer::newConnection, [=] {
             QLocalSocket* socket = d->singleInstanceServer->nextPendingConnection();
-            connect(socket, &QLocalSocket::readyRead, [ = ] {
+            connect(socket, &QLocalSocket::readyRead, [=] {
                 QJsonObject obj = QJsonDocument::fromJson(socket->readAll()).object();
                 emit static_cast<tApplication*>(tApplication::instance())->singleInstanceMessage(obj);
             });
-            connect(socket, &QLocalSocket::disconnected, [ = ] {
+            connect(socket, &QLocalSocket::disconnected, [=] {
                 socket->deleteLater();
             });
         });
         d->singleInstanceServer->listen(sharedMemoryName);
     } else {
-        if (!d->singleInstanceMemory->attach()) std::exit(0); //Can't attach to the memory
+        if (!d->singleInstanceMemory->attach()) std::exit(0); // Can't attach to the memory
 
         QLocalSocket* socket = new QLocalSocket();
         socket->connectToServer(sharedMemoryName);

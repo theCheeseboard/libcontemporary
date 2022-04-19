@@ -26,7 +26,7 @@ function(cntp_target_public_headers target)
                     MACOSX_PACKAGE_LOCATION Headers/${relfile})
         ELSE()
             install(FILES ${file}
-                    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${DESTINATION_DIRECTORY}/${relfile})
+                    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${INSTALL_HEADERS_DESTINATION_DIRECTORY}/${relfile})
         ENDIF()
     ENDFOREACH()
 
@@ -39,6 +39,6 @@ function(cntp_target_public_headers target)
 
         set(${target}_INCLUDE_DIR ${CMAKE_INSTALL_LIBDIR}/${TARGET_OUTPUT_NAME}.framework/Headers PARENT_SCOPE)
     ELSE()
-        set(${target}_INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR}/${DESTINATION_DIRECTORY} PARENT_SCOPE)
+        set(${target}_INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR}/${INSTALL_HEADERS_DESTINATION_DIRECTORY} PARENT_SCOPE)
     ENDIF()
 endfunction()

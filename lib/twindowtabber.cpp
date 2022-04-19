@@ -3,27 +3,27 @@
 //
 
 #include "twindowtabber.h"
-#include <QScrollArea>
-#include <QBoxLayout>
-#include <QTimer>
-#include <QScrollBar>
-#include <QToolButton>
+#include "tapplication.h"
 #include "tlogger.h"
 #include "twindowtabberbutton.h"
-#include "tapplication.h"
+#include <QBoxLayout>
+#include <QScrollArea>
+#include <QScrollBar>
+#include <QTimer>
+#include <QToolButton>
 
 struct tWindowTabberPrivate {
-    QList<tWindowTabberButton*> buttons;
-    QBoxLayout* tabLayout;
-    QScrollArea* scrollArea;
+        QList<tWindowTabberButton*> buttons;
+        QBoxLayout* tabLayout;
+        QScrollArea* scrollArea;
 
-    QToolButton* newTabButton;
+        QToolButton* newTabButton;
 
-    bool scrollLeft = false;
-    QTimer* scrollTimer;
+        bool scrollLeft = false;
+        QTimer* scrollTimer;
 };
 
-tWindowTabber::tWindowTabber(QWidget *parent) {
+tWindowTabber::tWindowTabber(QWidget* parent) {
     d = new tWindowTabberPrivate();
 
     QPalette pal = this->palette();
@@ -66,17 +66,19 @@ tWindowTabber::tWindowTabber(QWidget *parent) {
     layout->addWidget(d->newTabButton);
     this->setLayout(layout);
 
-    libContemporaryCommon::fixateHeight(d->scrollArea, [=]{
-//#ifdef Q_OS_MAC
-//        return fontMetrics().height() + SC_DPI_W(12, this);
-//#else
+    libContemporaryCommon::fixateHeight(d->scrollArea, [=] {
+        //#ifdef Q_OS_MAC
+        //        return fontMetrics().height() + SC_DPI_W(12, this);
+        //#else
         return fontMetrics().height() + SC_DPI_W(28, this);
-//#endif
+        //#endif
     });
 
     d->scrollTimer = new QTimer(this);
     connect(d->scrollTimer, &QTimer::timeout, this, [=] {
-        d->scrollArea->horizontalScrollBar()->setValue(d->scrollArea->horizontalScrollBar()->value() + (d->scrollLeft ? -1 : 1));
+        bool scrollLeft = d->scrollLeft;
+        if (this->layoutDirection() == Qt::RightToLeft) scrollLeft = !scrollLeft;
+        d->scrollArea->horizontalScrollBar()->setValue(d->scrollArea->horizontalScrollBar()->value() + (scrollLeft ? -1 : 1));
         if (!d->scrollArea->underMouse()) d->scrollTimer->stop();
     });
 }
@@ -85,19 +87,19 @@ tWindowTabber::~tWindowTabber() {
     delete d;
 }
 
-void tWindowTabber::addButton(tWindowTabberButton *button) {
+void tWindowTabber::addButton(tWindowTabberButton* button) {
     button->setParent(this);
     d->buttons.append(button);
     d->tabLayout->addWidget(button);
 }
 
-void tWindowTabber::setCurrent(tWindowTabberButton *button) {
+void tWindowTabber::setCurrent(tWindowTabberButton* button) {
     for (tWindowTabberButton* tabberButton : d->buttons) {
         tabberButton->setSelected(button == tabberButton);
     }
 }
 
-bool tWindowTabber::eventFilter(QObject *watched, QEvent *event) {
+bool tWindowTabber::eventFilter(QObject* watched, QEvent* event) {
     if (QWidget* widget = qobject_cast<QWidget*>(watched)) {
         if ((d->scrollArea->isAncestorOf(widget) || widget == d->scrollArea) && (event->type() == QEvent::MouseMove || event->type() == QEvent::Leave)) {
             if (!d->scrollArea->underMouse()) {
@@ -112,7 +114,7 @@ bool tWindowTabber::eventFilter(QObject *watched, QEvent *event) {
                 return QObject::eventFilter(watched, event);
             }
 
-            //Scroll!
+            // Scroll!
             d->scrollLeft = x < scrollDistance;
             int distance = x;
             if (x > d->scrollArea->width() / 2) {
@@ -129,7 +131,7 @@ void tWindowTabber::setShowNewTabButton(bool showNewTabButton) {
     d->newTabButton->setVisible(showNewTabButton);
 }
 
-void tWindowTabber::removeButton(tWindowTabberButton *button) {
+void tWindowTabber::removeButton(tWindowTabberButton* button) {
     d->tabLayout->removeWidget(button);
     d->buttons.removeOne(button);
     button->deleteLater();
