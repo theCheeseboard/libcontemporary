@@ -138,7 +138,11 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     Q_INIT_RESOURCE(thelibs_translations);
     Q_INIT_RESOURCE(thelibs_icons);
 
-    d->translator.load(QLocale().name(), ":/the-libs/translations/");
+    QLocale locale;
+        //macOS gives weird language/region combinations sometimes so extra logic might be required
+    if (!d->translator.load(locale, "", "", ":/the-libs/translations/")) {
+        d->translator.load(locale.name(), ":/the-libs/translations/");
+    }
     installTranslator(new TranslatorProxy(&d->translator));
 
 #ifdef Q_OS_MAC
@@ -471,7 +475,7 @@ void tApplication::installTranslators() {
 
     QTranslator* localTranslator = new QTranslator();
 #if defined(Q_OS_MAC)
-    QString translationsPath = macOSBundlePath() + "/Contents/translations/";
+    QString translationsPath = macOSBundlePath() + "/Contents/Resources/translations/";
 
     //macOS gives weird language/region combinations sometimes so extra logic might be required
     if (!localTranslator->load(locale, "", "", translationsPath)) {
