@@ -140,7 +140,11 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             tcsdtools/tcsdtools-objc.mm
             tnotification/tnotification-mac.mm
             private/nsalertmac.mm
-            private/tmessageboxbackend-mac.mm)
+            private/tmessageboxbackend-mac.mm
+            private/tapplicationmacprivate.mm)
+
+    set(HEADERS ${HEADERS}
+        private/tapplicationmacprivate.h)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")

@@ -40,7 +40,7 @@
 #endif
 
 #ifdef Q_OS_MAC
-    #include <CoreFoundation/CFBundle.h>
+    #include "private/tapplicationmacprivate.h"
 #endif
 
 #ifdef Q_OS_WIN
@@ -95,10 +95,14 @@ struct tApplicationPrivate {
         static void crashTrapHandler();
 #endif
 
-        static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
-            tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
-            //        tApplication::d->oldMessageHandler(messageType, context, message);
-        }
+#ifdef Q_OS_MAC
+    tApplicationMacPrivate* privateProxy;
+#endif
+
+    static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
+        tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
+//        tApplication::d->oldMessageHandler(messageType, context, message);
+    }
 
         QtMessageHandler oldMessageHandler;
 };
@@ -109,6 +113,10 @@ tApplication::tApplication(int& argc, char** argv) :
     QApplication(argc, argv) {
     d = new tApplicationPrivate();
     d->applicationInstance = this;
+
+#ifdef Q_OS_MAC
+    d->privateProxy = new tApplicationMacPrivate(this);
+#endif
 
     d->oldMessageHandler = qInstallMessageHandler(&tApplicationPrivate::qtMessageHandler);
 
@@ -543,15 +551,16 @@ void tApplication::addLibraryTranslator(QString sharePath) {
 
 QString tApplication::macOSBundlePath() {
 #ifdef Q_OS_MAC
-    CFURLRef appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
-    const char* pathPtr = CFStringGetCStringPtr(macPath, CFStringGetSystemEncoding());
+    return d->privateProxy->macOSBundlePath();
+#else
+    return "";
+#endif
+}
 
-    QString bundlePath = QString::fromLocal8Bit(pathPtr);
-
-    CFRelease(appUrlRef);
-    CFRelease(macPath);
-    return bundlePath;
+QString tApplication::macOSBundlePath(QString bundleIdentifier)
+{
+#ifdef Q_OS_MAC
+    return d->privateProxy->macOSBundlePath(bundleIdentifier);
 #else
     return "";
 #endif

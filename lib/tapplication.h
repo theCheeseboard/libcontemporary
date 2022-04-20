@@ -108,6 +108,7 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         static void removePluginTranslator(QString pluginName);
         static void addLibraryTranslator(QString sharePath);
         static QString macOSBundlePath();
+        static QString macOSBundlePath(QString bundleIdentifier);
 
         static void restart();
 
