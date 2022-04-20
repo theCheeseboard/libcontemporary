@@ -65,6 +65,7 @@ set(SOURCES
         twindowtabber.cpp
         twindowtabberbutton.cpp
         tx11info.cpp
+        tcontentsizer.cpp
         private/debuglogpopover.cpp
         private/debuglogwindow.cpp
         private/nativeeventfilter.cpp
@@ -129,7 +130,8 @@ set(HEADERS
         "twindowtabberbutton.h"
         "tx11info.h"
         "tstandardlabel.h"
-        "tsubtitlelabel.h")
+        "tsubtitlelabel.h"
+        "tcontentsizer.h")
 
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
