@@ -1,0 +1,20 @@
+function(cntp_target_name targetName targetReadableName)
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        string(TOLOWER ${targetReadableName} TARGET_LOWER_NAME)
+        IF(BLUEPRINT)
+            set(TARGET_FINAL_NAME "${TARGET_LOWER_NAME}-blueprint")
+        ELSE()
+            set(TARGET_FINAL_NAME "${TARGET_LOWER_NAME}")
+        ENDIF()
+    ELSE()
+        IF(BLUEPRINT)
+            set(TARGET_FINAL_NAME "${targetReadableName} Blueprint")
+        ELSE()
+            set(TARGET_FINAL_NAME "${targetReadableName}")
+        ENDIF()
+    ENDIF()
+
+
+    set_target_properties(${targetName} PROPERTIES
+            OUTPUT_NAME "${TARGET_FINAL_NAME}")
+endfunction()

@@ -3,8 +3,11 @@ function(cntp_mac_icon targetName)
     cmake_parse_arguments(MAC_ICON "" "${singleValueArgs}" "" ${ARGN})
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        # TODO: Blueprint detection
-        set(CURRENT_ICON ${MAC_ICON_ICON})
+        if(BLUEPRINT AND DEFINED MAC_ICON_BLUEPRINT_ICON)
+            set(CURRENT_ICON ${MAC_ICON_BLUEPRINT_ICON})
+        else()
+            set(CURRENT_ICON ${MAC_ICON_ICON})
+        endif()
 
         IF(CURRENT_ICON)
             set_target_properties(${targetName} PROPERTIES
