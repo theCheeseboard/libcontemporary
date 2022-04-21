@@ -27,7 +27,13 @@ function(cntp_target_install_desktop_file target translationfile)
     ENDIF()
 endfunction()
 
-function(cntp_target_install_desktop_file_switch target translationfile blueprintfile)
-    # TODO: Blueprint detection
-    cntp_target_install_desktop_file(${target} ${translationfile})
+function(cntp_target_desktop_file target)
+    set(singleValueArgs DESKTOP_FILE BLUEPRINT_DESKTOP_FILE)
+    cmake_parse_arguments(DESKTOP_FILE "" "${singleValueArgs}" "" ${ARGN})
+
+    if(BLUEPRINT AND DEFINED DESKTOP_FILE_BLUEPRINT_DESKTOP_FILE)
+        cntp_target_install_desktop_file(${target} ${DESKTOP_FILE_BLUEPRINT_DESKTOP_FILE})
+    else()
+        cntp_target_install_desktop_file(${target} ${DESKTOP_FILE_DESKTOP_FILE})
+    endif()
 endfunction()
