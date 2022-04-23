@@ -19,10 +19,12 @@
  ******************************************************************************/
 #include "tsettings.h"
 
+#include <tapplication.h>
 #include <QSettings>
 #include <QFileSystemWatcher>
 #include "tlogger.h"
 #include <QTimer>
+#include <QDir>
 
 typedef QPair<QString, QString> SettingIdentifier;
 
@@ -54,7 +56,7 @@ struct tSettingsGlobals {
             //Register settings from environment variables
             QString defaults = qEnvironmentVariable("THELIBS_TSETTINGS_DEFAULT_FILES");
             if (!defaults.isEmpty()) {
-                for (QString defaultDefinition : defaults.split(":")) {
+                for (const QString &defaultDefinition : defaults.split(":")) {
                     QStringList definition = defaultDefinition.split(";");
                     if (definition.count() != 3) {
                         tDebug("tSettings") << "THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
@@ -67,6 +69,24 @@ struct tSettingsGlobals {
                 }
             }
 
+            //Register settings from default application locations
+            QStringList searchPaths;
+#if defined(Q_OS_MAC)
+            searchPaths.append(QDir(tApplication::macOSBundlePath()).absoluteFilePath("Contents/Resources/defaults"));
+#elif defined(Q_OS_WIN)
+            searchPaths.append(QDir(tApplication::applicationDirPath()).absoluteFilePath("defaults"));
+#else
+            searchPaths.append(QDir(tApplication::shareDir()).absoluteFilePath("defaults"));
+#endif
+
+            for (const QString &searchPath : searchPaths) {
+                QDir searchPathDir(searchPath);
+                for (const QFileInfo &fileInfo : searchPathDir.entryInfoList({"*.conf"}, QDir::Files)) {
+                    tSettings::registerDefaults(identifier.first, identifier.second, fileInfo.absoluteFilePath());
+                }
+            }
+
+            //TODO: Ensure the settings file exists on required platforms
             tDebug("tSettings") << "Writing settings for " << identifier.second << "to" << settings->fileName();
         }
     }
