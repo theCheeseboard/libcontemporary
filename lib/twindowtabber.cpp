@@ -10,6 +10,7 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QTimer>
+#include <QScroller>
 #include <QToolButton>
 
 struct tWindowTabberPrivate {
@@ -67,11 +68,7 @@ tWindowTabber::tWindowTabber(QWidget* parent) {
     this->setLayout(layout);
 
     libContemporaryCommon::fixateHeight(d->scrollArea, [=] {
-        //#ifdef Q_OS_MAC
-        //        return fontMetrics().height() + SC_DPI_W(12, this);
-        //#else
         return fontMetrics().height() + SC_DPI_W(28, this);
-        //#endif
     });
 
     d->scrollTimer = new QTimer(this);
@@ -97,6 +94,8 @@ void tWindowTabber::setCurrent(tWindowTabberButton* button) {
     for (tWindowTabberButton* tabberButton : d->buttons) {
         tabberButton->setSelected(button == tabberButton);
     }
+
+    QScroller::scroller(d->scrollArea->viewport())->ensureVisible(button->geometry(), 0, 0);
 }
 
 bool tWindowTabber::eventFilter(QObject* watched, QEvent* event) {

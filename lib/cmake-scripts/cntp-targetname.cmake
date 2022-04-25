@@ -17,4 +17,6 @@ function(cntp_target_name targetName targetReadableName)
 
     set_target_properties(${targetName} PROPERTIES
             OUTPUT_NAME "${TARGET_FINAL_NAME}")
+    target_compile_definitions(${targetName} PRIVATE
+            T_APPMETA_READABLE_NAME="${TARGET_FINAL_NAME}")
 endfunction()

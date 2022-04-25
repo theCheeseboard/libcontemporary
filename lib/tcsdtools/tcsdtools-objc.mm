@@ -36,6 +36,7 @@ void tCsdTools::macInstallResizeAction(QWidget* widget) {
     NSView* view = reinterpret_cast<NSView*>(widget->winId());
 
     NSWindowStyleMask styleMask = NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskUnifiedTitleAndToolbar | NSWindowStyleMaskResizable | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
+    if ([view.window styleMask] & NSWindowStyleMaskFullScreen) styleMask |= NSWindowStyleMaskFullScreen;
     [view.window setStyleMask:styleMask];
 }
 
