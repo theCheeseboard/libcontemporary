@@ -5,6 +5,7 @@ project(libcontemporary VERSION 1.0.0 LANGUAGES CXX)
 
 add_subdirectory(lib)
 add_subdirectory(cntp-trdesktop)
+add_subdirectory(cntp-appicontool)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     add_subdirectory(cntp-macdeploy)
