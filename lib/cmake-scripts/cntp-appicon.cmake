@@ -6,7 +6,9 @@ function(cntp_app_icon targetName)
 
 message("${CMAKE_INSTALL_FULL_BINDIR}")
     find_path(CNTPAPPICONTOOL_PATH cntp-appicontool
-        PATHS ${CMAKE_INSTALL_FULL_BINDIR})
+        PATHS ${CMAKE_INSTALL_FULL_BINDIR}
+        HINTS ${CMAKE_CURRENT_LIST_DIR}/../../../../bin)
+
     IF(${CNTPAPPICONTOOL_PATH} STREQUAL "CNTPAPPICONTOOL_PATH-NOTFOUND")
         message(FATAL_ERROR "cntp-appicontool executable not available, app icon cannot be created")
     ELSE()
