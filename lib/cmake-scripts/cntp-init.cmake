@@ -14,7 +14,10 @@ function(cntp_init target cxx-standard)
     add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
     add_compile_definitions(SYSTEM_PREFIX_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_PREFIX}")
     add_compile_definitions(SYSTEM_DATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
-    add_compile_definitions(T_APPMETA_DESKTOP_ID="${DESKTOPID}")
+
+    if(NOT ${DESKTOPID} STREQUAL "${DESKTOPID}-NOTFOUND")
+        add_compile_definitions(T_APPMETA_DESKTOP_ID="${DESKTOPID}")
+    endif()
 endfunction()
 
 function(cntp_init_plugin parent target cxx-standard share-subdir)

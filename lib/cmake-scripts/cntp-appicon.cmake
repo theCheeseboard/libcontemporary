@@ -14,7 +14,7 @@ message("${CMAKE_INSTALL_FULL_BINDIR}")
         get_filename_component(BASEICON_PATH "${APP_ICON_BASEICON}" REALPATH)
         get_filename_component(BASEICON_PATH_MAC "${APP_ICON_BASEICON_MAC}" REALPATH)
 
-        cntp_dotcontemporary_path(${targetName} DOTCONTEMPORARY_FILE)
+        cntp_dotcontemporary_path(${targetName} DOTCONTEMPORARY_FILE REQUIRED)
         cntp_dotcontemporary(${targetName} COLOR1 "theme-colors" 0)
         cntp_dotcontemporary(${targetName} COLOR2 "theme-colors" 1)
         cntp_dotcontemporary_desktopId(${targetName} DESKTOPID RESOLVE_BLUEPRINT)
