@@ -45,8 +45,9 @@
 
 #ifdef Q_OS_WIN
     #include "tnotification/tnotification-win.h"
-    #include <DbgHelp.h>
     #include <Windows.h>
+
+    #include <DbgHelp.h>
     #include <appmodel.h>
 #endif
 
