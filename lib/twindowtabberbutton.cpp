@@ -4,27 +4,28 @@
 
 #include "twindowtabberbutton.h"
 
+#include "tstackedwidget.h"
+#include "tvariantanimation.h"
+#include "twindowtabber.h"
+#include <QAction>
 #include <QActionEvent>
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QToolButton>
-#include <QAction>
-#include "tstackedwidget.h"
-#include "twindowtabber.h"
-#include "tvariantanimation.h"
 
 struct tWindowTabberButtonPrivate {
-    QPushButton* rootButton;
-    QMap<QAction*, QToolButton*> buttons;
+        QPushButton* rootButton;
+        QMap<QAction*, QToolButton*> buttons;
 
-    QWidget* actionsWidget;
-    QBoxLayout* actionsLayout;
-    tVariantAnimation* actionsWidgetAnim;
+        QWidget* actionsWidget;
+        QBoxLayout* actionsLayout;
+        tVariantAnimation* actionsWidgetAnim;
 
-    tWindowTabber* parent = nullptr;
+        tWindowTabber* parent = nullptr;
 };
 
-tWindowTabberButton::tWindowTabberButton(tWindowTabber *parent) : QWidget(parent) {
+tWindowTabberButton::tWindowTabberButton(tWindowTabber* parent) :
+    QWidget(parent) {
     this->init();
     this->setParent(parent);
 }
@@ -35,7 +36,7 @@ tWindowTabberButton::tWindowTabberButton(const QIcon& icon, const QString& text)
     this->setText(text);
 }
 
-tWindowTabberButton::tWindowTabberButton(const QIcon &icon, const QString &text, tStackedWidget *toTrack, QWidget *widgetToTrack) {
+tWindowTabberButton::tWindowTabberButton(const QIcon& icon, const QString& text, tStackedWidget* toTrack, QWidget* widgetToTrack) {
     this->init();
     this->setIcon(icon);
     this->setText(text);
@@ -72,14 +73,13 @@ void tWindowTabberButton::init() {
         d->actionsWidget->setFixedWidth(value.toInt());
     });
     d->actionsWidget->setFixedWidth(0);
-
 }
 
 tWindowTabberButton::~tWindowTabberButton() {
     delete d;
 }
 
-void tWindowTabberButton::actionEvent(QActionEvent *event) {
+void tWindowTabberButton::actionEvent(QActionEvent* event) {
     QAction* action = event->action();
     if (event->type() == QEvent::ActionAdded) {
         QToolButton* button = new QToolButton(this);
@@ -109,7 +109,7 @@ void tWindowTabberButton::setIcon(const QIcon& icon) {
     d->rootButton->setIcon(icon);
 }
 
-void tWindowTabberButton::configureAction(QAction *action) {
+void tWindowTabberButton::configureAction(QAction* action) {
     QToolButton* button = d->buttons.value(action);
     button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     button->setIcon(action->icon());
@@ -117,24 +117,26 @@ void tWindowTabberButton::configureAction(QAction *action) {
     button->setToolTip(action->text());
 }
 
-void tWindowTabberButton::setParent(tWindowTabber *tabber) {
+void tWindowTabberButton::setParent(tWindowTabber* tabber) {
     if (d->parent) {
-
     }
     QWidget::setParent(tabber);
     d->parent = tabber;
     if (d->parent) {
-
     }
 }
 
-void tWindowTabberButton::syncWithStackedWidget(tStackedWidget *stackedWidget, QWidget *widget) {
+void tWindowTabberButton::syncWithStackedWidget(tStackedWidget* stackedWidget, QWidget* widget) {
     connect(stackedWidget, &tStackedWidget::currentChanged, this, [=](int tab) {
         if (stackedWidget->widget(tab) == widget) this->setSelected(true);
+    });
+    connect(stackedWidget, &tStackedWidget::removingWidget, this, [=](QWidget* removing) {
+        if (removing == widget) this->setVisible(false);
     });
     connect(this, &tWindowTabberButton::activated, stackedWidget, [=] {
         stackedWidget->setCurrentWidget(widget);
     });
+    connect(widget, &QWidget::destroyed, this, &tWindowTabberButton::deleteLater);
     if (stackedWidget->currentWidget() == widget) this->setSelected(true);
 }
 

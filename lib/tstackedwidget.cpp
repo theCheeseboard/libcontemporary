@@ -36,7 +36,8 @@ class tStackedWidgetPrivate {
         tStackedWidget* parent;
 };
 
-tStackedWidget::tStackedWidget(QWidget* parent) : QStackedWidget(parent) {
+tStackedWidget::tStackedWidget(QWidget* parent) :
+    QStackedWidget(parent) {
     d = new tStackedWidgetPrivate(this);
 }
 
@@ -46,7 +47,7 @@ tStackedWidget::~tStackedWidget() {
 
 void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
     if (doAnimation) {
-        //Do some checks before setting the current index.
+        // Do some checks before setting the current index.
         if (currentIndex() != index && !d->doingNewAnimation) {
             doSetCurrentIndex(index);
         }
@@ -59,12 +60,12 @@ void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
 }
 
 void tStackedWidget::doSetCurrentIndex(int index) {
-    //Check if Power Stretch is on or if animations are disabled
+    // Check if Power Stretch is on or if animations are disabled
     if (libContemporaryCommon::instance()->powerStretchEnabled() || !libContemporaryCommon::instance()->allowSystemAnimations()) {
-        //Forego animations; power stretch is on
+        // Forego animations; power stretch is on
         QStackedWidget::setCurrentIndex(index);
     } else {
-        //Forcibly set the current index.
+        // Forcibly set the current index.
         QWidget* currentWidget = widget(currentIndex());
         QWidget* nextWidget = widget(index);
         if (nextWidget == nullptr) {
@@ -75,162 +76,167 @@ void tStackedWidget::doSetCurrentIndex(int index) {
             }
 
             switch (d->anim) {
-                case None: {
-                    QStackedWidget::setCurrentIndex(index);
-                    break;
-                }
-                case SlideHorizontal: {
-                    QRect newGeometry;
-                    if ((currentIndex() < index && !QApplication::isRightToLeft()) || (currentIndex() > index && QApplication::isRightToLeft())) {
-                        nextWidget->setGeometry(this->width(), 0, this->width(), this->height());
-                        newGeometry.setRect(-this->width() / 8, 0, this->width(), this->height());
-                    } else {
-                        nextWidget->setGeometry(-this->width(), 0, this->width(), this->height());
-                        newGeometry.setRect(this->width() / 8, 0, this->width(), this->height());
+                case None:
+                    {
+                        QStackedWidget::setCurrentIndex(index);
+                        break;
                     }
+                case SlideHorizontal:
+                    {
+                        QRect newGeometry;
+                        if ((currentIndex() < index && !QApplication::isRightToLeft()) || (currentIndex() > index && QApplication::isRightToLeft())) {
+                            nextWidget->setGeometry(this->width(), 0, this->width(), this->height());
+                            newGeometry.setRect(-this->width() / 8, 0, this->width(), this->height());
+                        } else {
+                            nextWidget->setGeometry(-this->width(), 0, this->width(), this->height());
+                            newGeometry.setRect(this->width() / 8, 0, this->width(), this->height());
+                        }
 
-                    nextWidget->show();
-                    nextWidget->raise();
+                        nextWidget->show();
+                        nextWidget->raise();
 
-                    QParallelAnimationGroup* group = new QParallelAnimationGroup;
-                    tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
-                    animation->setStartValue(nextWidget->geometry());
-                    animation->setEndValue(QRect(0, 0, this->width(), this->height()));
-                    animation->setEasingCurve(QEasingCurve::OutCubic);
-                    animation->setDuration(250);
-                    connect(this, &tStackedWidget::resized, animation, [ = ] {
+                        QParallelAnimationGroup* group = new QParallelAnimationGroup;
+                        tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
+                        animation->setStartValue(nextWidget->geometry());
                         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
-                    });
-                    group->addAnimation(animation);
+                        animation->setEasingCurve(QEasingCurve::OutCubic);
+                        animation->setDuration(250);
+                        connect(this, &tStackedWidget::resized, animation, [=] {
+                            animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                        });
+                        group->addAnimation(animation);
 
-                    tPropertyAnimation* animation2 = new tPropertyAnimation(currentWidget, "geometry");
-                    animation2->setStartValue(currentWidget->geometry());
-                    animation2->setEndValue(newGeometry);
-                    animation2->setEasingCurve(QEasingCurve::OutCubic);
-                    animation2->setDuration(250);
-                    group->addAnimation(animation2);
+                        tPropertyAnimation* animation2 = new tPropertyAnimation(currentWidget, "geometry");
+                        animation2->setStartValue(currentWidget->geometry());
+                        animation2->setEndValue(newGeometry);
+                        animation2->setEasingCurve(QEasingCurve::OutCubic);
+                        animation2->setDuration(250);
+                        group->addAnimation(animation2);
 
-                    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
-                        QStackedWidget::setCurrentIndex(index);
-                        d->doingNewAnimation = false;
-                        group->deleteLater();
-                        d->currentAnimation = nullptr;
-                    });
-                    group->start();
-                    d->currentAnimation = group;
-                    break;
-                }
-                case SlideVertical: {
-                    QRect newGeometry;
-                    if (currentIndex() < index) {
-                        nextWidget->setGeometry(0, this->height(), this->width(), this->height());
-                        newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
-                    } else {
-                        nextWidget->setGeometry(0, -this->height(), this->width(), this->height());
-                        newGeometry.setRect(0, this->height() / 8, this->width(), this->height());
+                        connect(group, &QParallelAnimationGroup::finished, [=]() {
+                            QStackedWidget::setCurrentIndex(index);
+                            d->doingNewAnimation = false;
+                            group->deleteLater();
+                            d->currentAnimation = nullptr;
+                        });
+                        group->start();
+                        d->currentAnimation = group;
+                        break;
                     }
+                case SlideVertical:
+                    {
+                        QRect newGeometry;
+                        if (currentIndex() < index) {
+                            nextWidget->setGeometry(0, this->height(), this->width(), this->height());
+                            newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
+                        } else {
+                            nextWidget->setGeometry(0, -this->height(), this->width(), this->height());
+                            newGeometry.setRect(0, this->height() / 8, this->width(), this->height());
+                        }
 
-                    nextWidget->show();
-                    nextWidget->raise();
+                        nextWidget->show();
+                        nextWidget->raise();
 
-                    QParallelAnimationGroup* group = new QParallelAnimationGroup;
-                    tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
-                    animation->setStartValue(nextWidget->geometry());
-                    animation->setEndValue(QRect(0, 0, this->width(), this->height()));
-                    animation->setEasingCurve(QEasingCurve::OutCubic);
-                    animation->setDuration(250);
-                    connect(this, &tStackedWidget::resized, animation, [ = ] {
+                        QParallelAnimationGroup* group = new QParallelAnimationGroup;
+                        tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
+                        animation->setStartValue(nextWidget->geometry());
                         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
-                    });
-                    group->addAnimation(animation);
+                        animation->setEasingCurve(QEasingCurve::OutCubic);
+                        animation->setDuration(250);
+                        connect(this, &tStackedWidget::resized, animation, [=] {
+                            animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                        });
+                        group->addAnimation(animation);
 
-                    tPropertyAnimation* animation2 = new tPropertyAnimation(currentWidget, "geometry");
-                    animation2->setStartValue(currentWidget->geometry());
-                    animation2->setEndValue(newGeometry);
-                    animation2->setEasingCurve(QEasingCurve::OutCubic);
-                    animation2->setDuration(250);
-                    group->addAnimation(animation2);
+                        tPropertyAnimation* animation2 = new tPropertyAnimation(currentWidget, "geometry");
+                        animation2->setStartValue(currentWidget->geometry());
+                        animation2->setEndValue(newGeometry);
+                        animation2->setEasingCurve(QEasingCurve::OutCubic);
+                        animation2->setDuration(250);
+                        group->addAnimation(animation2);
 
-                    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
-                        QStackedWidget::setCurrentIndex(index);
-                        d->doingNewAnimation = false;
-                        group->deleteLater();
-                        d->currentAnimation = nullptr;
-                    });
-                    group->start();
-                    d->currentAnimation = group;
-                    break;
-                }
-                case Fade: {
-                    nextWidget->show();
-                    nextWidget->raise();
-                    nextWidget->resize(this->width(), this->height());
+                        connect(group, &QParallelAnimationGroup::finished, [=]() {
+                            QStackedWidget::setCurrentIndex(index);
+                            d->doingNewAnimation = false;
+                            group->deleteLater();
+                            d->currentAnimation = nullptr;
+                        });
+                        group->start();
+                        d->currentAnimation = group;
+                        break;
+                    }
+                case Fade:
+                    {
+                        nextWidget->show();
+                        nextWidget->raise();
+                        nextWidget->resize(this->width(), this->height());
 
-                    QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect();
-                    effect->setOpacity(0);
-                    nextWidget->setGraphicsEffect(effect);
+                        QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect();
+                        effect->setOpacity(0);
+                        nextWidget->setGraphicsEffect(effect);
 
-                    tPropertyAnimation* anim = new tPropertyAnimation(effect, "opacity");
-                    anim->setStartValue((float) 0);
-                    anim->setEndValue((float) 1);
-                    anim->setEasingCurve(QEasingCurve::OutCubic);
-                    anim->setDuration(250);
-                    connect(anim, &tPropertyAnimation::finished, [ = ] {
-                        QStackedWidget::setCurrentIndex(index);
-                        anim->deleteLater();
-                        effect->deleteLater();
-                        d->currentAnimation = nullptr;
-                    });
-                    anim->start();
-                    d->currentAnimation = anim;
-                    break;
-                }
-                case Lift: {
-                    //QRect newGeometry;
-                    //if (currentIndex() < index) {
-                    nextWidget->setGeometry(0, this->height() / 8, this->width(), this->height());
-                    //newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
-                    //} else {
-                    //    nextWidget->setGeometry(0, -this->height(), this->width(), this->height());
-                    //    newGeometry.setRect(0, this->height() / 8, this->width(), this->height());
-                    //}
+                        tPropertyAnimation* anim = new tPropertyAnimation(effect, "opacity");
+                        anim->setStartValue((float) 0);
+                        anim->setEndValue((float) 1);
+                        anim->setEasingCurve(QEasingCurve::OutCubic);
+                        anim->setDuration(250);
+                        connect(anim, &tPropertyAnimation::finished, [=] {
+                            QStackedWidget::setCurrentIndex(index);
+                            anim->deleteLater();
+                            effect->deleteLater();
+                            d->currentAnimation = nullptr;
+                        });
+                        anim->start();
+                        d->currentAnimation = anim;
+                        break;
+                    }
+                case Lift:
+                    {
+                        // QRect newGeometry;
+                        // if (currentIndex() < index) {
+                        nextWidget->setGeometry(0, this->height() / 8, this->width(), this->height());
+                        // newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
+                        // } else {
+                        //     nextWidget->setGeometry(0, -this->height(), this->width(), this->height());
+                        //     newGeometry.setRect(0, this->height() / 8, this->width(), this->height());
+                        // }
 
-                    nextWidget->show();
-                    nextWidget->raise();
+                        nextWidget->show();
+                        nextWidget->raise();
 
-                    QParallelAnimationGroup* group = new QParallelAnimationGroup;
-                    tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
-                    animation->setStartValue(nextWidget->geometry());
-                    animation->setEndValue(QRect(0, 0, this->width(), this->height()));
-                    animation->setEasingCurve(QEasingCurve::OutCubic);
-                    animation->setDuration(250);
-                    connect(this, &tStackedWidget::resized, animation, [ = ] {
+                        QParallelAnimationGroup* group = new QParallelAnimationGroup;
+                        tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
+                        animation->setStartValue(nextWidget->geometry());
                         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
-                    });
-                    group->addAnimation(animation);
+                        animation->setEasingCurve(QEasingCurve::OutCubic);
+                        animation->setDuration(250);
+                        connect(this, &tStackedWidget::resized, animation, [=] {
+                            animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                        });
+                        group->addAnimation(animation);
 
-                    QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect();
-                    effect->setOpacity(0);
-                    nextWidget->setGraphicsEffect(effect);
+                        QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect();
+                        effect->setOpacity(0);
+                        nextWidget->setGraphicsEffect(effect);
 
-                    tPropertyAnimation* anim = new tPropertyAnimation(effect, "opacity");
-                    anim->setStartValue((float) 0);
-                    anim->setEndValue((float) 1);
-                    anim->setEasingCurve(QEasingCurve::OutCubic);
-                    anim->setDuration(250);
-                    group->addAnimation(anim);
+                        tPropertyAnimation* anim = new tPropertyAnimation(effect, "opacity");
+                        anim->setStartValue((float) 0);
+                        anim->setEndValue((float) 1);
+                        anim->setEasingCurve(QEasingCurve::OutCubic);
+                        anim->setDuration(250);
+                        group->addAnimation(anim);
 
-                    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
-                        QStackedWidget::setCurrentIndex(index);
-                        d->doingNewAnimation = false;
-                        group->deleteLater();
-                        effect->deleteLater();
-                        d->currentAnimation = nullptr;
-                    });
-                    group->start();
-                    d->currentAnimation = group;
-                    break;
-                }
+                        connect(group, &QParallelAnimationGroup::finished, [=]() {
+                            QStackedWidget::setCurrentIndex(index);
+                            d->doingNewAnimation = false;
+                            group->deleteLater();
+                            effect->deleteLater();
+                            d->currentAnimation = nullptr;
+                        });
+                        group->start();
+                        d->currentAnimation = group;
+                        break;
+                    }
             }
         }
     }
@@ -262,6 +268,11 @@ int tStackedWidget::insertWidget(int index, QWidget* w) {
     int indexReturn = QStackedWidget::insertWidget(index, w);
     emit widgetAdded();
     return indexReturn;
+}
+
+void tStackedWidget::removeWidget(QWidget* w) {
+    emit removingWidget(w);
+    QStackedWidget::removeWidget(w);
 }
 
 void tStackedWidget::resizeEvent(QResizeEvent* event) {

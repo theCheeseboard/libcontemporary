@@ -21,15 +21,15 @@
 #ifndef TSTACKEDWIDGET_H
 #define TSTACKEDWIDGET_H
 
-#include <QStackedWidget>
-#include <tpropertyanimation.h>
-#include <QSequentialAnimationGroup>
-#include <QParallelAnimationGroup>
-#include <QGraphicsOpacityEffect>
-#include <QSettings>
-#include <QWindow>
-#include <QDebug>
 #include <QApplication>
+#include <QDebug>
+#include <QGraphicsOpacityEffect>
+#include <QParallelAnimationGroup>
+#include <QSequentialAnimationGroup>
+#include <QSettings>
+#include <QStackedWidget>
+#include <QWindow>
+#include <tpropertyanimation.h>
 
 class tStackedWidgetPrivate;
 
@@ -52,12 +52,14 @@ class LIBCONTEMPORARY_EXPORT tStackedWidget : public QStackedWidget {
 
         int addWidget(QWidget* w);
         int insertWidget(int index, QWidget* w);
+        void removeWidget(QWidget* w);
 
     signals:
         void switchingFrame(int switchTo);
         void CurrentAnimationChanged(Animation currentAnimation);
         void resized();
         void widgetAdded();
+        void removingWidget(QWidget* widget);
 
     public slots:
         void setCurrentIndex(int index, bool doAnimation = true);
