@@ -1,5 +1,5 @@
 function(cntp_dotcontemporary_path targetName outputVar)
-    set(CURRENT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+    get_target_property(CURRENT_DIR ${targetName} SOURCE_DIR)
     while(NOT EXISTS ${CURRENT_DIR}/.contemporary.json)
         IF(${CURRENT_DIR} STREQUAL "/")
             message(FATAL_ERROR "No .contemporary.json file found in project")
