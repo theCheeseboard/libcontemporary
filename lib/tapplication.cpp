@@ -45,8 +45,8 @@
 
 #ifdef Q_OS_WIN
     #include "tnotification/tnotification-win.h"
-    #include <Windows.h>
     #include <DbgHelp.h>
+    #include <Windows.h>
     #include <appmodel.h>
 #endif
 
@@ -96,13 +96,13 @@ struct tApplicationPrivate {
 #endif
 
 #ifdef Q_OS_MAC
-    tApplicationMacPrivate* privateProxy;
+        tApplicationMacPrivate* privateProxy;
 #endif
 
-    static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
-        tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
-//        tApplication::d->oldMessageHandler(messageType, context, message);
-    }
+        static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
+            tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
+            //        tApplication::d->oldMessageHandler(messageType, context, message);
+        }
 
         QtMessageHandler oldMessageHandler;
 };
@@ -148,7 +148,7 @@ tApplication::tApplication(int& argc, char** argv) :
     Q_INIT_RESOURCE(thelibs_icons);
 
     QLocale locale;
-        //macOS gives weird language/region combinations sometimes so extra logic might be required
+    // macOS gives weird language/region combinations sometimes so extra logic might be required
     if (!d->translator.load(locale, "", "", ":/the-libs/translations/")) {
         d->translator.load(locale.name(), ":/the-libs/translations/");
     }
@@ -189,6 +189,8 @@ tApplication::tApplication(int& argc, char** argv) :
             break;
     }
     d->versions.append({tr("Platform"), platformString});
+
+    d->applicationIcon = QIcon(":/libcontemporary-appassets/appicon.svg");
 }
 
 bool tApplication::event(QEvent* event) {
@@ -557,8 +559,7 @@ QString tApplication::macOSBundlePath() {
 #endif
 }
 
-QString tApplication::macOSBundlePath(QString bundleIdentifier)
-{
+QString tApplication::macOSBundlePath(QString bundleIdentifier) {
 #ifdef Q_OS_MAC
     return d->privateProxy->macOSBundlePath(bundleIdentifier);
 #else

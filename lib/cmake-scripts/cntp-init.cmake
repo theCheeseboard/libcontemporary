@@ -8,10 +8,13 @@ function(cntp_init target cxx-standard)
             
     find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
+    cntp_dotcontemporary_desktopId(${target} DESKTOPID RESOLVE_BLUEPRINT)
+
     target_include_directories(${target} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
     add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
     add_compile_definitions(SYSTEM_PREFIX_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_PREFIX}")
     add_compile_definitions(SYSTEM_DATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
+    add_compile_definitions(T_APPMETA_DESKTOP_ID="${DESKTOPID}")
 endfunction()
 
 function(cntp_init_plugin parent target cxx-standard share-subdir)

@@ -30,6 +30,7 @@
 #include <QSvgGenerator>
 #include <QSvgRenderer>
 #include <QTextStream>
+#include <QXmlStreamWriter>
 
 int main(int argc, char* argv[]) {
     QCoreApplication a(argc, argv);
@@ -137,6 +138,36 @@ int main(int argc, char* argv[]) {
         } else {
             eoutput << "warn: No native generator available for this platform.\n";
         }
+    }
+
+    if (parser.isSet("output-rc")) {
+        CombinedIcon crossPlatformSvgIcon;
+        crossPlatformSvgIcon.setBaseIcon(CombinedIcon::CrossPlatformIcon);
+        crossPlatformSvgIcon.setIconGradientColors(color1, color2);
+        crossPlatformSvgIcon.setGenerateBlueprintIcon(parser.isSet("blueprint"));
+        crossPlatformSvgIcon.setOverlayIcon(overlayIcon);
+        crossPlatformSvgIcon.setOverlayIconMac(overlayIconMac);
+
+        QFileInfo rcFileInfo(parser.value("output-rc"));
+        QFile rcSvgOutput(rcFileInfo.dir().absoluteFilePath("appicon.svg"));
+        rcSvgOutput.open(QFile::WriteOnly);
+        rcSvgOutput.write(crossPlatformSvgIcon.generatedIcon().toUtf8());
+        rcSvgOutput.close();
+
+        QFile rcFile(rcFileInfo.absoluteFilePath());
+        rcFile.open(QFile::WriteOnly);
+
+        QXmlStreamWriter xmlWriter(&rcFile);
+        xmlWriter.writeStartElement("RCC");
+        xmlWriter.writeStartElement("qresource");
+        xmlWriter.writeAttribute("prefix", "/libcontemporary-appassets");
+        xmlWriter.writeStartElement("file");
+        xmlWriter.writeCharacters("appicon.svg");
+        xmlWriter.writeEndElement(); // file
+        xmlWriter.writeEndElement(); // qresource
+        xmlWriter.writeEndElement(); // RCC
+
+        rcFile.close();
     }
 
     return 0;

@@ -45,6 +45,8 @@ void MacPlatformIconGenerator::generateIcon() {
     icnsGenerator.setWorkingDirectory(tempDir.path());
     icnsGenerator.start("iconutil", {"-c", "icns", "icon.iconset"});
     icnsGenerator.waitForFinished(-1);
+
+    if (QFile::exists(outputFile())) QFile::remove(outputFile());
     QFile::copy(tempDir.filePath("icon.icns"), outputFile());
 }
 

@@ -36,7 +36,7 @@ set_target_properties(cntp-appicontool PROPERTIES
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set_target_properties(cntp-appicontool PROPERTIES
-            INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR})
+            INSTALL_RPATH_USE_LINK_PATH True)
 ENDIF()
 
 target_link_libraries(cntp-appicontool Qt6::Svg Qt6::Xml libcontemporary)

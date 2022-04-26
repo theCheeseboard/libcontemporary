@@ -29,7 +29,7 @@ set_target_properties(cntp-trdesktop PROPERTIES
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set_target_properties(cntp-trdesktop PROPERTIES
-            INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR})
+            INSTALL_RPATH_USE_LINK_PATH True)
 ENDIF()
 
 target_link_libraries(cntp-trdesktop Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia libcontemporary)

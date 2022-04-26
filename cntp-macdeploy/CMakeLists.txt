@@ -27,7 +27,7 @@ set_target_properties(cntp-macdeploy PROPERTIES
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set_target_properties(cntp-macdeploy PROPERTIES
-            INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR})
+            INSTALL_RPATH_USE_LINK_PATH True)
 ENDIF()
 
 target_link_libraries(cntp-macdeploy libcontemporary Qt6::Network)
