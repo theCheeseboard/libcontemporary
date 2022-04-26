@@ -2,12 +2,15 @@ function(cntp_app_icon targetName)
     set(singleValueArgs BASEICON BASEICON_MAC)
     cmake_parse_arguments(APP_ICON "" "${singleValueArgs}" "" ${ARGN})
 
-#-i /Users/victor/Documents/Apps/theBeat/application/icons/baseicon.svg -m /Users/victor/Documents/Apps/theBeat/application/icons/baseicon-mac.svg -c #ff6400:#ffc800 -s /Users/victor/Documents/thebeat.svg -n /Users/victor/Documents/thebeat.icns -r /Users/victor/Documents/thebeat.qrc
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+        find_path(CNTPAPPICONTOOL_PATH cntp-appicontool.exe
+            PATHS ${CMAKE_INSTALL_FULL_BINDIR}
+            HINTS ${CMAKE_CURRENT_LIST_DIR}/../../../../bin)
+    ELSE()
+        find_path(CNTPAPPICONTOOL_PATH cntp-appicontool
+            PATHS ${CMAKE_INSTALL_FULL_BINDIR})
+    ENDIF()
 
-message("${CMAKE_INSTALL_FULL_BINDIR}")
-    find_path(CNTPAPPICONTOOL_PATH cntp-appicontool
-        PATHS ${CMAKE_INSTALL_FULL_BINDIR}
-        HINTS ${CMAKE_CURRENT_LIST_DIR}/../../../../bin)
 
     IF(${CNTPAPPICONTOOL_PATH} STREQUAL "CNTPAPPICONTOOL_PATH-NOTFOUND")
         message(FATAL_ERROR "cntp-appicontool executable not available, app icon cannot be created")
