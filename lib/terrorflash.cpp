@@ -20,22 +20,22 @@
 
 #include "terrorflash.h"
 
-#include <QWidget>
-#include <QTimer>
+#include "private/errorflashwidget.h"
 #include "tvariantanimation.h"
+#include <QTimer>
+#include <QWidget>
 
 struct tErrorFlashPrivate {
-    tErrorFlash* instance = nullptr;
+        tErrorFlash* instance = nullptr;
 };
 
 tErrorFlashPrivate* tErrorFlash::d = new tErrorFlashPrivate();
 
-tErrorFlash::tErrorFlash(QObject *parent) : QObject(parent)
-{
-
+tErrorFlash::tErrorFlash(QObject* parent) :
+    QObject(parent) {
 }
 
-void tErrorFlash::flashError(QWidget *flash) {
+void tErrorFlash::flashError(QWidget* flash) {
     if (d->instance == nullptr) d->instance = new tErrorFlash();
     emit d->instance->startingFlash(flash);
 
@@ -67,7 +67,7 @@ void tErrorFlash::flashError(QWidget *flash) {
     connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
     connect(anim, &tVariantAnimation::destroyed, anim2, &tVariantAnimation::deleteLater);
     connect(d->instance, &tErrorFlash::startingFlash, anim, [=](QWidget* widget) {
-        //Stop the animation if a flash occurs again
+        // Stop the animation if a flash occurs again
         if (flash == widget) {
             anim->stop();
             anim->setCurrentTime(anim->duration());
@@ -75,4 +75,9 @@ void tErrorFlash::flashError(QWidget *flash) {
         }
     });
     anim->start();
+}
+
+void tErrorFlash::flashError(QWidget* flash, QString description) {
+    flashError(flash);
+    ErrorFlashWidget::showError(flash, description);
 }

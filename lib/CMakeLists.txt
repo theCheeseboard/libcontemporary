@@ -77,6 +77,7 @@ set(SOURCES
         tnotification/tnotification-common.cpp
         jobs/jobbutton.cpp
         jobs/jobspopover.cpp
+        private/errorflashwidget.cpp private/errorflashwidget.ui
 
         taboutdialog.ui
         tinputdialog.ui
@@ -133,6 +134,9 @@ set(HEADERS
         "tsubtitlelabel.h"
         "tcontentsizer.h")
 
+set(PRIVATE_HEADERS
+    private/errorflashwidget.h)
+
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
 qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
 
@@ -165,7 +169,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     )
 ENDIF()
 
-add_library(libcontemporary SHARED ${SOURCES})
+add_library(libcontemporary SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS})
 cntp_target_public_headers(libcontemporary
         DESTINATION_DIRECTORY libcontemporary
         HEADERS ${HEADERS})

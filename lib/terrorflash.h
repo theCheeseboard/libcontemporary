@@ -21,15 +21,15 @@
 #ifndef TERRORFLASH_H
 #define TERRORFLASH_H
 
-#include <QObject>
 #include "libcontemporary_global.h"
+#include <QObject>
 
 struct tErrorFlashPrivate;
-class LIBCONTEMPORARY_EXPORT tErrorFlash : public QObject
-{
+class LIBCONTEMPORARY_EXPORT tErrorFlash : public QObject {
         Q_OBJECT
     public:
         static void flashError(QWidget* flash);
+        static void flashError(QWidget* flash, QString description);
 
     signals:
         void startingFlash(QWidget* flash);
@@ -37,7 +37,7 @@ class LIBCONTEMPORARY_EXPORT tErrorFlash : public QObject
     public slots:
 
     private:
-        explicit tErrorFlash(QObject *parent = nullptr);
+        explicit tErrorFlash(QObject* parent = nullptr);
         static tErrorFlashPrivate* d;
 };
 
