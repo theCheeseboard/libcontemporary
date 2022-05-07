@@ -1,6 +1,7 @@
 #include "tapplication.h"
 #include "tmessageboxbackend.h"
 #include <QWindow>
+#include <QTimer>
 #import <AppKit/AppKit.h>
 
 struct tMessageBoxBackendPrivate {
@@ -180,6 +181,8 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
 void tMessageBoxBackend::open(QWidget *parent) {
     NSView* windowView = reinterpret_cast<NSView *>(parent->windowHandle()->winId());
     [d->nsAlert beginSheetModalForWindow:[windowView window] completionHandler:^(NSModalResponse response) {
-                            emit d->buttonStorage.value(response)->buttonPressed([[d->nsAlert suppressionButton] state] == NSOnState);
+        QTimer::singleShot(0, this, [=] {
+            emit d->buttonStorage.value(response)->buttonPressed([[d->nsAlert suppressionButton] state] == NSOnState);
+        });
                        }];
 }
