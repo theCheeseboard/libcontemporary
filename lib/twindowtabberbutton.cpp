@@ -73,6 +73,8 @@ void tWindowTabberButton::init() {
         d->actionsWidget->setFixedWidth(value.toInt());
     });
     d->actionsWidget->setFixedWidth(0);
+
+    this->setAcceptDrops(true);
 }
 
 tWindowTabberButton::~tWindowTabberButton() {
@@ -153,4 +155,8 @@ void tWindowTabberButton::configureActionStrip() {
     d->actionsWidgetAnim->setStartValue(d->actionsWidget->width());
     d->actionsWidgetAnim->setEndValue(d->rootButton->isChecked() ? d->actionsWidget->sizeHint().width() : 0);
     d->actionsWidgetAnim->start();
+}
+
+void tWindowTabberButton::dragEnterEvent(QDragEnterEvent* event) {
+    d->rootButton->click();
 }

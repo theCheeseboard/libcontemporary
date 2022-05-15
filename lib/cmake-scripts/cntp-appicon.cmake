@@ -2,12 +2,18 @@ function(cntp_app_icon targetName)
     set(singleValueArgs BASEICON BASEICON_MAC)
     cmake_parse_arguments(APP_ICON "" "${singleValueArgs}" "" ${ARGN})
 
+
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+        return()
+    ENDIF()
+
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
         find_path(CNTPAPPICONTOOL_PATH cntp-appicontool.exe
             PATHS ${CMAKE_INSTALL_FULL_BINDIR}
-            HINTS ${CMAKE_CURRENT_LIST_DIR}/../../../../bin)
+            HINTS ${CMAKE_CURRENT_LIST_DIR}/../../../../bin ${CNTP_TOOLS_PATH})
     ELSE()
         find_path(CNTPAPPICONTOOL_PATH cntp-appicontool
+            HINTS ${CNTP_TOOLS_PATH}
             PATHS ${CMAKE_INSTALL_FULL_BINDIR})
     ENDIF()
 

@@ -19,35 +19,38 @@
  ******************************************************************************/
 #include "tstylemanager.h"
 
+#include <QDir>
 #include <tapplication.h>
 
 struct tStyleManagerPrivate {
-    tStyleManager::Style currentStyle = tStyleManager::System;
-    tApplication::Platforms overrideOnPlatforms = tApplication::Flatpak | tApplication::Windows | tApplication::WindowsAppPackage | tApplication::MacOS | tApplication::OtherPlatform;
+        tStyleManager::Style currentStyle = tStyleManager::System;
+        tApplication::Platforms overrideOnPlatforms = tApplication::Flatpak | tApplication::Windows | tApplication::WindowsAppPackage | tApplication::MacOS | tApplication::OtherPlatform;
 };
 
-tStyleManager::tStyleManager(QObject* parent) : QObject(parent) {
+tStyleManager::tStyleManager(QObject* parent) :
+    QObject(parent) {
     d = new tStyleManagerPrivate();
 }
 
 void tStyleManager::updateStyle() {
     if (isOverridingStyle()) {
-        //Override the styles!
+        // Override the styles!
 
         QApplication::setStyle(QStyleFactory::create("contemporary"));
 
         QIcon::setThemeSearchPaths({
-            "/usr/share/icons", //Linux
-            "/app/share/icons", //Flatpak
-            tApplication::applicationDirPath() + "\\icons", //Windows
-            tApplication::macOSBundlePath() + "/Contents/Resources/icons" //macOS
+            QDir::home().absoluteFilePath(".local/share/icons"),
+            "/usr/share/icons",                                           // Linux
+            "/app/share/icons",                                           // Flatpak
+            tApplication::applicationDirPath() + "\\icons",               // Windows
+            tApplication::macOSBundlePath() + "/Contents/Resources/icons" // macOS
         });
         QIcon::setThemeName("contemporary");
         QIcon::setFallbackThemeName("contemporary-icons");
 
         QPalette pal = QApplication::palette();
 
-        //Get the accent colour
+        // Get the accent colour
         QColor accentCol;
 #ifdef Q_OS_WIN
         QSettings accentDetection("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM", QSettings::NativeFormat);

@@ -5,41 +5,41 @@
 #ifndef LIBCONTEMPORARY_TWINDOWTABBERBUTTON_H
 #define LIBCONTEMPORARY_TWINDOWTABBERBUTTON_H
 
-#include <QWidget>
 #include "libcontemporary_global.h"
+#include <QWidget>
 
 struct tWindowTabberButtonPrivate;
 class tStackedWidget;
 class tWindowTabber;
 class LIBCONTEMPORARY_EXPORT tWindowTabberButton : public QWidget {
-    Q_OBJECT
-public:
-    tWindowTabberButton(tWindowTabber *parent = nullptr);
-    tWindowTabberButton(const QIcon& icon, const QString& text);
-    tWindowTabberButton(const QIcon& icon, const QString& text, tStackedWidget *toTrack, QWidget* widgetToTrack);
-    virtual ~tWindowTabberButton();
+        Q_OBJECT
+    public:
+        tWindowTabberButton(tWindowTabber* parent = nullptr);
+        tWindowTabberButton(const QIcon& icon, const QString& text);
+        tWindowTabberButton(const QIcon& icon, const QString& text, tStackedWidget* toTrack, QWidget* widgetToTrack);
+        virtual ~tWindowTabberButton();
 
-    void setText(const QString& text);
-    void setIcon(const QIcon& icon);
-    void setSelected(bool selected);
+        void setText(const QString& text);
+        void setIcon(const QIcon& icon);
+        void setSelected(bool selected);
 
-    void setParent(tWindowTabber* tabber);
-    void syncWithStackedWidget(tStackedWidget *stackedWidget, QWidget* widget);
+        void setParent(tWindowTabber* tabber);
+        void syncWithStackedWidget(tStackedWidget* stackedWidget, QWidget* widget);
 
     signals:
         void activated();
 
-protected:
-    friend tWindowTabber;
-    void actionEvent(QActionEvent *event) override;
+    protected:
+        friend tWindowTabber;
+        void actionEvent(QActionEvent* event) override;
+        void dragEnterEvent(QDragEnterEvent* event) override;
 
-private:
-    tWindowTabberButtonPrivate* d;
+    private:
+        tWindowTabberButtonPrivate* d;
 
-    void init();
-    void configureAction(QAction* action);
-    void configureActionStrip();
+        void init();
+        void configureAction(QAction* action);
+        void configureActionStrip();
 };
 
-
-#endif//LIBCONTEMPORARY_TWINDOWTABBERBUTTON_H
+#endif // LIBCONTEMPORARY_TWINDOWTABBERBUTTON_H

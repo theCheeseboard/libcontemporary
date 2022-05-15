@@ -43,7 +43,7 @@
     #include <Windows.h>
 #endif
 
-#ifdef T_OS_UNIX_NOT_MAC
+#ifdef HAVE_QT_DBUS
     #include <QDBusInterface>
 #endif
 
@@ -99,8 +99,8 @@ libContemporaryCommon::libContemporaryCommon() :
 #endif
 }
 
-libContemporaryCommon *libContemporaryCommon::instance() {
-    static libContemporaryCommon * appInst;
+libContemporaryCommon* libContemporaryCommon::instance() {
+    static libContemporaryCommon* appInst;
     if (appInst == nullptr) {
         appInst = new libContemporaryCommon;
     }
@@ -136,11 +136,11 @@ bool libContemporaryCommon::allowSystemAnimations() {
 #ifdef QT_WIDGETS_LIB
     #include <QScreen>
 double libContemporaryCommon::getDPIScaling() {
-#ifdef Q_OS_MAC
+    #ifdef Q_OS_MAC
     return 1;
-#else
+    #else
     return QApplication::primaryScreen()->devicePixelRatio();
-#endif
+    #endif
 }
 #endif
 
@@ -194,15 +194,15 @@ void libContemporaryCommon::tintImage(QImage& image, QColor tint) {
         painter.end();
     }
 }
-double libContemporaryCommon::getDPIScaling(const QPaintDevice *paintDevice) {
-#ifdef Q_OS_MAC
+double libContemporaryCommon::getDPIScaling(const QPaintDevice* paintDevice) {
+    #ifdef Q_OS_MAC
     return 1;
-#endif
+    #endif
     if (!paintDevice) return QApplication::primaryScreen()->devicePixelRatio();
     return paintDevice->devicePixelRatio();
 }
 
-void libContemporaryCommon::fixateHeight(QWidget *widget, std::function<int()> calculateHeight) {
+void libContemporaryCommon::fixateHeight(QWidget* widget, std::function<int()> calculateHeight) {
     connect(widget->window()->windowHandle(), &QWindow::screenChanged, widget, [=] {
         widget->setFixedHeight(calculateHeight());
     });

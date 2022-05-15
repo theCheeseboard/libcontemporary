@@ -10,7 +10,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Svg Network Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
@@ -32,7 +32,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             INSTALL_RPATH_USE_LINK_PATH True)
 ENDIF()
 
-target_link_libraries(cntp-trdesktop Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia libcontemporary)
+target_link_libraries(cntp-trdesktop Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia libcontemporary)
 
 install(TARGETS cntp-trdesktop
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

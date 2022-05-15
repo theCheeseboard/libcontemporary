@@ -41,7 +41,7 @@
     #define T_OS_UNIX_NOT_MAC
 #endif
 
-#ifdef T_OS_UNIX_NOT_MAC
+#ifdef HAVE_QT_DBUS
     #include <QDBusConnection>
     #include <QDBusMessage>
     #include <QDBusReply>
@@ -71,14 +71,13 @@ class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
     public:
         /// Get the application instance of the class so you can connect to signals
         /// \return The application instance of libContemporaryCommon
-        static libContemporaryCommon * instance();
+        static libContemporaryCommon* instance();
 
 #ifdef QT_WIDGETS_LIB
         /// Get the screen scaling ratio
         /// \deprecated Use the overload that takes a QPaintDevice instead
         /// \return The screen scaling ratio
-        [[deprecated("getDPIScaling is deprecated, use the overload that takes a QPaintDevice (or SC_DPI_W)")]]
-        static double getDPIScaling();
+        [[deprecated("getDPIScaling is deprecated, use the overload that takes a QPaintDevice (or SC_DPI_W)")]] static double getDPIScaling();
 
         /// Get the screen scaling ratio
         /// \param paintDevice The device to get the scaling ratio for

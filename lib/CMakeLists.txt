@@ -16,11 +16,11 @@ foreach(f ${EXTRA_FUNCTIONS})
     include(${f})
 endforeach()
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Svg Network Multimedia PrintSupport)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport OPTIONAL_COMPONENTS DBus)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
 
-cntp_find_pkgconfig(Unwind libunwind)
+cntp_find_pkgconfig(Unwind libunwind FAIL_ON_ANDROID)
 cntp_find_pkgconfig(X11 x11)
 #cntp_find_pkgconfig(GsettingsQt gsettings-qt)
 
@@ -134,11 +134,16 @@ set(HEADERS
         "tsubtitlelabel.h"
         "tcontentsizer.h")
 
+
 set(PRIVATE_HEADERS
     private/errorflashwidget.h)
 
-qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
-qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
+
+if(${Qt6DBus_FOUND})
+    qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
+    qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
+endif()
+
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(SOURCES ${SOURCES}
@@ -169,6 +174,13 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     )
 ENDIF()
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+    set(SOURCES ${SOURCES}
+            tnotification/tnotification-android.cpp
+            private/tmessageboxbackend-qt.cpp
+    )
+ENDIF()
+
 add_library(libcontemporary SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS})
 cntp_target_public_headers(libcontemporary
         DESTINATION_DIRECTORY libcontemporary
@@ -178,8 +190,13 @@ set_target_properties(libcontemporary PROPERTIES
         MACOSX_FRAMEWORK_IDENTIFIER com.vicr123.libcontemporary
         VERSION 6.0.0)
 
-target_link_libraries(libcontemporary Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport)
+target_link_libraries(libcontemporary Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport)
 target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
+
+if(${Qt6DBus_FOUND})
+    target_link_libraries(libcontemporary Qt6::DBus)
+    target_compile_definitions(libcontemporary PRIVATE HAVE_QT_DBUS)
+ENDIF()
 
 IF(${Unwind_FOUND})
     target_link_libraries(libcontemporary PkgConfig::Unwind)
