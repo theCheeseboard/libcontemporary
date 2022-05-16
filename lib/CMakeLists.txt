@@ -83,6 +83,7 @@ set(SOURCES
         tinputdialog.ui
         tshortcuthud.ui
         tstatusframe.ui
+        tprintpopover.ui
         private/debuglogpopover.ui
         private/debuglogwindow.ui
 

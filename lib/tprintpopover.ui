@@ -106,15 +106,17 @@
         <item>
          <widget class="QWidget" name="printOptionsWidget" native="true">
           <layout class="QGridLayout" name="gridLayout">
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_5">
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_2">
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
-              <string>Page Size</string>
+              <string>PRINT OPTIONS</string>
              </property>
             </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QComboBox" name="pageSizeBox"/>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label_3">
@@ -129,13 +131,6 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="QCheckBox" name="grayscaleBox">
-             <property name="text">
-              <string>Print in Grayscale</string>
-             </property>
-            </widget>
-           </item>
            <item row="6" column="0" colspan="2">
             <widget class="QPushButton" name="printButton">
              <property name="text">
@@ -147,12 +142,22 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_4">
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_5">
              <property name="text">
-              <string>Copies</string>
+              <string>Page Size</string>
              </property>
             </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QCheckBox" name="grayscaleBox">
+             <property name="text">
+              <string>Print in Grayscale</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="pageSizeBox"/>
            </item>
            <item row="5" column="0" colspan="2">
             <widget class="QCheckBox" name="duplexBox">
@@ -161,15 +166,10 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_2">
-             <property name="font">
-              <font>
-               <bold>true</bold>
-              </font>
-             </property>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>PRINT OPTIONS</string>
+              <string>Copies</string>
              </property>
             </widget>
            </item>
@@ -182,6 +182,16 @@
            </item>
            <item row="1" column="1">
             <widget class="QComboBox" name="printerBox"/>
+           </item>
+           <item row="7" column="0" colspan="2">
+            <widget class="QPushButton" name="pdfButton">
+             <property name="text">
+              <string>PDF</string>
+             </property>
+             <property name="icon">
+              <iconset theme="application-pdf"/>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

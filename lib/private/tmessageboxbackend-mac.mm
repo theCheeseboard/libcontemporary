@@ -10,7 +10,9 @@ struct tMessageBoxBackendPrivate {
     NSAlert* nsAlert = nil;
 };
 
-tMessageBoxBackend::tMessageBoxBackend(QObject *parent) : QObject(parent), d(new tMessageBoxBackendPrivate) {}
+tMessageBoxBackend::tMessageBoxBackend(QObject *parent) : QObject(parent), d(new tMessageBoxBackendPrivate) {
+    d->nsAlert = [[NSAlert alloc] init];
+}
 
 tMessageBoxBackend::~tMessageBoxBackend() = default;
 
@@ -22,7 +24,6 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
                               const QString &detailedText,
                               const QString &checkboxText,
                               const tOrderedMap<tMessageBoxButton *, tMessageBoxButtonInfo *> &buttonMap) {
-    d->nsAlert = [[NSAlert alloc] init];
 
     switch (style) {
         case QMessageBox::NoIcon:
@@ -183,6 +184,7 @@ void tMessageBoxBackend::open(QWidget *parent) {
     [d->nsAlert beginSheetModalForWindow:[windowView window] completionHandler:^(NSModalResponse response) {
         QTimer::singleShot(0, this, [=] {
             emit d->buttonStorage.value(response)->buttonPressed([[d->nsAlert suppressionButton] state] == NSOnState);
+            emit canBeDestroyed();
         });
-                       }];
+    }];
 }

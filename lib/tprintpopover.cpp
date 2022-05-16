@@ -20,9 +20,11 @@
 #include "tprintpopover.h"
 #include "ui_tprintpopover.h"
 
+#include <QFileDialog>
 #include <QPrintPreviewWidget>
 #include <QPrinter>
 #include <QPrinterInfo>
+#include <QStandardPaths>
 
 struct tPrintPopoverPrivate {
         QPrinter* printer;
@@ -139,4 +141,23 @@ tPrintPopoverCustomPrintSettingsWidget::~tPrintPopoverCustomPrintSettingsWidget(
 
 void tPrintPopover::showEvent(QShowEvent* event) {
     d->printPreview->updatePreview();
+}
+
+void tPrintPopover::on_pdfButton_clicked() {
+    QFileDialog* dialog = new QFileDialog(this);
+    dialog->setAcceptMode(QFileDialog::AcceptSave);
+    dialog->setFileMode(QFileDialog::AnyFile);
+    dialog->setDirectory(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    dialog->setNameFilters({tr("Portable Document Format (*.pdf)")});
+    dialog->setDefaultSuffix(".pdf");
+    connect(
+        dialog, &QFileDialog::accepted, this, [=] {
+            d->printer->setOutputFileName(dialog->selectedFiles().first());
+            d->printer->setOutputFormat(QPrinter::PdfFormat);
+            emit paintRequested(d->printer);
+            emit done();
+        },
+        Qt::QueuedConnection);
+    connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
+    dialog->open();
 }

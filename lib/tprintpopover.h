@@ -70,6 +70,8 @@ class LIBCONTEMPORARY_EXPORT tPrintPopover : public QWidget {
 
         void on_duplexBox_toggled(bool checked);
 
+        void on_pdfButton_clicked();
+
     private:
         Ui::tPrintPopover* ui;
         tPrintPopoverPrivate* d;
