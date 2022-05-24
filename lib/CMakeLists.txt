@@ -133,7 +133,10 @@ set(HEADERS
         "tx11info.h"
         "tstandardlabel.h"
         "tsubtitlelabel.h"
-        "tcontentsizer.h")
+        "tcontentsizer.h"
+        "plugins/plugininterface.h"
+        "plugins/tpluginmanager.h"
+    )
 
 
 set(PRIVATE_HEADERS
