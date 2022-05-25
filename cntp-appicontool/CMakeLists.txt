@@ -27,7 +27,10 @@ set(HEADERS
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(SOURCES ${SOURCES} platformgenerators/macplatformicongenerator.cpp)
-    set(HEADERS ${HEADERS} "platformgenerators/macplatformicongenerator.cpp")
+    set(HEADERS ${HEADERS} platformgenerators/macplatformicongenerator.h)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    set(SOURCES ${SOURCES} platformgenerators/winplatformicongenerator.cpp)
+    set(HEADERS ${HEADERS} platformgenerators/winplatformicongenerator.h)
 ENDIF()
 
 add_executable(cntp-appicontool ${SOURCES} ${HEADERS})

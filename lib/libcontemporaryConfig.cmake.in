@@ -20,4 +20,6 @@ cntp_find_pkgconfig(Unwind libunwind)
 cntp_find_pkgconfig(X11 x11)
 cntp_find_pkgconfig(GsettingsQt gsettings-qt)
 
+find_program(CNTPAPPICONTOOL_PATH cntp-appicontool REQUIRED)
+
 check_required_components(libContemporary)

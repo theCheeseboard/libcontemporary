@@ -2,6 +2,8 @@
 
 #ifdef Q_OS_MAC
 #include "platformgenerators/macplatformicongenerator.h"
+#elif defined(Q_OS_WIN)
+#include "platformgenerators/winplatformicongenerator.h"
 #endif
 
 struct PlatformIconGeneratorPrivate {
@@ -44,7 +46,7 @@ PlatformIconGenerator *PlatformIconGenerator::iconGeneratorForPlatform()
 {
 #ifdef Q_OS_MAC
     return new MacPlatformIconGenerator();
-#else
-    return nullptr;
+#elif defined(Q_OS_WIN)
+    return new WinPlatformIconGenerator();
 #endif
 }
