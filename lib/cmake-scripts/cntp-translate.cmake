@@ -5,10 +5,14 @@ function(cntp_translate target)
     file(GLOB TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/*.ts)
     #list(PREPEND TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/en_US.ts)
 
+    message(STATUS "TRX ${TRANSLATION_FILES}")
+
     qt_add_translations(${target}
         TS_FILES ${TRANSLATION_FILES}
         QM_FILES_OUTPUT_VARIABLE QM_FILES
     )
+    add_dependencies(${target}_lrelease ${target}_lupdate)
+
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         cntp_get_target_share_subdir_name(SHARE_DIR_CHILD ${target})

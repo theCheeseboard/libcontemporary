@@ -82,6 +82,8 @@ struct tApplicationPrivate {
         QSharedMemory* singleInstanceMemory = nullptr;
         QLocalServer* singleInstanceServer = nullptr;
 
+        static bool isInitialised;
+
 #ifdef T_OS_UNIX_NOT_MAC
         static void crashTrapHandler(int sig);
 #elif defined(Q_OS_WIN)
@@ -109,6 +111,7 @@ struct tApplicationPrivate {
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
+bool tApplicationPrivate::isInitialised = false;
 
 tApplication::tApplication(int& argc, char** argv) :
     QApplication(argc, argv) {
@@ -192,6 +195,7 @@ tApplication::tApplication(int& argc, char** argv) :
     d->versions.append({tr("Platform"), platformString});
 
     d->applicationIcon = QIcon(":/libcontemporary-appassets/appicon.svg");
+    d->isInitialised = true;
 }
 
 bool tApplication::event(QEvent* event) {
@@ -738,6 +742,10 @@ tApplication::Platform tApplication::currentPlatform() {
         return OtherPlatform;
     }
 #endif
+}
+
+bool tApplication::isInitialised() {
+    return d->isInitialised;
 }
 
 QString tApplication::copyrightHolder() {

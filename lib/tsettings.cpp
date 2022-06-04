@@ -19,136 +19,138 @@
  ******************************************************************************/
 #include "tsettings.h"
 
-#include <tapplication.h>
-#include <QSettings>
-#include <QFileSystemWatcher>
 #include "tlogger.h"
-#include <QTimer>
 #include <QDir>
+#include <QFileSystemWatcher>
+#include <QSettings>
+#include <QTimer>
+#include <tapplication.h>
 
 typedef QPair<QString, QString> SettingIdentifier;
 
 struct tSettingsGlobals {
-    void initialiseInitialSettings(SettingIdentifier identifier) {
+        void initialiseInitialSettings(SettingIdentifier identifier) {
+            if (tApplication::isInitialised())
 
-        if (allSettings.count(identifier) == 0) {
-            QSharedPointer<QSettings> settings(new QSettings(identifier.first, identifier.second));
-            allSettings.insert(identifier, settings);
-            settingsPaths.insert(identifier, "");
+                if (allSettings.count(identifier) == 0) {
+                    QSharedPointer<QSettings> settings(new QSettings(identifier.first, identifier.second));
+                    allSettings.insert(identifier, settings);
+                    settingsPaths.insert(identifier, "");
 
 #ifndef Q_OS_WIN
-            //Set up the watcher once the event loop has started
-            QTimer::singleShot(0, [ = ] {
-                QFileSystemWatcher* watcher = new QFileSystemWatcher();
-                watcher->moveToThread(qApp->thread());
-                QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [ = ] {
-                    if (!watcher->files().contains(settings->fileName())) {
+                    // Set up the watcher once the event loop has started
+                    QTimer::singleShot(0, [=] {
+                        QFileSystemWatcher* watcher = new QFileSystemWatcher();
+                        watcher->moveToThread(qApp->thread());
+                        QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [=] {
+                            if (!watcher->files().contains(settings->fileName())) {
+                                watcher->addPath(settings->fileName());
+                            }
+                            this->notifyChanges(identifier);
+                        });
                         watcher->addPath(settings->fileName());
-                    }
-                    this->notifyChanges(identifier);
-                });
-                watcher->addPath(settings->fileName());
-                watchers.insert(identifier, watcher);
-                notifyChanges(identifier);
-            });
+                        watchers.insert(identifier, watcher);
+                        notifyChanges(identifier);
+                    });
 #endif
 
-            //Register settings from environment variables
-            QString defaults = qEnvironmentVariable("THELIBS_TSETTINGS_DEFAULT_FILES");
-            if (!defaults.isEmpty()) {
-                for (const QString &defaultDefinition : defaults.split(":")) {
-                    QStringList definition = defaultDefinition.split(";");
-                    if (definition.count() != 3) {
-                        tDebug("tSettings") << "THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
-                        continue;
+                    // Register settings from environment variables
+                    QString defaults = qEnvironmentVariable("THELIBS_TSETTINGS_DEFAULT_FILES");
+                    if (!defaults.isEmpty()) {
+                        for (const QString& defaultDefinition : defaults.split(":")) {
+                            QStringList definition = defaultDefinition.split(";");
+                            if (definition.count() != 3) {
+                                tDebug("tSettings") << "THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
+                                continue;
+                            }
+
+                            if (definition.at(0) == identifier.first && definition.at(1) == identifier.second) {
+                                tSettings::registerDefaults(identifier.first, identifier.second, definition.at(2));
+                            }
+                        }
                     }
 
-                    if (definition.at(0) == identifier.first && definition.at(1) == identifier.second) {
-                        tSettings::registerDefaults(identifier.first, identifier.second, definition.at(2));
-                    }
-                }
-            }
-
-            //Register settings from default application locations
-            QStringList searchPaths;
+                    // Register settings from default application locations
+                    QStringList searchPaths;
 #if defined(Q_OS_MAC)
-            searchPaths.append(QDir(tApplication::macOSBundlePath()).absoluteFilePath("Contents/Resources/defaults"));
+                    searchPaths.append(QDir(tApplication::macOSBundlePath()).absoluteFilePath("Contents/Resources/defaults"));
 #elif defined(Q_OS_WIN)
-            searchPaths.append(QDir(tApplication::applicationDirPath()).absoluteFilePath("defaults"));
+                    searchPaths.append(QDir(tApplication::applicationDirPath()).absoluteFilePath("defaults"));
 #else
-            searchPaths.append(QDir(tApplication::shareDir()).absoluteFilePath("defaults"));
+                    searchPaths.append(QDir(tApplication::shareDir()).absoluteFilePath("defaults"));
 #endif
 
-            for (const QString &searchPath : searchPaths) {
-                QDir searchPathDir(searchPath);
-                for (const QFileInfo &fileInfo : searchPathDir.entryInfoList({"*.conf"}, QDir::Files)) {
-                    tSettings::registerDefaults(identifier.first, identifier.second, fileInfo.absoluteFilePath());
+                    for (const QString& searchPath : searchPaths) {
+                        QDir searchPathDir(searchPath);
+                        for (const QFileInfo& fileInfo : searchPathDir.entryInfoList({"*.conf"}, QDir::Files)) {
+                            tSettings::registerDefaults(identifier.first, identifier.second, fileInfo.absoluteFilePath());
+                        }
+                    }
+
+                    // TODO: Ensure the settings file exists on required platforms
+                    tDebug("tSettings") << "Writing settings for " << identifier.second << "to" << settings->fileName();
                 }
-            }
-
-            //TODO: Ensure the settings file exists on required platforms
-            tDebug("tSettings") << "Writing settings for " << identifier.second << "to" << settings->fileName();
-        }
-    }
-
-    SettingIdentifier defaultIdentifier() {
-        SettingIdentifier identifier;
-        identifier.first = qApp->organizationName();
-        identifier.second = qApp->applicationName();
-        return identifier;
-    }
-
-    void notifyChanges(SettingIdentifier identifier) {
-        QVariantMap values;
-        tSettings settings(identifier.first, identifier.second);
-        settings.sync();
-
-        for (QString key : settings.allKeys()) {
-            values.insert(key, settings.value(key));
         }
 
-        if (currentValues.contains(identifier)) {
-            //Go through and find the differences
-            QVariantMap differences;
-
-            QVariantMap oldValues = currentValues.value(identifier);
-            for (QString key : values.keys()) {
-                if (!oldValues.contains(key) || oldValues.value(key) != values.value(key)) {
-                    differences.insert(key, values.value(key));
-                }
-            }
-
-            for (QString key : oldValues.keys()) {
-                if (!values.contains(key)) {
-                    differences.insert(key, QVariant());
-                }
-            }
-
-            //Tell everyone about the differences
-            for (auto i = differences.constBegin(); i != differences.constEnd(); i++) {
-                for (tSettings* settingsObjects : availableSettingsObjects.values(identifier)) {
-                    emit settingsObjects->settingChanged(i.key(), i.value());
-                }
-            }
+        SettingIdentifier defaultIdentifier() {
+            SettingIdentifier identifier;
+            identifier.first = qApp->organizationName();
+            identifier.second = qApp->applicationName();
+            return identifier;
         }
-        currentValues.insert(identifier, values);
-    }
 
-    QMultiMap<SettingIdentifier, tSettings*> availableSettingsObjects;
+        void notifyChanges(SettingIdentifier identifier) {
+            QVariantMap values;
+            tSettings settings(identifier.first, identifier.second);
+            settings.sync();
 
-    QMultiMap<SettingIdentifier, QSharedPointer<QSettings>> allSettings;
-    QMultiMap<SettingIdentifier, QString> settingsPaths;
-    QMap<SettingIdentifier, QFileSystemWatcher*> watchers;
-    QMap<SettingIdentifier, QVariantMap> currentValues;
+            for (QString key : settings.allKeys()) {
+                values.insert(key, settings.value(key));
+            }
+
+            if (currentValues.contains(identifier)) {
+                // Go through and find the differences
+                QVariantMap differences;
+
+                QVariantMap oldValues = currentValues.value(identifier);
+                for (QString key : values.keys()) {
+                    if (!oldValues.contains(key) || oldValues.value(key) != values.value(key)) {
+                        differences.insert(key, values.value(key));
+                    }
+                }
+
+                for (QString key : oldValues.keys()) {
+                    if (!values.contains(key)) {
+                        differences.insert(key, QVariant());
+                    }
+                }
+
+                // Tell everyone about the differences
+                for (auto i = differences.constBegin(); i != differences.constEnd(); i++) {
+                    for (tSettings* settingsObjects : availableSettingsObjects.values(identifier)) {
+                        emit settingsObjects->settingChanged(i.key(), i.value());
+                    }
+                }
+            }
+            currentValues.insert(identifier, values);
+        }
+
+        QMultiMap<SettingIdentifier, tSettings*> availableSettingsObjects;
+
+        QMultiMap<SettingIdentifier, QSharedPointer<QSettings>> allSettings;
+        QMultiMap<SettingIdentifier, QString> settingsPaths;
+        QMap<SettingIdentifier, QFileSystemWatcher*> watchers;
+        QMap<SettingIdentifier, QVariantMap> currentValues;
 };
 
 tSettingsGlobals* tSettings::g = nullptr;
 
 struct tSettingsPrivate {
-    SettingIdentifier identifier;
+        SettingIdentifier identifier;
 };
 
-tSettings::tSettings(QObject* parent) : QObject(parent) {
+tSettings::tSettings(QObject* parent) :
+    QObject(parent) {
     if (g == nullptr) g = new tSettingsGlobals();
     d = new tSettingsPrivate;
     d->identifier = g->defaultIdentifier();
@@ -158,7 +160,8 @@ tSettings::tSettings(QObject* parent) : QObject(parent) {
     g->availableSettingsObjects.insert(d->identifier, this);
 }
 
-tSettings::tSettings(QString applicationName, QObject* parent) : QObject(parent) {
+tSettings::tSettings(QString applicationName, QObject* parent) :
+    QObject(parent) {
     if (g == nullptr) g = new tSettingsGlobals();
     d = new tSettingsPrivate;
     d->identifier.first = qApp->organizationName();
@@ -169,7 +172,8 @@ tSettings::tSettings(QString applicationName, QObject* parent) : QObject(parent)
     g->availableSettingsObjects.insert(d->identifier, this);
 }
 
-tSettings::tSettings(QString organisationName, QString applicationName, QObject* parent) : QObject(parent) {
+tSettings::tSettings(QString organisationName, QString applicationName, QObject* parent) :
+    QObject(parent) {
     if (g == nullptr) g = new tSettingsGlobals();
     d = new tSettingsPrivate;
     d->identifier.first = organisationName;
@@ -238,7 +242,7 @@ bool tSettings::contains(QString key) {
 void tSettings::setValue(QString key, QVariant value) {
     g->allSettings.values(d->identifier).last()->setValue(key, value);
 
-    //Don't handle it here on not Windows; we'll detect when the file changes
+    // Don't handle it here on not Windows; we'll detect when the file changes
 #ifdef Q_OS_WIN
     for (tSettings* settingsObjects : g->availableSettingsObjects.values(d->identifier)) {
         emit settingsObjects->settingChanged(key, value);
@@ -247,7 +251,7 @@ void tSettings::setValue(QString key, QVariant value) {
 }
 
 QVariant tSettings::value(QString key) {
-    //Go through the list of settings in reverse order (least recent to most recent)
+    // Go through the list of settings in reverse order (least recent to most recent)
     QList<QSharedPointer<QSettings>> settings = g->allSettings.values(d->identifier);
     for (auto i = settings.rbegin(); i != settings.rend(); i++) {
         if (i->data()->contains(key)) return i->data()->value(key);

@@ -75,6 +75,7 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         static KnownLicenses applicationLicense();
         static void ensureSingleInstance(QJsonObject launchData);
         static Platform currentPlatform();
+        static bool isInitialised();
 
     Q_SIGNALS:
         void openFile(QString file);
