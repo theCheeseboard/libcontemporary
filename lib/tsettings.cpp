@@ -30,46 +30,45 @@ typedef QPair<QString, QString> SettingIdentifier;
 
 struct tSettingsGlobals {
         void initialiseInitialSettings(SettingIdentifier identifier) {
-            if (tApplication::isInitialised())
-
-                if (allSettings.count(identifier) == 0) {
-                    QSharedPointer<QSettings> settings(new QSettings(identifier.first, identifier.second));
-                    allSettings.insert(identifier, settings);
-                    settingsPaths.insert(identifier, "");
+            if (allSettings.count(identifier) == 0) {
+                QSharedPointer<QSettings> settings(new QSettings(identifier.first, identifier.second));
+                allSettings.insert(identifier, settings);
+                settingsPaths.insert(identifier, "");
 
 #ifndef Q_OS_WIN
-                    // Set up the watcher once the event loop has started
-                    QTimer::singleShot(0, [=] {
-                        QFileSystemWatcher* watcher = new QFileSystemWatcher();
-                        watcher->moveToThread(qApp->thread());
-                        QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [=] {
-                            if (!watcher->files().contains(settings->fileName())) {
-                                watcher->addPath(settings->fileName());
-                            }
-                            this->notifyChanges(identifier);
-                        });
-                        watcher->addPath(settings->fileName());
-                        watchers.insert(identifier, watcher);
-                        notifyChanges(identifier);
+                // Set up the watcher once the event loop has started
+                QTimer::singleShot(0, [=] {
+                    QFileSystemWatcher* watcher = new QFileSystemWatcher();
+                    watcher->moveToThread(qApp->thread());
+                    QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [=] {
+                        if (!watcher->files().contains(settings->fileName())) {
+                            watcher->addPath(settings->fileName());
+                        }
+                        this->notifyChanges(identifier);
                     });
+                    watcher->addPath(settings->fileName());
+                    watchers.insert(identifier, watcher);
+                    notifyChanges(identifier);
+                });
 #endif
 
-                    // Register settings from environment variables
-                    QString defaults = qEnvironmentVariable("THELIBS_TSETTINGS_DEFAULT_FILES");
-                    if (!defaults.isEmpty()) {
-                        for (const QString& defaultDefinition : defaults.split(":")) {
-                            QStringList definition = defaultDefinition.split(";");
-                            if (definition.count() != 3) {
-                                tDebug("tSettings") << "THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
-                                continue;
-                            }
+                // Register settings from environment variables
+                QString defaults = qEnvironmentVariable("THELIBS_TSETTINGS_DEFAULT_FILES");
+                if (!defaults.isEmpty()) {
+                    for (const QString& defaultDefinition : defaults.split(":")) {
+                        QStringList definition = defaultDefinition.split(";");
+                        if (definition.count() != 3) {
+                            tDebug("tSettings") << "THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
+                            continue;
+                        }
 
-                            if (definition.at(0) == identifier.first && definition.at(1) == identifier.second) {
-                                tSettings::registerDefaults(identifier.first, identifier.second, definition.at(2));
-                            }
+                        if (definition.at(0) == identifier.first && definition.at(1) == identifier.second) {
+                            tSettings::registerDefaults(identifier.first, identifier.second, definition.at(2));
                         }
                     }
+                }
 
+                if (identifier == defaultIdentifier()) {
                     // Register settings from default application locations
                     QStringList searchPaths;
 #if defined(Q_OS_MAC)
@@ -86,10 +85,11 @@ struct tSettingsGlobals {
                             tSettings::registerDefaults(identifier.first, identifier.second, fileInfo.absoluteFilePath());
                         }
                     }
-
-                    // TODO: Ensure the settings file exists on required platforms
-                    tDebug("tSettings") << "Writing settings for " << identifier.second << "to" << settings->fileName();
                 }
+
+                // TODO: Ensure the settings file exists on required platforms
+                tDebug("tSettings") << "Writing settings for " << identifier.second << "to" << settings->fileName();
+            }
         }
 
         SettingIdentifier defaultIdentifier() {
