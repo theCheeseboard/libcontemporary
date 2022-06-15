@@ -23,11 +23,15 @@ class LIBCONTEMPORARY_EXPORT tWindowTabberButton : public QWidget {
         void setIcon(const QIcon& icon);
         void setSelected(bool selected);
 
+        QString text();
+        QIcon icon();
+
         void setParent(tWindowTabber* tabber);
         void syncWithStackedWidget(tStackedWidget* stackedWidget, QWidget* widget);
 
     signals:
         void activated();
+        void changed();
 
     protected:
         friend tWindowTabber;

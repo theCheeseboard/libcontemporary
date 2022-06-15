@@ -84,7 +84,7 @@ tWindowTabberButton::~tWindowTabberButton() {
 void tWindowTabberButton::actionEvent(QActionEvent* event) {
     QAction* action = event->action();
     if (event->type() == QEvent::ActionAdded) {
-        QToolButton* button = new QToolButton(this);
+        auto* button = new QToolButton(this);
         d->actionsLayout->addWidget(button);
         d->buttons.insert(action, button);
 
@@ -92,23 +92,28 @@ void tWindowTabberButton::actionEvent(QActionEvent* event) {
 
         configureAction(action);
         configureActionStrip();
+        emit changed();
     } else if (event->type() == QEvent::ActionChanged) {
         configureAction(action);
+        emit changed();
     } else if (event->type() == QEvent::ActionRemoved) {
-        QToolButton* button = d->buttons.value(action);
+        auto* button = d->buttons.value(action);
         button->deleteLater();
         d->buttons.remove(action);
         configureActionStrip();
+        emit changed();
     }
     QWidget::actionEvent(event);
 }
 
 void tWindowTabberButton::setText(const QString& text) {
     d->rootButton->setText(text);
+    emit changed();
 }
 
 void tWindowTabberButton::setIcon(const QIcon& icon) {
     d->rootButton->setIcon(icon);
+    emit changed();
 }
 
 void tWindowTabberButton::configureAction(QAction* action) {
@@ -150,6 +155,14 @@ void tWindowTabberButton::setSelected(bool selected) {
         if (d->parent) d->parent->setCurrent(this);
     }
     configureActionStrip();
+}
+
+QString tWindowTabberButton::text() {
+    return d->rootButton->text();
+}
+
+QIcon tWindowTabberButton::icon() {
+    return d->rootButton->icon();
 }
 void tWindowTabberButton::configureActionStrip() {
     d->actionsWidgetAnim->setStartValue(d->actionsWidget->width());
