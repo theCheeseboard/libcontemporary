@@ -115,7 +115,7 @@ template<> struct tPromisePrivate<void> {
         }
 };
 
-template<typename T> class [[deprecated("tPromise is deprecated, use tAsync instead")]] tPromise {
+template<typename T> class [[deprecated("tPromise is deprecated, use QCoro library instead")]] tPromise {
 public:
     explicit tPromise(typename tPromisePrivate<T>::RunFunction functionToRun);
     explicit tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun);

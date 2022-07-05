@@ -15,7 +15,7 @@ foreach(f ${EXTRA_FUNCTIONS})
 endforeach()
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport OPTIONAL_COMPONENTS DBus)
-find_package(QCoro6 REQUIRED COMPONENTS Core)
+find_package(QCoro6 REQUIRED COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
 
@@ -28,7 +28,6 @@ add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAK
 set(SOURCES
         taboutdialog.cpp
         tapplication.cpp
-        tasync.cpp
         tcircularspinner.cpp
         tconditionalwidget.cpp
         tcsdtools.cpp
@@ -134,7 +133,6 @@ set(HEADERS
         "tstandardlabel.h"
         "tsubtitlelabel.h"
         "tcontentsizer.h"
-        "tasync.h"
         "plugins/plugininterface.h"
         "plugins/tpluginmanager.h"
     )
@@ -194,13 +192,18 @@ set_target_properties(libcontemporary PROPERTIES
         FRAMEWORK TRUE
         MACOSX_FRAMEWORK_IDENTIFIER com.vicr123.libcontemporary
         VERSION 6.0.0)
+cntp_enable_coroutines(libcontemporary)
 
-target_link_libraries(libcontemporary Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport QCoro::Coro)
+target_link_libraries(libcontemporary Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport QCoro::Coro QCoro::Core QCoro::Network)
 target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
 
 if(${Qt6DBus_FOUND})
     target_link_libraries(libcontemporary Qt6::DBus)
     target_compile_definitions(libcontemporary PRIVATE HAVE_QT_DBUS)
+ENDIF()
+
+if(${QCoro6DBus_FOUND})
+    target_link_libraries(libcontemporary QCoro::DBus)
 ENDIF()
 
 IF(${Unwind_FOUND})
