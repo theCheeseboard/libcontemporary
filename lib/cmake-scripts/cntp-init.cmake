@@ -18,6 +18,8 @@ function(cntp_init target cxx-standard)
     if(NOT ${DESKTOPID} STREQUAL "${DESKTOPID}-NOTFOUND")
         add_compile_definitions(T_APPMETA_DESKTOP_ID="${DESKTOPID}")
     endif()
+
+    cntp_enable_coroutines(${target})
 endfunction()
 
 function(cntp_init_plugin parent target cxx-standard share-subdir)
