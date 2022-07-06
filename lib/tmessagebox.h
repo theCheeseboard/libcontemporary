@@ -28,39 +28,43 @@ class tMessageBox;
 class tMessageBoxBackend;
 
 class LIBCONTEMPORARY_EXPORT tMessageBoxButton final : public QObject {
-    Q_OBJECT
-public:
-    explicit tMessageBoxButton(QObject *parent) : QObject(parent) { }
-signals:
-    void buttonPressed(bool checkboxChecked);
+        Q_OBJECT
+    public:
+        explicit tMessageBoxButton(QObject* parent) :
+            QObject(parent) {}
+    signals:
+        void buttonPressed(bool checkboxChecked);
 };
 
 struct tMessageBoxPrivate;
 class LIBCONTEMPORARY_EXPORT tMessageBox final : public QObject {
-    Q_OBJECT
-public:
-    explicit tMessageBox(QWidget *parent = nullptr);
-    ~tMessageBox();
+        Q_OBJECT
+    public:
+        explicit tMessageBox(QWidget* parent = nullptr);
+        ~tMessageBox();
 
-    void setIcon(QMessageBox::Icon style);
-    void setIcon(const QIcon &icon);
+        void setIcon(QMessageBox::Icon style);
+        void setIcon(const QIcon& icon);
 
-    tMessageBoxButton *addStandardButton(QMessageBox::StandardButton buttonType);
-    tMessageBoxButton *addButton(const QString &label, QMessageBox::ButtonRole buttonStyle);
+        tMessageBoxButton* addStandardButton(QMessageBox::StandardButton buttonType);
+        tMessageBoxButton* addButton(const QString& label, QMessageBox::ButtonRole buttonStyle);
 
-    void setDefaultButton(tMessageBoxButton *button);
-    void setTitleBarText(const QString &text);
-    void setMessageText(const QString &text);
-    void setInformativeText(const QString &text);
-    void setDetailedText(const QString &text);
-    void setCheckboxText(const QString &text);
+        void setDefaultButton(tMessageBoxButton* button);
+        void setTitleBarText(const QString& text);
+        void setMessageText(const QString& text);
+        void setInformativeText(const QString& text);
+        void setDetailedText(const QString& text);
+        void setCheckboxText(const QString& text);
 
-    void show(bool deleteOnClose = false);
-    void exec(bool deleteOnClose = false);
+        void show(bool deleteOnClose = false);
+        void exec(bool deleteOnClose = false);
 
-private:
-    tMessageBoxPrivate *d;
-    void initBackend(tMessageBoxBackend &backend);
+    signals:
+        void buttonPressed(tMessageBoxButton* button, bool checkboxChecked);
+
+    private:
+        tMessageBoxPrivate* d;
+        void initBackend(tMessageBoxBackend& backend);
 };
 
 #endif // TMESSAGEBOX_H

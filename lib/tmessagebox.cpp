@@ -22,23 +22,24 @@
 #include "private/tmessageboxbackend.h"
 
 #include "tapplication.h"
-#include <QPainter>
 #include "torderedmap.h"
+#include <QPainter>
 
 struct tMessageBoxPrivate {
-    QMessageBox::Icon iconStyle = QMessageBox::NoIcon;
-    QIcon icon;
-    tOrderedMap<tMessageBoxButton *, tMessageBoxButtonInfo *> buttonMap;
-    tMessageBoxButton *defaultButton{};
+        QMessageBox::Icon iconStyle = QMessageBox::NoIcon;
+        QIcon icon;
+        tOrderedMap<tMessageBoxButton*, tMessageBoxButtonInfo*> buttonMap;
+        tMessageBoxButton* defaultButton{};
 
-    QString titleText;
-    QString messageText;
-    QString informativeText;
-    QString detailedText;
-    QString checkboxText;
+        QString titleText;
+        QString messageText;
+        QString informativeText;
+        QString detailedText;
+        QString checkboxText;
 };
 
-tMessageBox::tMessageBox(QWidget *parent) : QObject(parent) {
+tMessageBox::tMessageBox(QWidget* parent) :
+    QObject(parent) {
     d = new tMessageBoxPrivate;
 }
 
@@ -50,28 +51,37 @@ void tMessageBox::setIcon(QMessageBox::Icon style) {
     d->iconStyle = style;
 }
 
-void tMessageBox::setIcon(const QIcon &icon) {
+void tMessageBox::setIcon(const QIcon& icon) {
     d->icon = icon;
 }
 
-tMessageBoxButton *tMessageBox::addStandardButton(QMessageBox::StandardButton buttonType) {
-    auto button = new tMessageBoxButton(this);
-    auto info = new tMessageBoxButtonInfo(button);
+tMessageBoxButton* tMessageBox::addStandardButton(QMessageBox::StandardButton buttonType) {
+    auto* button = new tMessageBoxButton(this);
+    auto* info = new tMessageBoxButtonInfo(button);
     info->buttonType = buttonType;
     d->buttonMap.append(button, info);
+
+    connect(button, &tMessageBoxButton::buttonPressed, this, [this, button](bool checkboxChecked) {
+        emit buttonPressed(button, checkboxChecked);
+    });
     return button;
 }
 
-tMessageBoxButton *tMessageBox::addButton(const QString &label, QMessageBox::ButtonRole buttonStyle) {
-    auto button = new tMessageBoxButton(this);
-    auto info = new tMessageBoxButtonInfo(button);
+tMessageBoxButton* tMessageBox::addButton(const QString& label, QMessageBox::ButtonRole buttonStyle) {
+    auto* button = new tMessageBoxButton(this);
+    auto* info = new tMessageBoxButtonInfo(button);
     info->label = label;
     info->buttonStyle = buttonStyle;
     d->buttonMap.append(button, info);
+
+    connect(button, &tMessageBoxButton::buttonPressed, this, [this, button](bool checkboxChecked) {
+        emit buttonPressed(button, checkboxChecked);
+    });
+
     return button;
 }
 
-void tMessageBox::setDefaultButton(tMessageBoxButton *button) {
+void tMessageBox::setDefaultButton(tMessageBoxButton* button) {
     if (!d->buttonMap.contains(button)) {
         // bug in caller; pretend this didn't happen
         return;
@@ -89,7 +99,7 @@ void tMessageBox::setTitleBarText(const QString& text) {
     d->titleText = text;
 }
 
-void tMessageBox::setMessageText(const QString &text) {
+void tMessageBox::setMessageText(const QString& text) {
     d->messageText = text;
 }
 
@@ -97,36 +107,35 @@ void tMessageBox::setInformativeText(const QString& text) {
     d->informativeText = text;
 }
 
-void tMessageBox::setDetailedText(const QString &text) {
+void tMessageBox::setDetailedText(const QString& text) {
     d->detailedText = text;
 }
 
-void tMessageBox::setCheckboxText(const QString &text) {
+void tMessageBox::setCheckboxText(const QString& text) {
     d->checkboxText = text;
 }
 
-
 void tMessageBox::initBackend(tMessageBoxBackend& backend) {
     if (d->buttonMap.isEmpty()) {
-        auto button = new tMessageBoxButton(this);
-        auto info = new tMessageBoxButtonInfo(button);
+        auto* button = new tMessageBoxButton(this);
+        auto* info = new tMessageBoxButtonInfo(button);
         info->buttonType = QMessageBox::StandardButton::Ok;
         d->buttonMap.append(button, info);
     }
 
     backend.init(d->iconStyle,
-                 d->icon,
-                 d->titleText,
-                 d->messageText,
-                 d->informativeText,
-                 d->detailedText,
-                 d->checkboxText,
-                 d->buttonMap);
-    backend.open(qobject_cast<QWidget *>(parent()));
+        d->icon,
+        d->titleText,
+        d->messageText,
+        d->informativeText,
+        d->detailedText,
+        d->checkboxText,
+        d->buttonMap);
+    backend.open(qobject_cast<QWidget*>(parent()));
 }
 
 void tMessageBox::show(bool deleteOnClose) {
-    auto backend = new tMessageBoxBackend(this);
+    auto* backend = new tMessageBoxBackend(this);
     initBackend(*backend);
     if (deleteOnClose) {
         connect(backend, &tMessageBoxBackend::canBeDestroyed, this, &tMessageBox::deleteLater);
