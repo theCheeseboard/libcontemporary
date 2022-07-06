@@ -16,7 +16,7 @@ define_property(TARGET PROPERTY CNTP_DATA_SUBDIR
     FULL_DOCS "Path within data directory to place standard data (usually the application name)")
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport OPTIONAL_COMPONENTS DBus)
-find_package(QCoro6 REQUIRED COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
+find_package(QCoro6 COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
 cntp_find_pkgconfig(Unwind libunwind)
 cntp_find_pkgconfig(X11 x11)
 cntp_find_pkgconfig(GsettingsQt gsettings-qt)

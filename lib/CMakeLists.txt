@@ -15,9 +15,14 @@ foreach(f ${EXTRA_FUNCTIONS})
 endforeach()
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport OPTIONAL_COMPONENTS DBus)
-find_package(QCoro6 REQUIRED COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
+find_package(QCoro6 COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
+
+
+if(NOT ${QCoro6Core_FOUND})
+    message(FATAL_ERROR "QCoro6 library not found")
+ENDIF()
 
 cntp_find_pkgconfig(Unwind libunwind FAIL_ON_ANDROID)
 cntp_find_pkgconfig(X11 x11)
