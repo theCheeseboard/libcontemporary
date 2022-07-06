@@ -43,15 +43,17 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
         auto info = it->second;
         QPushButton* pushButton;
         if (info->label.isEmpty()) {
+            auto buttonType = info->buttonType;
             pushButton = d->box.addButton(info->buttonType);
+            connect(&d->box, &QMessageBox::finished, this, [this, buttonType, tButton](int result) {
+                if (result == buttonType) emit tButton->buttonPressed(d->box.checkBox() ? d->box.checkBox()->isChecked() : false);
+            });
         } else {
             pushButton = d->box.addButton(info->label, info->buttonStyle);
-        }
-
-        connect(
-            pushButton, &QPushButton::clicked, this, [=] {
-                emit tButton->buttonPressed(d->box.checkBox() ? d->box.checkBox()->isChecked() : false);
+            connect(&d->box, &QMessageBox::buttonClicked, this, [this, pushButton, tButton](QAbstractButton* button) {
+                if (button == pushButton) emit tButton->buttonPressed(d->box.checkBox() ? d->box.checkBox()->isChecked() : false);
             });
+        }
 
         d->buttonStorage.insert(pushButton, tButton);
     }
