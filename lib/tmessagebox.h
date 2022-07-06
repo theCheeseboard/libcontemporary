@@ -23,6 +23,7 @@
 
 #include "libcontemporary_global.h"
 #include <QMessageBox>
+#include <Task>
 
 class tMessageBox;
 class tMessageBoxBackend;
@@ -58,9 +59,7 @@ class LIBCONTEMPORARY_EXPORT tMessageBox final : public QObject {
 
         void show(bool deleteOnClose = false);
         void exec(bool deleteOnClose = false);
-
-    signals:
-        void buttonPressed(tMessageBoxButton* button, bool checkboxChecked);
+        QCoro::Task<tMessageBoxButton*> presentAsync(bool* checkboxChecked = nullptr);
 
     private:
         tMessageBoxPrivate* d;

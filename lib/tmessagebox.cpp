@@ -23,6 +23,7 @@
 
 #include "tapplication.h"
 #include "torderedmap.h"
+#include <QCoroSignal>
 #include <QPainter>
 
 struct tMessageBoxPrivate {
@@ -36,6 +37,9 @@ struct tMessageBoxPrivate {
         QString informativeText;
         QString detailedText;
         QString checkboxText;
+
+        tMessageBoxButton* pressedButton = nullptr;
+        bool checkboxChecked = false;
 };
 
 tMessageBox::tMessageBox(QWidget* parent) :
@@ -62,7 +66,8 @@ tMessageBoxButton* tMessageBox::addStandardButton(QMessageBox::StandardButton bu
     d->buttonMap.append(button, info);
 
     connect(button, &tMessageBoxButton::buttonPressed, this, [this, button](bool checkboxChecked) {
-        emit buttonPressed(button, checkboxChecked);
+        d->pressedButton = button;
+        d->checkboxChecked = checkboxChecked;
     });
     return button;
 }
@@ -75,7 +80,8 @@ tMessageBoxButton* tMessageBox::addButton(const QString& label, QMessageBox::But
     d->buttonMap.append(button, info);
 
     connect(button, &tMessageBoxButton::buttonPressed, this, [this, button](bool checkboxChecked) {
-        emit buttonPressed(button, checkboxChecked);
+        d->pressedButton = button;
+        d->checkboxChecked = checkboxChecked;
     });
 
     return button;
@@ -153,4 +159,16 @@ void tMessageBox::exec(bool deleteOnClose) {
     }
 
     eventLoop.exec();
+}
+
+QCoro::Task<tMessageBoxButton*> tMessageBox::presentAsync(bool* checkboxChecked) {
+    tMessageBoxBackend backend(nullptr);
+    initBackend(backend);
+
+    co_await qCoro(&backend, &tMessageBoxBackend::canBeDestroyed);
+
+    tMessageBoxButton* button = d->pressedButton;
+    bool checked = d->checkboxChecked;
+    if (checkboxChecked) *checkboxChecked = checked;
+    co_return button;
 }
