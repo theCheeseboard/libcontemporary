@@ -1,7 +1,6 @@
 #ifndef TPLUGINMANAGER_H
 #define TPLUGINMANAGER_H
 
-#include "../libcontemporary_global.h"
 #include "../tapplication.h"
 #include "../tlogger.h"
 #include <QDir>
@@ -9,7 +8,7 @@
 #include <QPluginLoader>
 
 template<typename T>
-class LIBCONTEMPORARY_EXPORT tPluginManager {
+class tPluginManager {
     public:
         tPluginManager(){};
 
