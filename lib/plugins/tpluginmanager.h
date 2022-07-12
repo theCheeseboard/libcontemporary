@@ -23,6 +23,7 @@ class tPluginManager {
 #elif defined(Q_OS_WIN)
             searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
             searchPaths.append(qApp->applicationDirPath() + "/plugins");
+            searchPaths.append(qApp->applicationDirPath());
 #elif defined(Q_OS_MAC)
             searchPaths.append(tApplication::macOSBundlePath() + "/Contents/Resources/Plugins");
             searchPaths.append(tApplication::macOSBundlePath() + "/../../plugins");
