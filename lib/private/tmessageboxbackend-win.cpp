@@ -81,8 +81,8 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
     }
 
     if (!detailedText.isEmpty()) {
-        d->informativeText = detailedText.toStdWString();
-        d->td.pszExpandedInformation = d->informativeText.c_str();
+        d->detailedText = detailedText.toStdWString();
+        d->td.pszExpandedInformation = d->detailedText.c_str();
     }
 
     if (!checkboxText.isEmpty()) {
