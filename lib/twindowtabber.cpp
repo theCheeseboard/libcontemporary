@@ -9,8 +9,8 @@
 #include <QBoxLayout>
 #include <QScrollArea>
 #include <QScrollBar>
-#include <QTimer>
 #include <QScroller>
+#include <QTimer>
 #include <QToolButton>
 
 struct tWindowTabberPrivate {
@@ -22,6 +22,8 @@ struct tWindowTabberPrivate {
 
         bool scrollLeft = false;
         QTimer* scrollTimer;
+
+        bool updateWindowTitle = false;
 };
 
 tWindowTabber::tWindowTabber(QWidget* parent) {
@@ -88,6 +90,7 @@ void tWindowTabber::addButton(tWindowTabberButton* button) {
     button->setParent(this);
     d->buttons.append(button);
     d->tabLayout->addWidget(button);
+    connect(button, &tWindowTabberButton::changed, this, &tWindowTabber::doUpdateWindowTitle);
 }
 
 void tWindowTabber::setCurrent(tWindowTabberButton* button) {
@@ -96,6 +99,7 @@ void tWindowTabber::setCurrent(tWindowTabberButton* button) {
     }
 
     QScroller::scroller(d->scrollArea->viewport())->ensureVisible(button->geometry(), 0, 0);
+    this->doUpdateWindowTitle();
 }
 
 bool tWindowTabber::eventFilter(QObject* watched, QEvent* event) {
@@ -126,8 +130,28 @@ bool tWindowTabber::eventFilter(QObject* watched, QEvent* event) {
     return QObject::eventFilter(watched, event);
 }
 
+void tWindowTabber::doUpdateWindowTitle() {
+    if (!d->updateWindowTitle) return;
+
+    QWidget* window = this->window();
+    if (!window) return;
+
+    for (auto button : d->buttons) {
+        if (button->isSelected()) {
+            window->setWindowTitle(QStringLiteral("%1 - %2").arg(button->text(), tApplication::applicationDisplayName()));
+            return;
+        }
+    }
+    window->setWindowTitle(tApplication::applicationDisplayName());
+}
+
 void tWindowTabber::setShowNewTabButton(bool showNewTabButton) {
     d->newTabButton->setVisible(showNewTabButton);
+}
+
+void tWindowTabber::setUpdateWindowTitle(bool updateWindowTitle) {
+    d->updateWindowTitle = updateWindowTitle;
+    this->doUpdateWindowTitle();
 }
 
 void tWindowTabber::removeButton(tWindowTabberButton* button) {

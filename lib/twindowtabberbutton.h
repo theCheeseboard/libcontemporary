@@ -21,6 +21,8 @@ class LIBCONTEMPORARY_EXPORT tWindowTabberButton : public QWidget {
 
         void setText(const QString& text);
         void setIcon(const QIcon& icon);
+
+        bool isSelected();
         void setSelected(bool selected);
 
         QString text();

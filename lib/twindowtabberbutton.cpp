@@ -116,6 +116,10 @@ void tWindowTabberButton::setIcon(const QIcon& icon) {
     emit changed();
 }
 
+bool tWindowTabberButton::isSelected() {
+    return d->rootButton->isChecked();
+}
+
 void tWindowTabberButton::configureAction(QAction* action) {
     QToolButton* button = d->buttons.value(action);
     button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
