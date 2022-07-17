@@ -34,6 +34,7 @@ class tStackedWidgetPrivate {
         QAbstractAnimation* currentAnimation = nullptr;
 
         tStackedWidget* parent;
+        QWidget* defaultWidget = nullptr;
 };
 
 tStackedWidget::tStackedWidget(QWidget* parent) :
@@ -42,14 +43,15 @@ tStackedWidget::tStackedWidget(QWidget* parent) :
 }
 
 tStackedWidget::~tStackedWidget() {
+    if (d->defaultWidget) d->defaultWidget->deleteLater();
     delete d;
 }
 
-void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
-    if (doAnimation) {
+void tStackedWidget::setCurrentIndex(int index, Animation animation) {
+    if (animation != None) {
         // Do some checks before setting the current index.
         if (currentIndex() != index && !d->doingNewAnimation) {
-            doSetCurrentIndex(index);
+            doSetCurrentIndex(index, animation == DefaultAnimation ? d->anim : animation);
         }
     } else {
         QStackedWidget::setCurrentIndex(index);
@@ -59,7 +61,7 @@ void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
     }
 }
 
-void tStackedWidget::doSetCurrentIndex(int index) {
+void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
     // Check if Power Stretch is on or if animations are disabled
     if (libContemporaryCommon::instance()->powerStretchEnabled() || !libContemporaryCommon::instance()->allowSystemAnimations()) {
         // Forego animations; power stretch is on
@@ -75,7 +77,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                 d->currentAnimation->stop();
             }
 
-            switch (d->anim) {
+            switch (animation) {
                 case None:
                     {
                         QStackedWidget::setCurrentIndex(index);
@@ -247,16 +249,22 @@ void tStackedWidget::setCurrentWidget(QWidget* w, bool doAnimation) {
     this->setCurrentIndex(indexOf(w), doAnimation);
 }
 
+void tStackedWidget::setCurrentWidget(QWidget* w, Animation animation) {
+    this->setCurrentIndex(indexOf(w), animation);
+}
+
 tStackedWidget::Animation tStackedWidget::CurrentAnimation() {
     return d->anim;
 }
 
 void tStackedWidget::setCurrentAnimation(Animation animation) {
+    if (animation == DefaultAnimation) return;
     d->anim = animation;
     emit CurrentAnimationChanged(animation);
 }
 
 int tStackedWidget::addWidget(QWidget* w) {
+    if (d->defaultWidget) d->defaultWidget->hide();
     w->setAutoFillBackground(true);
     int index = QStackedWidget::addWidget(w);
     emit widgetAdded();
@@ -264,6 +272,7 @@ int tStackedWidget::addWidget(QWidget* w) {
 }
 
 int tStackedWidget::insertWidget(int index, QWidget* w) {
+    if (d->defaultWidget) d->defaultWidget->hide();
     w->setAutoFillBackground(true);
     int indexReturn = QStackedWidget::insertWidget(index, w);
     emit widgetAdded();
@@ -273,8 +282,24 @@ int tStackedWidget::insertWidget(int index, QWidget* w) {
 void tStackedWidget::removeWidget(QWidget* w) {
     emit removingWidget(w);
     QStackedWidget::removeWidget(w);
+
+    if (this->count() == 0 && d->defaultWidget) d->defaultWidget->show();
+}
+
+void tStackedWidget::setDefaultWidget(QWidget* defaultWidget) {
+    d->defaultWidget = defaultWidget;
+    if (defaultWidget) {
+        d->defaultWidget->setGeometry(QRect(QPoint(0, 0), this->size()));
+        d->defaultWidget->setParent(this);
+        if (this->count() == 0) d->defaultWidget->show();
+    }
+}
+
+void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
+    this->setCurrentIndex(index, doAnimation ? d->anim : None);
 }
 
 void tStackedWidget::resizeEvent(QResizeEvent* event) {
+    if (d->defaultWidget) d->defaultWidget->resize(this->size());
     emit resized();
 }

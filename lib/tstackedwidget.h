@@ -46,13 +46,16 @@ class LIBCONTEMPORARY_EXPORT tStackedWidget : public QStackedWidget {
             SlideHorizontal,
             SlideVertical,
             Fade,
-            Lift
+            Lift,
+            DefaultAnimation
         };
         Animation CurrentAnimation();
 
         int addWidget(QWidget* w);
         int insertWidget(int index, QWidget* w);
         void removeWidget(QWidget* w);
+
+        void setDefaultWidget(QWidget* defaultWidget);
 
     signals:
         void switchingFrame(int switchTo);
@@ -63,7 +66,9 @@ class LIBCONTEMPORARY_EXPORT tStackedWidget : public QStackedWidget {
 
     public slots:
         void setCurrentIndex(int index, bool doAnimation = true);
+        void setCurrentIndex(int index, Animation animation);
         void setCurrentWidget(QWidget* w, bool doAnimation = true);
+        void setCurrentWidget(QWidget* w, Animation animation);
         void setCurrentAnimation(Animation animation);
 
     private:
@@ -71,7 +76,7 @@ class LIBCONTEMPORARY_EXPORT tStackedWidget : public QStackedWidget {
 
         void resizeEvent(QResizeEvent* event);
 
-        void doSetCurrentIndex(int index);
+        void doSetCurrentIndex(int index, Animation animation);
 };
 
 #endif // ANIMATEDSTACKEDWIDGET_H
