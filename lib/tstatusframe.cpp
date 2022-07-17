@@ -20,11 +20,13 @@
 #include "tstatusframe.h"
 #include "ui_tstatusframe.h"
 
-struct tStatusFramePrivate {
-    QString title;
-    QString text;
+#include <QPushButton>
 
-    tStatusFrame::State state = tStatusFrame::NoState;
+struct tStatusFramePrivate {
+        QString title;
+        QString text;
+
+        tStatusFrame::State state = tStatusFrame::NoState;
 };
 
 tStatusFrame::tStatusFrame(QWidget* parent) :
@@ -87,4 +89,10 @@ void tStatusFrame::setState(const tStatusFrame::State& state) {
 
     this->setPalette(pal);
     emit stateChanged();
+}
+
+QPushButton* tStatusFrame::addButton() {
+    auto button = new QPushButton();
+    ui->buttonLayout->addWidget(button);
+    return button;
 }

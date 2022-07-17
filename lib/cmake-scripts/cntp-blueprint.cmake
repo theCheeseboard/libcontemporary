@@ -1,3 +1,5 @@
+include_guard()
+
 option(FORCE_BLUEPRINT "Force a Blueprint build (FORCE_STABLE overrides)" OFF)
 option(FORCE_STABLE "Force a Stable build (overrides FORCE_BLUEPRINT)" OFF)
 

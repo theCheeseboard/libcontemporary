@@ -27,6 +27,7 @@ namespace Ui {
     class tStatusFrame;
 }
 
+class QPushButton;
 struct tStatusFramePrivate;
 class LIBCONTEMPORARY_EXPORT tStatusFrame : public QFrame {
         Q_OBJECT
@@ -55,6 +56,8 @@ class LIBCONTEMPORARY_EXPORT tStatusFrame : public QFrame {
         void setState(const State& state);
 
         void addActionWidget(QWidget* widget);
+
+        QPushButton* addButton();
 
     signals:
         void titleChanged();

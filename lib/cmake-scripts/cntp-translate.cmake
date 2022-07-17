@@ -3,9 +3,6 @@ function(cntp_translate target)
     cntp_get_target_share_dir(SHARE_DIR ${target})
 
     file(GLOB TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/*.ts)
-    #list(PREPEND TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/en_US.ts)
-
-    message(STATUS "TRX ${TRANSLATION_FILES}")
 
     qt_add_translations(${target}
         TS_FILES ${TRANSLATION_FILES}

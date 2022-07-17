@@ -22,8 +22,8 @@
 #define TMESSAGEBOX_H
 
 #include "libcontemporary_global.h"
+#include <QCoroTask>
 #include <QMessageBox>
-#include <Task>
 
 class tMessageBox;
 class tMessageBoxBackend;
