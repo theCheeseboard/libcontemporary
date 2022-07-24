@@ -170,6 +170,10 @@ QColor libContemporaryCommon::lineColor(QColor textColor) {
     return textColor;
 }
 
+QString libContemporaryCommon::humanReadablePartJoinString() {
+    return QStringLiteral(" · ");
+}
+
 #ifdef QT_WIDGETS_LIB
 void libContemporaryCommon::tintImage(QImage& image, QColor tint) {
     // bool doPaint = true;

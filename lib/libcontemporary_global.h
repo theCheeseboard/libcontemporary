@@ -106,6 +106,8 @@ class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
         /// \return The colour to draw lines in
         static QColor lineColor(QColor textColor);
 
+        static QString humanReadablePartJoinString();
+
     public Q_SLOTS:
         /// Get whether Power Stretch (or system equivalent) is enabled.
         /// \return True if Power Stretch is enabled
