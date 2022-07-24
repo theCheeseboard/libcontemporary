@@ -83,6 +83,10 @@ set(SOURCES
         jobs/jobspopover.cpp
         private/errorflashwidget.cpp private/errorflashwidget.ui
 
+        tsettingswindow/tsettingswindow.cpp tsettingswindow/tsettingswindow.ui
+        tsettingswindow/tsettingspane.cpp
+        tsettingswindow/tsettingswindowdelegate.cpp
+
         taboutdialog.ui
         tinputdialog.ui
         tshortcuthud.ui
@@ -97,54 +101,59 @@ set(SOURCES
         "private/tmessageboxbackend.h")
 
 set(HEADERS
-        "taboutdialog.h"
-        "tapplication.h"
-        "tcircularspinner.h"
-        "tconditionalwidget.h"
-        "tcsdtools.h"
-        "tdatetimepicker.h"
-        "terrorflash.h"
-        "libcontemporary_global.h"
-        "thelpmenu.h"
-        "ticon.h"
-        "tinputdialog.h"
-        "tjob.h"
-        "tjobmanager.h"
-        "tlocale.h"
-        "tlogger.h"
-        "tmessagebox.h"
-        "tnotification.h"
-        "torderedmap.h"
-        "tpaintcalculator.h"
-        "tpopover.h"
-        "tpromise.h"
-        "tprintpopover.h"
-        "tpropertyanimation.h"
-        "tscrim.h"
-        "tsettings.h"
-        "tshortcuthud.h"
-        "tstackedwidget.h"
-        "tstatusframe.h"
-        "tstylemanager.h"
-        "tswitch.h"
-        "tsystemsound.h"
-        "ttitlelabel.h"
-        "ttoast.h"
-        "tvariantanimation.h"
-        "tvirtualkeyboard.h"
-        "twindowtabber.h"
-        "twindowtabberbutton.h"
-        "tx11info.h"
-        "tstandardlabel.h"
-        "tsubtitlelabel.h"
-        "tcontentsizer.h"
-        "plugins/plugininterface.h"
-        "plugins/tpluginmanager.h"
+        taboutdialog.h
+        tapplication.h
+        tcircularspinner.h
+        tconditionalwidget.h
+        tcsdtools.h
+        tdatetimepicker.h
+        terrorflash.h
+        libcontemporary_global.h
+        thelpmenu.h
+        ticon.h
+        tinputdialog.h
+        tjob.h
+        tjobmanager.h
+        tlocale.h
+        tlogger.h
+        tmessagebox.h
+        tnotification.h
+        torderedmap.h
+        tpaintcalculator.h
+        tpopover.h
+        tpromise.h
+        tprintpopover.h
+        tpropertyanimation.h
+        tscrim.h
+        tsettings.h
+        tshortcuthud.h
+        tstackedwidget.h
+        tstatusframe.h
+        tstylemanager.h
+        tswitch.h
+        tsystemsound.h
+        ttitlelabel.h
+        ttoast.h
+        tvariantanimation.h
+        tvirtualkeyboard.h
+        twindowtabber.h
+        twindowtabberbutton.h
+        tx11info.h
+        tstandardlabel.h
+        tsubtitlelabel.h
+        tcontentsizer.h
+        plugins/plugininterface.h
+        plugins/tpluginmanager.h
+
+        tsettingswindow/tsettingswindow.h
+        tsettingswindow/tsettingspane.h
     )
 
 
 set(PRIVATE_HEADERS
-    private/errorflashwidget.h)
+    private/errorflashwidget.h
+    tsettingswindow/tsettingswindowdelegate.h
+)
 
 
 if(${Qt6DBus_FOUND})
