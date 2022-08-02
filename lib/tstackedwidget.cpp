@@ -32,7 +32,7 @@ class tStackedWidgetPrivate {
         QSettings settings;
 
         tStackedWidget::Animation anim = tStackedWidget::None;
-        QAbstractAnimation* currentAnimation = nullptr;
+        std::function<void()> stopAnimations = nullptr;
 
         tStackedWidget* parent;
         QWidget* defaultWidget = nullptr;
@@ -51,10 +51,11 @@ tStackedWidget::~tStackedWidget() {
 void tStackedWidget::setCurrentIndex(int index, Animation animation) {
     if (animation != None) {
         // Do some checks before setting the current index.
-        if (d->doingNewAnimation != index && !d->doingNewAnimation) {
+        if (d->animatingIndex != index && !d->doingNewAnimation) {
             doSetCurrentIndex(index, animation == DefaultAnimation ? d->anim : animation);
         }
     } else {
+        d->animatingIndex = index;
         QStackedWidget::setCurrentIndex(index);
         d->doingNewAnimation = false;
 
@@ -76,8 +77,8 @@ void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
         if (nextWidget == nullptr) {
             QStackedWidget::setCurrentIndex(index);
         } else {
-            if (d->currentAnimation != nullptr) {
-                d->currentAnimation->stop();
+            if (d->stopAnimations) {
+                d->stopAnimations();
             }
 
             switch (animation) {
@@ -88,86 +89,94 @@ void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
                     }
                 case SlideHorizontal:
                     {
-                        QRect newGeometry;
+                        bool moveLeft;
                         if ((currentIndex() < index && !QApplication::isRightToLeft()) || (currentIndex() > index && QApplication::isRightToLeft())) {
-                            nextWidget->setGeometry(this->width(), 0, this->width(), this->height());
-                            newGeometry.setRect(-this->width() / 8, 0, this->width(), this->height());
+                            moveLeft = true;
                         } else {
-                            nextWidget->setGeometry(-this->width(), 0, this->width(), this->height());
-                            newGeometry.setRect(this->width() / 8, 0, this->width(), this->height());
+                            moveLeft = false;
                         }
 
                         nextWidget->show();
                         nextWidget->raise();
 
-                        auto* group = new QParallelAnimationGroup;
-                        auto* animation = new tPropertyAnimation(nextWidget, "geometry");
-                        animation->setStartValue(nextWidget->geometry());
-                        animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                        auto* animation = new tVariantAnimation();
+                        animation->setStartValue(0.0);
+                        animation->setEndValue(1.0);
                         animation->setEasingCurve(QEasingCurve::OutCubic);
                         animation->setDuration(250);
-                        connect(this, &tStackedWidget::resized, animation, [this, animation] {
-                            animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                        connect(animation, &tVariantAnimation::valueChanged, this, [this, moveLeft, nextWidget, currentWidget](QVariant value) {
+                            auto progress = value.toReal();
+                            auto geometry = QRect(QPoint(0, 0), this->size());
+
+                            QRect currentWidgetRect;
+                            QRect newWidgetRect;
+                            if (moveLeft) {
+                                newWidgetRect = geometry.translated(this->width() * (1 - progress), 0);
+                                currentWidgetRect = geometry.translated(-this->width() / 8 * progress, 0);
+                            } else {
+                                newWidgetRect = geometry.translated(-this->width() * (1 - progress), 0);
+                                currentWidgetRect = geometry.translated(this->width() / 8 * progress, 0);
+                            }
+
+                            currentWidget->setGeometry(currentWidgetRect);
+                            nextWidget->setGeometry(newWidgetRect);
                         });
-                        group->addAnimation(animation);
-
-                        auto* animation2 = new tPropertyAnimation(currentWidget, "geometry");
-                        animation2->setStartValue(currentWidget->geometry());
-                        animation2->setEndValue(newGeometry);
-                        animation2->setEasingCurve(QEasingCurve::OutCubic);
-                        animation2->setDuration(250);
-                        group->addAnimation(animation2);
-
-                        connect(group, &QParallelAnimationGroup::finished, this, [this, index, group] {
+                        connect(animation, &tPropertyAnimation::finished, this, [this, index] {
                             QStackedWidget::setCurrentIndex(index);
                             d->doingNewAnimation = false;
-                            group->deleteLater();
-                            d->currentAnimation = nullptr;
+                            d->stopAnimations = nullptr;
                         });
-                        group->start();
-                        d->currentAnimation = group;
+                        animation->start();
+
+                        d->stopAnimations = [animation] {
+                            animation->stop();
+                        };
                         break;
                     }
                 case SlideVertical:
                     {
-                        QRect newGeometry;
-                        if (currentIndex() < index) {
-                            nextWidget->setGeometry(0, this->height(), this->width(), this->height());
-                            newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
+                        bool moveUp;
+                        if ((currentIndex() < index && !QApplication::isRightToLeft()) || (currentIndex() > index && QApplication::isRightToLeft())) {
+                            moveUp = true;
                         } else {
-                            nextWidget->setGeometry(0, -this->height(), this->width(), this->height());
-                            newGeometry.setRect(0, this->height() / 8, this->width(), this->height());
+                            moveUp = false;
                         }
 
                         nextWidget->show();
                         nextWidget->raise();
 
-                        auto* group = new QParallelAnimationGroup;
-                        auto* animation = new tPropertyAnimation(nextWidget, "geometry");
-                        animation->setStartValue(nextWidget->geometry());
-                        animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                        auto* animation = new tVariantAnimation();
+                        animation->setStartValue(0.0);
+                        animation->setEndValue(1.0);
                         animation->setEasingCurve(QEasingCurve::OutCubic);
                         animation->setDuration(250);
-                        connect(this, &tStackedWidget::resized, animation, [=] {
-                            animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                        connect(animation, &tVariantAnimation::valueChanged, this, [this, moveUp, nextWidget, currentWidget](QVariant value) {
+                            auto progress = value.toReal();
+                            auto geometry = QRect(QPoint(0, 0), this->size());
+
+                            QRect currentWidgetRect;
+                            QRect newWidgetRect;
+                            if (moveUp) {
+                                newWidgetRect = geometry.translated(0, this->height() * (1 - progress));
+                                currentWidgetRect = geometry.translated(0, -this->height() / 8 * progress);
+                            } else {
+                                newWidgetRect = geometry.translated(0, -this->height() * (1 - progress));
+                                currentWidgetRect = geometry.translated(0, this->height() / 8 * progress);
+                            }
+
+                            currentWidget->setGeometry(currentWidgetRect);
+                            nextWidget->setGeometry(newWidgetRect);
                         });
-                        group->addAnimation(animation);
-
-                        auto* animation2 = new tPropertyAnimation(currentWidget, "geometry");
-                        animation2->setStartValue(currentWidget->geometry());
-                        animation2->setEndValue(newGeometry);
-                        animation2->setEasingCurve(QEasingCurve::OutCubic);
-                        animation2->setDuration(250);
-                        group->addAnimation(animation2);
-
-                        connect(group, &QParallelAnimationGroup::finished, this, [this, group, index] {
+                        connect(animation, &tPropertyAnimation::finished, this, [this, index] {
                             QStackedWidget::setCurrentIndex(index);
                             d->doingNewAnimation = false;
-                            group->deleteLater();
-                            d->currentAnimation = nullptr;
+                            d->stopAnimations = nullptr;
                         });
-                        group->start();
-                        d->currentAnimation = group;
+                        animation->start();
+
+                        d->stopAnimations = [animation] {
+                            animation->stop();
+                        };
                         break;
                     }
                 case Fade:
@@ -189,22 +198,18 @@ void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
                             QStackedWidget::setCurrentIndex(index);
                             anim->deleteLater();
                             effect->deleteLater();
-                            d->currentAnimation = nullptr;
+                            d->stopAnimations = nullptr;
                         });
                         anim->start();
-                        d->currentAnimation = anim;
+
+                        d->stopAnimations = [anim] {
+                            anim->stop();
+                        };
                         break;
                     }
                 case Lift:
                     {
-                        // QRect newGeometry;
-                        // if (currentIndex() < index) {
                         nextWidget->setGeometry(0, this->height() / 8, this->width(), this->height());
-                        // newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
-                        // } else {
-                        //     nextWidget->setGeometry(0, -this->height(), this->width(), this->height());
-                        //     newGeometry.setRect(0, this->height() / 8, this->width(), this->height());
-                        // }
 
                         nextWidget->show();
                         nextWidget->raise();
@@ -236,10 +241,14 @@ void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
                             d->doingNewAnimation = false;
                             group->deleteLater();
                             effect->deleteLater();
-                            d->currentAnimation = nullptr;
+                            d->stopAnimations = nullptr;
                         });
                         group->start();
-                        d->currentAnimation = group;
+
+                        d->stopAnimations = [group] {
+                            group->stop();
+                        };
+
                         break;
                     }
             }
