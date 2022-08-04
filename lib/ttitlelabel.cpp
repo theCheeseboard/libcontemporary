@@ -19,19 +19,21 @@
  ******************************************************************************/
 #include "ttitlelabel.h"
 
+#include "ticon.h"
+#include <QApplication>
+#include <QMetaMethod>
 #include <QPainter>
 #include <QToolButton>
-#include <QApplication>
-#include "ticon.h"
 
 struct tTitleLabelPrivate {
-    QToolButton* backButton;
-    bool backButtonShown = false;
-    bool backButtonIsMenu = false;
-    bool drawBottomBorder = true;
+        QToolButton* backButton;
+        bool backButtonShown = false;
+        bool backButtonIsMenu = false;
+        bool drawBottomBorder = true;
 };
 
-tTitleLabel::tTitleLabel(QWidget* parent) : QLabel(parent) {
+tTitleLabel::tTitleLabel(QWidget* parent) :
+    QLabel(parent) {
     d = new tTitleLabelPrivate();
 
     d->backButton = new QToolButton(this);
@@ -54,7 +56,7 @@ tTitleLabel::~tTitleLabel() {
 }
 
 QSize tTitleLabel::sizeHint() const {
-    //TODO: Account for actions
+    // TODO: Account for actions
     QSize labelSize = QLabel::sizeHint();
     labelSize.setHeight(qMax(labelSize.height(), d->backButton->sizeHint().height()));
     labelSize.rheight()++;
@@ -125,5 +127,11 @@ void tTitleLabel::resizeEvent(QResizeEvent* event) {
 
     if (this->layoutDirection() == Qt::RightToLeft) {
         d->backButton->move(this->width() - d->backButton->width(), 0);
+    }
+}
+
+void tTitleLabel::connectNotify(const QMetaMethod& signal) {
+    if (signal == QMetaMethod::fromSignal(&tTitleLabel::backButtonClicked)) {
+        this->setBackButtonShown(true);
     }
 }
