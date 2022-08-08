@@ -52,7 +52,7 @@ module.exports = async options => {
 
                 if (process.platform === 'win32') {
                     //HACK: Replace path seperators
-                    arg = arg.replace("\\", "/");
+                    arg = arg.replaceAll("\\", "/");
                 }
 
                 cmakeArgs.push(arg);
