@@ -1,0 +1,11 @@
+{
+    "name": "libContemporary",
+    "subprojects": [
+        {
+            "name": "libContemporary Desktop",
+            "type": "qt",
+            "path": "/lib/translations/{lang}.ts",
+            "baseLang": "en_US"
+        }
+    ]
+}
