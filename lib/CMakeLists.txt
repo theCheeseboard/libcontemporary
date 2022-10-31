@@ -14,7 +14,7 @@ foreach(f ${EXTRA_FUNCTIONS})
     include(${f})
 endforeach()
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport OPTIONAL_COMPONENTS DBus)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport LinguistTools OPTIONAL_COMPONENTS DBus)
 find_package(QCoro6 COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
@@ -252,6 +252,14 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ELSE()
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/libcontemporary)
 ENDIF()
+
+file(GLOB TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/*.ts)
+
+qt_add_translations(libcontemporary
+    TS_FILES ${TRANSLATION_FILES}
+    QM_FILES_OUTPUT_VARIABLE QM_FILES
+)
+add_dependencies(libcontemporary_lrelease libcontemporary_lupdate)
 
 install(TARGETS libcontemporary
         EXPORT libcontemporaryTargets
