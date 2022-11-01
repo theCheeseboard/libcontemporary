@@ -1,386 +1,379 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
-<context>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TS version="2.1">
+  <context>
     <name>DebugLogModel</name>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="273"/>
-        <source>Timestamp</source>
-        <translation>Dấu thời gian</translation>
+      <translation>Dấu thời gian</translation>
+      <location filename="../private/debuglogwindow.cpp" line="273" />
+      <source>Timestamp</source>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="275"/>
-        <source>Context</source>
-        <translation>Bối cảnh</translation>
+      <translation>Bối cảnh</translation>
+      <location filename="../private/debuglogwindow.cpp" line="275" />
+      <source>Context</source>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="277"/>
-        <source>Message</source>
-        <translation>Lời báo</translation>
+      <translation>Lời báo</translation>
+      <location filename="../private/debuglogwindow.cpp" line="277" />
+      <source>Message</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>DebugLogPopover</name>
     <message>
-        <location filename="../private/debuglogpopover.ui" line="35"/>
-        <source>Debug Log Item</source>
-        <translation>Mục nhật ký</translation>
+      <translation>Mục nhật ký</translation>
+      <location filename="../private/debuglogpopover.ui" line="35" />
+      <source>Debug Log Item</source>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="37"/>
-        <source>Timestamp</source>
-        <translation>Dấu thời gian</translation>
+      <translation>Dấu thời gian</translation>
+      <location filename="../private/debuglogpopover.cpp" line="37" />
+      <source>Timestamp</source>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="38"/>
-        <source>Context</source>
-        <translation>Bối cảnh</translation>
+      <translation>Bối cảnh</translation>
+      <location filename="../private/debuglogpopover.cpp" line="38" />
+      <source>Context</source>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="39"/>
-        <source>Severity</source>
-        <translation>Độ nghiêm trọng</translation>
+      <translation>Độ nghiêm trọng</translation>
+      <location filename="../private/debuglogpopover.cpp" line="39" />
+      <source>Severity</source>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="40"/>
-        <source>File</source>
-        <translation>Tệp</translation>
+      <translation>Tệp</translation>
+      <location filename="../private/debuglogpopover.cpp" line="40" />
+      <source>File</source>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="40"/>
-        <location filename="../private/debuglogpopover.cpp" line="41"/>
-        <source>[unavailable]</source>
-        <translation>[không có sẵn]</translation>
+      <translation>[không có sẵn]</translation>
+      <location filename="../private/debuglogpopover.cpp" line="40" />
+      <location filename="../private/debuglogpopover.cpp" line="41" />
+      <source>[unavailable]</source>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="41"/>
-        <source>Function</source>
-        <translation>Hàm</translation>
+      <translation>Hàm</translation>
+      <location filename="../private/debuglogpopover.cpp" line="41" />
+      <source>Function</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>DebugLogWindow</name>
     <message>
-        <location filename="../private/debuglogwindow.ui" line="14"/>
-        <source>Debug Log</source>
-        <translation>Nhật ký gỡ lỗi</translation>
+      <translation>Nhật ký gỡ lỗi</translation>
+      <location filename="../private/debuglogwindow.ui" line="14" />
+      <source>Debug Log</source>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.ui" line="80"/>
-        <source>Search Debug Log</source>
-        <translation>Tìm kiếm nhật ký</translation>
+      <translation>Tìm kiếm nhật ký</translation>
+      <location filename="../private/debuglogwindow.ui" line="80" />
+      <source>Search Debug Log</source>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.ui" line="156"/>
-        <source>Clear Log</source>
-        <translation>Xóa nhật ký</translation>
+      <translation>Xóa nhật ký</translation>
+      <location filename="../private/debuglogwindow.ui" line="156" />
+      <source>Clear Log</source>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.ui" line="183"/>
-        <source>Filter by Context</source>
-        <translation>Lọc bằng bối cảnh</translation>
+      <translation>Lọc bằng bối cảnh</translation>
+      <location filename="../private/debuglogwindow.ui" line="183" />
+      <source>Filter by Context</source>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="307"/>
-        <source>context</source>
-        <comment>Placeholder in search box</comment>
-        <translation>bối cảnh</translation>
+      <translation>bối cảnh</translation>
+      <location filename="../private/debuglogwindow.cpp" line="307" />
+      <source>context</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>JobsPopover</name>
     <message>
-        <location filename="../jobs/jobspopover.ui" line="35"/>
-        <source>Jobs</source>
-        <translation>Hoạt động</translation>
+      <translation>Hoạt động</translation>
+      <location filename="../jobs/jobspopover.ui" line="35" />
+      <source>Jobs</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../tapplication.cpp" line="97"/>
-        <source>Services</source>
-        <translation>Dịch vụ</translation>
+      <translation>Dịch vụ</translation>
+      <location filename="../tapplication.cpp" line="97" />
+      <source>Services</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="98"/>
-        <source>Hide %1</source>
-        <translation>Ẩn %1</translation>
+      <translation>Ẩn %1</translation>
+      <location filename="../tapplication.cpp" line="98" />
+      <source>Hide %1</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="99"/>
-        <source>Hide Others</source>
-        <translation>Ẩn các mục khác</translation>
+      <translation>Ẩn các mục khác</translation>
+      <location filename="../tapplication.cpp" line="99" />
+      <source>Hide Others</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="100"/>
-        <source>Show All</source>
-        <translation>Hiển thị tất cả</translation>
+      <translation>Hiển thị tất cả</translation>
+      <location filename="../tapplication.cpp" line="100" />
+      <source>Show All</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="101"/>
-        <source>Preferences...</source>
-        <translation>Cài đặt...</translation>
+      <translation>Cài đặt...</translation>
+      <location filename="../tapplication.cpp" line="101" />
+      <source>Preferences...</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="102"/>
-        <location filename="../thelpmenu.cpp" line="46"/>
-        <source>About %1</source>
-        <translation>Giới thiệu về %1</translation>
+      <translation>Giới thiệu về %1</translation>
+      <location filename="../tapplication.cpp" line="102" />
+      <location filename="../thelpmenu.cpp" line="46" />
+      <source>About %1</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="103"/>
-        <source>Quit %1</source>
-        <translation>Thoát %1</translation>
+      <translation>Thoát %1</translation>
+      <location filename="../tapplication.cpp" line="103" />
+      <source>Quit %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../tapplication.cpp" line="106"/>
-        <source>Displays version information.</source>
-        <translation>Hiển thị thông tin về phiên bản.</translation>
+      <translation>Hiển thị thông tin về phiên bản.</translation>
+      <location filename="../tapplication.cpp" line="106" />
+      <source>Displays version information.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="107"/>
-        <source>Displays this help.</source>
-        <translation>Hiển thị trợ giúp này.</translation>
+      <translation>Hiển thị trợ giúp này.</translation>
+      <location filename="../tapplication.cpp" line="107" />
+      <source>Displays this help.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="108"/>
-        <source>Unknown option &apos;%1&apos;.</source>
-        <translation>Không biết tùy chọn &apos;%1&apos;.</translation>
+      <translation>Không biết tùy chọn '%1'.</translation>
+      <location filename="../tapplication.cpp" line="108" />
+      <source>Unknown option '%1'.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="109"/>
-        <source>Unknown options: %1.</source>
-        <translation>Không biết các tùy chọn: %1.</translation>
+      <translation>Không biết các tùy chọn: %1.</translation>
+      <location filename="../tapplication.cpp" line="109" />
+      <source>Unknown options: %1.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="110"/>
-        <source>Missing value after &apos;%1&apos;.</source>
-        <translation>Thiếu đối số sau &apos;%1&apos;.</translation>
+      <translation>Thiếu đối số sau '%1'.</translation>
+      <location filename="../tapplication.cpp" line="110" />
+      <source>Missing value after '%1'.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="111"/>
-        <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation>Phát hiện đối số bất ngờ sau &apos;%1&apos;.</translation>
+      <translation>Phát hiện đối số bất ngờ sau '%1'.</translation>
+      <location filename="../tapplication.cpp" line="111" />
+      <source>Unexpected value after '%1'.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="112"/>
-        <source>[options]</source>
-        <translation>[tùy chọn]</translation>
+      <translation>[tùy chọn]</translation>
+      <location filename="../tapplication.cpp" line="112" />
+      <source>[options]</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="113"/>
-        <source>Usage: %1</source>
-        <translation>Cách dùng: %1</translation>
+      <translation>Cách dùng: %1</translation>
+      <location filename="../tapplication.cpp" line="113" />
+      <source>Usage: %1</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="114"/>
-        <source>Options:</source>
-        <translation>Tùy chọn:</translation>
+      <translation>Tùy chọn:</translation>
+      <location filename="../tapplication.cpp" line="114" />
+      <source>Options:</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="115"/>
-        <source>Arguments:</source>
-        <translation>Đối số:</translation>
+      <translation>Đối số:</translation>
+      <location filename="../tapplication.cpp" line="115" />
+      <source>Arguments:</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>tAboutDialog</name>
     <message>
-        <location filename="../taboutdialog.ui" line="194"/>
-        <source>SOFTWARE</source>
-        <translation>PHẦN MỀM</translation>
+      <translation>PHẦN MỀM</translation>
+      <location filename="../taboutdialog.ui" line="194" />
+      <source>SOFTWARE</source>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="239"/>
-        <source>COPYRIGHT</source>
-        <translation>BẢN QUYỀN</translation>
+      <translation>BẢN QUYỀN</translation>
+      <location filename="../taboutdialog.ui" line="239" />
+      <source>COPYRIGHT</source>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="299"/>
-        <source>OK</source>
-        <translation>OK</translation>
+      <translation>OK</translation>
+      <location filename="../taboutdialog.ui" line="299" />
+      <source>OK</source>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="15"/>
-        <location filename="../taboutdialog.cpp" line="16"/>
-        <source>About %1</source>
-        <translation>Giới thiệu về %1</translation>
+      <translation>Giới thiệu về %1</translation>
+      <location filename="../taboutdialog.cpp" line="15" />
+      <location filename="../taboutdialog.cpp" line="16" />
+      <source>About %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="600"/>
-        <source>Copyright © %1.</source>
-        <translation>Bản Quyền © %1.</translation>
+      <translation>Bản Quyền © %1.</translation>
+      <location filename="../tapplication.cpp" line="600" />
+      <source>Copyright © %1.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="572"/>
-        <location filename="../tapplication.cpp" line="575"/>
-        <location filename="../tapplication.cpp" line="578"/>
-        <location filename="../tapplication.cpp" line="581"/>
-        <location filename="../tapplication.cpp" line="584"/>
-        <location filename="../tapplication.cpp" line="587"/>
-        <location filename="../tapplication.cpp" line="590"/>
-        <location filename="../tapplication.cpp" line="593"/>
-        <source>Licensed under the terms of the %1.</source>
-        <translation>Được cấp phép theo điều khoản của %1.</translation>
+      <translation>Được cấp phép theo điều khoản của %1.</translation>
+      <location filename="../tapplication.cpp" line="572" />
+      <location filename="../tapplication.cpp" line="575" />
+      <location filename="../tapplication.cpp" line="578" />
+      <location filename="../tapplication.cpp" line="581" />
+      <location filename="../tapplication.cpp" line="584" />
+      <location filename="../tapplication.cpp" line="587" />
+      <location filename="../tapplication.cpp" line="590" />
+      <location filename="../tapplication.cpp" line="593" />
+      <source>Licensed under the terms of the %1.</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="572"/>
-        <source>GNU General Public License, version 3</source>
-        <translation>Giấy phép Công cộng GNU, phiên bản 3</translation>
+      <translation>Giấy phép Công cộng GNU, phiên bản 3</translation>
+      <location filename="../tapplication.cpp" line="572" />
+      <source>GNU General Public License, version 3</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="575"/>
-        <source>GNU General Public License, version 3, or later</source>
-        <translation>Giấy phép Công cộng GNU, phiên bản 3, hoặc mới hơn</translation>
+      <translation>Giấy phép Công cộng GNU, phiên bản 3, hoặc mới hơn</translation>
+      <location filename="../tapplication.cpp" line="575" />
+      <source>GNU General Public License, version 3, or later</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="578"/>
-        <source>GNU General Public License, version 2</source>
-        <translation>Giấy phép Công cộng GNU, phiên bản 2</translation>
+      <translation>Giấy phép Công cộng GNU, phiên bản 2</translation>
+      <location filename="../tapplication.cpp" line="578" />
+      <source>GNU General Public License, version 2</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="581"/>
-        <source>GNU General Public License, version 2, or later</source>
-        <translation>Giấy phép Công cộng GNU, phiên bản 2, hoặc mới hơn</translation>
+      <translation>Giấy phép Công cộng GNU, phiên bản 2, hoặc mới hơn</translation>
+      <location filename="../tapplication.cpp" line="581" />
+      <source>GNU General Public License, version 2, or later</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="584"/>
-        <source>GNU Lesser General Public License, version 3</source>
-        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3</translation>
+      <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3</translation>
+      <location filename="../tapplication.cpp" line="584" />
+      <source>GNU Lesser General Public License, version 3</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="587"/>
-        <source>GNU Lesser General Public License, version 3, or later</source>
-        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3, hoặc mới hơn</translation>
+      <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3, hoặc mới hơn</translation>
+      <location filename="../tapplication.cpp" line="587" />
+      <source>GNU Lesser General Public License, version 3, or later</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="590"/>
-        <source>GNU Lesser General Public License, version 2.1</source>
-        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1</translation>
+      <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1</translation>
+      <location filename="../tapplication.cpp" line="590" />
+      <source>GNU Lesser General Public License, version 2.1</source>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="593"/>
-        <source>GNU Lesser General Public License, version 2.1, or later</source>
-        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1, hoặc mới hơn</translation>
+      <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1, hoặc mới hơn</translation>
+      <location filename="../tapplication.cpp" line="593" />
+      <source>GNU Lesser General Public License, version 2.1, or later</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>tHelpMenu</name>
     <message>
-        <location filename="../thelpmenu.cpp" line="40"/>
-        <source>%1 Help</source>
-        <translation>Trợ giúp về %1</translation>
+      <translation>Trợ giúp về %1</translation>
+      <location filename="../thelpmenu.cpp" line="40" />
+      <source>%1 Help</source>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="43"/>
-        <source>File Bug</source>
-        <translation>Báo cáo lỗi</translation>
+      <translation>Báo cáo lỗi</translation>
+      <location filename="../thelpmenu.cpp" line="43" />
+      <source>File Bug</source>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="44"/>
-        <source>Sources</source>
-        <translation>Mã nguồn</translation>
+      <translation>Mã nguồn</translation>
+      <location filename="../thelpmenu.cpp" line="44" />
+      <source>Sources</source>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="45"/>
-        <source>View Debug Log</source>
-        <translation>Xem nhật ký gỡ lỗi</translation>
+      <translation>Xem nhật ký gỡ lỗi</translation>
+      <location filename="../thelpmenu.cpp" line="45" />
+      <source>View Debug Log</source>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="73"/>
-        <source>Help</source>
-        <translation>Trợ giúp</translation>
+      <translation>Trợ giúp</translation>
+      <location filename="../thelpmenu.cpp" line="73" />
+      <source>Help</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>tInputDialog</name>
     <message>
-        <location filename="../tinputdialog.ui" line="48"/>
-        <source>Cancel</source>
-        <translation>Hủy</translation>
+      <translation>Hủy</translation>
+      <location filename="../tinputdialog.ui" line="48" />
+      <source>Cancel</source>
     </message>
     <message>
-        <location filename="../tinputdialog.ui" line="55"/>
-        <source>OK</source>
-        <translation>OK</translation>
+      <translation>OK</translation>
+      <location filename="../tinputdialog.ui" line="55" />
+      <source>OK</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>tLogger</name>
     <message>
-        <location filename="../tlogger.cpp" line="106"/>
-        <source>Debug</source>
-        <comment>Severity Level</comment>
-        <translation>Gỡ Lỗi</translation>
+      <translation>Gỡ Lỗi</translation>
+      <location filename="../tlogger.cpp" line="106" />
+      <source>Debug</source>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="108"/>
-        <source>Warning</source>
-        <comment>Severity Level</comment>
-        <translation>Cảnh Báo</translation>
+      <translation>Cảnh Báo</translation>
+      <location filename="../tlogger.cpp" line="108" />
+      <source>Warning</source>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="110"/>
-        <source>Critical</source>
-        <comment>Severity Level</comment>
-        <translation>Quan Trọng</translation>
+      <translation>Quan Trọng</translation>
+      <location filename="../tlogger.cpp" line="110" />
+      <source>Critical</source>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="112"/>
-        <source>Fatal</source>
-        <comment>Severity Level</comment>
-        <translation>Gây Tử</translation>
+      <translation>Gây Tử</translation>
+      <location filename="../tlogger.cpp" line="112" />
+      <source>Fatal</source>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="114"/>
-        <source>Info</source>
-        <comment>Severity Level</comment>
-        <translation>Thông Tin</translation>
+      <translation>Thông Tin</translation>
+      <location filename="../tlogger.cpp" line="114" />
+      <source>Info</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>tPrintPopover</name>
     <message>
-        <location filename="../tprintpopover.ui" line="153"/>
-        <source>Copies</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../tprintpopover.ui" line="153" />
+      <source>Copies</source>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="172"/>
-        <source>PRINT OPTIONS</source>
-        <translation type="unfinished"></translation>
+      <translation>TÙY CHỌN IN</translation>
+      <location filename="../tprintpopover.ui" line="172" />
+      <source>PRINT OPTIONS</source>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="142"/>
-        <source>Print</source>
-        <translation type="unfinished"></translation>
+      <translation>In</translation>
+      <location filename="../tprintpopover.ui" line="142" />
+      <source>Print</source>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="128"/>
-        <source>Printer</source>
-        <translation type="unfinished"></translation>
+      <translation>Máy in</translation>
+      <location filename="../tprintpopover.ui" line="128" />
+      <source>Printer</source>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="112"/>
-        <source>Page Size</source>
-        <translation type="unfinished"></translation>
+      <translation>Kích thước giấy</translation>
+      <location filename="../tprintpopover.ui" line="112" />
+      <source>Page Size</source>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="135"/>
-        <source>Print in Grayscale</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../tprintpopover.ui" line="135" />
+      <source>Print in Grayscale</source>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="160"/>
-        <source>Double Sided</source>
-        <translation type="unfinished"></translation>
+      <translation>In hai mặt</translation>
+      <location filename="../tprintpopover.ui" line="160" />
+      <source>Double Sided</source>
     </message>
-</context>
+  </context>
 </TS>
