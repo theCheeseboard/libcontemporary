@@ -21,22 +21,21 @@
 #include "translatorproxy.h"
 
 struct TranslatorProxyPrivate {
-    QTranslator* primaryTranslator;
+        QTranslator* primaryTranslator;
 
-    static QStringList numberExtensions;
-    static QString accentReplacements;
+        static QStringList numberExtensions;
+        static QString accentReplacements;
 };
 
-QStringList TranslatorProxyPrivate::numberExtensions {
+QStringList TranslatorProxyPrivate::numberExtensions{
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"
-};
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"};
 
 QString TranslatorProxyPrivate::accentReplacements =
     QStringLiteral("AÅBβCÇDĐEÊGĜHĤIÎJĴKĶLĻMḾNÑOÖPÞRŔSŠTŢUÛVvWŴYÝZaåcçdðeéffgĝhĥiîjĵkķlļmḿnñoöpþrŕsštţuûvVwŵyýzƶ");
 
-TranslatorProxy::TranslatorProxy(QTranslator* parentTranslator, QObject* parent)
-    : QTranslator(parent) {
+TranslatorProxy::TranslatorProxy(QTranslator* parentTranslator, QObject* parent) :
+    QTranslator(parent) {
     d = new TranslatorProxyPrivate();
     d->primaryTranslator = parentTranslator;
 }

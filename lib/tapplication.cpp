@@ -516,7 +516,7 @@ void tApplication::installTranslators() {
     for (QString library : d->libraryTranslators) {
         QTranslator* translator = new QTranslator();
         for (auto dir : systemShareDirs()) {
-            if (localTranslator->load(locale, "", "", QDir(QDir(dir).absoluteFilePath(library)).absoluteFilePath("translations"))) break;
+            if (translator->load(locale, "", "", QDir(QDir(dir).absoluteFilePath(library)).absoluteFilePath("translations"))) break;
         }
         TranslatorProxy* translatorProxy = new TranslatorProxy(translator);
         installTranslator(translatorProxy);

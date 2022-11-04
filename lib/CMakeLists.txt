@@ -96,7 +96,7 @@ set(SOURCES
         private/debuglogwindow.ui
 
         thelibs_icons.qrc
-        thelibs_translations.qrc
+#        thelibs_translations.qrc
 
         "private/tmessageboxbackend.h")
 
@@ -260,6 +260,11 @@ qt_add_translations(libcontemporary
     QM_FILES_OUTPUT_VARIABLE QM_FILES
 )
 add_dependencies(libcontemporary_lrelease libcontemporary_lupdate)
+
+qt_add_resources(libcontemporary "thelibs_translations"
+    PREFIX "/the-libs/translations"
+    BASE "${CMAKE_CURRENT_BINARY_DIR}"
+    FILES "${QM_FILES}")
 
 install(TARGETS libcontemporary
         EXPORT libcontemporaryTargets
