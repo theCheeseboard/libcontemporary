@@ -34,7 +34,7 @@ runs:
       with:
         bundle: ${{ inputs.bundle-name }}
         manifest-path: ${{ inputs.manifest }}
-        cache-key: flatpak-builder-${{ github.sha }}
+        cache-key: flatpak-builder-${{ inputs.manifest }}
         arch: ${{ inputs.arch }}
     - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v4
       if: github.event_name != 'pull_request'
