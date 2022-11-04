@@ -37,10 +37,3 @@ runs:
       with:
         name: repo-${{ inputs.arch }}-${{ inputs.bundle-name }}
         path: repo/
-    - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v4
-      if: github.event_name != 'pull_request'
-      name: "Deploy"
-      with:
-        repository: ${{ inputs.repository }}
-        flat-manager-url: https://flatpak.vicr123.com
-        token: ${{ inputs.repo-token }}
