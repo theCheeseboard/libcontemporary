@@ -4,6 +4,12 @@ inputs:
   arch:
     description: 'Architecture to build Flatpak for'
     required: true
+  repo-token:
+    description: 'Token to authenticate to Flatpak server with'
+    required: true
+  repository:
+    description: 'Flatpak repository to deploy to'
+    required: true
   bundle-name:
     description: 'Name of the Flatpak bundle to output'
     required: true
@@ -28,15 +34,8 @@ runs:
       with:
         bundle: ${{ inputs.bundle-name }}
         manifest-path: ${{ inputs.manifest }}
+        cache-key: flatpak-builder-${{ github.sha }}
         arch: ${{ inputs.arch }}
-    - uses: actions/upload-artifact@v3
-      with:
-        name: ${{ inputs.arch }}-${{ inputs.bundle-name }}
-        path: ${{ inputs.bundle-name }}
-    - uses: actions/upload-artifact@v3
-      with:
-        name: repo-${{ inputs.arch }}-${{ inputs.bundle-name }}
-        path: repo/
     - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v4
       if: github.event_name != 'pull_request'
       name: "Deploy"
