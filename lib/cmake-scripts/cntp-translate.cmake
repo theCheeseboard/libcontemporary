@@ -33,6 +33,6 @@ function(cntp_translate target)
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         install(FILES ${QM_FILES}
-                DESTINATION ${CMAKE_INSTALL_DATADIR}/${SHARE_DIR}/translations)
+                DESTINATION ${SHARE_DIR}/translations)
     ENDIF()
 endfunction()
