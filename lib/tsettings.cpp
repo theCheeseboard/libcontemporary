@@ -76,7 +76,9 @@ struct tSettingsGlobals {
 #elif defined(Q_OS_WIN)
                     searchPaths.append(QDir(tApplication::applicationDirPath()).absoluteFilePath("defaults"));
 #else
-                    searchPaths.append(QDir(tApplication::shareDir()).absoluteFilePath("defaults"));
+                    for (auto dir : tApplication::shareDirs()) {
+                        searchPaths.append(QDir(dir).absoluteFilePath("defaults"));
+                    }
 #endif
 
                     for (const QString& searchPath : searchPaths) {

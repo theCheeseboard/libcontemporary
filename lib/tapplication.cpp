@@ -70,7 +70,7 @@ struct tApplicationPrivate {
         bool crashHandlingEnabled = false;
         QIcon applicationIcon;
 
-        QString shareDir;
+        QString applicationShareDir;
         QString genericName;
         QPixmap aboutDialogSplashGraphic;
         QList<QPair<QString, QString>> versions;
@@ -464,16 +464,24 @@ QIcon tApplication::applicationIcon() {
     return d->applicationIcon;
 }
 
+QStringList tApplication::shareDirs() {
+    QStringList list;
+    for (auto dir : systemShareDirs()) {
+        list.append(QDir(dir).absoluteFilePath(d->applicationShareDir));
+    }
+    return list;
+}
+
+QStringList tApplication::systemShareDirs() {
+    return qEnvironmentVariable("XDG_DATA_DIRS").split(":");
+}
+
 void tApplication::setApplicationIcon(QIcon icon) {
     d->applicationIcon = icon;
 }
 
-QString tApplication::shareDir() {
-    return d->shareDir;
-}
-
-void tApplication::setShareDir(QString shareDir) {
-    d->shareDir = shareDir;
+void tApplication::setApplicationShareDir(QString shareDir) {
+    d->applicationShareDir = shareDir;
 }
 
 void tApplication::installTranslators() {
@@ -495,7 +503,9 @@ void tApplication::installTranslators() {
         localTranslator->load(locale.name(), translationsPath);
     }
 #elif defined(Q_OS_LINUX)
-    localTranslator->load(locale, "", "", d->shareDir + "/translations");
+    for (auto dir : shareDirs()) {
+        if (localTranslator->load(locale, "", "", QDir(dir).absoluteFilePath("translations"))) break;
+    }
 #elif defined(Q_OS_WIN)
     localTranslator->load(locale, "", "", this->applicationDirPath() + "\\translations");
 #endif
@@ -505,7 +515,9 @@ void tApplication::installTranslators() {
 
     for (QString library : d->libraryTranslators) {
         QTranslator* translator = new QTranslator();
-        translator->load(locale, "", "", d->shareDir + "/../" + library + "/translations");
+        for (auto dir : systemShareDirs()) {
+            if (localTranslator->load(locale, "", "", QDir(QDir(dir).absoluteFilePath(library)).absoluteFilePath("translations"))) break;
+        }
         TranslatorProxy* translatorProxy = new TranslatorProxy(translator);
         installTranslator(translatorProxy);
         d->applicationTranslators.append(translatorProxy);
@@ -521,7 +533,10 @@ void tApplication::installTranslators() {
             translator->load(locale.name(), translationsPath);
         }
 #elif defined(Q_OS_LINUX)
-        translator->load(locale, "", "", d->shareDir + "/" + plugin + "/translations");
+        for (auto dir : shareDirs()) {
+            auto pluginPath = QDir(QDir("plugins").absoluteFilePath(plugin)).absoluteFilePath("translations");
+            if (translator->load(locale, "", "", QDir(dir).absoluteFilePath(pluginPath))) break;
+        }
 #elif defined(Q_OS_WIN)
         translator->load(locale, "", "", this->applicationDirPath() + "\\plugins\\" + plugin + "\\translations");
 #endif

@@ -63,7 +63,8 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         Q_DECLARE_FLAGS(Platforms, Platform)
 
         static QIcon applicationIcon();
-        static QString shareDir();
+        static QStringList shareDirs();
+        static QStringList systemShareDirs();
         static QString genericName();
         static QPixmap aboutDialogSplashGraphic();
         static QList<QPair<QString, QString>> versions();
@@ -88,7 +89,7 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         static QStringList exportBacktrace();
 
         static void setApplicationIcon(QIcon icon);
-        static void setShareDir(QString shareDir);
+        static void setApplicationShareDir(QString shareDir);
         static void setGenericName(QString genericName);
         static void setAboutDialogSplashGraphic(QPixmap aboutDialogSplashGraphic);
         static void addLibraryVersion(QString libraryName, QString version);

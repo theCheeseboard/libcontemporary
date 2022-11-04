@@ -90,46 +90,45 @@
 <context>
     <name>JobsPopover</name>
     <message>
-        <location filename="../jobs/jobspopover.ui" line="35"/>
         <source>Jobs</source>
-        <translation>Aufgaben</translation>
+        <translation type="vanished">Aufgaben</translation>
     </message>
 </context>
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../tapplication.cpp" line="97"/>
+        <location filename="../tapplication.cpp" line="130"/>
         <source>Services</source>
         <translation>Dienste</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="98"/>
+        <location filename="../tapplication.cpp" line="131"/>
         <source>Hide %1</source>
         <translation>%1 ausblenden</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="99"/>
+        <location filename="../tapplication.cpp" line="132"/>
         <source>Hide Others</source>
         <translation>Andere ausblenden</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="100"/>
+        <location filename="../tapplication.cpp" line="133"/>
         <source>Show All</source>
         <translation>Alle anzeigen</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="101"/>
+        <location filename="../tapplication.cpp" line="134"/>
         <source>Preferences...</source>
         <translation>Einstellungen...</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="102"/>
+        <location filename="../tapplication.cpp" line="135"/>
         <location filename="../thelpmenu.cpp" line="46"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="103"/>
+        <location filename="../tapplication.cpp" line="136"/>
         <source>Quit %1</source>
         <translation>Beende %1</translation>
     </message>
@@ -137,52 +136,52 @@
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../tapplication.cpp" line="106"/>
+        <location filename="../tapplication.cpp" line="139"/>
         <source>Displays version information.</source>
         <translation>Zeigt Versionsinformationen.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="107"/>
+        <location filename="../tapplication.cpp" line="140"/>
         <source>Displays this help.</source>
         <translation>Zeigt diese Hilfe an.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="108"/>
+        <location filename="../tapplication.cpp" line="141"/>
         <source>Unknown option &apos;%1&apos;.</source>
         <translation>Unbekannte Option &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="109"/>
+        <location filename="../tapplication.cpp" line="142"/>
         <source>Unknown options: %1.</source>
         <translation>Unbekannte Optionen: %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="110"/>
+        <location filename="../tapplication.cpp" line="143"/>
         <source>Missing value after &apos;%1&apos;.</source>
         <translation>Fehlender Wert nach &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="111"/>
+        <location filename="../tapplication.cpp" line="144"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
         <translation>Unbekannter Wert nach &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="112"/>
+        <location filename="../tapplication.cpp" line="145"/>
         <source>[options]</source>
         <translation>[Optionen]</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="113"/>
+        <location filename="../tapplication.cpp" line="146"/>
         <source>Usage: %1</source>
         <translation>Nutzung: %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="114"/>
+        <location filename="../tapplication.cpp" line="147"/>
         <source>Options:</source>
         <translation>Optionen:</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="115"/>
+        <location filename="../tapplication.cpp" line="148"/>
         <source>Arguments:</source>
         <translation>Argumente:</translation>
     </message>
@@ -191,22 +190,25 @@
     <name>tAboutDialog</name>
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="225"/>
         <source>SOFTWARE</source>
         <translation>SOFTWARE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="226"/>
         <source>COPYRIGHT</source>
         <translation>COPYRIGHT</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="15"/>
-        <location filename="../taboutdialog.cpp" line="16"/>
+        <location filename="../taboutdialog.cpp" line="35"/>
+        <location filename="../taboutdialog.cpp" line="36"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
@@ -214,59 +216,99 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="600"/>
+        <location filename="../tapplication.cpp" line="684"/>
         <source>Copyright © %1.</source>
         <translation>Copyright © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="572"/>
-        <location filename="../tapplication.cpp" line="575"/>
-        <location filename="../tapplication.cpp" line="578"/>
-        <location filename="../tapplication.cpp" line="581"/>
-        <location filename="../tapplication.cpp" line="584"/>
-        <location filename="../tapplication.cpp" line="587"/>
-        <location filename="../tapplication.cpp" line="590"/>
-        <location filename="../tapplication.cpp" line="593"/>
+        <location filename="../tapplication.cpp" line="657"/>
+        <location filename="../tapplication.cpp" line="660"/>
+        <location filename="../tapplication.cpp" line="663"/>
+        <location filename="../tapplication.cpp" line="666"/>
+        <location filename="../tapplication.cpp" line="669"/>
+        <location filename="../tapplication.cpp" line="672"/>
+        <location filename="../tapplication.cpp" line="675"/>
+        <location filename="../tapplication.cpp" line="678"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Lizenziert unter den Bedingungen der %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="572"/>
+        <location filename="../tapplication.cpp" line="173"/>
+        <source>Linux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="176"/>
+        <source>Flatpak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="179"/>
+        <source>Microsoft Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="182"/>
+        <source>Microsoft Windows Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="186"/>
+        <source>macOS - Apple Silicon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="188"/>
+        <source>macOS - Intel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="192"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="195"/>
+        <source>Platform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="657"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU General Public License, Version 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="575"/>
+        <location filename="../tapplication.cpp" line="660"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU General Public License, Version 3, oder neuer</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="578"/>
+        <location filename="../tapplication.cpp" line="663"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU General Public License, Version 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="581"/>
+        <location filename="../tapplication.cpp" line="666"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU General Public License, Version 2, oder neuer</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="584"/>
+        <location filename="../tapplication.cpp" line="669"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Lesser General Public License, Version 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="587"/>
+        <location filename="../tapplication.cpp" line="672"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Lesser General Public License, Version 3, oder neuer</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="590"/>
+        <location filename="../tapplication.cpp" line="675"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Lesser General Public License, Version 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="593"/>
+        <location filename="../tapplication.cpp" line="678"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Lesser General Public License, Version 2.1, oder neuer</translation>
     </message>
@@ -303,11 +345,13 @@
     <name>tInputDialog</name>
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="87"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="88"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -348,38 +392,74 @@
 <context>
     <name>tPrintPopover</name>
     <message>
-        <location filename="../tprintpopover.ui" line="153"/>
+        <location filename="../tprintpopover.ui" line="172"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="201"/>
         <source>Copies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="172"/>
+        <location filename="../tprintpopover.ui" line="117"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="195"/>
         <source>PRINT OPTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="142"/>
+        <location filename="../tprintpopover.ui" line="137"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="197"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="128"/>
+        <location filename="../tprintpopover.ui" line="130"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="196"/>
         <source>Printer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="112"/>
+        <location filename="../tprintpopover.ui" line="148"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="198"/>
         <source>Page Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="135"/>
+        <location filename="../tprintpopover.ui" line="155"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="199"/>
         <source>Print in Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tprintpopover.ui" line="160"/>
+        <location filename="../tprintpopover.ui" line="165"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200"/>
         <source>Double Sided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.ui" line="189"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="202"/>
+        <source>PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.cpp" line="151"/>
+        <source>Portable Document Format (*.pdf)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tSettingsWindow</name>
+    <message>
+        <location filename="../tsettingswindow/tsettingswindow.ui" line="44"/>
+        <location filename="../tsettingswindow/tsettingswindow.cpp" line="42"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tWindowTabber</name>
+    <message>
+        <location filename="../twindowtabber.cpp" line="60"/>
+        <location filename="../twindowtabber.cpp" line="61"/>
+        <source>New Tab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
