@@ -492,7 +492,8 @@ void tApplication::installTranslators() {
     d->applicationTranslators.clear();
 
     QLocale locale;
-    tDebug("tApplication") << locale.uiLanguages();
+    auto languages = locale.uiLanguages();
+    tDebug("tApplication") << languages;
 
     QTranslator* localTranslator = new QTranslator();
 #if defined(Q_OS_MAC)
@@ -552,7 +553,9 @@ void tApplication::installTranslators() {
             this->setLayoutDirection(Qt::LeftToRight);
         }
     } else {
-        this->setLayoutDirection(locale.textDirection());
+        if (!languages.isEmpty()) {
+            this->setLayoutDirection(QLocale(languages.first()).textDirection());
+        }
     }
 }
 
