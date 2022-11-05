@@ -414,7 +414,7 @@
       <source>Print in Grayscale</source>
     </message>
     <message>
-      <translation>די-צידי</translation>
+      <translation>דו-צידי</translation>
       <location filename="../tprintpopover.ui" line="165" />
       <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200" />
       <source>Double Sided</source>
