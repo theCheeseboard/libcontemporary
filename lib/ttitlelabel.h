@@ -53,6 +53,7 @@ class LIBCONTEMPORARY_EXPORT tTitleLabel : public QLabel {
         tTitleLabelPrivate* d;
 
         void updateFont();
+        void updateDirection();
 
         void paintEvent(QPaintEvent* event);
         void resizeEvent(QResizeEvent* event);
@@ -60,6 +61,10 @@ class LIBCONTEMPORARY_EXPORT tTitleLabel : public QLabel {
         // QObject interface
     protected:
         void connectNotify(const QMetaMethod& signal);
+
+        // QObject interface
+    public:
+        bool event(QEvent* event);
 };
 
 #endif // TTITLELABEL_H

@@ -21,10 +21,10 @@
 #include "taboutdialog.h"
 #include "ui_taboutdialog.h"
 
-#include <QToolButton>
-#include <QScroller>
 #include "tapplication.h"
 #include "ticon.h"
+#include <QScroller>
+#include <QToolButton>
 
 tAboutDialog::tAboutDialog(QWidget* parent) :
     QDialog(parent),
@@ -42,11 +42,11 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     bool graphicAvailable;
     if (splashGraphic.isNull()) {
         ui->splashGraphicLabel->setVisible(false);
-        this->setFixedSize(SC_DPI_T(QSize(430, 340), QSize));
+        this->setFixedSize(SC_DPI_WT(QSize(430, 340), QSize, this));
         graphicAvailable = false;
     } else {
         ui->splashGraphicLabel->setPixmap(splashGraphic);
-        this->setFixedSize(SC_DPI_T(QSize(530, 340), QSize));
+        this->setFixedSize(SC_DPI_WT(QSize(530, 340), QSize, this));
         graphicAvailable = true;
     }
 
@@ -86,11 +86,12 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     if (graphicAvailable) {
         backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         backButton->setParent(ui->splashGraphicLabel);
+        backButton->setFixedHeight(ui->titleLabel->sizeHint().height());
 
         if (this->layoutDirection() == Qt::LeftToRight) {
             backButton->move(0, 0);
         } else {
-            backButton->move(splashGraphic.width() - backButton->width(), 0);
+            backButton->move(SC_DPI_W(100, this) - backButton->width(), 0);
         }
     } else {
         backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);

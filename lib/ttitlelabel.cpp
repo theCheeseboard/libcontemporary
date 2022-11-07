@@ -45,8 +45,8 @@ tTitleLabel::tTitleLabel(QWidget* parent) :
     d->backButton->setVisible(false);
     connect(d->backButton, &QToolButton::clicked, this, &tTitleLabel::backButtonClicked);
 
-    connect(qApp, &QApplication::fontChanged, this, &tTitleLabel::updateFont);
     updateFont();
+    updateDirection();
 
     this->setMargin(9);
 }
@@ -112,6 +112,10 @@ void tTitleLabel::updateFont() {
     this->setFont(font);
 }
 
+void tTitleLabel::updateDirection() {
+    this->setAlignment(Qt::AlignVCenter | Qt::AlignAbsolute | (this->layoutDirection() == Qt::LeftToRight ? Qt::AlignLeft : Qt::AlignRight));
+}
+
 void tTitleLabel::paintEvent(QPaintEvent* event) {
     QLabel::paintEvent(event);
 
@@ -134,4 +138,14 @@ void tTitleLabel::connectNotify(const QMetaMethod& signal) {
     if (signal == QMetaMethod::fromSignal(&tTitleLabel::backButtonClicked)) {
         this->setBackButtonShown(true);
     }
+}
+
+bool tTitleLabel::event(QEvent* event) {
+    if (event->type() == QEvent::ApplicationFontChange) {
+        updateFont();
+    } else if (event->type() == QEvent::LanguageChange || event->type() == QEvent::LayoutDirectionChange) {
+        updateDirection();
+    }
+
+    return QLabel::event(event);
 }
