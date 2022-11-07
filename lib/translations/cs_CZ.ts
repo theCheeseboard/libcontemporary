@@ -26,33 +26,33 @@
       <source>Debug Log Item</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Časová známka</translation>
       <location filename="../private/debuglogpopover.cpp" line="37" />
       <source>Timestamp</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Kontext</translation>
       <location filename="../private/debuglogpopover.cpp" line="38" />
       <source>Context</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Závažnost</translation>
       <location filename="../private/debuglogpopover.cpp" line="39" />
       <source>Severity</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Soubor</translation>
       <location filename="../private/debuglogpopover.cpp" line="40" />
       <source>File</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>[nedostupné]</translation>
       <location filename="../private/debuglogpopover.cpp" line="40" />
       <location filename="../private/debuglogpopover.cpp" line="41" />
       <source>[unavailable]</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Funkce</translation>
       <location filename="../private/debuglogpopover.cpp" line="41" />
       <source>Function</source>
     </message>
@@ -60,27 +60,27 @@
   <context>
     <name>DebugLogWindow</name>
     <message>
-      <translation></translation>
+      <translation>Debugovací výpis</translation>
       <location filename="../private/debuglogwindow.ui" line="14" />
       <source>Debug Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Prohledat debugovací výpis</translation>
       <location filename="../private/debuglogwindow.ui" line="80" />
       <source>Search Debug Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Smazat výpis</translation>
       <location filename="../private/debuglogwindow.ui" line="156" />
       <source>Clear Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Filtrovat podle kontextu</translation>
       <location filename="../private/debuglogwindow.ui" line="183" />
       <source>Filter by Context</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>kontext</translation>
       <location filename="../private/debuglogwindow.cpp" line="307" />
       <source>context</source>
     </message>
@@ -88,12 +88,12 @@
   <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-      <translation></translation>
+      <translation>Služby</translation>
       <location filename="../tapplication.cpp" line="130" />
       <source>Services</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Skrýt %1</translation>
       <location filename="../tapplication.cpp" line="131" />
       <source>Hide %1</source>
     </message>
@@ -113,13 +113,13 @@
       <source>Preferences...</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>O %1</translation>
       <location filename="../tapplication.cpp" line="135" />
       <location filename="../thelpmenu.cpp" line="46" />
       <source>About %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ukončit %1</translation>
       <location filename="../tapplication.cpp" line="136" />
       <source>Quit %1</source>
     </message>
