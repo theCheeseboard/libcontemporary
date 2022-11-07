@@ -98,17 +98,17 @@
       <source>Hide %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Skrýt ostatní</translation>
       <location filename="../tapplication.cpp" line="132" />
       <source>Hide Others</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Zobrazit vše</translation>
       <location filename="../tapplication.cpp" line="133" />
       <source>Show All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Předvolby...</translation>
       <location filename="../tapplication.cpp" line="134" />
       <source>Preferences...</source>
     </message>
@@ -127,32 +127,32 @@
   <context>
     <name>QCommandLineParser</name>
     <message>
-      <translation></translation>
+      <translation>Zobrazí informace o verzi.</translation>
       <location filename="../tapplication.cpp" line="139" />
       <source>Displays version information.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Zobrazí tuto nápovědu.</translation>
       <location filename="../tapplication.cpp" line="140" />
       <source>Displays this help.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Neznámá možnost '%1'.</translation>
       <location filename="../tapplication.cpp" line="141" />
       <source>Unknown option '%1'.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Neznámé možnosti: %1.</translation>
       <location filename="../tapplication.cpp" line="142" />
       <source>Unknown options: %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chybějící hodnota po '%1'.</translation>
       <location filename="../tapplication.cpp" line="143" />
       <source>Missing value after '%1'.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Neočekávaná hodnota po '%1'.</translation>
       <location filename="../tapplication.cpp" line="144" />
       <source>Unexpected value after '%1'.</source>
     </message>
