@@ -172,7 +172,7 @@
       <source>Options:</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Argumenty:</translation>
       <location filename="../tapplication.cpp" line="148" />
       <source>Arguments:</source>
     </message>
@@ -180,25 +180,25 @@
   <context>
     <name>tAboutDialog</name>
     <message>
-      <translation></translation>
+      <translation>SOFTWARE</translation>
       <location filename="../taboutdialog.ui" line="194" />
       <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="225" />
       <source>SOFTWARE</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>COPYRIGHT</translation>
       <location filename="../taboutdialog.ui" line="239" />
       <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="226" />
       <source>COPYRIGHT</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>OK</translation>
       <location filename="../taboutdialog.ui" line="299" />
       <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227" />
       <source>OK</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>O %1</translation>
       <location filename="../taboutdialog.cpp" line="35" />
       <location filename="../taboutdialog.cpp" line="36" />
       <source>About %1</source>
@@ -207,7 +207,7 @@
   <context>
     <name>tApplication</name>
     <message>
-      <translation></translation>
+      <translation>Copyright © %1.</translation>
       <location filename="../tapplication.cpp" line="684" />
       <source>Copyright © %1.</source>
     </message>
