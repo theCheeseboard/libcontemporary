@@ -341,7 +341,7 @@
   <context>
     <name>tPrintPopover</name>
     <message>
-      <translation></translation>
+      <translation>Bản sao</translation>
       <location filename="../tprintpopover.ui" line="153" />
       <source>Copies</source>
     </message>
