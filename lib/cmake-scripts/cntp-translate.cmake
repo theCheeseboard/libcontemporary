@@ -2,7 +2,10 @@ function(cntp_translate target)
     include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/cntp-sharedir.cmake)
     cntp_get_target_share_dir(SHARE_DIR ${target})
 
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/translations)
+
     file(GLOB TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/*.ts)
+    list(APPEND TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/en_US.ts)
 
     qt_add_translations(${target}
         TS_FILES ${TRANSLATION_FILES}
