@@ -132,7 +132,7 @@
       <source>Displays version information.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Afișează informații de ajutor</translation>
       <location filename="../tapplication.cpp" line="140" />
       <source>Displays this help.</source>
     </message>
@@ -198,7 +198,7 @@
       <source>OK</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Despre %1</translation>
       <location filename="../taboutdialog.cpp" line="35" />
       <location filename="../taboutdialog.cpp" line="36" />
       <source>About %1</source>
@@ -207,12 +207,12 @@
   <context>
     <name>tApplication</name>
     <message>
-      <translation></translation>
+      <translation>Toate drepturile rezervate © %1.</translation>
       <location filename="../tapplication.cpp" line="684" />
       <source>Copyright © %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licențiat sub termenii %1</translation>
       <location filename="../tapplication.cpp" line="657" />
       <location filename="../tapplication.cpp" line="660" />
       <location filename="../tapplication.cpp" line="663" />
@@ -224,82 +224,82 @@
       <source>Licensed under the terms of the %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Linux</translation>
       <location filename="../tapplication.cpp" line="173" />
       <source>Linux</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Flatpak</translation>
       <location filename="../tapplication.cpp" line="176" />
       <source>Flatpak</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Microsoft Windows</translation>
       <location filename="../tapplication.cpp" line="179" />
       <source>Microsoft Windows</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Magazinul Microsoft Windows</translation>
       <location filename="../tapplication.cpp" line="182" />
       <source>Microsoft Windows Store</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>macOS - Apple Silicon</translation>
       <location filename="../tapplication.cpp" line="186" />
       <source>macOS - Apple Silicon</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>macOS - Intel</translation>
       <location filename="../tapplication.cpp" line="188" />
       <source>macOS - Intel</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Necunoscut</translation>
       <location filename="../tapplication.cpp" line="192" />
       <source>Unknown</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Platformă</translation>
       <location filename="../tapplication.cpp" line="195" />
       <source>Platform</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU, versiunea a 3-a</translation>
       <location filename="../tapplication.cpp" line="657" />
       <source>GNU General Public License, version 3</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU, versiunea a 3-a sau mai nouă</translation>
       <location filename="../tapplication.cpp" line="660" />
       <source>GNU General Public License, version 3, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU, versiunea a 2-a</translation>
       <location filename="../tapplication.cpp" line="663" />
       <source>GNU General Public License, version 2</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU, versiunea a 3-a sau mai nouă</translation>
       <location filename="../tapplication.cpp" line="666" />
       <source>GNU General Public License, version 2, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU Lesser, versiunea a 3-a</translation>
       <location filename="../tapplication.cpp" line="669" />
       <source>GNU Lesser General Public License, version 3</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU Lesser, versiunea a 3-a sau mai nouă</translation>
       <location filename="../tapplication.cpp" line="672" />
       <source>GNU Lesser General Public License, version 3, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU Lesser, versiunea 2.1</translation>
       <location filename="../tapplication.cpp" line="675" />
       <source>GNU Lesser General Public License, version 2.1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licența generală publică GNU Lesser, versiunea a 2.1 sau mai nouă</translation>
       <location filename="../tapplication.cpp" line="678" />
       <source>GNU Lesser General Public License, version 2.1, or later</source>
     </message>
