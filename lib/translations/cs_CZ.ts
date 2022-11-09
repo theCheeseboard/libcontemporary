@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TS version="2.1">
+<TS version="2.1" language="cs_CZ">
   <context>
     <name>DebugLogModel</name>
     <message>
@@ -212,7 +212,7 @@
       <source>Copyright © %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Licencováno pod podmínkami %1.</translation>
       <location filename="../tapplication.cpp" line="657" />
       <location filename="../tapplication.cpp" line="660" />
       <location filename="../tapplication.cpp" line="663" />
@@ -224,42 +224,42 @@
       <source>Licensed under the terms of the %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Linux</translation>
       <location filename="../tapplication.cpp" line="173" />
       <source>Linux</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Flatpak</translation>
       <location filename="../tapplication.cpp" line="176" />
       <source>Flatpak</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Microsoft Windows</translation>
       <location filename="../tapplication.cpp" line="179" />
       <source>Microsoft Windows</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Obchod Microsoft Windows</translation>
       <location filename="../tapplication.cpp" line="182" />
       <source>Microsoft Windows Store</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>macOS - Apple Silicon</translation>
       <location filename="../tapplication.cpp" line="186" />
       <source>macOS - Apple Silicon</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>macOS - Intel</translation>
       <location filename="../tapplication.cpp" line="188" />
       <source>macOS - Intel</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Neznámé</translation>
       <location filename="../tapplication.cpp" line="192" />
       <source>Unknown</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Platforma</translation>
       <location filename="../tapplication.cpp" line="195" />
       <source>Platform</source>
     </message>
