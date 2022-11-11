@@ -19,38 +19,39 @@
  ******************************************************************************/
 #include "tdatetimepicker.h"
 
-#include <QDateTime>
-#include <QBoxLayout>
 #include "tdatetimepicker/datetimepart.h"
+#include <QBoxLayout>
+#include <QDateTime>
 
 struct tDateTimePickerPrivate {
-    QDateTime dateTime;
+        QDateTime dateTime;
 
-    QWidget* datePart;
-    QWidget* timePart;
+        QWidget* datePart;
+        QWidget* timePart;
 
-    QList<DateTimePart*> dateTimeParts;
-    QLocale locale;
+        QList<DateTimePart*> dateTimeParts;
+        QLocale locale;
 
-    int valueForPart(QChar part) {
-        if (part == 'd') return dateTime.date().day();
-        if (part == 'M') return dateTime.date().month();
-        if (part == 'y') return dateTime.date().year();
-        if (part == 'H') return dateTime.time().hour();
-        if (part == 'm') return dateTime.time().minute();
-        if (part == 's') return dateTime.time().second();
-        if (part == 'a') return dateTime.time().hour() >= 12 ? 1 : 0;
+        int valueForPart(QChar part) {
+            if (part == 'd') return dateTime.date().day();
+            if (part == 'M') return dateTime.date().month();
+            if (part == 'y') return dateTime.date().year();
+            if (part == 'H') return dateTime.time().hour();
+            if (part == 'm') return dateTime.time().minute();
+            if (part == 's') return dateTime.time().second();
+            if (part == 'a') return dateTime.time().hour() >= 12 ? 1 : 0;
 
-        if (part == 'h') {
-            int hour = dateTime.time().hour() % 12;
-            if (hour == 0) hour = 12;
-            return hour;
+            if (part == 'h') {
+                int hour = dateTime.time().hour() % 12;
+                if (hour == 0) hour = 12;
+                return hour;
+            }
+            return 0;
         }
-        return 0;
-    }
 };
 
-tDateTimePicker::tDateTimePicker(QWidget* parent) : QWidget(parent) {
+tDateTimePicker::tDateTimePicker(QWidget* parent) :
+    QWidget(parent) {
     d = new tDateTimePickerPrivate();
     QString foundChars;
     QString dateFormat = d->locale.dateFormat(QLocale::ShortFormat);
@@ -64,7 +65,8 @@ tDateTimePicker::tDateTimePicker(QWidget* parent) : QWidget(parent) {
     init(foundChars);
 }
 
-tDateTimePicker::tDateTimePicker(QString format, QWidget* parent) : QWidget(parent) {
+tDateTimePicker::tDateTimePicker(QString format, QWidget* parent) :
+    QWidget(parent) {
     d = new tDateTimePickerPrivate();
     init(format);
 }
@@ -88,6 +90,7 @@ void tDateTimePicker::setPickOptions(PickOptions options) {
 }
 
 void tDateTimePicker::init(QString format) {
+    this->setLayoutDirection(Qt::LeftToRight);
     d->datePart = new QWidget(this);
     d->timePart = new QWidget(this);
 
@@ -97,7 +100,6 @@ void tDateTimePicker::init(QString format) {
     layout->addWidget(d->timePart);
     layout->addStretch(0);
     this->setLayout(layout);
-
 
     QBoxLayout* dateLayout = new QBoxLayout(QBoxLayout::LeftToRight, d->datePart);
     QBoxLayout* timeLayout = new QBoxLayout(QBoxLayout::LeftToRight, d->timePart);
@@ -114,7 +116,7 @@ void tDateTimePicker::init(QString format) {
         if (QStringLiteral("dMyhHmsa").contains(c)) {
             DateTimePart* part = new DateTimePart(this);
             part->setValueType(c);
-            connect(this, &tDateTimePicker::dateTimeChanged, part, [ = ](QDateTime dateTime) {
+            connect(this, &tDateTimePicker::dateTimeChanged, part, [=](QDateTime dateTime) {
                 part->blockSignals(true);
                 part->setValue(d->valueForPart(c));
                 part->blockSignals(false);
@@ -123,27 +125,29 @@ void tDateTimePicker::init(QString format) {
                     part->setMaxValue(dateTime.date().daysInMonth());
                 }
             });
-            connect(part, &DateTimePart::valueChanged, this, [ = ](int value) {
+            connect(part, &DateTimePart::valueChanged, this, [=](int value) {
                 QDate newDate = d->dateTime.date();
                 QTime newTime = d->dateTime.time();
                 switch (c.unicode()) {
                     case 'd':
                         newDate.setDate(newDate.year(), newDate.month(), value);
                         break;
-                    case 'M': {
-                        int day = newDate.day();
-                        int daysInMonth = QDate(newDate.year(), value, 1).daysInMonth();
-                        if (daysInMonth < day) day = daysInMonth;
-                        newDate.setDate(newDate.year(), value, day);
-                        break;
-                    }
-                    case 'y': {
-                        int day = newDate.day();
-                        int daysInMonth = QDate(value, newDate.month(), 1).daysInMonth();
-                        if (daysInMonth < day) day = daysInMonth;
-                        newDate.setDate(value, newDate.month(), day);
-                        break;
-                    }
+                    case 'M':
+                        {
+                            int day = newDate.day();
+                            int daysInMonth = QDate(newDate.year(), value, 1).daysInMonth();
+                            if (daysInMonth < day) day = daysInMonth;
+                            newDate.setDate(newDate.year(), value, day);
+                            break;
+                        }
+                    case 'y':
+                        {
+                            int day = newDate.day();
+                            int daysInMonth = QDate(value, newDate.month(), 1).daysInMonth();
+                            if (daysInMonth < day) day = daysInMonth;
+                            newDate.setDate(value, newDate.month(), day);
+                            break;
+                        }
                     case 'H':
                         newTime.setHMS(value, newTime.minute(), newTime.second());
                         break;
@@ -153,23 +157,24 @@ void tDateTimePicker::init(QString format) {
                     case 's':
                         newTime.setHMS(newTime.hour(), newTime.minute(), value);
                         break;
-                    case 'a': {
-                        int baseHour = newTime.hour() % 12;
-                        if (value == 1) {
-                            //PM
-                            newTime.setHMS(baseHour + 12, newTime.minute(), newTime.second());
-                        } else {
-                            //AM
-                            newTime.setHMS(baseHour, newTime.minute(), newTime.second());
+                    case 'a':
+                        {
+                            int baseHour = newTime.hour() % 12;
+                            if (value == 1) {
+                                // PM
+                                newTime.setHMS(baseHour + 12, newTime.minute(), newTime.second());
+                            } else {
+                                // AM
+                                newTime.setHMS(baseHour, newTime.minute(), newTime.second());
+                            }
+                            break;
                         }
-                        break;
-                    }
                     case 'h':
                         if (newTime.hour() / 12 == 1) {
-                            //PM
+                            // PM
                             newTime.setHMS(value + 12, newTime.minute(), newTime.second());
                         } else {
-                            //AM
+                            // AM
                             newTime.setHMS(value, newTime.minute(), newTime.second());
                         }
                         break;
