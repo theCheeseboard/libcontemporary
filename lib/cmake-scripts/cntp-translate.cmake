@@ -7,9 +7,12 @@ function(cntp_translate target)
     file(GLOB TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/*.ts)
     list(APPEND TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/en_US.ts)
 
+    get_target_property(SOURCE_FILES ${target} SOURCES)
+
     qt_add_translations(${target}
         TS_FILES ${TRANSLATION_FILES}
         QM_FILES_OUTPUT_VARIABLE QM_FILES
+        SOURCES ${SOURCE_FILES}
     )
     add_dependencies(${target}_lrelease ${target}_lupdate)
 
