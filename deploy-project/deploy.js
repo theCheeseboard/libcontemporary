@@ -40,7 +40,13 @@ module.exports = async options => {
             // Run cntp-macdeploy and then create the disk image
 
             // HACK: Due to SSL issues we try removing the OpenSSL backend - we can use Secure Transport anyway
-
+            for (let dir of await fs.readdir("/usr/local/Cellar/qt/")) {
+                try {
+                    await fs.rm(`/usr/local/Cellar/qt/${dir}/share/qt/plugins/tls/libqopensslbackend.dylib`)
+                } catch {
+                    console.log(`Unable to remove the file /usr/local/Cellar/qt/${dir}/share/qt/plugins/tls/libqopensslbackend.dylib`)
+                }
+            }
 
             await exec.exec("cntp-macdeploy", [target]);
 
