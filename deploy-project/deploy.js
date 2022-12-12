@@ -37,9 +37,11 @@ module.exports = async options => {
 
     switch (process.platform) {
         case "darwin": {
-            //Run cntp-macdeploy and then create the disk image
-            //HACK: Add /usr/local/lib to the RPATH
-            // await exec.exec("install_name_tool", ["-add_rpath", "/usr/local/lib", "/usr/local/bin/cntp-macdeploy"]);
+            // Run cntp-macdeploy and then create the disk image
+
+            // HACK: Due to SSL issues we try removing the OpenSSL backend - we can use Secure Transport anyway
+
+
             await exec.exec("cntp-macdeploy", [target]);
 
             console.log("Creating disk image...");
