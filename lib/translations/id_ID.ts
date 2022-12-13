@@ -129,94 +129,16 @@
 <context>
     <name>NsAlertMac</name>
     <message>
-        <location filename="../private/nsalertmac.mm" line="65"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
-        <location filename="../private/nsalertmac.mm" line="68"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="71"/>
-        <source>Save All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="74"/>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="77"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="80"/>
-        <source>Yes to All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="83"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="86"/>
-        <source>No to All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="89"/>
-        <source>Abort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="92"/>
-        <source>Retry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="95"/>
-        <source>Ignore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="98"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="101"/>
         <source>Cancel</source>
-        <translation type="unfinished">Batal</translation>
+        <translation type="obsolete">Batal</translation>
     </message>
     <message>
-        <location filename="../private/nsalertmac.mm" line="104"/>
-        <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="107"/>
         <source>Help</source>
-        <translation type="unfinished">Bantuan</translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="110"/>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="113"/>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/nsalertmac.mm" line="116"/>
-        <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Bantuan</translation>
     </message>
 </context>
 <context>
@@ -276,19 +198,19 @@
     <name>tAboutDialog</name>
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="225"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="225"/>
         <source>SOFTWARE</source>
         <translation>SOFTWARE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="226"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="226"/>
         <source>COPYRIGHT</source>
         <translation>HAK CIPTA</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227"/>
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
@@ -431,13 +353,13 @@
     <name>tInputDialog</name>
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="87"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="87"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="88"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="88"/>
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
@@ -478,143 +400,65 @@
 <context>
     <name>tMessageBoxBackend</name>
     <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="106"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="109"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="112"/>
-        <source>Save All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="115"/>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="118"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="121"/>
-        <source>Yes to All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="124"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="127"/>
-        <source>No to All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="130"/>
-        <source>Abort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="133"/>
-        <source>Retry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="136"/>
-        <source>Ignore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="139"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="142"/>
         <source>Cancel</source>
-        <translation type="unfinished">Batal</translation>
+        <translation type="obsolete">Batal</translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="145"/>
-        <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="148"/>
         <source>Help</source>
-        <translation type="unfinished">Bantuan</translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="151"/>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="154"/>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../private/tmessageboxbackend-mac.mm" line="157"/>
-        <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Bantuan</translation>
     </message>
 </context>
 <context>
     <name>tPrintPopover</name>
     <message>
         <location filename="../tprintpopover.ui" line="172"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="201"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="201"/>
         <source>Copies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="117"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="195"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="195"/>
         <source>PRINT OPTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="137"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="197"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="197"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="130"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="196"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="196"/>
         <source>Printer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="148"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="198"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="198"/>
         <source>Page Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="155"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="199"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="199"/>
         <source>Print in Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="165"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200"/>
         <source>Double Sided</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="189"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="202"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="202"/>
         <source>PDF</source>
         <translation type="unfinished"></translation>
     </message>

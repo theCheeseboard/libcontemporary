@@ -91,6 +91,9 @@ void tWindowTabber::addButton(tWindowTabberButton* button) {
     d->buttons.append(button);
     d->tabLayout->addWidget(button);
     connect(button, &tWindowTabberButton::changed, this, &tWindowTabber::doUpdateWindowTitle);
+    connect(button, &tWindowTabberButton::destroyed, this, [this, button] {
+        removeButton(button);
+    });
 }
 
 void tWindowTabber::setCurrent(tWindowTabberButton* button) {
