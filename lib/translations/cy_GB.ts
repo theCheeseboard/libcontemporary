@@ -276,19 +276,16 @@
     <name>tAboutDialog</name>
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="225"/>
         <source>SOFTWARE</source>
         <translation>MEDDALWEDD</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="226"/>
         <source>COPYRIGHT</source>
         <translation>HAWLFRAINT</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227"/>
         <source>OK</source>
         <translation>IAWN</translation>
     </message>
@@ -468,13 +465,11 @@
     <name>tInputDialog</name>
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="87"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="88"/>
         <source>OK</source>
         <translation type="unfinished">IAWN</translation>
     </message>
@@ -521,6 +516,7 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="109"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="154"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -531,6 +527,7 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="115"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="151"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -591,11 +588,13 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="151"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="160"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="154"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="163"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -604,54 +603,71 @@
         <source>Restore Defaults</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="157"/>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="166"/>
+        <source>Restore defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="169"/>
+        <source>Save all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="172"/>
+        <source>Yes to all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="175"/>
+        <source>No to all</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>tPrintPopover</name>
     <message>
         <location filename="../tprintpopover.ui" line="172"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="201"/>
         <source>Copies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="117"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="195"/>
         <source>PRINT OPTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="137"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="197"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="130"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="196"/>
         <source>Printer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="148"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="198"/>
         <source>Page Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="155"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="199"/>
         <source>Print in Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="165"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200"/>
         <source>Double Sided</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="189"/>
-        <location filename="../../../build-libcontemporary-Desktop_ARM-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="202"/>
         <source>PDF</source>
         <translation type="unfinished"></translation>
     </message>

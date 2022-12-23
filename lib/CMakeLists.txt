@@ -30,7 +30,10 @@ cntp_find_pkgconfig(X11 x11)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
-set(SOURCES
+cntp_sourcelist(
+    OUTPUT SOURCES
+    OUTPUT_ALL ALL_SOURCES
+    FILES
         taboutdialog.cpp
         tapplication.cpp
         tcircularspinner.cpp
@@ -105,9 +108,13 @@ set(SOURCES
         thelibs_icons.qrc
 #        thelibs_translations.qrc
 
-        "private/tmessageboxbackend.h")
+        "private/tmessageboxbackend.h"
+)
 
-set(HEADERS
+cntp_sourcelist(
+    OUTPUT HEADERS
+    OUTPUT_ALL ALL_HEADERS
+    FILES
         taboutdialog.h
         tapplication.h
         tcircularspinner.h
@@ -161,12 +168,14 @@ set(HEADERS
         tcommandpalette/tcommandpalettecompositescope.h
     )
 
-
-set(PRIVATE_HEADERS
-    private/errorflashwidget.h
-    tsettingswindow/tsettingswindowdelegate.h
-    tcommandpalette/tcommandpalettewindow.h
-    tcommandpalette/tcommandpaletteallscope.h
+cntp_sourcelist(
+    OUTPUT PRIVATE_HEADERS
+    OUTPUT_ALL ALL_PRIVATE_HEADERS
+    FILES
+        private/errorflashwidget.h
+        tsettingswindow/tsettingswindowdelegate.h
+        tcommandpalette/tcommandpalettewindow.h
+        tcommandpalette/tcommandpaletteallscope.h
 )
 
 
@@ -175,51 +184,68 @@ if(${Qt6DBus_FOUND})
     qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
 endif()
 
+cntp_sourcelist(
+    OUTPUT SOURCES
+    OUTPUT_ALL ALL_SOURCES
+    TARGET_SYSTEM_NAME "Darwin"
+    FILES
+        tcsdtools/csdbuttonbox-objc.mm
+        tcsdtools/tcsdtools-objc.mm
+        tnotification/tnotification-mac.mm
+        private/nsalertmac.mm
+        private/tmessageboxbackend-mac.mm
+        private/tapplicationmacprivate.mm
+)
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(SOURCES ${SOURCES}
-            tcsdtools/csdbuttonbox-objc.mm
-            tcsdtools/tcsdtools-objc.mm
-            tnotification/tnotification-mac.mm
-            private/nsalertmac.mm
-            private/tmessageboxbackend-mac.mm
-            private/tapplicationmacprivate.mm)
+cntp_sourcelist(
+    OUTPUT HEADERS
+    OUTPUT_ALL ALL_HEADERS
+    TARGET_SYSTEM_NAME "Darwin"
+    FILES
+        private/tapplicationmacprivate.h
+)
 
-    set(HEADERS ${HEADERS}
-        private/tapplicationmacprivate.h)
-ENDIF()
+cntp_sourcelist(
+    OUTPUT SOURCES
+    OUTPUT_ALL ALL_SOURCES
+    TARGET_SYSTEM_NAME "Linux"
+    FILES
+        tnotification/tnotification-linux.cpp
+        jobs/jobdbus.cpp
+        jobs/jobdbusmanager.cpp
+        private/tmessageboxbackend-qt.cpp
+)
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    set(SOURCES ${SOURCES}
-            tnotification/tnotification-linux.cpp
-            jobs/jobdbus.cpp
-            jobs/jobdbusmanager.cpp
-            private/tmessageboxbackend-qt.cpp)
-ENDIF()
+cntp_sourcelist(
+    OUTPUT SOURCES
+    OUTPUT_ALL ALL_SOURCES
+    TARGET_SYSTEM_NAME "Windows"
+    FILES
+        tnotification/tnotification-win.cpp
+        private/tmessageboxbackend-win.cpp
+        private/tmessageboxbackend-win.h
+)
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    set(SOURCES ${SOURCES}
-            tnotification/tnotification-win.cpp
-            private/tmessageboxbackend-win.cpp
-            private/tmessageboxbackend-win.h
-    )
-ENDIF()
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
-    set(SOURCES ${SOURCES}
-            tnotification/tnotification-android.cpp
-            private/tmessageboxbackend-qt.cpp
-    )
-ENDIF()
+cntp_sourcelist(
+    OUTPUT SOURCES
+    OUTPUT_ALL ALL_SOURCES
+    TARGET_SYSTEM_NAME "Android"
+    FILES
+        tnotification/tnotification-android.cpp
+        private/tmessageboxbackend-qt.cpp
+)
 
 add_library(libcontemporary SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS})
+cntp_init(libcontemporary 20)
 cntp_target_public_headers(libcontemporary
         DESTINATION_DIRECTORY libcontemporary
         HEADERS ${HEADERS})
 set_target_properties(libcontemporary PROPERTIES
         FRAMEWORK TRUE
         MACOSX_FRAMEWORK_IDENTIFIER com.vicr123.libcontemporary
-        VERSION 6.0.0)
+        VERSION 6.0.0
+        TRANSLATION_SOURCES "${ALL_SOURCES};${ALL_HEADERS}"
+    )
 cntp_enable_coroutines(libcontemporary)
 
 target_link_libraries(libcontemporary Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport QCoro::Coro QCoro::Core QCoro::Network)
@@ -267,14 +293,7 @@ ELSE()
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/libcontemporary)
 ENDIF()
 
-file(GLOB TRANSLATION_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/*.ts)
-
-qt_add_translations(libcontemporary
-    TS_FILES ${TRANSLATION_FILES}
-    QM_FILES_OUTPUT_VARIABLE QM_FILES
-)
-add_dependencies(libcontemporary_lrelease libcontemporary_lupdate)
-
+cntp_translate(libcontemporary OUTPUT QM_FILES)
 qt_add_resources(libcontemporary "thelibs_translations"
     PREFIX "/the-libs/translations"
     BASE "${CMAKE_CURRENT_BINARY_DIR}"
