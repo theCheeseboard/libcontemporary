@@ -106,7 +106,6 @@ cntp_sourcelist(
         private/debuglogwindow.ui
 
         thelibs_icons.qrc
-#        thelibs_translations.qrc
 
         "private/tmessageboxbackend.h"
 )
@@ -195,6 +194,7 @@ cntp_sourcelist(
         private/nsalertmac.mm
         private/tmessageboxbackend-mac.mm
         private/tapplicationmacprivate.mm
+        tcommandpalette/tcommandpalettewindow-mac.mm
 )
 
 cntp_sourcelist(

@@ -37,6 +37,8 @@ tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controll
     this->setWindowFlag(Qt::FramelessWindowHint);
 #ifdef Q_OS_MAC
     this->setWindowFlag(Qt::Tool);
+
+    this->setupTouchBar();
 #endif
 
     ui->searchBox->setText(controller->currentQuery());
@@ -58,6 +60,15 @@ void tCommandPaletteWindow::changeScope(tCommandPaletteScope* scope) {
     scope->filter(ui->searchBox->text());
     d->scopeButtons.value(scope)->setChecked(true);
     ui->listView->setModel(d->currentScope);
+    emit scopeChanged(d->currentScope);
+}
+
+tCommandPaletteScope* tCommandPaletteWindow::currentScope() {
+    return d->currentScope;
+}
+
+tCommandPaletteController* tCommandPaletteWindow::controller() {
+    return d->controller;
 }
 
 void tCommandPaletteWindow::changeEvent(QEvent* event) {

@@ -18,10 +18,20 @@ class tCommandPaletteWindow : public QDialog {
         ~tCommandPaletteWindow();
 
         void changeScope(tCommandPaletteScope* scope);
+        tCommandPaletteScope* currentScope();
+
+    signals:
+        void scopeChanged(tCommandPaletteScope* scope);
 
     private:
         Ui::tCommandPaletteWindow* ui;
         tCommandPaletteWindowPrivate* d;
+
+        tCommandPaletteController* controller();
+
+#ifdef Q_OS_MAC
+        void setupTouchBar();
+#endif
 
         // QWidget interface
     protected:
