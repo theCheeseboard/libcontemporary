@@ -18,17 +18,16 @@
  *
  ******************************************************************************/
 #include "csdbuttonbox.h"
-#include "ui_csdbuttonbox.h"
 #include "csdbuttonbox_p.h"
+#include "ui_csdbuttonbox.h"
 
 #include "libcontemporary_global.h"
-#include <QPainter>
 #include "tcsdtools.h"
+#include <QPainter>
 
-CsdButtonBox::CsdButtonBox(QWidget *parent) :
+CsdButtonBox::CsdButtonBox(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::CsdButtonBox)
-{
+    ui(new Ui::CsdButtonBox) {
     ui->setupUi(this);
     d = new CsdButtonBoxPrivate();
     d->box = this;
@@ -52,13 +51,12 @@ CsdButtonBox::CsdButtonBox(QWidget *parent) :
 #endif
 }
 
-CsdButtonBox::~CsdButtonBox()
-{
+CsdButtonBox::~CsdButtonBox() {
     delete d;
     delete ui;
 }
 
-bool CsdButtonBox::eventFilter(QObject *watched, QEvent *event) {
+bool CsdButtonBox::eventFilter(QObject* watched, QEvent* event) {
     if (event->type() == QEvent::WindowStateChange) {
         if (d->parentWidget->window()->isMaximized()) {
             ui->maxButton->setIcon(QIcon(":/tcsdtools/res.svg"));
@@ -72,18 +70,19 @@ bool CsdButtonBox::eventFilter(QObject *watched, QEvent *event) {
         d->windowHidden();
     } else if (event->type() == QEvent::Show) {
         d->windowShown();
+    } else if (event->type() == QEvent::ActivationChange) {
+        d->windowHidden();
+        d->windowShown();
     }
 #endif
     return false;
 }
 
-void CsdButtonBox::on_closeButton_clicked()
-{
+void CsdButtonBox::on_closeButton_clicked() {
     d->parentWidget->window()->close();
 }
 
-void CsdButtonBox::on_maxButton_clicked()
-{
+void CsdButtonBox::on_maxButton_clicked() {
     if (d->parentWidget->window()->isMaximized()) {
         d->parentWidget->window()->showNormal();
     } else {
@@ -91,8 +90,7 @@ void CsdButtonBox::on_maxButton_clicked()
     }
 }
 
-void CsdButtonBox::on_minButton_clicked()
-{
+void CsdButtonBox::on_minButton_clicked() {
     d->parentWidget->window()->showMinimized();
 }
 

@@ -12,7 +12,6 @@
 @property (strong) NSButton *lastFrameButton;
 
 @property (strong) NSObject *qtDelegate;
-@property QObject *parentQObject;
 @property tCommandPaletteController *commandPaletteController;
 @property tCommandPaletteWindow *commandPaletteWindow;
 @property NSSegmentedControl *segmentedControl;
@@ -26,8 +25,6 @@ static NSTouchBarItemIdentifier scopeIdentifier = @"com.vicr123.libcontemporary.
 
 - (id)init: (tCommandPaletteWindow*)commandPaletteWin withController:(tCommandPaletteController*)controller {
     if (self = [super init]) {
-        self.parentQObject = new QObject();
-
         //Set main window UI to call touch bar handlers
         self.commandPaletteWindow = commandPaletteWin;
         self.commandPaletteController = controller;
@@ -85,11 +82,6 @@ static NSTouchBarItemIdentifier scopeIdentifier = @"com.vicr123.libcontemporary.
     // this instance does not responds to, which means that the Qt delegate
     // must respond to it (due to the respondsToSelector implementation above).
     [anInvocation invokeWithTarget:_qtDelegate];
-}
-
-- (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions {
-    //On an unrelated note, set full screen window properties
-    return (NSApplicationPresentationFullScreen | NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar | NSApplicationPresentationAutoHideToolbar);
 }
 
 - (void)setScopes:(QList<tCommandPaletteScope*>)scopes withDefaultScope:(tCommandPaletteScope*)defaultScope {
