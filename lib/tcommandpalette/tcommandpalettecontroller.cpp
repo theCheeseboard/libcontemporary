@@ -16,6 +16,8 @@ struct tCommandPaletteControllerPrivate {
         QList<tCommandPaletteScope*> scopes;
         tCommandPaletteScope* allScope;
 
+        QString currentQuery;
+
         bool awaitingNextShift = false;
 };
 
@@ -53,6 +55,14 @@ QList<tCommandPaletteScope*> tCommandPaletteController::scopes() {
     auto scopes = d->scopes;
     if (scopes.length() != 1) scopes.prepend(d->allScope);
     return scopes;
+}
+
+void tCommandPaletteController::setCurrentQuery(QString query) {
+    d->currentQuery = query;
+}
+
+QString tCommandPaletteController::currentQuery() {
+    return d->currentQuery;
 }
 
 void tCommandPaletteController::activate() {

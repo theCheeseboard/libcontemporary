@@ -426,7 +426,7 @@
 <context>
     <name>tCommandPaletteController</name>
     <message>
-        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="28"/>
+        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="30"/>
         <source>Command Palette</source>
         <translation type="unfinished"></translation>
     </message>

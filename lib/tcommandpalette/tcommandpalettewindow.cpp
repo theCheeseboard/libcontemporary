@@ -38,6 +38,9 @@ tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controll
 #ifdef Q_OS_MAC
     this->setWindowFlag(Qt::Tool);
 #endif
+
+    ui->searchBox->setText(controller->currentQuery());
+    ui->searchBox->selectAll();
     ui->searchBox->installEventFilter(this);
 }
 
@@ -71,6 +74,7 @@ void tCommandPaletteWindow::reject() {
 }
 
 void tCommandPaletteWindow::on_searchBox_textChanged(const QString& arg1) {
+    d->controller->setCurrentQuery(arg1);
     d->currentScope->filter(arg1);
 }
 

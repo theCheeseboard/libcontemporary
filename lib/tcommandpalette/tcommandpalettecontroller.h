@@ -19,6 +19,9 @@ class LIBCONTEMPORARY_EXPORT tCommandPaletteController : public QObject {
         void addScope(tCommandPaletteScope* scope);
         QList<tCommandPaletteScope*> scopes();
 
+        void setCurrentQuery(QString query);
+        QString currentQuery();
+
         void activate();
         void installShortcut();
 
