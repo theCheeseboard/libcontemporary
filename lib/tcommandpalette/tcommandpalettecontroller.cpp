@@ -2,6 +2,7 @@
 
 #include "tcommandpaletteactionscope.h"
 #include "tcommandpalettewindow.h"
+#include <QAction>
 #include <QKeyEvent>
 #include <QPointer>
 #include <QShortcut>
@@ -53,6 +54,8 @@ void tCommandPaletteController::activate() {
     }
 
     d->activeWindow->show();
+    d->activeWindow->activateWindow();
+    d->activeWindow->raise();
 
     QRect geometry;
     geometry.setSize(SC_DPI_WT(QSize(600, 800), QSize, d->parent));

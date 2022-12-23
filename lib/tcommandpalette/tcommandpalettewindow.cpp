@@ -35,6 +35,9 @@ tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controll
     }
 
     this->setWindowFlag(Qt::FramelessWindowHint);
+#ifdef Q_OS_MAC
+    this->setWindowFlag(Qt::Tool);
+#endif
     ui->searchBox->installEventFilter(this);
 }
 
@@ -92,6 +95,7 @@ void tCommandPaletteWindow::on_searchBox_returnPressed() {
             currentScope->activate(indices.at(0));
         });
     }
+    this->reject();
 }
 
 bool tCommandPaletteWindow::eventFilter(QObject* watched, QEvent* event) {
