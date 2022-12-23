@@ -87,6 +87,8 @@ set(SOURCES
         tcommandpalette/tcommandpalettecontroller.cpp
         tcommandpalette/tcommandpalettescope.cpp
         tcommandpalette/tcommandpaletteactionscope.cpp
+        tcommandpalette/tcommandpaletteallscope.cpp
+        tcommandpalette/tcommandpalettecompositescope.cpp
 
         tsettingswindow/tsettingswindow.cpp tsettingswindow/tsettingswindow.ui
         tsettingswindow/tsettingspane.cpp
@@ -156,6 +158,7 @@ set(HEADERS
         tcommandpalette/tcommandpalettecontroller.h
         tcommandpalette/tcommandpalettescope.h
         tcommandpalette/tcommandpaletteactionscope.h
+        tcommandpalette/tcommandpalettecompositescope.h
     )
 
 
@@ -163,6 +166,7 @@ set(PRIVATE_HEADERS
     private/errorflashwidget.h
     tsettingswindow/tsettingswindowdelegate.h
     tcommandpalette/tcommandpalettewindow.h
+    tcommandpalette/tcommandpaletteallscope.h
 )
 
 

@@ -61,9 +61,10 @@ QVariant tCommandPaletteActionScope::data(const QModelIndex& index, int role) co
 }
 
 void tCommandPaletteActionScope::filter(QString filter) {
+    this->beginResetModel();
     if (filter.isEmpty()) {
         d->displayedActions = d->actions;
-        emit dataChanged(index(0), index(rowCount(QModelIndex())));
+        this->endResetModel();
         return;
     }
 
@@ -74,7 +75,7 @@ void tCommandPaletteActionScope::filter(QString filter) {
             d->displayedActions.append(action);
         }
     }
-    emit dataChanged(index(0), index(rowCount(QModelIndex())));
+    this->endResetModel();
 }
 
 void tCommandPaletteActionScope::activate(QModelIndex index) {

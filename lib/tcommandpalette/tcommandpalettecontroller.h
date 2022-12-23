@@ -25,6 +25,7 @@ class LIBCONTEMPORARY_EXPORT tCommandPaletteController : public QObject {
         QAction* commandPaletteAction();
 
     signals:
+        void scopesChanged();
 
     private:
         tCommandPaletteControllerPrivate* d;

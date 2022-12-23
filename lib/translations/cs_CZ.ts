@@ -412,9 +412,17 @@
     </message>
 </context>
 <context>
+    <name>tCommandPaletteAllScope</name>
+    <message>
+        <location filename="../tcommandpalette/tcommandpaletteallscope.cpp" line="10"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tCommandPaletteController</name>
     <message>
-        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="25"/>
+        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="28"/>
         <source>Command Palette</source>
         <translation type="unfinished"></translation>
     </message>

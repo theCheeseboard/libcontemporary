@@ -1,6 +1,7 @@
 #include "tcommandpalettecontroller.h"
 
 #include "tcommandpaletteactionscope.h"
+#include "tcommandpaletteallscope.h"
 #include "tcommandpalettewindow.h"
 #include <QAction>
 #include <QKeyEvent>
@@ -13,6 +14,7 @@ struct tCommandPaletteControllerPrivate {
         QAction* commandPaletteAction;
 
         QList<tCommandPaletteScope*> scopes;
+        tCommandPaletteScope* allScope;
 
         bool awaitingNextShift = false;
 };
@@ -26,6 +28,8 @@ tCommandPaletteController::tCommandPaletteController(QWidget* parent) :
     d->commandPaletteAction->setText(tr("Command Palette"));
     d->commandPaletteAction->setShortcut(QKeySequence(Qt::Key_Shift, Qt::Key_Shift));
     connect(d->commandPaletteAction, &QAction::triggered, this, &tCommandPaletteController::activate);
+
+    d->allScope = new tCommandPaletteAllScope(this);
 }
 
 tCommandPaletteController::~tCommandPaletteController() {
@@ -42,10 +46,13 @@ tCommandPaletteController* tCommandPaletteController::defaultController(QWidget*
 
 void tCommandPaletteController::addScope(tCommandPaletteScope* scope) {
     d->scopes.append(scope);
+    emit scopesChanged();
 }
 
 QList<tCommandPaletteScope*> tCommandPaletteController::scopes() {
-    return d->scopes;
+    auto scopes = d->scopes;
+    if (scopes.length() != 1) scopes.prepend(d->allScope);
+    return scopes;
 }
 
 void tCommandPaletteController::activate() {
