@@ -123,7 +123,7 @@
     </message>
     <message>
         <location filename="../tapplication.cpp" line="135"/>
-        <location filename="../thelpmenu.cpp" line="46"/>
+        <location filename="../thelpmenu.cpp" line="48"/>
         <source>About %1</source>
         <translation>حول %1</translation>
     </message>
@@ -329,29 +329,58 @@
     </message>
 </context>
 <context>
+    <name>tCommandPaletteActionScope</name>
+    <message>
+        <location filename="../tcommandpalette/tcommandpaletteactionscope.cpp" line="43"/>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tCommandPaletteController</name>
+    <message>
+        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="25"/>
+        <source>Command Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tCommandPaletteWindow</name>
+    <message>
+        <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="14"/>
+        <source>Command Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="128"/>
+        <source>What are you looking for?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tHelpMenu</name>
     <message>
-        <location filename="../thelpmenu.cpp" line="40"/>
+        <location filename="../thelpmenu.cpp" line="42"/>
         <source>%1 Help</source>
         <translation>%1 مساعدة</translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="43"/>
+        <location filename="../thelpmenu.cpp" line="45"/>
         <source>File Bug</source>
         <translation>إرسال مشكلة</translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="44"/>
+        <location filename="../thelpmenu.cpp" line="46"/>
         <source>Sources</source>
         <translation>مصادر</translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="45"/>
+        <location filename="../thelpmenu.cpp" line="47"/>
         <source>View Debug Log</source>
         <translation>عرض سجل التصحيح</translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="73"/>
+        <location filename="../thelpmenu.cpp" line="75"/>
         <source>Help</source>
         <translation>مساعدة</translation>
     </message>

@@ -83,6 +83,11 @@ set(SOURCES
         jobs/jobspopover.cpp
         private/errorflashwidget.cpp private/errorflashwidget.ui
 
+        tcommandpalette/tcommandpalettewindow.cpp tcommandpalette/tcommandpalettewindow.ui
+        tcommandpalette/tcommandpalettecontroller.cpp
+        tcommandpalette/tcommandpalettescope.cpp
+        tcommandpalette/tcommandpaletteactionscope.cpp
+
         tsettingswindow/tsettingswindow.cpp tsettingswindow/tsettingswindow.ui
         tsettingswindow/tsettingspane.cpp
         tsettingswindow/tsettingswindowdelegate.cpp
@@ -147,12 +152,17 @@ set(HEADERS
 
         tsettingswindow/tsettingswindow.h
         tsettingswindow/tsettingspane.h
+
+        tcommandpalette/tcommandpalettecontroller.h
+        tcommandpalette/tcommandpalettescope.h
+        tcommandpalette/tcommandpaletteactionscope.h
     )
 
 
 set(PRIVATE_HEADERS
     private/errorflashwidget.h
     tsettingswindow/tsettingswindowdelegate.h
+    tcommandpalette/tcommandpalettewindow.h
 )
 
 

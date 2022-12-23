@@ -23,11 +23,12 @@
 #include "libcontemporary_global.h"
 #include <QMenu>
 
+class tCommandPaletteController;
 struct tHelpMenuPrivate;
 class LIBCONTEMPORARY_EXPORT tHelpMenu : public QMenu {
         Q_OBJECT
     public:
-        explicit tHelpMenu(QWidget* parent);
+        explicit tHelpMenu(QWidget* parent, tCommandPaletteController* commandPaletteController = nullptr);
         ~tHelpMenu();
 
         void addAction(QAction* action);

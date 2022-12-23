@@ -19,23 +19,25 @@
  ******************************************************************************/
 #include "thelpmenu.h"
 
-#include "tapplication.h"
 #include "taboutdialog.h"
+#include "tapplication.h"
+#include "tcommandpalette/tcommandpalettecontroller.h"
 #include "tlogger.h"
 #include <QDesktopServices>
 #include <QUrl>
 
 struct tHelpMenuPrivate {
-    QAction* helpContentsAction;
-    QAction* fileBugAction;
-    QAction* sourcesAction;
-    QAction* debugLogAction;
-    QAction* aboutAction;
+        QAction* helpContentsAction;
+        QAction* fileBugAction;
+        QAction* sourcesAction;
+        QAction* debugLogAction;
+        QAction* aboutAction;
 
-    QAction* userActionsSeperator;
+        QAction* userActionsSeperator;
 };
 
-tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
+tHelpMenu::tHelpMenu(QWidget* parent, tCommandPaletteController* commandPaletteController) :
+    QMenu(parent) {
     d = new tHelpMenuPrivate();
     d->helpContentsAction = new QAction(QIcon::fromTheme("help-contents"), tr("%1 Help").arg(tApplication::applicationDisplayName()), this);
     d->helpContentsAction->setShortcut(QKeySequence(Qt::Key_F1));
@@ -45,19 +47,19 @@ tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
     d->debugLogAction = new QAction(tr("View Debug Log"), this);
     d->aboutAction = new QAction(QIcon::fromTheme("help-about"), tApplication::translate("MAC_APPLICATION_MENU", "About %1").arg(tApplication::applicationDisplayName()), this);
 
-    connect(d->helpContentsAction, &QAction::triggered, this, [ = ] {
+    connect(d->helpContentsAction, &QAction::triggered, this, [] {
         QDesktopServices::openUrl(tApplication::applicationUrl(tApplication::HelpContents));
     });
-    connect(d->fileBugAction, &QAction::triggered, this, [ = ] {
+    connect(d->fileBugAction, &QAction::triggered, this, [] {
         QDesktopServices::openUrl(tApplication::applicationUrl(tApplication::FileBug));
     });
-    connect(d->sourcesAction, &QAction::triggered, this, [ = ] {
+    connect(d->sourcesAction, &QAction::triggered, this, [] {
         QDesktopServices::openUrl(tApplication::applicationUrl(tApplication::Sources));
     });
-    connect(d->debugLogAction, &QAction::triggered, this, [ = ] {
+    connect(d->debugLogAction, &QAction::triggered, this, [] {
         tLogger::openDebugLogWindow();
     });
-    connect(d->aboutAction, &QAction::triggered, this, [ = ] {
+    connect(d->aboutAction, &QAction::triggered, this, [parent] {
         tAboutDialog dialog(parent);
         dialog.exec();
     });
@@ -74,6 +76,10 @@ tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
     this->setIcon(QIcon::fromTheme("help-contents"));
 
     this->QMenu::addAction(d->helpContentsAction);
+    if (commandPaletteController) {
+        this->addSeparator();
+        this->QMenu::addAction(commandPaletteController->commandPaletteAction());
+    }
     this->addSeparator();
     d->userActionsSeperator = this->addSeparator();
     this->QMenu::addAction(d->fileBugAction);
