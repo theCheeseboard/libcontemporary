@@ -13,6 +13,13 @@ function createDmg(properties) {
 
         dmg.on('finish', res);
         dmg.on('error', rej);
+        dmg.on('progress', info => {
+            if (info.type === "step-begin") {
+                console.log(`[ ${info.current}/${info.total} ] ${info.title}`);
+            } else {
+                console.log(`[ ${info.current}/${info.total} ] ${info.status}`);
+            }
+        });
     });
 }
 

@@ -12,7 +12,7 @@ runs:
       name: "Build QCoro"
       with:
         project: "danvratil/qcoro"
-        commitish: "v0.6.0"
+        commitish: "v0.7.0"
     - uses: vicr123/libcontemporary/build-project@actions
       name: "Build libcontemporary"
       with:
