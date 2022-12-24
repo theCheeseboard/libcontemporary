@@ -22,17 +22,22 @@
 #include <QDir>
 #include <tapplication.h>
 
+#ifdef Q_OS_WIN
+#include <winrt/base.h>
+#include <winrt/windows.foundation.h>
+#include <winrt/windows.ui.viewmanagement.h>
+namespace ViewManagement = winrt::Windows::UI::ViewManagement;
+#endif
+
 struct tStyleManagerPrivate {
         tStyleManager::Style currentStyle = tStyleManager::System;
         tApplication::Platforms overrideOnPlatforms = tApplication::Flatpak | tApplication::Windows | tApplication::WindowsAppPackage | tApplication::MacOS | tApplication::OtherPlatform;
+#ifdef Q_OS_WIN
+        ViewManagement::UISettings settings;
+#endif
 };
 
-tStyleManager::tStyleManager(QObject* parent) :
-    QObject(parent) {
-    d = new tStyleManagerPrivate();
-}
-
-void tStyleManager::updateStyle() {
+void tStyleManager::updateStyle () {
     if (isOverridingStyle()) {
         // Override the styles!
 
@@ -53,21 +58,22 @@ void tStyleManager::updateStyle() {
         // Get the accent colour
         QColor accentCol;
 #ifdef Q_OS_WIN
-        QSettings accentDetection("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM", QSettings::NativeFormat);
-        if (accentDetection.contains("ColorizationColor")) {
-            accentCol = QColor::fromRgb(QRgb(accentDetection.value("ColorizationColor").toInt() & 0x00FFFFFF));
+        try {
             if (d->currentStyle == ContemporaryLight) {
-                pal.setColor(QPalette::Button, accentCol.lighter(150));
+                auto accent = d->settings.GetColorValue(ViewManagement::UIColorType::AccentLight1);             
+                accentCol = QColor::fromRgb(accent.R, accent.G, accent.B);
             } else {
-                pal.setColor(QPalette::Button, accentCol);
+                auto accent = d->settings.GetColorValue(ViewManagement::UIColorType::Accent);
+                accentCol = QColor::fromRgb(accent.R, accent.G, accent.B);
             }
-        } else {
+        } catch (...) {
 #endif
             accentCol = QColor::fromRgb((d->currentStyle == ContemporaryLight ? 0xC400C8FF : 0xC4003296) & 0x00FFFFFF);
-            pal.setColor(QPalette::Button, accentCol);
 #ifdef Q_OS_WIN
         }
 #endif
+
+        pal.setColor(QPalette::Button, accentCol);
 
         if (d->currentStyle == ContemporaryLight) {
             pal.setColor(QPalette::ButtonText, QColor(0, 0, 0));
@@ -82,6 +88,7 @@ void tStyleManager::updateStyle() {
             pal.setColor(QPalette::WindowText, QColor(0, 0, 0));
             pal.setColor(QPalette::Text, QColor(0, 0, 0));
             pal.setColor(QPalette::ToolTipText, QColor(0, 0, 0));
+            pal.setColor(QPalette::PlaceholderText, QColor(100, 100, 100));
 
             pal.setColor(QPalette::Disabled, QPalette::WindowText, QColor(100, 100, 100));
         } else {
@@ -97,6 +104,7 @@ void tStyleManager::updateStyle() {
             pal.setColor(QPalette::WindowText, QColor(255, 255, 255));
             pal.setColor(QPalette::Text, QColor(255, 255, 255));
             pal.setColor(QPalette::ToolTipText, QColor(255, 255, 255));
+            pal.setColor(QPalette::PlaceholderText, QColor(150, 150, 150));
 
             pal.setColor(QPalette::Disabled, QPalette::WindowText, QColor(150, 150, 150));
         }
@@ -105,6 +113,16 @@ void tStyleManager::updateStyle() {
         QApplication::setPalette(pal, "QDockWidget");
         QApplication::setPalette(pal, "QToolBar");
     }
+}
+
+tStyleManager::tStyleManager(QObject *parent) : QObject(parent) {
+    d = new tStyleManagerPrivate();
+
+#ifdef Q_OS_WIN
+    d->settings.ColorValuesChanged([](auto &&, auto &&) {
+        QMetaObject::invokeMethod(instance(), &tStyleManager::updateStyle, Qt::QueuedConnection);
+    });
+#endif
 }
 
 tStyleManager* tStyleManager::instance() {

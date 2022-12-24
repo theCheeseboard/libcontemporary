@@ -39,12 +39,11 @@ class LIBCONTEMPORARY_EXPORT tStyleManager : public QObject {
         static void setOverrideStyleOnPlatforms(tApplication::Platforms platforms);
         static bool isOverridingStyle();
 
-    signals:
-
     private:
         explicit tStyleManager(QObject* parent = nullptr);
         tStyleManagerPrivate* d;
 
+    private slots:
         void updateStyle();
 };
 
