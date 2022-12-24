@@ -33,12 +33,6 @@
     #include <QWindow>
 #endif
 
-#ifdef Q_OS_MAC
-    #define DPI_100_PERCENT 72.0
-#else
-    #define DPI_100_PERCENT 96.0
-#endif
-
 #ifdef Q_OS_WIN
     #include <Windows.h>
 #endif
@@ -136,7 +130,7 @@ bool libContemporaryCommon::allowSystemAnimations() {
 #ifdef QT_WIDGETS_LIB
     #include <QScreen>
 double libContemporaryCommon::getDPIScaling() {
-    #ifdef Q_OS_MAC
+    #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     return 1;
     #else
     return QApplication::primaryScreen()->devicePixelRatio();
@@ -199,7 +193,7 @@ void libContemporaryCommon::tintImage(QImage& image, QColor tint) {
     }
 }
 double libContemporaryCommon::getDPIScaling(const QPaintDevice* paintDevice) {
-    #ifdef Q_OS_MAC
+    #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     return 1;
     #endif
     if (!paintDevice) return QApplication::primaryScreen()->devicePixelRatio();
