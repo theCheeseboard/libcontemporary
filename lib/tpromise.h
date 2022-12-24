@@ -21,9 +21,10 @@
 #ifndef TPROMISE_H
 #define TPROMISE_H
 
-#include <QFuture>
 #include <QObject>
-#include <QtConcurrent/QtConcurrent>
+#include <QFuture>
+#include <QTimer>
+#include <QtConcurrent>
 #include <functional>
 #include <libcontemporary_global.h>
 

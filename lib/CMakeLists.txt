@@ -14,7 +14,7 @@ foreach(f ${EXTRA_FUNCTIONS})
     include(${f})
 endforeach()
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport LinguistTools OPTIONAL_COMPONENTS DBus)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport Concurrent LinguistTools OPTIONAL_COMPONENTS DBus)
 find_package(QCoro6 COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
@@ -248,7 +248,7 @@ set_target_properties(libcontemporary PROPERTIES
     )
 cntp_enable_coroutines(libcontemporary)
 
-target_link_libraries(libcontemporary Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::PrintSupport QCoro::Coro QCoro::Core QCoro::Network)
+target_link_libraries(libcontemporary Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::Concurrent Qt6::PrintSupport QCoro::Coro QCoro::Core QCoro::Network)
 target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
 
 if(${Qt6DBus_FOUND})
