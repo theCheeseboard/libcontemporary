@@ -15,7 +15,7 @@
 #include "deployfolder.h"
 #include "systemlibrarydatabase.h"
 #include "common.h"
-#include "unzip.h" 
+#include "unzip.h"
 
 struct DeployFolderPrivate {
     QDir dir;
@@ -23,7 +23,7 @@ struct DeployFolderPrivate {
     QStringList foundLibraries;
 };
 
-DeployFolder::DeployFolder(QString folder, QObject *parent) {
+DeployFolder::DeployFolder(QString folder, QObject* parent) {
     d = new DeployFolderPrivate;
     d->dir = folder;
 }
@@ -59,29 +59,29 @@ QDir DeployFolder::destinationDir(DeployFolderDirectories directory) {
     return dir;
 }
 
-void DeployFolder::makeSelfContained(SystemLibraryDatabase *libraryDatabase) {
+void DeployFolder::makeSelfContained(SystemLibraryDatabase* libraryDatabase) {
     //Copy over required Qt plugins
     copySystemPlugins({
-            "iconengines/qsvgicon.dll",
-            "imageformats/qgif.dll",
-            "imageformats/qicns.dll",
-            "imageformats/qico.dll",
-            "imageformats/qjp2.dll",
-            "imageformats/qjpeg.dll",
-            "imageformats/qmacheif.dll",
-            "imageformats/qmng.dll",
-            "imageformats/qsvg.dll",
-            "imageformats/qtga.dll",
-            "imageformats/qtiff.dll",
-            "imageformats/qwbmp.dll",
-            "imageformats/qwebp.dll",
-            "platforms/qwindows.dll",
-            "sqldrivers/qsqlite.dll",
-            "styles/qwindowsvistastyle.dll",
-            "tls/qcertonlybackend.dll",
-            "tls/qopensslbackend.dll",
-            "tls/qschannelbackend.dll",
-            "multimedia/windowsmediaplugin.dll"
+        "iconengines/qsvgicon.dll",
+        "imageformats/qgif.dll",
+        "imageformats/qicns.dll",
+        "imageformats/qico.dll",
+        "imageformats/qjp2.dll",
+        "imageformats/qjpeg.dll",
+        "imageformats/qmacheif.dll",
+        "imageformats/qmng.dll",
+        "imageformats/qsvg.dll",
+        "imageformats/qtga.dll",
+        "imageformats/qtiff.dll",
+        "imageformats/qwbmp.dll",
+        "imageformats/qwebp.dll",
+        "platforms/qwindows.dll",
+        "sqldrivers/qsqlite.dll",
+        "styles/qwindowsvistastyle.dll",
+        "tls/qcertonlybackend.dll",
+        "tls/qopensslbackend.dll",
+        "tls/qschannelbackend.dll",
+        "multimedia/windowsmediaplugin.dll"
     });
 
     installContemporaryIcons();
@@ -120,7 +120,7 @@ void DeployFolder::installContemporaryIcons() {
     QNetworkReply* zipReply = mgr.get(QNetworkRequest(QUrl(zipUrl)));
     connect(zipReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
-    
+
     QFile zipFile(tempDir.filePath("archive.zip"));
     zipFile.open(QFile::WriteOnly);
     zipFile.write(zipReply->readAll());
@@ -162,7 +162,7 @@ bool DeployFolder::doMakeSelfContained(SystemLibraryDatabase* libraryDatabase) {
             QString libraryPath = libraryDatabase->library(library);
             if (libraryPath.isEmpty()) {
                 QTextStream(stderr) << "Can't find library " << library << ", referenced from "
-                                    << iterator.fileName() << "\n";
+                    << iterator.fileName() << "\n";
                 continue;
             }
 
