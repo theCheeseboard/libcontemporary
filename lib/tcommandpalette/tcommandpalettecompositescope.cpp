@@ -47,11 +47,37 @@ void tCommandPaletteCompositeScope::registerScope(tCommandPaletteScope* scope) {
     connect(scope, &tCommandPaletteScope::modelReset, this, [this] {
         endReset();
     });
+    connect(scope, &tCommandPaletteScope::destroyed, this, [this, scope] {
+        deregisterScope(scope);
+    });
     d->registeredScopes.append(scope);
+}
+
+void tCommandPaletteCompositeScope::deregisterScope(tCommandPaletteScope* scope) {
+    scope->disconnect(this);
+    d->registeredScopes.removeAll(scope);
 }
 
 bool tCommandPaletteCompositeScope::scopeRegistered(tCommandPaletteScope* scope) {
     return d->registeredScopes.contains(scope);
+}
+
+QList<tCommandPaletteScope*> tCommandPaletteCompositeScope::scopes() {
+    return d->registeredScopes;
+}
+
+QList<QPair<tCommandPaletteScope*, QModelIndex>> tCommandPaletteCompositeScope::filteredItems(QString filter) {
+    QList<QPair<tCommandPaletteScope*, QModelIndex>> scopes;
+    for (auto* scope : d->registeredScopes) {
+        if (scope == this) continue;
+
+        scope->filter(filter);
+        for (auto i = 0; i < scope->rowCount(); i++) {
+            auto index = scope->index(i);
+            scopes.append({scope, index});
+        }
+    }
+    return scopes;
 }
 
 int tCommandPaletteCompositeScope::rowCount(const QModelIndex& parent) const {
@@ -67,22 +93,7 @@ void tCommandPaletteCompositeScope::filter(QString filter) {
     if (d->resetCount != 0) return;
 
     startReset();
-    d->currentFilter = filter;
-    if (filter.isEmpty()) {
-        d->shown.clear();
-        endReset();
-        return;
-    }
-
-    for (auto* scope : d->registeredScopes) {
-        if (scope == this) continue;
-
-        scope->filter(filter);
-        for (auto i = 0; i < scope->rowCount(); i++) {
-            auto index = scope->index(i);
-            d->shown.append({scope, index});
-        }
-    }
+    d->shown = this->filteredItems(filter);
     endReset();
 }
 

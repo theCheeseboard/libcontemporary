@@ -28,3 +28,8 @@ void tCommandPaletteAllScope::updateScopes() {
         registerScope(scope);
     }
 }
+
+QList<QPair<tCommandPaletteScope*, QModelIndex>> tCommandPaletteAllScope::filteredItems(QString filter) {
+    if (filter.isEmpty()) return {};
+    return tCommandPaletteCompositeScope::filteredItems(filter);
+}

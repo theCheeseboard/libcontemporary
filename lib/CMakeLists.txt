@@ -94,6 +94,7 @@ cntp_sourcelist(
         tcommandpalette/tcommandpaletteactionscope.cpp
         tcommandpalette/tcommandpaletteallscope.cpp
         tcommandpalette/tcommandpalettecompositescope.cpp
+        tcommandpalette/tcommandpalettedocumentspecificscope.cpp
 
         tsettingswindow/tsettingswindow.cpp tsettingswindow/tsettingswindow.ui
         tsettingswindow/tsettingspane.cpp
@@ -168,6 +169,7 @@ cntp_sourcelist(
         tcommandpalette/tcommandpalettescope.h
         tcommandpalette/tcommandpaletteactionscope.h
         tcommandpalette/tcommandpalettecompositescope.h
+        tcommandpalette/tcommandpalettedocumentspecificscope.h
     )
 
 cntp_sourcelist(

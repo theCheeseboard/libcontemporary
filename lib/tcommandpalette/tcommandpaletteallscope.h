@@ -15,6 +15,10 @@ class tCommandPaletteAllScope : public tCommandPaletteCompositeScope {
         tCommandPaletteAllScopePrivate* d;
 
         void updateScopes();
+
+        // tCommandPaletteCompositeScope interface
+protected:
+        QList<QPair<tCommandPaletteScope *, QModelIndex> > filteredItems(QString filter);
 };
 
 #endif // TCOMMANDPALETTEALLSCOPE_H

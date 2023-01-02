@@ -14,8 +14,13 @@ class LIBCONTEMPORARY_EXPORT tCommandPaletteCompositeScope : public tCommandPale
         void startReset();
         void endReset();
 
-        void registerScope(tCommandPaletteScope* scope);
+        virtual void registerScope(tCommandPaletteScope* scope);
+        virtual void deregisterScope(tCommandPaletteScope* scope);
         bool scopeRegistered(tCommandPaletteScope* scope);
+
+    protected:
+        QList<tCommandPaletteScope*> scopes();
+        virtual QList<QPair<tCommandPaletteScope*, QModelIndex>> filteredItems(QString filter);
 
     private:
         tCommandPaletteCompositeScopePrivate* d;
