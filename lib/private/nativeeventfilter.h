@@ -31,8 +31,12 @@ namespace libContemporaryPrivate {
             Q_OBJECT
         public:
             explicit NativeEventFilter(QObject* parent = nullptr);
+
+            static NativeEventFilter* instance(QObject* parentIfNotCreated = nullptr);
         signals:
             void powerStretchChanged(bool powerStretchOn);
+            void thumbnailToolbarButtonClicked(int buttonId);
+            void thumbnailCreated(quintptr hwnd);
 
         public slots:
 

@@ -71,6 +71,7 @@ cntp_sourcelist(
         tvirtualkeyboard.cpp
         twindowtabber.cpp
         twindowtabberbutton.cpp
+        twindowthumbnail.cpp
         tx11info.cpp
         tcontentsizer.cpp
         private/debuglogpopover.cpp
@@ -84,7 +85,8 @@ cntp_sourcelist(
         tnotification/tnotification-common.cpp
         jobs/jobbutton.cpp
         jobs/jobspopover.cpp
-        private/errorflashwidget.cpp private/errorflashwidget.ui
+        private/errorflashwidget.cpp 
+        private/errorflashwidget.ui
 
         tcommandpalette/tcommandpalettewindow.cpp tcommandpalette/tcommandpalettewindow.ui
         tcommandpalette/tcommandpalettecontroller.cpp
@@ -107,7 +109,7 @@ cntp_sourcelist(
 
         thelibs_icons.qrc
 
-        "private/tmessageboxbackend.h"
+        private/tmessageboxbackend.h
 )
 
 cntp_sourcelist(
@@ -151,6 +153,7 @@ cntp_sourcelist(
         tvirtualkeyboard.h
         twindowtabber.h
         twindowtabberbutton.h
+        twindowthumbnail.h
         tx11info.h
         tstandardlabel.h
         tsubtitlelabel.h
@@ -224,6 +227,8 @@ cntp_sourcelist(
         tnotification/tnotification-win.cpp
         private/tmessageboxbackend-win.cpp
         private/tmessageboxbackend-win.h
+        private/twindowthumbnail-win.cpp
+        private/twindowthumbnail-win.h
 )
 
 cntp_sourcelist(

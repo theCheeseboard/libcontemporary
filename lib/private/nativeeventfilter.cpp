@@ -24,6 +24,7 @@
 
 #ifdef Q_OS_WIN
     #include <Windows.h>
+    #include <ShObjIdl.h>
 #endif
 
 using namespace libContemporaryPrivate;
@@ -32,18 +33,49 @@ NativeEventFilter::NativeEventFilter(QObject* parent) :
     QObject(parent), QAbstractNativeEventFilter() {
 }
 
+NativeEventFilter* NativeEventFilter::instance(QObject* parentIfNotCreated) {
+    static NativeEventFilter* filter = new NativeEventFilter(parentIfNotCreated);
+    return filter;
+}
+
+
 bool NativeEventFilter::filter(const QByteArray& eventType, void* message) {
 #ifdef Q_OS_WIN
+    static const UINT WM_TASKBAR_BUTTON_CREATED = []{
+        UINT message = RegisterWindowMessage(L"TaskbarButtonCreated");
+        // In case the application is run elevated, allow the
+        // TaskbarButtonCreated message through.
+        ChangeWindowMessageFilter(message, MSGFLT_ADD);
+        return message;
+    }();
+
+
     if (eventType == "windows_generic_MSG") {
         MSG* msg = static_cast<MSG*>(message);
-        if (msg->message == WM_POWERBROADCAST) {
-            if (msg->wParam == PBT_POWERSETTINGCHANGE) {
-                POWERBROADCAST_SETTING* powerSettings = reinterpret_cast<POWERBROADCAST_SETTING*>(msg->lParam);
-                if (powerSettings->PowerSetting == GUID_POWER_SAVING_STATUS) {
-                    bool powerSaverOn = powerSettings->Data[0];
-                    emit powerStretchChanged(powerSaverOn);
+        switch (msg->message) {
+            case WM_POWERBROADCAST: {
+                if (msg->wParam == PBT_POWERSETTINGCHANGE) {
+                    POWERBROADCAST_SETTING* powerSettings = reinterpret_cast<POWERBROADCAST_SETTING*>(msg->lParam);
+                    if (powerSettings->PowerSetting == GUID_POWER_SAVING_STATUS) {
+                        bool powerSaverOn = powerSettings->Data[0];
+                        emit powerStretchChanged(powerSaverOn);
+                    }
                 }
+
+                break;
             }
+            case WM_COMMAND: {
+                if (HIWORD(msg->wParam) == THBN_CLICKED) {
+                    const int buttonId = LOWORD(msg->wParam);
+                    emit thumbnailToolbarButtonClicked(buttonId);
+                    return true;
+                }
+                break;
+            }
+        }
+
+        if (msg->message == WM_TASKBAR_BUTTON_CREATED) {
+            emit thumbnailCreated(reinterpret_cast<quintptr>(msg->hwnd));
         }
     }
 #endif

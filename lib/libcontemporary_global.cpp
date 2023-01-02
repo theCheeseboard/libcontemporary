@@ -55,7 +55,7 @@ libContemporaryCommon::libContemporaryCommon() :
     d = new libContemporaryCommonPrivate();
 
     // Install the native event filter
-    d->filter = new libContemporaryPrivate::NativeEventFilter(this);
+    d->filter = libContemporaryPrivate::NativeEventFilter::instance(this);
     QApplication::instance()->installNativeEventFilter(d->filter);
     connect(d->filter, &libContemporaryPrivate::NativeEventFilter::powerStretchChanged, this, &libContemporaryCommon::powerStretchChangedPrivate);
 
@@ -94,11 +94,7 @@ libContemporaryCommon::libContemporaryCommon() :
 }
 
 libContemporaryCommon* libContemporaryCommon::instance() {
-    static libContemporaryCommon* appInst;
-    if (appInst == nullptr) {
-        appInst = new libContemporaryCommon;
-    }
-
+    static libContemporaryCommon* appInst = new libContemporaryCommon;
     return appInst;
 }
 
