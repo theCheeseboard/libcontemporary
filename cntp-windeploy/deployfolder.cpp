@@ -80,7 +80,8 @@ void DeployFolder::makeSelfContained(SystemLibraryDatabase *libraryDatabase) {
             "styles/qwindowsvistastyle.dll",
             "tls/qcertonlybackend.dll",
             "tls/qopensslbackend.dll",
-            "tls/qschannelbackend.dll"
+            "tls/qschannelbackend.dll",
+            "multimedia/windowsmediaplugin.dll"
     });
 
     installContemporaryIcons();
