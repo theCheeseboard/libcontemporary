@@ -5,7 +5,7 @@
 #endif
 
 
-tWindowThumbnail* tWindowThumbnail::create(QWidget *parent) {
+tWindowThumbnail* tWindowThumbnail::thumbnailFor(QWidget *parent) {
 #ifdef Q_OS_WIN
     return new tWindowThumbnailWin(parent);
 #else

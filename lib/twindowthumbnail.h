@@ -37,7 +37,7 @@ enum class tWindowThumbnailProgressState {
 class LIBCONTEMPORARY_EXPORT tWindowThumbnail : public QObject {
         Q_OBJECT
     public:
-        static tWindowThumbnail* create(QWidget* parent);
+        static tWindowThumbnail* thumbnailFor(QWidget* parent);
         virtual ~tWindowThumbnail() { };
 
         virtual void setToolbar(const QList<QAction*>& actions) = 0;
