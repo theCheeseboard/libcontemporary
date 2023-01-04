@@ -4,25 +4,26 @@
 
 #include "applicationbundle.h"
 #include "common.h"
-#include <QProcess>
+#include "library.h"
 #include <QDirIterator>
-#include <QRegularExpression>
-#include <QNetworkAccessManager>
-#include <QTemporaryDir>
-#include <QNetworkReply>
 #include <QEventLoop>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QProcess>
+#include <QRegularExpression>
 #include <QSettings>
-#include "library.h"
+#include <QTemporaryDir>
 
 struct ApplicationBundlePrivate {
-    QDir dir;
-    QMap<QString, Library*> libraries;
-    QStringList processed;
+        QDir dir;
+        QMap<QString, Library*> libraries;
+        QStringList processed;
 };
 
-ApplicationBundle::ApplicationBundle(QString path, QObject *parent) : QObject(parent) {
+ApplicationBundle::ApplicationBundle(QString path, QObject* parent) :
+    QObject(parent) {
     d = new ApplicationBundlePrivate();
     d->dir = path;
 }
@@ -69,9 +70,8 @@ bool ApplicationBundle::exists() {
 }
 
 void ApplicationBundle::makeSelfContained() {
-    //Copy over required Qt plugins
-    copySystemPlugins({
-        "iconengines/libqsvgicon.dylib",
+    // Copy over required Qt plugins
+    copySystemPlugins({"iconengines/libqsvgicon.dylib",
         "imageformats/libqgif.dylib",
         "imageformats/libqicns.dylib",
         "imageformats/libqico.dylib",
@@ -89,14 +89,15 @@ void ApplicationBundle::makeSelfContained() {
         "styles/libqmacstyle.dylib",
         "tls/libqcertonlybackend.dylib",
         "tls/libqopensslbackend.dylib",
-        "tls/libqsecuretransportbackend.dylib"
-    });
+        "tls/libqsecuretransportbackend.dylib",
+        "multimedia/libdarwinmediaplugin.dylib"});
 
     installContemporaryIcons();
     installQtConfigurationFile();
 
-    //Continuously attempt to make the bundle self-contained until no more changes have been made
-    while (!doMakeSelfContained());
+    // Continuously attempt to make the bundle self-contained until no more changes have been made
+    while (!doMakeSelfContained())
+        ;
 }
 
 void ApplicationBundle::sign(QString identity) {
@@ -133,14 +134,14 @@ bool ApplicationBundle::doMakeSelfContained() {
                     QStringList rpaths = this->rpaths(iterator.filePath());
                     for (QString rpath : rpaths) {
                         if (QFile::exists(QString(library).replace("@rpath", rpath))) {
-                            //TODO: Resolve @loader_path
+                            // TODO: Resolve @loader_path
                             library = library.replace("@rpath", rpath);
                             break;
                         }
                     }
                 }
                 if (library.contains("@loader_path")) {
-                    //Resolve the loader path from the current library name
+                    // Resolve the loader path from the current library name
                     QString identifier = Library::extractIdentifierFromPath(iterator.filePath());
                     Library* originatingLibrary = d->libraries.value(identifier);
                     library = library.replace("@loader_path", QFileInfo(originatingLibrary->libraryPath(arch)).dir().absolutePath());
@@ -160,9 +161,9 @@ bool ApplicationBundle::doMakeSelfContained() {
 
         if (!librariesToUpdate.isEmpty()) {
             QTextStream(stdout) << "Processing " << iterator.fileName() << "...";
-            for (QString library: librariesToUpdate.keys()) {
+            for (QString library : librariesToUpdate.keys()) {
                 installNameTool(library, d->libraries.value(librariesToUpdate.value(library))->outputPath(),
-                                iterator.filePath());
+                    iterator.filePath());
             }
             QTextStream(stdout) << " ✅\n";
             success = false;
@@ -233,7 +234,7 @@ void ApplicationBundle::copySystemPlugins(QStringList plugins) {
     if (systemDirArchs.contains("x86_64")) systemPluginDirs.insert("x86_64", pluginDir);
     if (systemDirArchs.isEmpty()) systemPluginDirs.insert(systemDirArchs.first(), pluginDir);
 
-    //Special handling for Homebrew on Rosetta
+    // Special handling for Homebrew on Rosetta
     if (pluginDir.startsWith("/opt/homebrew") && systemDirArchs.contains("arm64")) {
         systemPluginDirs.insert("x86_64", pluginDir.replace("/opt/homebrew", "/usr/local"));
     }
