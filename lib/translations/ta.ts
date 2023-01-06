@@ -127,32 +127,32 @@
   <context>
     <name>NsAlertMac</name>
     <message>
-      <translation></translation>
+      <translation>OK</translation>
       <location filename="../private/nsalertmac.mm" line="65" />
       <source>OK</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>சேமி</translation>
       <location filename="../private/nsalertmac.mm" line="68" />
       <source>Save</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>அனைத்தையும் சேமி</translation>
       <location filename="../private/nsalertmac.mm" line="71" />
       <source>Save All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>திற</translation>
       <location filename="../private/nsalertmac.mm" line="74" />
       <source>Open</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>ஆம்</translation>
       <location filename="../private/nsalertmac.mm" line="77" />
       <source>Yes</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>அனைத்திகும்ம் ஆம்</translation>
       <location filename="../private/nsalertmac.mm" line="80" />
       <source>Yes to All</source>
     </message>
