@@ -41,7 +41,7 @@
       <source>Severity</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>கோப்பு</translation>
       <location filename="../private/debuglogpopover.cpp" line="40" />
       <source>File</source>
     </message>
@@ -60,17 +60,17 @@
   <context>
     <name>DebugLogWindow</name>
     <message>
-      <translation></translation>
+      <translation>பிழைத்திருத்தப் பதிவு</translation>
       <location filename="../private/debuglogwindow.ui" line="14" />
       <source>Debug Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>பிழைத்திருத்தப் பதிவில் தேடு</translation>
       <location filename="../private/debuglogwindow.ui" line="80" />
       <source>Search Debug Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>பதிவைக் காலி செய்</translation>
       <location filename="../private/debuglogwindow.ui" line="156" />
       <source>Clear Log</source>
     </message>
@@ -80,7 +80,7 @@
       <source>Filter by Context</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>சூழல்</translation>
       <location filename="../private/debuglogwindow.cpp" line="307" />
       <source>context</source>
     </message>
@@ -88,38 +88,38 @@
   <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-      <translation></translation>
+      <translation>சேவைகள்</translation>
       <location filename="../tapplication.cpp" line="130" />
       <source>Services</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>மறை %1</translation>
       <location filename="../tapplication.cpp" line="131" />
       <source>Hide %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>மற்றவையை மறை</translation>
       <location filename="../tapplication.cpp" line="132" />
       <source>Hide Others</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>அனைத்தையும் காண்பி</translation>
       <location filename="../tapplication.cpp" line="133" />
       <source>Show All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>விருப்பத்தேர்வுகள்</translation>
       <location filename="../tapplication.cpp" line="134" />
       <source>Preferences...</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>%1 பற்றி</translation>
       <location filename="../tapplication.cpp" line="135" />
       <location filename="../thelpmenu.cpp" line="48" />
       <source>About %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>%1ஐ மூடு</translation>
       <location filename="../tapplication.cpp" line="136" />
       <source>Quit %1</source>
     </message>
