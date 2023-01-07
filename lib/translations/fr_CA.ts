@@ -88,17 +88,17 @@
   <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-      <translation></translation>
+      <translation>Services</translation>
       <location filename="../tapplication.cpp" line="130" />
       <source>Services</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>N'afficher pas  %1</translation>
       <location filename="../tapplication.cpp" line="131" />
       <source>Hide %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>N'afficher pas les autres</translation>
       <location filename="../tapplication.cpp" line="132" />
       <source>Hide Others</source>
     </message>
@@ -119,7 +119,7 @@
       <source>About %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Quitter  %1</translation>
       <location filename="../tapplication.cpp" line="136" />
       <source>Quit %1</source>
     </message>
@@ -172,7 +172,7 @@
       <source>Abort</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Réessayer</translation>
       <location filename="../private/nsalertmac.mm" line="92" />
       <source>Retry</source>
     </message>
@@ -197,7 +197,7 @@
       <source>Don't Save</source>
     </message>
     <message>
-      <translation>Aidez-moi</translation>
+      <translation>Aide</translation>
       <location filename="../private/nsalertmac.mm" line="107" />
       <source>Help</source>
     </message>
@@ -225,7 +225,7 @@
       <source>Displays version information.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Montre c'est message</translation>
       <location filename="../tapplication.cpp" line="140" />
       <source>Displays this help.</source>
     </message>
@@ -235,12 +235,12 @@
       <source>Unknown option '%1'.</source>
     </message>
     <message>
-      <translation>Options Inconnus %1</translation>
+      <translation>Options Inconnus: %1</translation>
       <location filename="../tapplication.cpp" line="142" />
       <source>Unknown options: %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Valeur manquant après «%1».</translation>
       <location filename="../tapplication.cpp" line="143" />
       <source>Missing value after '%1'.</source>
     </message>
@@ -434,7 +434,7 @@
   <context>
     <name>tHelpMenu</name>
     <message>
-      <translation></translation>
+      <translation>%1 Aide</translation>
       <location filename="../thelpmenu.cpp" line="42" />
       <source>%1 Help</source>
     </message>
@@ -444,7 +444,7 @@
       <source>File Bug</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Sources</translation>
       <location filename="../thelpmenu.cpp" line="46" />
       <source>Sources</source>
     </message>
@@ -454,7 +454,7 @@
       <source>View Debug Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Aide</translation>
       <location filename="../thelpmenu.cpp" line="75" />
       <source>Help</source>
     </message>
@@ -575,7 +575,7 @@
       <source>Don't Save</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Aide</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="148" />
       <source>Help</source>
     </message>
@@ -660,12 +660,12 @@
       <source>Double Sided</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>PDF</translation>
       <location filename="../tprintpopover.ui" line="189" />
       <source>PDF</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Portable Document Format (*.pdf)</translation>
       <location filename="../tprintpopover.cpp" line="151" />
       <source>Portable Document Format (*.pdf)</source>
     </message>
