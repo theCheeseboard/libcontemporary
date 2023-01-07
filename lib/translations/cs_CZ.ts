@@ -358,42 +358,42 @@
       <source>Platform</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Obecná Veřejná licence, verze 3</translation>
       <location filename="../tapplication.cpp" line="660" />
       <source>GNU General Public License, version 3</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Obecná Veřejná licence, verze 3 nebo pozdější</translation>
       <location filename="../tapplication.cpp" line="663" />
       <source>GNU General Public License, version 3, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Obecná Veřejná licence, verze 2</translation>
       <location filename="../tapplication.cpp" line="666" />
       <source>GNU General Public License, version 2</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Obecná Veřejná licence, verze 2 nebo pozdější</translation>
       <location filename="../tapplication.cpp" line="669" />
       <source>GNU General Public License, version 2, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Menší Obecná Veřejná licence, verze 3</translation>
       <location filename="../tapplication.cpp" line="672" />
       <source>GNU Lesser General Public License, version 3</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Menší Obecná Veřejná licence, verze 3 nebo pozdější</translation>
       <location filename="../tapplication.cpp" line="675" />
       <source>GNU Lesser General Public License, version 3, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Menší Obecná Veřejná licence, verze 2.1</translation>
       <location filename="../tapplication.cpp" line="678" />
       <source>GNU Lesser General Public License, version 2.1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Menší Obecná Veřejná licence, verze 2.1 nebo pozdější</translation>
       <location filename="../tapplication.cpp" line="681" />
       <source>GNU Lesser General Public License, version 2.1, or later</source>
     </message>
@@ -559,69 +559,69 @@
       <source>Retry</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ignorovat</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="136" />
       <source>Ignore</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Zavřít</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="139" />
       <source>Close</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Zrušit</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="142" />
       <source>Cancel</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Neukládat</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="145" />
       <source>Don't Save</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Nápověda</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="148" />
       <source>Help</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Použít</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="151" />
       <location filename="../private/tmessageboxbackend-win.cpp" line="160" />
       <source>Apply</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Resetovat</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="154" />
       <location filename="../private/tmessageboxbackend-win.cpp" line="163" />
       <source>Reset</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Obnovit výchozí</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="157" />
       <source>Restore Defaults</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Zahodit</translation>
       <location filename="../private/tmessageboxbackend-win.cpp" line="157" />
       <source>Discard</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Obnovit výchozí</translation>
       <location filename="../private/tmessageboxbackend-win.cpp" line="166" />
       <source>Restore defaults</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Uložit vše</translation>
       <location filename="../private/tmessageboxbackend-win.cpp" line="169" />
       <source>Save all</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ano všem</translation>
       <location filename="../private/tmessageboxbackend-win.cpp" line="172" />
       <source>Yes to all</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ne všem</translation>
       <location filename="../private/tmessageboxbackend-win.cpp" line="175" />
       <source>No to all</source>
     </message>
@@ -629,47 +629,47 @@
   <context>
     <name>tPrintPopover</name>
     <message>
-      <translation></translation>
+      <translation>Kopie</translation>
       <location filename="../tprintpopover.ui" line="172" />
       <source>Copies</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>MOŽNOSTI TISKU</translation>
       <location filename="../tprintpopover.ui" line="117" />
       <source>PRINT OPTIONS</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Tisk</translation>
       <location filename="../tprintpopover.ui" line="137" />
       <source>Print</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Tiskárna</translation>
       <location filename="../tprintpopover.ui" line="130" />
       <source>Printer</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Velikost strany</translation>
       <location filename="../tprintpopover.ui" line="148" />
       <source>Page Size</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Vytisknout černobíle</translation>
       <location filename="../tprintpopover.ui" line="155" />
       <source>Print in Grayscale</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Oboustranně</translation>
       <location filename="../tprintpopover.ui" line="165" />
       <source>Double Sided</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>PDF</translation>
       <location filename="../tprintpopover.ui" line="189" />
       <source>PDF</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>PDF dokument (*.pdf)</translation>
       <location filename="../tprintpopover.cpp" line="151" />
       <source>Portable Document Format (*.pdf)</source>
     </message>
@@ -677,7 +677,7 @@
   <context>
     <name>tSettingsWindow</name>
     <message>
-      <translation></translation>
+      <translation>Nastavení</translation>
       <location filename="../tsettingswindow/tsettingswindow.ui" line="44" />
       <location filename="../tsettingswindow/tsettingswindow.cpp" line="42" />
       <source>Settings</source>
@@ -686,7 +686,7 @@
   <context>
     <name>tWindowTabber</name>
     <message>
-      <translation></translation>
+      <translation>Nová karta</translation>
       <location filename="../twindowtabber.cpp" line="60" />
       <location filename="../twindowtabber.cpp" line="61" />
       <source>New Tab</source>
