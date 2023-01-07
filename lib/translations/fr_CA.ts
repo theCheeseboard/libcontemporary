@@ -225,17 +225,17 @@
       <source>Displays version information.</source>
     </message>
     <message>
-      <translation>Montre c'est message</translation>
+      <translation>Montre c'est message.</translation>
       <location filename="../tapplication.cpp" line="140" />
       <source>Displays this help.</source>
     </message>
     <message>
-      <translation>Option Inconnu  «%1».</translation>
+      <translation>Option inconnu  «%1».</translation>
       <location filename="../tapplication.cpp" line="141" />
       <source>Unknown option '%1'.</source>
     </message>
     <message>
-      <translation>Options Inconnus: %1</translation>
+      <translation>Options inconnus: %1</translation>
       <location filename="../tapplication.cpp" line="142" />
       <source>Unknown options: %1.</source>
     </message>
@@ -314,32 +314,32 @@
       <source>Licensed under the terms of the %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Linux</translation>
       <location filename="../tapplication.cpp" line="173" />
       <source>Linux</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Flatpak</translation>
       <location filename="../tapplication.cpp" line="176" />
       <source>Flatpak</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Microsoft Windows</translation>
       <location filename="../tapplication.cpp" line="179" />
       <source>Microsoft Windows</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Microsoft Windows Store</translation>
       <location filename="../tapplication.cpp" line="182" />
       <source>Microsoft Windows Store</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>macOS - Apple Silicon</translation>
       <location filename="../tapplication.cpp" line="186" />
       <source>macOS - Apple Silicon</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>macOS - Intel</translation>
       <location filename="../tapplication.cpp" line="188" />
       <source>macOS - Intel</source>
     </message>
@@ -354,42 +354,42 @@
       <source>Platform</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU General Public License, version 3</translation>
       <location filename="../tapplication.cpp" line="660" />
       <source>GNU General Public License, version 3</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU General Public License, version 3, ou plus tard</translation>
       <location filename="../tapplication.cpp" line="663" />
       <source>GNU General Public License, version 3, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU General Public License, version 2</translation>
       <location filename="../tapplication.cpp" line="666" />
       <source>GNU General Public License, version 2</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU General Public License, version 2, ou plus tard</translation>
       <location filename="../tapplication.cpp" line="669" />
       <source>GNU General Public License, version 2, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Lesser General Public License, version 3</translation>
       <location filename="../tapplication.cpp" line="672" />
       <source>GNU Lesser General Public License, version 3</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Lesser General Public License, version 3, ou plus tard</translation>
       <location filename="../tapplication.cpp" line="675" />
       <source>GNU Lesser General Public License, version 3, or later</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Lesser General Public License, version 2.1</translation>
       <location filename="../tapplication.cpp" line="678" />
       <source>GNU Lesser General Public License, version 2.1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>GNU Lesser General Public License, version 2.1, ou plus tard</translation>
       <location filename="../tapplication.cpp" line="681" />
       <source>GNU Lesser General Public License, version 2.1, or later</source>
     </message>
@@ -397,7 +397,7 @@
   <context>
     <name>tCommandPaletteActionScope</name>
     <message>
-      <translation></translation>
+      <translation>Actions</translation>
       <location filename="../tcommandpalette/tcommandpaletteactionscope.cpp" line="43" />
       <source>Actions</source>
     </message>
@@ -426,7 +426,7 @@
       <source>Command Palette</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Qu'est-ce que vous regardez pour?</translation>
       <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="128" />
       <source>What are you looking for?</source>
     </message>
@@ -645,12 +645,12 @@
       <source>Printer</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Grandeur de la Page</translation>
       <location filename="../tprintpopover.ui" line="148" />
       <source>Page Size</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Imprime en Noir et Blanc</translation>
       <location filename="../tprintpopover.ui" line="155" />
       <source>Print in Grayscale</source>
     </message>
