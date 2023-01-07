@@ -250,7 +250,7 @@
       <source>Unexpected value after '%1'.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>[options]</translation>
       <location filename="../tapplication.cpp" line="145" />
       <source>[options]</source>
     </message>
@@ -265,7 +265,7 @@
       <source>Options:</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Arguments:</translation>
       <location filename="../tapplication.cpp" line="148" />
       <source>Arguments:</source>
     </message>
@@ -297,12 +297,12 @@
   <context>
     <name>tApplication</name>
     <message>
-      <translation></translation>
+      <translation>Copyright © %1.</translation>
       <location filename="../tapplication.cpp" line="687" />
       <source>Copyright © %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Autorisé sur les termes de %1 </translation>
       <location filename="../tapplication.cpp" line="660" />
       <location filename="../tapplication.cpp" line="663" />
       <location filename="../tapplication.cpp" line="666" />
