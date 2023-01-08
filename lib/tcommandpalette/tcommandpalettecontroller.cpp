@@ -75,7 +75,7 @@ void tCommandPaletteController::activate() {
     d->activeWindow->raise();
 
     QRect geometry;
-    geometry.setSize(SC_DPI_WT(QSize(600, 800), QSize, d->parent));
+    geometry.setSize(SC_DPI_WT(QSize(400, 600), QSize, d->parent));
     geometry.moveCenter(d->parent->geometry().center());
     d->activeWindow->setGeometry(geometry);
 }

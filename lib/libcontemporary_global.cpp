@@ -188,6 +188,13 @@ void libContemporaryCommon::tintImage(QImage& image, QColor tint) {
         painter.end();
     }
 }
+
+QPixmap libContemporaryCommon::getTintedPixmap(QPixmap pixmap, QColor tint) {
+    auto image = pixmap.toImage();
+    tintImage(image, tint);
+    return QPixmap::fromImage(image);
+}
+
 double libContemporaryCommon::getDPIScaling(const QPaintDevice* paintDevice) {
     #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     return 1;

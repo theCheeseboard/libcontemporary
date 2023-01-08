@@ -90,6 +90,12 @@ class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
         /// \param tint The colour to tint the icon with
         static void tintImage(QImage& image, QColor tint);
 
+        /// Tint a pixmap
+        /// \param pixmap The pixmap to tint
+        /// \param tint The colour to tint the pixmap with
+        /// \returns The tinted pixmap
+        static QPixmap getTintedPixmap(QPixmap pixmap, QColor tint);
+
         /// Fixate the height of a widget when the DPI changes
         /// \param widget The widget to fixate the height of
         /// \param calculateHeight Function to calculate the desired height

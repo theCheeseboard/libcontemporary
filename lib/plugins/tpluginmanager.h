@@ -1,7 +1,6 @@
 #ifndef TPLUGINMANAGER_H
 #define TPLUGINMANAGER_H
 
-#include "../tapplication.h"
 #include "../tlogger.h"
 #include <QDir>
 #include <QDirIterator>
@@ -10,7 +9,9 @@
 template<typename T>
 class tPluginManager {
     public:
-        tPluginManager(){};
+        tPluginManager(QString libraryDirectory) {
+            this->libraryDirectory = libraryDirectory;
+        };
 
         void load() {
             // Load all available plugins
@@ -18,8 +19,7 @@ class tPluginManager {
                 QDir::cleanPath(qApp->applicationDirPath() + "/../plugins")};
 
 #ifdef T_OS_UNIX_NOT_MAC
-            searchPaths.append(QString(SYSTEM_LIBRARY_DIRECTORY).append("/thebeat/plugins"));
-//    searchPaths.append(QString("/usr/lib/thebeat/plugins"));
+            searchPaths.append(QString(SYSTEM_LIBRARY_DIRECTORY).append(QStringLiteral("/%1/plugins").arg(libraryDirectory)));
 #elif defined(Q_OS_WIN)
             searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
             searchPaths.append(qApp->applicationDirPath() + "/plugins");
@@ -49,6 +49,9 @@ class tPluginManager {
                 }
             }
         }
+
+    private:
+        QString libraryDirectory;
 };
 
 #endif // TPLUGINMANAGER_H
