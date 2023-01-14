@@ -1,4 +1,6 @@
 function(cntp_init target cxx-standard)
+    option(CNTP_ASAN "Enable the use of AddressSanitizer" OFF)
+
     set_target_properties(${target} PROPERTIES
             AUTOMOC ON
             AUTORCC ON
@@ -14,6 +16,16 @@ function(cntp_init target cxx-standard)
     add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
     add_compile_definitions(SYSTEM_PREFIX_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_PREFIX}")
     add_compile_definitions(SYSTEM_DATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
+
+    if(CNTP_ASAN)
+        if(MSVC)
+            target_compile_options(${target} PRIVATE /fsanitize=address)
+            target_link_options(${target} PRIVATE /fsanitize=address)
+        else()
+            target_compile_options(${target} PRIVATE -fsanitize=address)
+            target_link_options(${target} PRIVATE -fsanitize=address)
+        endif()
+    endif()
 
     if(NOT ${DESKTOPID} STREQUAL "${DESKTOPID}-NOTFOUND")
         add_compile_definitions(T_APPMETA_DESKTOP_ID="${DESKTOPID}")
