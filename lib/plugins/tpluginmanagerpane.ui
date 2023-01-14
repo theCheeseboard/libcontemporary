@@ -70,6 +70,9 @@
         <property name="text">
          <string>Restart</string>
         </property>
+        <property name="icon">
+         <iconset theme="view-refresh"/>
+        </property>
        </widget>
       </item>
      </layout>
