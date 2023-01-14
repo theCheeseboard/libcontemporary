@@ -87,6 +87,10 @@ cntp_sourcelist(
         jobs/jobspopover.cpp
         private/errorflashwidget.cpp 
         private/errorflashwidget.ui
+        plugins/tpluginmanagerpane.cpp plugins/tpluginmanagerpane.ui
+        plugins/tpluginmanagerhelper.cpp
+        plugins/pluginmanagementpopover.cpp plugins/pluginmanagementpopover.ui
+        plugins/knownpluginmodel.cpp
 
         tcommandpalette/tcommandpalettewindow.cpp tcommandpalette/tcommandpalettewindow.ui
         tcommandpalette/tcommandpalettecontroller.cpp
@@ -161,6 +165,8 @@ cntp_sourcelist(
         tcontentsizer.h
         plugins/plugininterface.h
         plugins/tpluginmanager.h
+        plugins/tpluginmanagerpane.h
+        plugins/tpluginmanagerhelper.h
 
         tsettingswindow/tsettingswindow.h
         tsettingswindow/tsettingspane.h
@@ -180,6 +186,8 @@ cntp_sourcelist(
         tsettingswindow/tsettingswindowdelegate.h
         tcommandpalette/tcommandpalettewindow.h
         tcommandpalette/tcommandpaletteallscope.h
+        plugins/pluginmanagementpopover.h
+        plugins/knownpluginmodel.h
 )
 
 

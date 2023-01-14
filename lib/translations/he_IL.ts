@@ -224,6 +224,44 @@
     </message>
 </context>
 <context>
+    <name>PluginManagementPopover</name>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="57"/>
+        <source>Manage Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="97"/>
+        <source>Actions</source>
+        <translation type="unfinished">פעולות</translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="107"/>
+        <source>Activate Plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="114"/>
+        <source>Deactivate Plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.cpp" line="23"/>
+        <source>Some changes to plugins won&apos;t apply until you restart %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.cpp" line="24"/>
+        <source>Restart %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QCommandLineParser</name>
     <message>
         <location filename="../tapplication.cpp" line="139"/>
@@ -651,6 +689,44 @@
         <location filename="../private/tmessageboxbackend-win.cpp" line="175"/>
         <source>No to all</source>
         <translation>לא לכל</translation>
+    </message>
+</context>
+<context>
+    <name>tPluginManagerPane</name>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="27"/>
+        <source>Manage Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="30"/>
+        <source>Enable or disable plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="71"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.cpp" line="14"/>
+        <source>Plugins add core and extra functionality to %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.cpp" line="15"/>
+        <source>Restart %1 to apply changes in plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.cpp" line="27"/>
+        <source>Plugins</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,695 +1,778 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
 <TS version="2.1" language="fr_CA">
-  <context>
+<context>
     <name>DebugLogModel</name>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogwindow.cpp" line="273" />
-      <source>Timestamp</source>
+        <location filename="../private/debuglogwindow.cpp" line="273"/>
+        <source>Timestamp</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogwindow.cpp" line="275" />
-      <source>Context</source>
+        <location filename="../private/debuglogwindow.cpp" line="275"/>
+        <source>Context</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Message</translation>
-      <location filename="../private/debuglogwindow.cpp" line="277" />
-      <source>Message</source>
+        <location filename="../private/debuglogwindow.cpp" line="277"/>
+        <source>Message</source>
+        <translation>Message</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>DebugLogPopover</name>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogpopover.ui" line="35" />
-      <source>Debug Log Item</source>
+        <location filename="../private/debuglogpopover.ui" line="35"/>
+        <source>Debug Log Item</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogpopover.cpp" line="37" />
-      <source>Timestamp</source>
+        <location filename="../private/debuglogpopover.cpp" line="37"/>
+        <source>Timestamp</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogpopover.cpp" line="38" />
-      <source>Context</source>
+        <location filename="../private/debuglogpopover.cpp" line="38"/>
+        <source>Context</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogpopover.cpp" line="39" />
-      <source>Severity</source>
+        <location filename="../private/debuglogpopover.cpp" line="39"/>
+        <source>Severity</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogpopover.cpp" line="40" />
-      <source>File</source>
+        <location filename="../private/debuglogpopover.cpp" line="40"/>
+        <source>File</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogpopover.cpp" line="40" />
-      <location filename="../private/debuglogpopover.cpp" line="41" />
-      <source>[unavailable]</source>
+        <location filename="../private/debuglogpopover.cpp" line="40"/>
+        <location filename="../private/debuglogpopover.cpp" line="41"/>
+        <source>[unavailable]</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Fonction</translation>
-      <location filename="../private/debuglogpopover.cpp" line="41" />
-      <source>Function</source>
+        <location filename="../private/debuglogpopover.cpp" line="41"/>
+        <source>Function</source>
+        <translation>Fonction</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>DebugLogWindow</name>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogwindow.ui" line="14" />
-      <source>Debug Log</source>
+        <location filename="../private/debuglogwindow.ui" line="14"/>
+        <source>Debug Log</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogwindow.ui" line="80" />
-      <source>Search Debug Log</source>
+        <location filename="../private/debuglogwindow.ui" line="80"/>
+        <source>Search Debug Log</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogwindow.ui" line="156" />
-      <source>Clear Log</source>
+        <location filename="../private/debuglogwindow.ui" line="156"/>
+        <source>Clear Log</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogwindow.ui" line="183" />
-      <source>Filter by Context</source>
+        <location filename="../private/debuglogwindow.ui" line="183"/>
+        <source>Filter by Context</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/debuglogwindow.cpp" line="307" />
-      <source>context</source>
+        <location filename="../private/debuglogwindow.cpp" line="307"/>
+        <source>context</source>
+        <comment>Placeholder in search box</comment>
+        <translation type="unfinished"></translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-      <translation>Services</translation>
-      <location filename="../tapplication.cpp" line="130" />
-      <source>Services</source>
+        <location filename="../tapplication.cpp" line="130"/>
+        <source>Services</source>
+        <translation>Services</translation>
     </message>
     <message>
-      <translation>N'afficher pas  %1</translation>
-      <location filename="../tapplication.cpp" line="131" />
-      <source>Hide %1</source>
+        <location filename="../tapplication.cpp" line="131"/>
+        <source>Hide %1</source>
+        <translation>N&apos;afficher pas  %1</translation>
     </message>
     <message>
-      <translation>N'afficher pas les autres</translation>
-      <location filename="../tapplication.cpp" line="132" />
-      <source>Hide Others</source>
+        <location filename="../tapplication.cpp" line="132"/>
+        <source>Hide Others</source>
+        <translation>N&apos;afficher pas les autres</translation>
     </message>
     <message>
-      <translation>Montrer Tous</translation>
-      <location filename="../tapplication.cpp" line="133" />
-      <source>Show All</source>
+        <location filename="../tapplication.cpp" line="133"/>
+        <source>Show All</source>
+        <translation>Montrer Tous</translation>
     </message>
     <message>
-      <translation>Préférences...</translation>
-      <location filename="../tapplication.cpp" line="134" />
-      <source>Preferences...</source>
+        <location filename="../tapplication.cpp" line="134"/>
+        <source>Preferences...</source>
+        <translation>Préférences...</translation>
     </message>
     <message>
-      <translation>Apropos  %1</translation>
-      <location filename="../tapplication.cpp" line="135" />
-      <location filename="../thelpmenu.cpp" line="48" />
-      <source>About %1</source>
+        <location filename="../tapplication.cpp" line="135"/>
+        <location filename="../thelpmenu.cpp" line="48"/>
+        <source>About %1</source>
+        <translation>Apropos  %1</translation>
     </message>
     <message>
-      <translation>Quitter  %1</translation>
-      <location filename="../tapplication.cpp" line="136" />
-      <source>Quit %1</source>
+        <location filename="../tapplication.cpp" line="136"/>
+        <source>Quit %1</source>
+        <translation>Quitter  %1</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>NsAlertMac</name>
     <message>
-      <translation>OK</translation>
-      <location filename="../private/nsalertmac.mm" line="65" />
-      <source>OK</source>
+        <location filename="../private/nsalertmac.mm" line="65"/>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
     <message>
-      <translation>Sauvegarder</translation>
-      <location filename="../private/nsalertmac.mm" line="68" />
-      <source>Save</source>
+        <location filename="../private/nsalertmac.mm" line="68"/>
+        <source>Save</source>
+        <translation>Sauvegarder</translation>
     </message>
     <message>
-      <translation>Sauvegarder Tous</translation>
-      <location filename="../private/nsalertmac.mm" line="71" />
-      <source>Save All</source>
+        <location filename="../private/nsalertmac.mm" line="71"/>
+        <source>Save All</source>
+        <translation>Sauvegarder Tous</translation>
     </message>
     <message>
-      <translation>Ouvrir</translation>
-      <location filename="../private/nsalertmac.mm" line="74" />
-      <source>Open</source>
+        <location filename="../private/nsalertmac.mm" line="74"/>
+        <source>Open</source>
+        <translation>Ouvrir</translation>
     </message>
     <message>
-      <translation>Oui</translation>
-      <location filename="../private/nsalertmac.mm" line="77" />
-      <source>Yes</source>
+        <location filename="../private/nsalertmac.mm" line="77"/>
+        <source>Yes</source>
+        <translation>Oui</translation>
     </message>
     <message>
-      <translation>Oui à Tous</translation>
-      <location filename="../private/nsalertmac.mm" line="80" />
-      <source>Yes to All</source>
+        <location filename="../private/nsalertmac.mm" line="80"/>
+        <source>Yes to All</source>
+        <translation>Oui à Tous</translation>
     </message>
     <message>
-      <translation>Non</translation>
-      <location filename="../private/nsalertmac.mm" line="83" />
-      <source>No</source>
+        <location filename="../private/nsalertmac.mm" line="83"/>
+        <source>No</source>
+        <translation>Non</translation>
     </message>
     <message>
-      <translation>Non à Tous</translation>
-      <location filename="../private/nsalertmac.mm" line="86" />
-      <source>No to All</source>
+        <location filename="../private/nsalertmac.mm" line="86"/>
+        <source>No to All</source>
+        <translation>Non à Tous</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/nsalertmac.mm" line="89" />
-      <source>Abort</source>
+        <location filename="../private/nsalertmac.mm" line="89"/>
+        <source>Abort</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Réessayer</translation>
-      <location filename="../private/nsalertmac.mm" line="92" />
-      <source>Retry</source>
+        <location filename="../private/nsalertmac.mm" line="92"/>
+        <source>Retry</source>
+        <translation>Réessayer</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/nsalertmac.mm" line="95" />
-      <source>Ignore</source>
+        <location filename="../private/nsalertmac.mm" line="95"/>
+        <source>Ignore</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Fermer</translation>
-      <location filename="../private/nsalertmac.mm" line="98" />
-      <source>Close</source>
+        <location filename="../private/nsalertmac.mm" line="98"/>
+        <source>Close</source>
+        <translation>Fermer</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/nsalertmac.mm" line="101" />
-      <source>Cancel</source>
+        <location filename="../private/nsalertmac.mm" line="101"/>
+        <source>Cancel</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Ne Sauvegarder Pas</translation>
-      <location filename="../private/nsalertmac.mm" line="104" />
-      <source>Don't Save</source>
+        <location filename="../private/nsalertmac.mm" line="104"/>
+        <source>Don&apos;t Save</source>
+        <translation>Ne Sauvegarder Pas</translation>
     </message>
     <message>
-      <translation>Aide</translation>
-      <location filename="../private/nsalertmac.mm" line="107" />
-      <source>Help</source>
+        <location filename="../private/nsalertmac.mm" line="107"/>
+        <source>Help</source>
+        <translation>Aide</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/nsalertmac.mm" line="110" />
-      <source>Apply</source>
+        <location filename="../private/nsalertmac.mm" line="110"/>
+        <source>Apply</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/nsalertmac.mm" line="113" />
-      <source>Reset</source>
+        <location filename="../private/nsalertmac.mm" line="113"/>
+        <source>Reset</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/nsalertmac.mm" line="116" />
-      <source>Restore Defaults</source>
+        <location filename="../private/nsalertmac.mm" line="116"/>
+        <source>Restore Defaults</source>
+        <translation></translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
+    <name>PluginManagementPopover</name>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="57"/>
+        <source>Manage Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="97"/>
+        <source>Actions</source>
+        <translation type="unfinished">Actions</translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="107"/>
+        <source>Activate Plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.ui" line="114"/>
+        <source>Deactivate Plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.cpp" line="23"/>
+        <source>Some changes to plugins won&apos;t apply until you restart %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/pluginmanagementpopover.cpp" line="24"/>
+        <source>Restart %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QCommandLineParser</name>
     <message>
-      <translation></translation>
-      <location filename="../tapplication.cpp" line="139" />
-      <source>Displays version information.</source>
+        <location filename="../tapplication.cpp" line="139"/>
+        <source>Displays version information.</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Montre c'est message.</translation>
-      <location filename="../tapplication.cpp" line="140" />
-      <source>Displays this help.</source>
+        <location filename="../tapplication.cpp" line="140"/>
+        <source>Displays this help.</source>
+        <translation>Montre c&apos;est message.</translation>
     </message>
     <message>
-      <translation>Option inconnu  «%1».</translation>
-      <location filename="../tapplication.cpp" line="141" />
-      <source>Unknown option '%1'.</source>
+        <location filename="../tapplication.cpp" line="141"/>
+        <source>Unknown option &apos;%1&apos;.</source>
+        <translation>Option inconnu  «%1».</translation>
     </message>
     <message>
-      <translation>Options inconnus: %1</translation>
-      <location filename="../tapplication.cpp" line="142" />
-      <source>Unknown options: %1.</source>
+        <location filename="../tapplication.cpp" line="142"/>
+        <source>Unknown options: %1.</source>
+        <translation>Options inconnus: %1</translation>
     </message>
     <message>
-      <translation>Valeur manquant après «%1».</translation>
-      <location filename="../tapplication.cpp" line="143" />
-      <source>Missing value after '%1'.</source>
+        <location filename="../tapplication.cpp" line="143"/>
+        <source>Missing value after &apos;%1&apos;.</source>
+        <translation>Valeur manquant après «%1».</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tapplication.cpp" line="144" />
-      <source>Unexpected value after '%1'.</source>
+        <location filename="../tapplication.cpp" line="144"/>
+        <source>Unexpected value after &apos;%1&apos;.</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>[options]</translation>
-      <location filename="../tapplication.cpp" line="145" />
-      <source>[options]</source>
+        <location filename="../tapplication.cpp" line="145"/>
+        <source>[options]</source>
+        <translation>[options]</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tapplication.cpp" line="146" />
-      <source>Usage: %1</source>
+        <location filename="../tapplication.cpp" line="146"/>
+        <source>Usage: %1</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Options:</translation>
-      <location filename="../tapplication.cpp" line="147" />
-      <source>Options:</source>
+        <location filename="../tapplication.cpp" line="147"/>
+        <source>Options:</source>
+        <translation>Options:</translation>
     </message>
     <message>
-      <translation>Arguments:</translation>
-      <location filename="../tapplication.cpp" line="148" />
-      <source>Arguments:</source>
+        <location filename="../tapplication.cpp" line="148"/>
+        <source>Arguments:</source>
+        <translation>Arguments:</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tAboutDialog</name>
     <message>
-      <translation></translation>
-      <location filename="../taboutdialog.ui" line="194" />
-      <source>SOFTWARE</source>
+        <location filename="../taboutdialog.ui" line="194"/>
+        <source>SOFTWARE</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../taboutdialog.ui" line="239" />
-      <source>COPYRIGHT</source>
+        <location filename="../taboutdialog.ui" line="239"/>
+        <source>COPYRIGHT</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>OK</translation>
-      <location filename="../taboutdialog.ui" line="299" />
-      <source>OK</source>
+        <location filename="../taboutdialog.ui" line="299"/>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
     <message>
-      <translation>Apropos %1</translation>
-      <location filename="../taboutdialog.cpp" line="35" />
-      <location filename="../taboutdialog.cpp" line="36" />
-      <source>About %1</source>
+        <location filename="../taboutdialog.cpp" line="35"/>
+        <location filename="../taboutdialog.cpp" line="36"/>
+        <source>About %1</source>
+        <translation>Apropos %1</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tApplication</name>
     <message>
-      <translation>Copyright © %1.</translation>
-      <location filename="../tapplication.cpp" line="687" />
-      <source>Copyright © %1.</source>
+        <location filename="../tapplication.cpp" line="687"/>
+        <source>Copyright © %1.</source>
+        <translation>Copyright © %1.</translation>
     </message>
     <message>
-      <translation>Autorisé sur les termes de %1 </translation>
-      <location filename="../tapplication.cpp" line="660" />
-      <location filename="../tapplication.cpp" line="663" />
-      <location filename="../tapplication.cpp" line="666" />
-      <location filename="../tapplication.cpp" line="669" />
-      <location filename="../tapplication.cpp" line="672" />
-      <location filename="../tapplication.cpp" line="675" />
-      <location filename="../tapplication.cpp" line="678" />
-      <location filename="../tapplication.cpp" line="681" />
-      <source>Licensed under the terms of the %1.</source>
+        <location filename="../tapplication.cpp" line="660"/>
+        <location filename="../tapplication.cpp" line="663"/>
+        <location filename="../tapplication.cpp" line="666"/>
+        <location filename="../tapplication.cpp" line="669"/>
+        <location filename="../tapplication.cpp" line="672"/>
+        <location filename="../tapplication.cpp" line="675"/>
+        <location filename="../tapplication.cpp" line="678"/>
+        <location filename="../tapplication.cpp" line="681"/>
+        <source>Licensed under the terms of the %1.</source>
+        <translation>Autorisé sur les termes de %1 </translation>
     </message>
     <message>
-      <translation>Linux</translation>
-      <location filename="../tapplication.cpp" line="173" />
-      <source>Linux</source>
+        <location filename="../tapplication.cpp" line="173"/>
+        <source>Linux</source>
+        <translation>Linux</translation>
     </message>
     <message>
-      <translation>Flatpak</translation>
-      <location filename="../tapplication.cpp" line="176" />
-      <source>Flatpak</source>
+        <location filename="../tapplication.cpp" line="176"/>
+        <source>Flatpak</source>
+        <translation>Flatpak</translation>
     </message>
     <message>
-      <translation>Microsoft Windows</translation>
-      <location filename="../tapplication.cpp" line="179" />
-      <source>Microsoft Windows</source>
+        <location filename="../tapplication.cpp" line="179"/>
+        <source>Microsoft Windows</source>
+        <translation>Microsoft Windows</translation>
     </message>
     <message>
-      <translation>Microsoft Windows Store</translation>
-      <location filename="../tapplication.cpp" line="182" />
-      <source>Microsoft Windows Store</source>
+        <location filename="../tapplication.cpp" line="182"/>
+        <source>Microsoft Windows Store</source>
+        <translation>Microsoft Windows Store</translation>
     </message>
     <message>
-      <translation>macOS - Apple Silicon</translation>
-      <location filename="../tapplication.cpp" line="186" />
-      <source>macOS - Apple Silicon</source>
+        <location filename="../tapplication.cpp" line="186"/>
+        <source>macOS - Apple Silicon</source>
+        <translation>macOS - Apple Silicon</translation>
     </message>
     <message>
-      <translation>macOS - Intel</translation>
-      <location filename="../tapplication.cpp" line="188" />
-      <source>macOS - Intel</source>
+        <location filename="../tapplication.cpp" line="188"/>
+        <source>macOS - Intel</source>
+        <translation>macOS - Intel</translation>
     </message>
     <message>
-      <translation>Inconnu</translation>
-      <location filename="../tapplication.cpp" line="192" />
-      <source>Unknown</source>
+        <location filename="../tapplication.cpp" line="192"/>
+        <source>Unknown</source>
+        <translation>Inconnu</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tapplication.cpp" line="195" />
-      <source>Platform</source>
+        <location filename="../tapplication.cpp" line="195"/>
+        <source>Platform</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>GNU General Public License, version 3</translation>
-      <location filename="../tapplication.cpp" line="660" />
-      <source>GNU General Public License, version 3</source>
+        <location filename="../tapplication.cpp" line="660"/>
+        <source>GNU General Public License, version 3</source>
+        <translation>GNU General Public License, version 3</translation>
     </message>
     <message>
-      <translation>GNU General Public License, version 3, ou plus tard</translation>
-      <location filename="../tapplication.cpp" line="663" />
-      <source>GNU General Public License, version 3, or later</source>
+        <location filename="../tapplication.cpp" line="663"/>
+        <source>GNU General Public License, version 3, or later</source>
+        <translation>GNU General Public License, version 3, ou plus tard</translation>
     </message>
     <message>
-      <translation>GNU General Public License, version 2</translation>
-      <location filename="../tapplication.cpp" line="666" />
-      <source>GNU General Public License, version 2</source>
+        <location filename="../tapplication.cpp" line="666"/>
+        <source>GNU General Public License, version 2</source>
+        <translation>GNU General Public License, version 2</translation>
     </message>
     <message>
-      <translation>GNU General Public License, version 2, ou plus tard</translation>
-      <location filename="../tapplication.cpp" line="669" />
-      <source>GNU General Public License, version 2, or later</source>
+        <location filename="../tapplication.cpp" line="669"/>
+        <source>GNU General Public License, version 2, or later</source>
+        <translation>GNU General Public License, version 2, ou plus tard</translation>
     </message>
     <message>
-      <translation>GNU Lesser General Public License, version 3</translation>
-      <location filename="../tapplication.cpp" line="672" />
-      <source>GNU Lesser General Public License, version 3</source>
+        <location filename="../tapplication.cpp" line="672"/>
+        <source>GNU Lesser General Public License, version 3</source>
+        <translation>GNU Lesser General Public License, version 3</translation>
     </message>
     <message>
-      <translation>GNU Lesser General Public License, version 3, ou plus tard</translation>
-      <location filename="../tapplication.cpp" line="675" />
-      <source>GNU Lesser General Public License, version 3, or later</source>
+        <location filename="../tapplication.cpp" line="675"/>
+        <source>GNU Lesser General Public License, version 3, or later</source>
+        <translation>GNU Lesser General Public License, version 3, ou plus tard</translation>
     </message>
     <message>
-      <translation>GNU Lesser General Public License, version 2.1</translation>
-      <location filename="../tapplication.cpp" line="678" />
-      <source>GNU Lesser General Public License, version 2.1</source>
+        <location filename="../tapplication.cpp" line="678"/>
+        <source>GNU Lesser General Public License, version 2.1</source>
+        <translation>GNU Lesser General Public License, version 2.1</translation>
     </message>
     <message>
-      <translation>GNU Lesser General Public License, version 2.1, ou plus tard</translation>
-      <location filename="../tapplication.cpp" line="681" />
-      <source>GNU Lesser General Public License, version 2.1, or later</source>
+        <location filename="../tapplication.cpp" line="681"/>
+        <source>GNU Lesser General Public License, version 2.1, or later</source>
+        <translation>GNU Lesser General Public License, version 2.1, ou plus tard</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tCommandPaletteActionScope</name>
     <message>
-      <translation>Actions</translation>
-      <location filename="../tcommandpalette/tcommandpaletteactionscope.cpp" line="43" />
-      <source>Actions</source>
+        <location filename="../tcommandpalette/tcommandpaletteactionscope.cpp" line="43"/>
+        <source>Actions</source>
+        <translation>Actions</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tCommandPaletteAllScope</name>
     <message>
-      <translation></translation>
-      <location filename="../tcommandpalette/tcommandpaletteallscope.cpp" line="10" />
-      <source>All</source>
+        <location filename="../tcommandpalette/tcommandpaletteallscope.cpp" line="10"/>
+        <source>All</source>
+        <translation></translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tCommandPaletteController</name>
     <message>
-      <translation></translation>
-      <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="30" />
-      <source>Command Palette</source>
+        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="30"/>
+        <source>Command Palette</source>
+        <translation></translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tCommandPaletteWindow</name>
     <message>
-      <translation></translation>
-      <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="14" />
-      <source>Command Palette</source>
+        <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="14"/>
+        <source>Command Palette</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Qu'est-ce que vous regardez pour?</translation>
-      <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="128" />
-      <source>What are you looking for?</source>
+        <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="128"/>
+        <source>What are you looking for?</source>
+        <translation>Qu&apos;est-ce que vous regardez pour?</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tHelpMenu</name>
     <message>
-      <translation>Aide avec %1</translation>
-      <location filename="../thelpmenu.cpp" line="42" />
-      <source>%1 Help</source>
+        <location filename="../thelpmenu.cpp" line="42"/>
+        <source>%1 Help</source>
+        <translation>Aide avec %1</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../thelpmenu.cpp" line="45" />
-      <source>File Bug</source>
+        <location filename="../thelpmenu.cpp" line="45"/>
+        <source>File Bug</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Sources</translation>
-      <location filename="../thelpmenu.cpp" line="46" />
-      <source>Sources</source>
+        <location filename="../thelpmenu.cpp" line="46"/>
+        <source>Sources</source>
+        <translation>Sources</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../thelpmenu.cpp" line="47" />
-      <source>View Debug Log</source>
+        <location filename="../thelpmenu.cpp" line="47"/>
+        <source>View Debug Log</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Aide</translation>
-      <location filename="../thelpmenu.cpp" line="75" />
-      <source>Help</source>
+        <location filename="../thelpmenu.cpp" line="75"/>
+        <source>Help</source>
+        <translation>Aide</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tInputDialog</name>
     <message>
-      <translation></translation>
-      <location filename="../tinputdialog.ui" line="48" />
-      <source>Cancel</source>
+        <location filename="../tinputdialog.ui" line="48"/>
+        <source>Cancel</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>OK</translation>
-      <location filename="../tinputdialog.ui" line="55" />
-      <source>OK</source>
+        <location filename="../tinputdialog.ui" line="55"/>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tLogger</name>
     <message>
-      <translation>Information</translation>
-      <source>Info</source>
+        <source>Info</source>
+        <translation type="vanished">Information</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tlogger.cpp" line="106" />
-      <source>Debug</source>
+        <location filename="../tlogger.cpp" line="106"/>
+        <source>Debug</source>
+        <comment>Severity Level</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tlogger.cpp" line="108" />
-      <source>Warning</source>
+        <location filename="../tlogger.cpp" line="108"/>
+        <source>Warning</source>
+        <comment>Severity Level</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tlogger.cpp" line="110" />
-      <source>Critical</source>
+        <location filename="../tlogger.cpp" line="110"/>
+        <source>Critical</source>
+        <comment>Severity Level</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tlogger.cpp" line="112" />
-      <source>Fatal</source>
+        <location filename="../tlogger.cpp" line="112"/>
+        <source>Fatal</source>
+        <comment>Severity Level</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-      <translation>Information</translation>
-      <location filename="../tlogger.cpp" line="114" />
-      <source>Info</source>
+        <location filename="../tlogger.cpp" line="114"/>
+        <source>Info</source>
+        <comment>Severity Level</comment>
+        <translation type="unfinished">Information</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tMessageBoxBackend</name>
     <message>
-      <translation>OK</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="106" />
-      <source>OK</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="106"/>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
     <message>
-      <translation>Sauvegarder</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="109" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="154" />
-      <source>Save</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="109"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="154"/>
+        <source>Save</source>
+        <translation>Sauvegarder</translation>
     </message>
     <message>
-      <translation>Sauvegarder Tous</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="112" />
-      <source>Save All</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="112"/>
+        <source>Save All</source>
+        <translation>Sauvegarder Tous</translation>
     </message>
     <message>
-      <translation>Ouvrer</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="115" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="151" />
-      <source>Open</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="115"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="151"/>
+        <source>Open</source>
+        <translation>Ouvrer</translation>
     </message>
     <message>
-      <translation>Oui</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="118" />
-      <source>Yes</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="118"/>
+        <source>Yes</source>
+        <translation>Oui</translation>
     </message>
     <message>
-      <translation>Oui à Tous</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="121" />
-      <source>Yes to All</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="121"/>
+        <source>Yes to All</source>
+        <translation>Oui à Tous</translation>
     </message>
     <message>
-      <translation>Non</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="124" />
-      <source>No</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="124"/>
+        <source>No</source>
+        <translation>Non</translation>
     </message>
     <message>
-      <translation>Non à Tous</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="127" />
-      <source>No to All</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="127"/>
+        <source>No to All</source>
+        <translation>Non à Tous</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="130" />
-      <source>Abort</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="130"/>
+        <source>Abort</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="133" />
-      <source>Retry</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="133"/>
+        <source>Retry</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="136" />
-      <source>Ignore</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="136"/>
+        <source>Ignore</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Fermer</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="139" />
-      <source>Close</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="139"/>
+        <source>Close</source>
+        <translation>Fermer</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="142" />
-      <source>Cancel</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="142"/>
+        <source>Cancel</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Ne Sauvegarder Pas</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="145" />
-      <source>Don't Save</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="145"/>
+        <source>Don&apos;t Save</source>
+        <translation>Ne Sauvegarder Pas</translation>
     </message>
     <message>
-      <translation>Aide</translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="148" />
-      <source>Help</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="148"/>
+        <source>Help</source>
+        <translation>Aide</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="151" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="160" />
-      <source>Apply</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="151"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="160"/>
+        <source>Apply</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="154" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="163" />
-      <source>Reset</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="154"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="163"/>
+        <source>Reset</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-mac.mm" line="157" />
-      <source>Restore Defaults</source>
+        <location filename="../private/tmessageboxbackend-mac.mm" line="157"/>
+        <source>Restore Defaults</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="157" />
-      <source>Discard</source>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="157"/>
+        <source>Discard</source>
+        <translation></translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="166" />
-      <source>Restore defaults</source>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="166"/>
+        <source>Restore defaults</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Sauvegarder Tous</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="169" />
-      <source>Save all</source>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="169"/>
+        <source>Save all</source>
+        <translation>Sauvegarder Tous</translation>
     </message>
     <message>
-      <translation>Oui à Tous</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="172" />
-      <source>Yes to all</source>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="172"/>
+        <source>Yes to all</source>
+        <translation>Oui à Tous</translation>
     </message>
     <message>
-      <translation>Non à Tous</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="175" />
-      <source>No to all</source>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="175"/>
+        <source>No to all</source>
+        <translation>Non à Tous</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
+    <name>tPluginManagerPane</name>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="27"/>
+        <source>Manage Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="30"/>
+        <source>Enable or disable plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.ui" line="71"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.cpp" line="14"/>
+        <source>Plugins add core and extra functionality to %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.cpp" line="15"/>
+        <source>Restart %1 to apply changes in plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/tpluginmanagerpane.cpp" line="27"/>
+        <source>Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tPrintPopover</name>
     <message>
-      <translation>Copies</translation>
-      <location filename="../tprintpopover.ui" line="172" />
-      <source>Copies</source>
+        <location filename="../tprintpopover.ui" line="172"/>
+        <source>Copies</source>
+        <translation>Copies</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tprintpopover.ui" line="117" />
-      <source>PRINT OPTIONS</source>
+        <location filename="../tprintpopover.ui" line="117"/>
+        <source>PRINT OPTIONS</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>Imprimer</translation>
-      <location filename="../tprintpopover.ui" line="137" />
-      <source>Print</source>
+        <location filename="../tprintpopover.ui" line="137"/>
+        <source>Print</source>
+        <translation>Imprimer</translation>
     </message>
     <message>
-      <translation>Imprimeur</translation>
-      <location filename="../tprintpopover.ui" line="130" />
-      <source>Printer</source>
+        <location filename="../tprintpopover.ui" line="130"/>
+        <source>Printer</source>
+        <translation>Imprimeur</translation>
     </message>
     <message>
-      <translation>Grandeur de la Page</translation>
-      <location filename="../tprintpopover.ui" line="148" />
-      <source>Page Size</source>
+        <location filename="../tprintpopover.ui" line="148"/>
+        <source>Page Size</source>
+        <translation>Grandeur de la Page</translation>
     </message>
     <message>
-      <translation>Imprime en Noir et Blanc</translation>
-      <location filename="../tprintpopover.ui" line="155" />
-      <source>Print in Grayscale</source>
+        <location filename="../tprintpopover.ui" line="155"/>
+        <source>Print in Grayscale</source>
+        <translation>Imprime en Noir et Blanc</translation>
     </message>
     <message>
-      <translation></translation>
-      <location filename="../tprintpopover.ui" line="165" />
-      <source>Double Sided</source>
+        <location filename="../tprintpopover.ui" line="165"/>
+        <source>Double Sided</source>
+        <translation></translation>
     </message>
     <message>
-      <translation>PDF</translation>
-      <location filename="../tprintpopover.ui" line="189" />
-      <source>PDF</source>
+        <location filename="../tprintpopover.ui" line="189"/>
+        <source>PDF</source>
+        <translation>PDF</translation>
     </message>
     <message>
-      <translation>Portable Document Format (*.pdf)</translation>
-      <location filename="../tprintpopover.cpp" line="151" />
-      <source>Portable Document Format (*.pdf)</source>
+        <location filename="../tprintpopover.cpp" line="151"/>
+        <source>Portable Document Format (*.pdf)</source>
+        <translation>Portable Document Format (*.pdf)</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tSettingsWindow</name>
     <message>
-      <translation></translation>
-      <location filename="../tsettingswindow/tsettingswindow.ui" line="44" />
-      <location filename="../tsettingswindow/tsettingswindow.cpp" line="42" />
-      <source>Settings</source>
+        <location filename="../tsettingswindow/tsettingswindow.ui" line="44"/>
+        <location filename="../tsettingswindow/tsettingswindow.cpp" line="42"/>
+        <source>Settings</source>
+        <translation></translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>tWindowTabber</name>
     <message>
-      <translation></translation>
-      <location filename="../twindowtabber.cpp" line="60" />
-      <location filename="../twindowtabber.cpp" line="61" />
-      <source>New Tab</source>
+        <location filename="../twindowtabber.cpp" line="60"/>
+        <location filename="../twindowtabber.cpp" line="61"/>
+        <source>New Tab</source>
+        <translation></translation>
     </message>
-  </context>
+</context>
 </TS>
