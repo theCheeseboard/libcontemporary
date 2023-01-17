@@ -24,17 +24,18 @@
 #include <QPointer>
 
 struct tToastPrivate {
-    QMap<QString, QString> actn;
+        QMap<QString, QString> actn;
 
-    QPointer<QWidget> toastWidget, announceActionWidget;
-    QPointer<QLabel> titleLabel, textLabel, announceActionLabel;
-    QBoxLayout* buttons;
+        QPointer<QWidget> toastWidget, announceActionWidget;
+        QPointer<QLabel> titleLabel, textLabel, announceActionLabel;
+        QBoxLayout* buttons;
 
-    tVariantAnimation* hideTimer;
-    int currentAnimationValue;
+        tVariantAnimation* hideTimer;
+        int currentAnimationValue;
 };
 
-tToast::tToast(QObject* parent) : QObject(parent) {
+tToast::tToast(QObject* parent) :
+    QObject(parent) {
     d = new tToastPrivate();
     d->toastWidget = new QWidget();
     d->toastWidget->installEventFilter(this);
@@ -79,12 +80,12 @@ tToast::tToast(QObject* parent) : QObject(parent) {
     d->hideTimer = new tVariantAnimation(this);
     d->hideTimer->setStartValue(0);
     d->hideTimer->setDuration(5000);
-    connect(d->hideTimer, &tVariantAnimation::valueChanged, d->toastWidget, [ = ](const QVariant & value) {
+    connect(d->hideTimer, &tVariantAnimation::valueChanged, d->toastWidget, [=](const QVariant& value) {
         d->currentAnimationValue = value.toInt();
         d->toastWidget->update();
     });
     d->hideTimer->setForceAnimation(true);
-    connect(d->hideTimer, &tVariantAnimation::finished, this, [ = ]() {
+    connect(d->hideTimer, &tVariantAnimation::finished, this, [=]() {
         timerStopped = true;
 
         canAnnounceAction = true;
@@ -98,6 +99,7 @@ tToast::tToast(QObject* parent) : QObject(parent) {
 }
 
 tToast::~tToast() {
+    this->setActions({});
     if (d->textLabel) d->textLabel->deleteLater();
     if (d->titleLabel) d->titleLabel->deleteLater();
     if (d->toastWidget) d->toastWidget->deleteLater();
@@ -173,7 +175,7 @@ void tToast::announceAction(QString text) {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();
 
-        QTimer::singleShot(3000, this, [ = ]() {
+        QTimer::singleShot(3000, this, [=]() {
             /*announceActionWidget->setVisible(false);
             announceActionWidget->setParent(NULL);*/
             announcingAction = false;
@@ -213,11 +215,11 @@ void tToast::setActions(QMap<QString, QString> actions) {
     for (QString key : actions.keys()) {
         QString text = actions.value(key);
 
-        QPushButton* button = new QPushButton;
+        QPushButton* button = new QPushButton();
         button->setText(text);
         d->buttons->addWidget(button);
 
-        connect(button, &QPushButton::clicked, this, [ = ]() {
+        connect(button, &QPushButton::clicked, this, [=]() {
             d->hideTimer->stop();
             timerStopped = true;
 
@@ -250,7 +252,6 @@ bool tToast::eventFilter(QObject* watched, QEvent* event) {
             QPaintEvent* pEvent = (QPaintEvent*) event;
             QPainter painter(d->toastWidget);
 
-
 #ifdef Q_OS_MAC
             QRect rect = pEvent->rect().adjusted(5, 10, -5, -10);
             QColor bgCol = d->toastWidget->palette().color(QPalette::Window);
@@ -267,7 +268,7 @@ bool tToast::eventFilter(QObject* watched, QEvent* event) {
 
             QColor highlightCol = d->toastWidget->palette().color(QPalette::Window);
             int average = (highlightCol.red() + highlightCol.green() + highlightCol.blue()) / 3;
-            if (average < 127) { //Dark color
+            if (average < 127) { // Dark color
                 highlightCol = highlightCol.lighter(150);
             } else {
                 highlightCol = highlightCol.lighter(150);
