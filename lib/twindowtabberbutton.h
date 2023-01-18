@@ -20,12 +20,14 @@ class LIBCONTEMPORARY_EXPORT tWindowTabberButton : public QWidget {
         virtual ~tWindowTabberButton();
 
         void setText(const QString& text);
+        void setSupplementaryText(const QString& supplementaryText);
         void setIcon(const QIcon& icon);
 
         bool isSelected();
         void setSelected(bool selected);
 
         QString text();
+        QString supplementaryText();
         QIcon icon();
 
         void setParent(tWindowTabber* tabber);

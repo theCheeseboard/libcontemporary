@@ -111,6 +111,11 @@ void tWindowTabberButton::setText(const QString& text) {
     emit changed();
 }
 
+void tWindowTabberButton::setSupplementaryText(const QString& supplementaryText) {
+    d->rootButton->setProperty("supplementaryText", supplementaryText);
+    emit changed();
+}
+
 void tWindowTabberButton::setIcon(const QIcon& icon) {
     d->rootButton->setIcon(icon);
     emit changed();
@@ -163,6 +168,10 @@ void tWindowTabberButton::setSelected(bool selected) {
 
 QString tWindowTabberButton::text() {
     return d->rootButton->text();
+}
+
+QString tWindowTabberButton::supplementaryText() {
+    return d->rootButton->property("supplementaryText").toString();
 }
 
 QIcon tWindowTabberButton::icon() {
