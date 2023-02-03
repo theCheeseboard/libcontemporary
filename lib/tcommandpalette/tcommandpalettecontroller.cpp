@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QPointer>
 #include <QShortcut>
+#include <QWindow>
 
 struct tCommandPaletteControllerPrivate {
         QWidget* parent;
@@ -91,7 +92,7 @@ QAction* tCommandPaletteController::commandPaletteAction() {
 }
 
 bool tCommandPaletteController::eventFilter(QObject* watched, QEvent* event) {
-    if (watched == d->parent && event->type() == QEvent::KeyPress) {
+    if ((watched == d->parent || (d->parent && watched == d->parent->windowHandle())) && event->type() == QEvent::KeyPress) {
         auto ke = static_cast<QKeyEvent*>(event);
         if (ke->key() == Qt::Key_Shift) {
             if (d->awaitingNextShift) {

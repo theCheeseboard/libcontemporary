@@ -72,6 +72,7 @@ cntp_sourcelist(
         twindowtabber.cpp
         twindowtabberbutton.cpp
         twindowthumbnail.cpp
+        texception.cpp
         tx11info.cpp
         tcontentsizer.cpp
         private/debuglogpopover.cpp
@@ -163,6 +164,7 @@ cntp_sourcelist(
         tstandardlabel.h
         tsubtitlelabel.h
         tcontentsizer.h
+        texception.h
         plugins/plugininterface.h
         plugins/tpluginmanager.h
         plugins/tpluginmanagerpane.h

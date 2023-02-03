@@ -453,7 +453,7 @@
 <context>
     <name>tCommandPaletteController</name>
     <message>
-        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="30"/>
+        <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="31"/>
         <source>Command Palette</source>
         <translation></translation>
     </message>
