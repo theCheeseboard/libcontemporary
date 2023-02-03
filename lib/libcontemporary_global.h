@@ -77,13 +77,13 @@ class LIBCONTEMPORARY_EXPORT libContemporaryCommon : public QObject {
         /// Get the screen scaling ratio
         /// \deprecated Use the overload that takes a QPaintDevice instead
         /// \return The screen scaling ratio
-        [[deprecated("getDPIScaling is deprecated, use the overload that takes a QPaintDevice (or SC_DPI_W)")]] static double getDPIScaling();
+        [[deprecated("getDPIScaling is deprecated, Qt now handles DPI scaling automatically")]] static double getDPIScaling();
 
         /// Get the screen scaling ratio
         /// \param paintDevice The device to get the scaling ratio for
         /// \return The screen scaling ratio
         /// \note Use the SC_DPI_W macro for a more convenient way to scale a number
-        static double getDPIScaling(const QPaintDevice* paintDevice);
+        [[deprecated("getDPIScaling is deprecated, Qt now handles DPI scaling automatically")]] static double getDPIScaling(const QPaintDevice* paintDevice);
 
         /// Tint an icon
         /// \param image The icon to tint

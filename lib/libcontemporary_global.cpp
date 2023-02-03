@@ -129,8 +129,9 @@ double libContemporaryCommon::getDPIScaling() {
     #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     return 1;
     #else
-    return QApplication::primaryScreen()->devicePixelRatio();
+        //    return QApplication::primaryScreen()->devicePixelRatio();
     #endif
+    return 1;
 }
 #endif
 
@@ -199,8 +200,9 @@ double libContemporaryCommon::getDPIScaling(const QPaintDevice* paintDevice) {
     #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     return 1;
     #endif
-    if (!paintDevice) return QApplication::primaryScreen()->devicePixelRatio();
-    return paintDevice->devicePixelRatio();
+    //    if (!paintDevice) return QApplication::primaryScreen()->devicePixelRatio();
+    //    return paintDevice->devicePixelRatio();
+    return 1;
 }
 
 void libContemporaryCommon::fixateHeight(QWidget* widget, std::function<int()> calculateHeight) {
