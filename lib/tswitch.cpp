@@ -66,25 +66,25 @@ void tSwitch::paintEvent(QPaintEvent* event) {
 }
 
 void tSwitch::mousePressEvent(QMouseEvent* event) {
-    mouseClickPoint = event->localPos().toPoint().x();
+    mouseClickPoint = event->position().toPoint().x();
     initialPoint = mouseClickPoint;
 }
 
 void tSwitch::mouseMoveEvent(QMouseEvent* event) {
-    if (event->localPos().toPoint().x() < mouseClickPoint) {
+    if (event->position().toPoint().x() < mouseClickPoint) {
         mouseMovedLeft = true;
     } else {
         mouseMovedLeft = false;
     }
 
-    innerRect.translate(event->localPos().toPoint().x() - mouseClickPoint, 0);
+    innerRect.translate(event->position().toPoint().x() - mouseClickPoint, 0);
     if (innerRect.x() <= 0) {
         innerRect.moveTo(0, 0);
     } else if (innerRect.right() >= this->width()) {
         innerRect.moveTo(this->width() - innerRect.width(), 0);
     }
 
-    mouseClickPoint = event->localPos().toPoint().x();
+    mouseClickPoint = event->position().toPoint().x();
     this->repaint();
 }
 

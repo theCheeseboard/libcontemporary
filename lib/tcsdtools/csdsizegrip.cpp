@@ -185,28 +185,28 @@ void CsdSizeGrip::mouseMoveEvent(QMouseEvent* e) {
         QRect geometry = parentWidget->window()->geometry();
         switch (hitTest(startPoint)) {
             case 0: // Top
-                geometry.setTop(e->globalY() + startPoint.y());
+                geometry.setTop(e->globalPosition().y() + startPoint.y());
                 break;
             case 1: // Left
-                geometry.setLeft(e->globalX() + startPoint.x());
+                geometry.setLeft(e->globalPosition().x() + startPoint.x());
                 break;
             case 2: // Bottom
-                geometry.setBottom(e->globalY() - startPoint.y());
+                geometry.setBottom(e->globalPosition().y() - startPoint.y());
                 break;
             case 3: // Right
-                geometry.setRight(e->globalX() - startPoint.x());
+                geometry.setRight(e->globalPosition().x() - startPoint.x());
                 break;
             case 4: // Upper right
-                geometry.setTopRight(e->globalPos());
+                geometry.setTopRight(e->globalPosition().toPoint());
                 break;
             case 5: // Upper left
-                geometry.setTopLeft(e->globalPos());
+                geometry.setTopLeft(e->globalPosition().toPoint());
                 break;
             case 6: // Lower left
-                geometry.setBottomLeft(e->globalPos());
+                geometry.setBottomLeft(e->globalPosition().toPoint());
                 break;
             case 7: // Lower right
-                geometry.setBottomRight(e->globalPos());
+                geometry.setBottomRight(e->globalPosition().toPoint());
                 break;
         }
         parentWidget->window()->setGeometry(geometry);

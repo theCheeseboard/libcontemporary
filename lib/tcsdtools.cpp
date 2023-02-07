@@ -43,29 +43,29 @@
 #endif
 
 struct tCsdGlobalPrivate {
-        tCsdGlobal* instance = nullptr;
-        bool enableCSDs;
+    tCsdGlobal* instance = nullptr;
+    bool enableCSDs;
 };
 
 struct ResizeWidget {
-        QWidget* widget;
-        CsdSizeGrip* sizeGrips[4];
+    QWidget* widget;
+    CsdSizeGrip* sizeGrips[4];
 
-        void setMarginsEnabled(bool marginsEnabled) {
-            if (marginsEnabled) {
-                int width = CsdSizeGrip::borderWidth();
-                widget->setContentsMargins(width, width, width, width);
-            } else {
-                widget->setContentsMargins(0, 0, 0, 0);
-            }
+    void setMarginsEnabled(bool marginsEnabled) {
+        if (marginsEnabled) {
+            int width = CsdSizeGrip::borderWidth();
+            widget->setContentsMargins(width, width, width, width);
+        } else {
+            widget->setContentsMargins(0, 0, 0, 0);
         }
+    }
 };
 
 struct tCsdToolsPrivate {
-        QList<QWidget*> moveWidgets;
-        QList<ResizeWidget*> resizeWidgets;
+    QList<QWidget*> moveWidgets;
+    QList<ResizeWidget*> resizeWidgets;
 
-        static QList<QWidget*> csdWidgets;
+    static QList<QWidget*> csdWidgets;
 };
 
 tCsdGlobalPrivate* tCsdGlobal::d = new tCsdGlobalPrivate();
@@ -137,7 +137,7 @@ tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
         XFree(data);
 
         if (windowManagerName == "GNOME Shell") {
-    #ifdef HAVE_GSETTINGS
+#ifdef HAVE_GSETTINGS
             // Use GNOME settings
             QGSettings gsettings("org.gnome.desktop.wm.preferences");
             QString buttonLayout = gsettings.get("button-layout").toString();
@@ -147,7 +147,7 @@ tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
             } else {
                 return Right;
             }
-    #endif
+#endif
         } else if (windowManagerName == "KWin") {
             // Use KWin settings
             QSettings kwinSettings(QDir::homePath() + "/.config/kwinrc", QSettings::IniFormat);
@@ -330,7 +330,7 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
             // Move window using Qt methods
             qWarning() << "Unsupported platform; moving window manually.";
             widget->setProperty("tcsdtools_action", "move");
-            widget->setProperty("tcsdtools_mousepoint", widget->window()->mapFromGlobal(e->globalPos()));
+            widget->setProperty("tcsdtools_mousepoint", widget->window()->mapFromGlobal(e->globalPosition()));
 
             return true; // Prevent further handling of this event
         }
@@ -342,7 +342,7 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
         if (d->moveWidgets.contains(widget) && widget->property("tcsdtools_action").toString() == "move") {
             // Move this window using Qt methods
             QPoint oldPos = widget->property("tcsdtools_mousepoint").toPoint();
-            widget->window()->move(e->globalPos() - oldPos);
+            widget->window()->move(e->globalPosition().toPoint() - oldPos);
             return true; // Prevent further handling of this event
         }
     } else if (event->type() == QEvent::MouseButtonRelease) {

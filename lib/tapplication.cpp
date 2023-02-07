@@ -541,7 +541,7 @@ void tApplication::installTranslators() {
             if (translator->load(locale, "", "", QDir(dir).absoluteFilePath(pluginPath))) break;
         }
 #elif defined(Q_OS_WIN)
-        translator->load(locale, "", "", this->applicationDirPath() + "\\plugins\\" + plugin + "\\translations");
+        Q_UNUSED(translator->load(locale, "", "", this->applicationDirPath() + "\\plugins\\" + plugin + "\\translations"));
 #endif
         TranslatorProxy* translatorProxy = new TranslatorProxy(translator);
         installTranslator(translatorProxy);

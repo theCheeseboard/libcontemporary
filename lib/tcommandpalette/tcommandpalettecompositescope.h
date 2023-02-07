@@ -4,7 +4,7 @@
 #include "libcontemporary_global.h"
 #include "tcommandpalettescope.h"
 
-class tCommandPaletteCompositeScopePrivate;
+struct tCommandPaletteCompositeScopePrivate;
 class LIBCONTEMPORARY_EXPORT tCommandPaletteCompositeScope : public tCommandPaletteScope {
         Q_OBJECT
     public:
