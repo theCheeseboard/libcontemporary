@@ -95,7 +95,7 @@ QWidget* tJobManager::makeJobButton() {
 void tJobManager::showJobsPopover(QWidget* parent) {
     JobsPopover* jp = new JobsPopover();
     tPopover* popover = new tPopover(jp);
-    popover->setPopoverWidth(SC_DPI(300));
+    popover->setPopoverWidth(300);
     connect(jp, &JobsPopover::done, popover, &tPopover::dismiss);
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, jp, &JobsPopover::deleteLater);

@@ -10,16 +10,16 @@
 #include <QWindow>
 
 struct tCommandPaletteControllerPrivate {
-        QWidget* parent;
-        QPointer<tCommandPaletteWindow> activeWindow;
-        QAction* commandPaletteAction;
+    QWidget* parent;
+    QPointer<tCommandPaletteWindow> activeWindow;
+    QAction* commandPaletteAction;
 
-        QList<tCommandPaletteScope*> scopes;
-        tCommandPaletteScope* allScope;
+    QList<tCommandPaletteScope*> scopes;
+    tCommandPaletteScope* allScope;
 
-        QString currentQuery;
+    QString currentQuery;
 
-        bool awaitingNextShift = false;
+    bool awaitingNextShift = false;
 };
 
 tCommandPaletteController::tCommandPaletteController(QWidget* parent) :
@@ -76,7 +76,7 @@ void tCommandPaletteController::activate() {
     d->activeWindow->raise();
 
     QRect geometry;
-    geometry.setSize(SC_DPI_WT(QSize(400, 600), QSize, d->parent));
+    geometry.setSize(QSize(400, 600));
     geometry.moveCenter(d->parent->geometry().center());
     d->activeWindow->setGeometry(geometry);
 }

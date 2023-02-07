@@ -14,16 +14,16 @@
 #include <QToolButton>
 
 struct tWindowTabberPrivate {
-        QList<tWindowTabberButton*> buttons;
-        QBoxLayout* tabLayout;
-        QScrollArea* scrollArea;
+    QList<tWindowTabberButton*> buttons;
+    QBoxLayout* tabLayout;
+    QScrollArea* scrollArea;
 
-        QToolButton* newTabButton;
+    QToolButton* newTabButton;
 
-        bool scrollLeft = false;
-        QTimer* scrollTimer;
+    bool scrollLeft = false;
+    QTimer* scrollTimer;
 
-        bool updateWindowTitle = false;
+    bool updateWindowTitle = false;
 };
 
 tWindowTabber::tWindowTabber(QWidget* parent) {
@@ -69,12 +69,12 @@ tWindowTabber::tWindowTabber(QWidget* parent) {
     layout->addWidget(d->newTabButton);
     this->setLayout(layout);
 
-    libContemporaryCommon::fixateHeight(d->scrollArea, [=] {
-        return fontMetrics().height() + SC_DPI_W(28, this);
+    libContemporaryCommon::fixateHeight(d->scrollArea, [ = ] {
+        return fontMetrics().height() + 28;
     });
 
     d->scrollTimer = new QTimer(this);
-    connect(d->scrollTimer, &QTimer::timeout, this, [=] {
+    connect(d->scrollTimer, &QTimer::timeout, this, [ = ] {
         bool scrollLeft = d->scrollLeft;
         if (this->layoutDirection() == Qt::RightToLeft) scrollLeft = !scrollLeft;
         d->scrollArea->horizontalScrollBar()->setValue(d->scrollArea->horizontalScrollBar()->value() + (scrollLeft ? -1 : 1));
@@ -113,7 +113,7 @@ bool tWindowTabber::eventFilter(QObject* watched, QEvent* event) {
                 return QObject::eventFilter(watched, event);
             }
 
-            const int scrollDistance = SC_DPI_W(100, d->scrollArea);
+            const int scrollDistance = 100;
             int x = d->scrollArea->mapFromGlobal(QCursor::pos()).x();
             if (x >= scrollDistance && x <= d->scrollArea->width() - scrollDistance) {
                 d->scrollTimer->stop();

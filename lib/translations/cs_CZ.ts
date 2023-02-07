@@ -341,19 +341,19 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="687"/>
+        <location filename="../tapplication.cpp" line="690"/>
         <source>Copyright © %1.</source>
         <translation>Copyright © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="660"/>
-        <location filename="../tapplication.cpp" line="663"/>
-        <location filename="../tapplication.cpp" line="666"/>
-        <location filename="../tapplication.cpp" line="669"/>
-        <location filename="../tapplication.cpp" line="672"/>
-        <location filename="../tapplication.cpp" line="675"/>
-        <location filename="../tapplication.cpp" line="678"/>
-        <location filename="../tapplication.cpp" line="681"/>
+        <location filename="../tapplication.cpp" line="662"/>
+        <location filename="../tapplication.cpp" line="665"/>
+        <location filename="../tapplication.cpp" line="668"/>
+        <location filename="../tapplication.cpp" line="671"/>
+        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Licencováno pod podmínkami %1.</translation>
     </message>
@@ -398,42 +398,42 @@
         <translation>Platforma</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="660"/>
+        <location filename="../tapplication.cpp" line="662"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU Obecná Veřejná licence, verze 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="663"/>
+        <location filename="../tapplication.cpp" line="665"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU Obecná Veřejná licence, verze 3 nebo pozdější</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="666"/>
+        <location filename="../tapplication.cpp" line="668"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU Obecná Veřejná licence, verze 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="669"/>
+        <location filename="../tapplication.cpp" line="671"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU Obecná Veřejná licence, verze 2 nebo pozdější</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="672"/>
+        <location filename="../tapplication.cpp" line="674"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Menší Obecná Veřejná licence, verze 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="675"/>
+        <location filename="../tapplication.cpp" line="677"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Menší Obecná Veřejná licence, verze 3 nebo pozdější</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="678"/>
+        <location filename="../tapplication.cpp" line="680"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Menší Obecná Veřejná licence, verze 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="681"/>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Menší Obecná Veřejná licence, verze 2.1 nebo pozdější</translation>
     </message>

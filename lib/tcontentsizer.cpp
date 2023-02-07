@@ -20,7 +20,7 @@
 #include "tcontentsizer.h"
 
 struct tContentSizerPrivate {
-        QWidget* parent;
+    QWidget* parent;
 };
 
 tContentSizer::tContentSizer(QWidget* parent) :
@@ -28,7 +28,7 @@ tContentSizer::tContentSizer(QWidget* parent) :
     d = new tContentSizerPrivate();
     d->parent = parent;
 
-    d->parent->setFixedWidth(SC_DPI_W(600, parent));
+    d->parent->setFixedWidth(600);
 }
 
 tContentSizer::~tContentSizer() {

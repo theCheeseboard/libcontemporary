@@ -109,6 +109,8 @@ int main(int argc, char* argv[]) {
     }
 
     if (parser.isSet("output-svg")) {
+        eoutput << "Creating SVG icon";
+
         CombinedIcon crossPlatformSvgIcon;
         crossPlatformSvgIcon.setBaseIcon(CombinedIcon::CrossPlatformIcon);
         crossPlatformSvgIcon.setIconGradientColors(color1, color2);
@@ -123,6 +125,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (parser.isSet("output-native")) {
+        eoutput << "Creating native icon";
         PlatformIconGenerator* nativeGenerator = PlatformIconGenerator::iconGeneratorForPlatform();
         if (nativeGenerator) {
             CombinedIcon nativeSvgIcon;
@@ -141,6 +144,8 @@ int main(int argc, char* argv[]) {
     }
 
     if (parser.isSet("output-rc")) {
+        eoutput << "Creating resource files";
+
         CombinedIcon crossPlatformSvgIcon;
         crossPlatformSvgIcon.setBaseIcon(CombinedIcon::CrossPlatformIcon);
         crossPlatformSvgIcon.setIconGradientColors(color1, color2);

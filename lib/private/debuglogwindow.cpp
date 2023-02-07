@@ -80,7 +80,7 @@ DebugLogWindow::DebugLogWindow(QWidget* parent) :
     ui->logView->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->logView->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 
-    ui->searchWidget->setFixedWidth(SC_DPI(600));
+    ui->searchWidget->setFixedWidth(600);
 
     QMenu* searchOptionsMenu = new QMenu(this);
     searchOptionsMenu->addAction(ui->actionFilterContext);
@@ -123,7 +123,7 @@ tPaintCalculator LogDelegate::calculatePaint(QPainter* painter, const QStyleOpti
 
     if (index.column() == 0) {
         QRect severityRect = rect;
-        severityRect.setWidth(SC_DPI(6));
+        severityRect.setWidth(6);
         rect.setLeft(severityRect.right());
 
         paintCalculator.addRect(severityRect, [ = ](QRectF adjusted) {
@@ -152,7 +152,7 @@ tPaintCalculator LogDelegate::calculatePaint(QPainter* painter, const QStyleOpti
     QString text = index.data().toString();
 
     QRect textRect = option.fontMetrics.boundingRect(rect, Qt::AlignTop | Qt::AlignLeft, text);
-    textRect.adjust(SC_DPI(3), SC_DPI(3), SC_DPI(3), SC_DPI(3));
+    textRect.adjust(3, 3, 3, 3);
     rect.setLeft(textRect.right());
 
     paintCalculator.addRect(textRect, [ = ](QRectF adjusted) {
@@ -166,7 +166,7 @@ tPaintCalculator LogDelegate::calculatePaint(QPainter* painter, const QStyleOpti
         if (repeat > 0) {
             QString text = QStringLiteral(" ×%1").arg(repeat);
             QRect repeatRect = rect;
-            repeatRect.adjust(SC_DPI(3), SC_DPI(3), SC_DPI(-3), SC_DPI(-3));
+            repeatRect.adjust(3, 3, -3, -3);
 
             paintCalculator.addRect(repeatRect, [ = ](QRectF adjusted) {
                 painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
@@ -314,7 +314,7 @@ void DebugLogWindow::on_actionFilterContext_triggered() {
 void DebugLogWindow::on_logView_activated(const QModelIndex& index) {
     DebugLogPopover* logPopover = new DebugLogPopover(index.data(Qt::UserRole + 1).value<tLogger::LogItem>());
     tPopover* popover = new tPopover(logPopover);
-    popover->setPopoverWidth(SC_DPI(500));
+    popover->setPopoverWidth(500);
     connect(logPopover, &DebugLogPopover::done, popover, &tPopover::dismiss);
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, logPopover, &DebugLogPopover::deleteLater);

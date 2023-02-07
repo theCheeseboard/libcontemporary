@@ -130,7 +130,7 @@ void tInputDialog::show() {
         d->opacity->setOpacity(value.toReal());
 
         QRect geometry = preferredGeometry();
-        geometry.moveTop(geometry.top() - SC_DPI(10) * (1.0 - value.toReal()));
+        geometry.moveTop(geometry.top() - 10 * (1.0 - value.toReal()));
         this->setFixedSize(QSize(0, 0));
         this->setFixedSize(geometry.size());
         this->setGeometry(geometry);
@@ -158,7 +158,7 @@ void tInputDialog::hide() {
         d->opacity->setOpacity(value.toReal());
 
         QRect geometry = preferredGeometry();
-        geometry.moveTop(geometry.top() + SC_DPI(10) * (1.0 - value.toReal()));
+        geometry.moveTop(geometry.top() + 10 * (1.0 - value.toReal()));
         this->setFixedSize(QSize(0, 0));
         this->setFixedSize(geometry.size());
         this->setGeometry(geometry);
@@ -192,7 +192,7 @@ bool tInputDialog::eventFilter(QObject* watched, QEvent* event) {
 QRect tInputDialog::preferredGeometry() {
     QRect geom;
     geom.setSize(this->sizeHint());
-    if (geom.width() < SC_DPI(400)) geom.setWidth(SC_DPI(400));
+    if (geom.width() < 400) geom.setWidth(400);
     if (geom.width() > d->parentWidget->width()) geom.setWidth(d->parentWidget->width());
     geom.moveCenter(QPoint(d->parentWidget->geometry().width() / 2, d->parentWidget->geometry().height() / 2));
     return geom;

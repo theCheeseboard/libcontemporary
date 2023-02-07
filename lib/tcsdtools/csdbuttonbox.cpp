@@ -35,9 +35,9 @@ CsdButtonBox::CsdButtonBox(QWidget* parent) :
     d->parentWidget = parent;
     parent->installEventFilter(this);
 
-    ui->minButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
-    ui->maxButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
-    ui->closeButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
+    ui->minButton->setIconSize(QSize(24, 24));
+    ui->maxButton->setIconSize(QSize(24, 24));
+    ui->closeButton->setIconSize(QSize(24, 24));
 
     if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         static_cast<QBoxLayout*>(this->layout())->setDirection(QBoxLayout::RightToLeft);

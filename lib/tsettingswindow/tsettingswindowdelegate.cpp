@@ -43,7 +43,7 @@ void tSettingsWindowDelegate::paint(QPainter* painter, const QStyleOptionViewIte
 
         auto textRect = option.rect;
         textRect.setHeight(painter->fontMetrics().height());
-        textRect.setWidth(textRect.width() - SC_DPI_W(6, option.widget));
+        textRect.setWidth(textRect.width() - 6);
         textRect.moveCenter(option.rect.center());
         painter->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, index.data().toString().toUpper());
     }

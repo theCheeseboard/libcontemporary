@@ -127,15 +127,15 @@ void tSwitch::checkChanging(bool checked) {
 
 QSize tSwitch::sizeHint() const {
     QFontMetrics metrics(this->font());
-    int width = SC_DPI(33);
+    int width = 33;
     if (iText == "") {
-        width += SC_DPI(8);
+        width += 8;
     } else {
         width += metrics.horizontalAdvance(iText);
     }
 
     width += metrics.horizontalAdvance(oText);
-    return QSize(width, SC_DPI(22));
+    return QSize(width, 22);
 }
 
 QString tSwitch::OnText() {

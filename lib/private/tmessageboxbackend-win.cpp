@@ -13,7 +13,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 struct tMessageBoxBackendPrivate {
     TASKDIALOGCONFIG td{0};
     QVector<TASKDIALOG_BUTTON> buttonArray;
-    QHash<int, std::pair<std::wstring, tMessageBoxButton *>> buttonStorage;
+    QHash<int, std::pair<std::wstring, tMessageBoxButton*>> buttonStorage;
     std::wstring titleText{};
     std::wstring messageText{};
     std::wstring informativeText{};
@@ -23,18 +23,18 @@ struct tMessageBoxBackendPrivate {
     HICON icon;
 };
 
-tMessageBoxBackend::tMessageBoxBackend(QObject *parent) : QObject(parent), d(new tMessageBoxBackendPrivate) {}
+tMessageBoxBackend::tMessageBoxBackend(QObject* parent) : QObject(parent), d(new tMessageBoxBackendPrivate) {}
 
 tMessageBoxBackend::~tMessageBoxBackend() = default;
 
-void tMessageBoxBackend::init(QMessageBox::Icon style, 
+void tMessageBoxBackend::init(QMessageBox::Icon style,
     const QIcon& icon,
     const QString& titleText,
     const QString& messageText,
-    const QString& informativeText, 
+    const QString& informativeText,
     const QString& detailedText,
     const QString& checkboxText,
-    const tOrderedMap<tMessageBoxButton *, tMessageBoxButtonInfo *> &buttonMap) {
+    const tOrderedMap<tMessageBoxButton*, tMessageBoxButtonInfo*>& buttonMap) {
     d->td.cbSize = sizeof(TASKDIALOGCONFIG);
     d->td.hInstance = nullptr;
     d->td.dwFlags = TDF_EXPAND_FOOTER_AREA;
@@ -57,7 +57,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
         }
     } else {
         d->td.dwFlags |= TDF_USE_HICON_MAIN;
-        d->icon = icon.pixmap(SC_DPI_WT(QSize(128, 128), QSize, qobject_cast<QWidget *>(parent()))).toImage().toHICON();
+        d->icon = icon.pixmap(QSize(128, 128)).toImage().toHICON();
         d->td.hMainIcon = d->icon;
     }
 
@@ -67,7 +67,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
     } else {
         d->titleText = tApplication::applicationDisplayName().toStdWString();
     }
-    
+
     d->td.pszWindowTitle = d->titleText.c_str();
 
     if (!messageText.isEmpty()) {
@@ -93,7 +93,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
     // Values 0-9 are reserved for default buttons
     int currentButtonId = 10;
 
-    auto addCustomButton = [&](tMessageBoxButton *button, const QString &label) {
+    auto addCustomButton = [&](tMessageBoxButton * button, const QString & label) {
         TASKDIALOG_BUTTON taskDialogButton{};
         auto id = currentButtonId++;
         taskDialogButton.nButtonID = id;
@@ -192,14 +192,14 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
     d->td.cButtons = d->buttonArray.count();
 }
 
-TaskDialogWorker::TaskDialogWorker(tMessageBox *messageBox, QHash<int, tMessageBoxButton *> &&buttonMap, const TASKDIALOGCONFIG &config)
-    : QObject(static_cast<QObject *>(messageBox)), messageBox(messageBox), buttonMap(std::move(buttonMap)), config(config) {
+TaskDialogWorker::TaskDialogWorker(tMessageBox* messageBox, QHash<int, tMessageBoxButton*>&& buttonMap, const TASKDIALOGCONFIG& config)
+    : QObject(static_cast<QObject*>(messageBox)), messageBox(messageBox), buttonMap(std::move(buttonMap)), config(config) {
 }
 
 void TaskDialogWorker::showDialog() {
     config.lpCallbackData = reinterpret_cast<LONG_PTR>(this);
     config.pfCallback = [](HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LONG_PTR lpRefData) -> HRESULT {
-        auto worker = reinterpret_cast<TaskDialogWorker *>(lpRefData);
+        auto worker = reinterpret_cast<TaskDialogWorker*>(lpRefData);
         switch (msg) {
             case TDN_HELP:
                 if (auto helpButton = worker->buttonMap.value(IDHELP)) {
@@ -222,7 +222,7 @@ void TaskDialogWorker::showDialog() {
 }
 
 
-void tMessageBoxBackend::open(QWidget *parent) {
+void tMessageBoxBackend::open(QWidget* parent) {
     if (parent) {
         d->td.hwndParent = reinterpret_cast<HWND>(parent->winId());
     }
@@ -230,14 +230,14 @@ void tMessageBoxBackend::open(QWidget *parent) {
     auto thread = new QThread(this);
 
     auto privateMap = d->buttonStorage;
-    QHash<int, tMessageBoxButton *> buttonMap;
+    QHash<int, tMessageBoxButton*> buttonMap;
 
     for (auto it = privateMap.constKeyValueBegin(); it != privateMap.constKeyValueEnd(); it++) {
         auto [id, value] = *it;
         buttonMap.insert(id, value.second);
     }
 
-    auto worker = new TaskDialogWorker(qobject_cast<tMessageBox *>(this->parent()), std::move(buttonMap), d->td);
+    auto worker = new TaskDialogWorker(qobject_cast<tMessageBox*>(this->parent()), std::move(buttonMap), d->td);
     connect(thread, &QThread::started, worker, &TaskDialogWorker::showDialog);
     connect(worker, &TaskDialogWorker::finished, thread, &QThread::quit);
     connect(thread, &QThread::finished, this, &tMessageBoxBackend::canBeDestroyed);

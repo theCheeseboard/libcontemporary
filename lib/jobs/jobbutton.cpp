@@ -121,7 +121,7 @@ void JobButton::paintEvent(QPaintEvent* event) {
     QToolButton::paintEvent(event);
 
     QRect iconRect;
-    iconRect.setSize(SC_DPI_T(QSize(16, 16), QSize));
+    iconRect.setSize(QSize(16, 16));
     iconRect.moveCenter(QPoint(this->width() / 2, this->height() / 2));
 
     QPainter painter(this);

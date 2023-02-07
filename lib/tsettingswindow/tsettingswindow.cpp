@@ -27,10 +27,10 @@
 #include <QStandardItemModel>
 
 struct tSettingsWindowPrivate {
-        QStandardItemModel* leftModel;
+    QStandardItemModel* leftModel;
 
-        QList<QWidget*> rightSide;
-        bool addedFirst = false;
+    QList<QWidget*> rightSide;
+    bool addedFirst = false;
 };
 
 tSettingsWindow::tSettingsWindow(QWidget* parent) :
@@ -47,7 +47,7 @@ tSettingsWindow::tSettingsWindow(QWidget* parent) :
 
     ui->contentsView->setModel(d->leftModel);
     ui->contentsView->setItemDelegate(new tSettingsWindowDelegate(this));
-    ui->contentsView->setFixedWidth(SC_DPI_W(300, this));
+    ui->contentsView->setFixedWidth(300);
 }
 
 tSettingsWindow::~tSettingsWindow() {
@@ -72,7 +72,7 @@ void tSettingsWindow::appendPane(tSettingsPane* pane) {
     d->leftModel->appendRow(item);
 
     auto titleContainer = new QWidget(this);
-    titleContainer->setFixedWidth(SC_DPI_W(600, this));
+    titleContainer->setFixedWidth(600);
 
     auto titleLayout = new QBoxLayout(QBoxLayout::LeftToRight);
     titleLayout->setContentsMargins(9, 9, 9, 0);
@@ -84,7 +84,7 @@ void tSettingsWindow::appendPane(tSettingsPane* pane) {
     titleContainer->setLayout(titleLayout);
     ui->paneLayout->addWidget(titleContainer);
 
-    pane->setFixedWidth(SC_DPI_W(600, this));
+    pane->setFixedWidth(600);
     ui->paneLayout->addWidget(pane);
 
     item->setData(QVariant::fromValue(titleContainer));
@@ -103,20 +103,20 @@ void tSettingsWindow::on_titleLabel_backButtonClicked() {
 }
 
 void tSettingsWindow::resizeEvent(QResizeEvent* event) {
-    if (this->width() > SC_DPI_W(900, this)) {
+    if (this->width() > 900) {
         ui->leftArea->setVisible(true);
         ui->line->setVisible(true);
-        auto remainingWidth = this->width() - SC_DPI_W(900, this) - 1;
-        ui->leftArea->setFixedWidth(remainingWidth / 2 + SC_DPI_W(300, this));
-        ui->rightArea->setFixedWidth(remainingWidth / 2 + SC_DPI_W(600, this));
+        auto remainingWidth = this->width() - 900 - 1;
+        ui->leftArea->setFixedWidth(remainingWidth / 2 + 300);
+        ui->rightArea->setFixedWidth(remainingWidth / 2 + 600);
 
-        for (auto widget : d->rightSide) widget->setFixedWidth(SC_DPI_W(600, this));
-    } else if (this->width() > SC_DPI_W(600, this)) {
+        for (auto widget : d->rightSide) widget->setFixedWidth(600);
+    } else if (this->width() > 600) {
         ui->leftArea->setVisible(false);
         ui->line->setVisible(false);
-        ui->rightArea->setFixedWidth(SC_DPI_W(600, this));
+        ui->rightArea->setFixedWidth(600);
 
-        for (auto widget : d->rightSide) widget->setFixedWidth(SC_DPI_W(600, this));
+        for (auto widget : d->rightSide) widget->setFixedWidth(600);
     } else {
         ui->rightArea->setFixedWidth(this->width());
 

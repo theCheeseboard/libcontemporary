@@ -34,7 +34,7 @@ void tPluginManagerPane::updateRestartState() {
 void tPluginManagerPane::on_manageButton_clicked() {
     auto* jp = new PluginManagementPopover();
     auto* popover = new tPopover(jp);
-    popover->setPopoverWidth(SC_DPI_W(600, this));
+    popover->setPopoverWidth(600);
     popover->setPopoverSide(tPopover::Trailing);
     connect(jp, &PluginManagementPopover::done, popover, &tPopover::dismiss);
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);

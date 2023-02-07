@@ -42,11 +42,11 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     bool graphicAvailable;
     if (splashGraphic.isNull()) {
         ui->splashGraphicLabel->setVisible(false);
-        this->setFixedSize(SC_DPI_WT(QSize(430, 340), QSize, this));
+        this->setFixedSize(QSize(430, 340));
         graphicAvailable = false;
     } else {
         ui->splashGraphicLabel->setPixmap(splashGraphic);
-        this->setFixedSize(SC_DPI_WT(QSize(530, 340), QSize, this));
+        this->setFixedSize(QSize(530, 340));
         graphicAvailable = true;
     }
 
@@ -91,7 +91,7 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
         if (this->layoutDirection() == Qt::LeftToRight) {
             backButton->move(0, 0);
         } else {
-            backButton->move(SC_DPI_W(100, this) - backButton->width(), 0);
+            backButton->move(100 - backButton->width(), 0);
         }
     } else {
         backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
