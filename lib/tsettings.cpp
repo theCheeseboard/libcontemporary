@@ -37,10 +37,10 @@ struct tSettingsGlobals {
 
 #ifndef Q_OS_WIN
                 // Set up the watcher once the event loop has started
-                QTimer::singleShot(0, [=] {
+                QTimer::singleShot(0, [this, settings, identifier] {
                     QFileSystemWatcher* watcher = new QFileSystemWatcher();
                     watcher->moveToThread(qApp->thread());
-                    QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [=] {
+                    QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [this, settings, watcher, identifier] {
                         if (!watcher->files().contains(settings->fileName())) {
                             watcher->addPath(settings->fileName());
                         }

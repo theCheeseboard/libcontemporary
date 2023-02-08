@@ -25,7 +25,7 @@ void tMessageBoxBackend::init(QMessageBox::Icon style,
     if (icon.isNull()) {
         d->box.setIcon(style);
     } else {
-        d->box.setIconPixmap(icon.pixmap(SC_DPI_WT(QSize(64, 64), QSize, qobject_cast<QWidget*>(parent()))));
+        d->box.setIconPixmap(icon.pixmap(QSize(64, 64)));
     }
 
     d->box.setWindowTitle(titleText);

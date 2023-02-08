@@ -18,20 +18,20 @@
  *
  ******************************************************************************/
 
-#include "tnotification.h"
 #include "tnotification-linux.h"
+#include "tnotification.h"
 
-#include <QDBusMessage>
-#include <QDBusConnection>
 #include <QCoreApplication>
-#include <QDBusPendingReply>
+#include <QDBusConnection>
+#include <QDBusMessage>
 #include <QDBusPendingCallWatcher>
+#include <QDBusPendingReply>
 
 struct tNotificationPrivateByOS {
-    tNotificationLinuxHelper* h;
-    uint replace = 0;
+        tNotificationLinuxHelper* h;
+        uint replace = 0;
 
-    bool deleteWhenDone = false;
+        bool deleteWhenDone = false;
 };
 
 void tNotification::post(bool deleteWhenDone) {
@@ -76,7 +76,7 @@ void tNotification::post(bool deleteWhenDone) {
 
     QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message);
     QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(pendingCall);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [ = ](QDBusPendingCallWatcher * watcher) {
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher* watcher) {
         QDBusPendingReply<uint> reply = *watcher;
         if (!reply.isError()) {
             dd->replace = reply.argumentAt<0>();
@@ -98,7 +98,7 @@ void tNotification::initialize() {
     QDBusConnection::sessionBus().connect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "NotificationClosed", dd->h, SLOT(dismissed(uint)));
     QDBusConnection::sessionBus().connect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "ActionInvoked", dd->h, SLOT(actionClicked(uint, QString)));
     connect(dd->h, &tNotificationLinuxHelper::didClick, this, &tNotification::actionClicked);
-    connect(dd->h, &tNotificationLinuxHelper::didDismiss, this, [ = ] {
+    connect(dd->h, &tNotificationLinuxHelper::didDismiss, this, [this] {
         emit dismissed();
 
         if (dd->deleteWhenDone) {
@@ -115,12 +115,11 @@ void tNotification::destroy() {
     delete dd;
 }
 
-tNotificationLinuxHelper::tNotificationLinuxHelper(QObject* parent) : QObject(parent) {
-
+tNotificationLinuxHelper::tNotificationLinuxHelper(QObject* parent) :
+    QObject(parent) {
 }
 
 tNotificationLinuxHelper::~tNotificationLinuxHelper() {
-
 }
 
 void tNotificationLinuxHelper::actionClicked(uint id, QString key) {

@@ -80,12 +80,12 @@ tToast::tToast(QObject* parent) :
     d->hideTimer = new tVariantAnimation(this);
     d->hideTimer->setStartValue(0);
     d->hideTimer->setDuration(5000);
-    connect(d->hideTimer, &tVariantAnimation::valueChanged, d->toastWidget, [=](const QVariant& value) {
+    connect(d->hideTimer, &tVariantAnimation::valueChanged, d->toastWidget, [this](const QVariant& value) {
         d->currentAnimationValue = value.toInt();
         d->toastWidget->update();
     });
     d->hideTimer->setForceAnimation(true);
-    connect(d->hideTimer, &tVariantAnimation::finished, this, [=]() {
+    connect(d->hideTimer, &tVariantAnimation::finished, this, [this]() {
         timerStopped = true;
 
         canAnnounceAction = true;
@@ -175,7 +175,7 @@ void tToast::announceAction(QString text) {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();
 
-        QTimer::singleShot(3000, this, [=]() {
+        QTimer::singleShot(3000, this, [this] {
             /*announceActionWidget->setVisible(false);
             announceActionWidget->setParent(NULL);*/
             announcingAction = false;
@@ -219,7 +219,7 @@ void tToast::setActions(QMap<QString, QString> actions) {
         button->setText(text);
         d->buttons->addWidget(button);
 
-        connect(button, &QPushButton::clicked, this, [=]() {
+        connect(button, &QPushButton::clicked, this, [this, key]() {
             d->hideTimer->stop();
             timerStopped = true;
 

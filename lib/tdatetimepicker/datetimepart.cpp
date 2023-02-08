@@ -27,94 +27,94 @@
 #include <QWheelEvent>
 
 struct DateTimePartPrivate {
-    int value;
-    int drawOffset = 0;
-    QChar valueType = 'm';
-    int sizeWidth;
-    int currentWheelDelta = 0;
+        int value;
+        int drawOffset = 0;
+        QChar valueType = 'm';
+        int sizeWidth;
+        int currentWheelDelta = 0;
 
-    int maxValueUser = -1;
+        int maxValueUser = -1;
 
-    DateTimePartButton* upButton, *downButton;
+        DateTimePartButton *upButton, *downButton;
 
-    QLocale locale;
+        QLocale locale;
 
-    QString textForValue(int value) {
-        switch (valueType.unicode()) {
-            case 'y':
-                return QString::number(value);
-            case 'd':
-            case 'h':
-            case 'H':
-            case 'm':
-            case 's':
-                return locale.toString(value).rightJustified(2, locale.zeroDigit().at(0));
-            case 'M':
-                return locale.monthName(value, QLocale::ShortFormat);
-            case 'a':
-                if (value == 0) {
-                    return locale.amText();
-                } else {
-                    return locale.pmText();
-                }
+        QString textForValue(int value) {
+            switch (valueType.unicode()) {
+                case 'y':
+                    return QString::number(value);
+                case 'd':
+                case 'h':
+                case 'H':
+                case 'm':
+                case 's':
+                    return locale.toString(value).rightJustified(2, locale.zeroDigit().at(0));
+                case 'M':
+                    return locale.monthName(value, QLocale::ShortFormat);
+                case 'a':
+                    if (value == 0) {
+                        return locale.amText();
+                    } else {
+                        return locale.pmText();
+                    }
+            }
+
+            return "(invalid)";
         }
 
-        return "(invalid)";
-    }
-
-    int minValue() {
-        switch (valueType.unicode()) {
-            case 'y':
-                return 1980;
-            case 'd':
-            case 'M':
-            case 'h':
-                return 1;
-            case 'H':
-            case 'm':
-            case 's':
-            case 'a':
-                return 0;
+        int minValue() {
+            switch (valueType.unicode()) {
+                case 'y':
+                    return 1980;
+                case 'd':
+                case 'M':
+                case 'h':
+                    return 1;
+                case 'H':
+                case 'm':
+                case 's':
+                case 'a':
+                    return 0;
+            }
+            return 0;
         }
-        return 0;
-    }
 
-    int maxValue() {
-        if (maxValueUser != -1) return maxValueUser;
-        switch (valueType.unicode()) {
-            case 'y':
-                return 2099;
-            case 'd':
-                return 30; // TODO: set depending on month
-            case 'h':
-                return 12;
-            case 'H':
-                return 23;
-            case 'm':
-            case 's':
-                return 59;
-            case 'M':
-                return 12;
-            case 'a':
-                return 1;
+        int maxValue() {
+            if (maxValueUser != -1) return maxValueUser;
+            switch (valueType.unicode()) {
+                case 'y':
+                    return 2099;
+                case 'd':
+                    return 30; // TODO: set depending on month
+                case 'h':
+                    return 12;
+                case 'H':
+                    return 23;
+                case 'm':
+                case 's':
+                    return 59;
+                case 'M':
+                    return 12;
+                case 'a':
+                    return 1;
+            }
+            return 0;
         }
-        return 0;
-    }
 
-    bool wrapAroundValue() {
-        switch (valueType.unicode()) {
-            case 'h':
-            case 'H':
-            case 'm':
-            case 's':
-            case 'a':
-                return true;
+        bool wrapAroundValue() {
+            switch (valueType.unicode()) {
+                case 'h':
+                case 'H':
+                case 'm':
+                case 's':
+                case 'a':
+                    return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    QString altText;
-    bool performOppositeAnimation = false;
+        QString altText;
+        bool performOppositeAnimation = false;
 };
 
 DateTimePart::DateTimePart(QWidget* parent) :
@@ -285,11 +285,11 @@ void DateTimePart::incrementAnimation() {
     anim->setEndValue(0);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         d->drawOffset = value.toInt();
         this->update();
     });
-    connect(anim, &tVariantAnimation::finished, this, [ = ] {
+    connect(anim, &tVariantAnimation::finished, this, [anim] {
         anim->deleteLater();
     });
     anim->start();
@@ -301,11 +301,11 @@ void DateTimePart::decrementAnimation() {
     anim->setEndValue(0);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         d->drawOffset = value.toInt();
         this->update();
     });
-    connect(anim, &tVariantAnimation::finished, this, [ = ] {
+    connect(anim, &tVariantAnimation::finished, this, [anim] {
         anim->deleteLater();
     });
     anim->start();

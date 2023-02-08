@@ -4,17 +4,17 @@
 <context>
     <name>DebugLogModel</name>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="273"/>
+        <location filename="../private/debuglogwindow.cpp" line="270"/>
         <source>Timestamp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="275"/>
+        <location filename="../private/debuglogwindow.cpp" line="272"/>
         <source>Context</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="277"/>
+        <location filename="../private/debuglogwindow.cpp" line="274"/>
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>
@@ -81,7 +81,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="307"/>
+        <location filename="../private/debuglogwindow.cpp" line="304"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
         <translation type="unfinished"></translation>

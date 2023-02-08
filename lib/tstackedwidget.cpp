@@ -220,7 +220,7 @@ void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
                         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                         animation->setEasingCurve(QEasingCurve::OutCubic);
                         animation->setDuration(250);
-                        connect(this, &tStackedWidget::resized, animation, [=] {
+                        connect(this, &tStackedWidget::resized, animation, [this, animation] {
                             animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                         });
                         group->addAnimation(animation);

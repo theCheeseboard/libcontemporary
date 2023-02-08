@@ -20,7 +20,7 @@
 
 #include "tpropertyanimation.h"
 
-tPropertyAnimation::tPropertyAnimation(QObject *target, const QByteArray &propertyName, QObject *parent) :
+tPropertyAnimation::tPropertyAnimation(QObject* target, const QByteArray& propertyName, QObject* parent) :
     tVariantAnimation(parent) {
     targetObject = target;
     targetName = propertyName;
@@ -28,14 +28,14 @@ tPropertyAnimation::tPropertyAnimation(QObject *target, const QByteArray &proper
     connect(this, &tPropertyAnimation::valueChanged, this, &tPropertyAnimation::propertyChanged);
     connect(targetObject, &tPropertyAnimation::destroyed, this, &tPropertyAnimation::stop);
     connect(targetObject, &tPropertyAnimation::destroyed, this, &tPropertyAnimation::deleteLater);
-    connect(this, &tPropertyAnimation::stateChanged, targetObject, [=](State newState, State oldState) {
-       if (newState == Running) {
-           targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
-       } else {
-           targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(static_cast<tPropertyAnimation*>(nullptr)));
-       }
+    connect(this, &tPropertyAnimation::stateChanged, targetObject, [this](State newState, State oldState) {
+        if (newState == Running) {
+            targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
+        } else {
+            targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(static_cast<tPropertyAnimation*>(nullptr)));
+        }
     });
-    connect(this, &tPropertyAnimation::finished, targetObject, [=]() {
+    connect(this, &tPropertyAnimation::finished, targetObject, [this]() {
         targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(static_cast<tPropertyAnimation*>(nullptr)));
     });
 }
@@ -46,7 +46,7 @@ tPropertyAnimation::~tPropertyAnimation() {
             targetObject->setProperty("t-anim", "");
         }
     }*/
-    disconnect(this, SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)));
+    disconnect(this, SIGNAL(stateChanged(QAbstractAnimation::State, QAbstractAnimation::State)));
     disconnect(this, SIGNAL(finished()));
 }
 

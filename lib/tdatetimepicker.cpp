@@ -116,7 +116,7 @@ void tDateTimePicker::init(QString format) {
         if (QStringLiteral("dMyhHmsa").contains(c)) {
             DateTimePart* part = new DateTimePart(this);
             part->setValueType(c);
-            connect(this, &tDateTimePicker::dateTimeChanged, part, [=](QDateTime dateTime) {
+            connect(this, &tDateTimePicker::dateTimeChanged, part, [this, part, c](QDateTime dateTime) {
                 part->blockSignals(true);
                 part->setValue(d->valueForPart(c));
                 part->blockSignals(false);
@@ -125,7 +125,7 @@ void tDateTimePicker::init(QString format) {
                     part->setMaxValue(dateTime.date().daysInMonth());
                 }
             });
-            connect(part, &DateTimePart::valueChanged, this, [=](int value) {
+            connect(part, &DateTimePart::valueChanged, this, [this, c](int value) {
                 QDate newDate = d->dateTime.date();
                 QTime newTime = d->dateTime.time();
                 switch (c.unicode()) {

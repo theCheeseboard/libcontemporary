@@ -76,7 +76,7 @@ void tShortcutHud::newShortcut(ShortcutGroup group) {
         QKeySequence key = shortcut->key();
         QString keyText = key.toString();
 
-        connect(shortcut, &QShortcut::activated, [ = ] {
+        connect(shortcut, &QShortcut::activated, [this] {
             this->setVisible(true);
             this->raise();
         });

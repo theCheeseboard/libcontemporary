@@ -22,23 +22,24 @@
 #include <tvariantanimation.h>
 
 struct tConditionalWidgetPrivate {
-    bool isExpanded = false;
-    bool fullyExpanded = false;
+        bool isExpanded = false;
+        bool fullyExpanded = false;
 
-    tVariantAnimation* heightAnim;
+        tVariantAnimation* heightAnim;
 };
 
-tConditionalWidget::tConditionalWidget(QWidget* parent) : QWidget(parent) {
+tConditionalWidget::tConditionalWidget(QWidget* parent) :
+    QWidget(parent) {
     d = new tConditionalWidgetPrivate();
 
     d->heightAnim = new tVariantAnimation(this);
     d->heightAnim->setEasingCurve(QEasingCurve::OutCubic);
     d->heightAnim->setDuration(250);
-    connect(d->heightAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(d->heightAnim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         this->setFixedHeight(value.toInt());
     });
     this->setFixedHeight(0);
-//    connect(d->heightAnim, &tVariantAnimation::finished, this, &tConditionalWidget::updateGeometry);
+    //    connect(d->heightAnim, &tVariantAnimation::finished, this, &tConditionalWidget::updateGeometry);
 }
 
 tConditionalWidget::~tConditionalWidget() {
@@ -60,7 +61,7 @@ void tConditionalWidget::expand() {
     d->heightAnim->setEndValue(QWidget::sizeHint().height());
 
     QMetaObject::Connection* c = new QMetaObject::Connection();
-    *c = connect(d->heightAnim, &tVariantAnimation::stateChanged, this, [ = ](tVariantAnimation::State newState, tVariantAnimation::State oldState) {
+    *c = connect(d->heightAnim, &tVariantAnimation::stateChanged, this, [this, c](tVariantAnimation::State newState, tVariantAnimation::State oldState) {
         if (newState == tVariantAnimation::Running) return;
         disconnect(*c);
         delete c;
@@ -87,7 +88,7 @@ void tConditionalWidget::collapse() {
     d->heightAnim->setEndValue(0);
 
     QMetaObject::Connection* c = new QMetaObject::Connection();
-    *c = connect(d->heightAnim, &tVariantAnimation::stateChanged, this, [ = ](tVariantAnimation::State newState, tVariantAnimation::State oldState) {
+    *c = connect(d->heightAnim, &tVariantAnimation::stateChanged, this, [this, c](tVariantAnimation::State newState, tVariantAnimation::State oldState) {
         if (newState == tVariantAnimation::Running) return;
         disconnect(*c);
         delete c;
@@ -105,4 +106,3 @@ void tConditionalWidget::setExpanded(bool expanded) {
         this->collapse();
     }
 }
-

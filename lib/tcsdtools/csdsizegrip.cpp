@@ -136,8 +136,8 @@ void CsdSizeGrip::mousePressEvent(QMouseEvent* e) {
             event.xclient.display = tX11Info::display();
             event.xclient.window = this->window()->winId(); // Move the parent window of the widget
             event.xclient.format = 32;
-            event.xclient.data.l[0] = e->globalPos().x();
-            event.xclient.data.l[1] = e->globalPos().y();
+            event.xclient.data.l[0] = e->globalPosition().x();
+            event.xclient.data.l[1] = e->globalPosition().y();
 
             switch (hitTest(e->pos())) {
                 case 0: // Top

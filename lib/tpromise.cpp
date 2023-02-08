@@ -18,11 +18,17 @@
  *
  ******************************************************************************/
 
-#include "libcontemporary_global.h"
 #include "tpromise.h"
+#include "libcontemporary_global.h"
 
-template<> LIBCONTEMPORARY_EXPORT void tPromise<void>::callNextFunction()
-{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma warning(push)
+#pragma warning(disable: 4996)
+
+template<> LIBCONTEMPORARY_EXPORT void tPromise<void>::callNextFunction() {
     if (d->resolvedValue.error != "") {
         d->state = tPromisePrivate<void>::Errored;
         if (d->functionSetToRunAfterFailure) {
@@ -38,8 +44,7 @@ template<> LIBCONTEMPORARY_EXPORT void tPromise<void>::callNextFunction()
     if (d->deleteAfter) this->deleteLater();
 }
 
-template<> LIBCONTEMPORARY_EXPORT tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
-{
+template<> LIBCONTEMPORARY_EXPORT tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePrivate<void>::RunAsyncFunction functionToRun) {
     tPromise<void>* promise = new tPromise<void>;
 
     typename tPromiseFunctions<void>::SuccessFunction successFunction = [=]() {
@@ -52,11 +57,14 @@ template<> LIBCONTEMPORARY_EXPORT tPromise<void>* tPromise<void>::runOnSameThrea
         QTimer::singleShot(0, [=] {
             promise->callNextFunction();
         });
-
     };
     functionToRun(successFunction, failureFunction);
 
-    //Don't watch because this runs synchronously
+    // Don't watch because this runs synchronously
 
     return promise;
 }
+
+#pragma warning(pop)
+#pragma GCC diagnostic pop
+#pragma clang diagnostic pop

@@ -20,17 +20,17 @@
 #include "tinputdialog.h"
 #include "ui_tinputdialog.h"
 
-#include <QMainWindow>
-#include <QGraphicsOpacityEffect>
-#include <QShortcut>
 #include "tcsdtools.h"
+#include "ticon.h"
 #include "tscrim.h"
 #include "tvariantanimation.h"
-#include "ticon.h"
+#include <QGraphicsOpacityEffect>
+#include <QMainWindow>
+#include <QShortcut>
 
 struct tInputDialogPrivate {
-    QWidget* parentWidget;
-    QGraphicsOpacityEffect* opacity;
+        QWidget* parentWidget;
+        QGraphicsOpacityEffect* opacity;
 };
 
 tInputDialog::tInputDialog(QWidget* parent) :
@@ -72,11 +72,11 @@ QString tInputDialog::getText(QWidget* parent, const QString& title, const QStri
     dialog->setEchoMode(mode);
     dialog->setText(text);
     dialog->setInputMethodHints(inputMethodHints);
-    connect(dialog, &tInputDialog::accepted, loop, [ = ] {
+    connect(dialog, &tInputDialog::accepted, loop, [=] {
         if (ok) *ok = true;
         loop->exit();
     });
-    connect(dialog, &tInputDialog::rejected, loop, [ = ] {
+    connect(dialog, &tInputDialog::rejected, loop, [=] {
         if (ok) *ok = false;
         loop->exit();
     });
@@ -126,7 +126,7 @@ void tInputDialog::show() {
     anim->setEndValue(1.0);
     anim->setDuration(400);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         d->opacity->setOpacity(value.toReal());
 
         QRect geometry = preferredGeometry();
@@ -135,7 +135,7 @@ void tInputDialog::show() {
         this->setFixedSize(geometry.size());
         this->setGeometry(geometry);
     });
-    connect(anim, &tVariantAnimation::finished, this, [ = ] {
+    connect(anim, &tVariantAnimation::finished, this, [this, anim] {
         d->opacity->setEnabled(false);
         anim->deleteLater();
         d->parentWidget->installEventFilter(this);
@@ -154,7 +154,7 @@ void tInputDialog::hide() {
     anim->setEndValue(0.0);
     anim->setDuration(400);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         d->opacity->setOpacity(value.toReal());
 
         QRect geometry = preferredGeometry();
@@ -163,7 +163,7 @@ void tInputDialog::hide() {
         this->setFixedSize(geometry.size());
         this->setGeometry(geometry);
     });
-    connect(anim, &tVariantAnimation::finished, this, [ = ] {
+    connect(anim, &tVariantAnimation::finished, this, [this, anim] {
         anim->deleteLater();
         QWidget::hide();
     });

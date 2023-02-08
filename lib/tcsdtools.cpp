@@ -43,29 +43,29 @@
 #endif
 
 struct tCsdGlobalPrivate {
-    tCsdGlobal* instance = nullptr;
-    bool enableCSDs;
+        tCsdGlobal* instance = nullptr;
+        bool enableCSDs;
 };
 
 struct ResizeWidget {
-    QWidget* widget;
-    CsdSizeGrip* sizeGrips[4];
+        QWidget* widget;
+        CsdSizeGrip* sizeGrips[4];
 
-    void setMarginsEnabled(bool marginsEnabled) {
-        if (marginsEnabled) {
-            int width = CsdSizeGrip::borderWidth();
-            widget->setContentsMargins(width, width, width, width);
-        } else {
-            widget->setContentsMargins(0, 0, 0, 0);
+        void setMarginsEnabled(bool marginsEnabled) {
+            if (marginsEnabled) {
+                int width = CsdSizeGrip::borderWidth();
+                widget->setContentsMargins(width, width, width, width);
+            } else {
+                widget->setContentsMargins(0, 0, 0, 0);
+            }
         }
-    }
 };
 
 struct tCsdToolsPrivate {
-    QList<QWidget*> moveWidgets;
-    QList<ResizeWidget*> resizeWidgets;
+        QList<QWidget*> moveWidgets;
+        QList<ResizeWidget*> resizeWidgets;
 
-    static QList<QWidget*> csdWidgets;
+        static QList<QWidget*> csdWidgets;
 };
 
 tCsdGlobalPrivate* tCsdGlobal::d = new tCsdGlobalPrivate();
@@ -137,7 +137,7 @@ tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
         XFree(data);
 
         if (windowManagerName == "GNOME Shell") {
-#ifdef HAVE_GSETTINGS
+    #ifdef HAVE_GSETTINGS
             // Use GNOME settings
             QGSettings gsettings("org.gnome.desktop.wm.preferences");
             QString buttonLayout = gsettings.get("button-layout").toString();
@@ -147,7 +147,7 @@ tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
             } else {
                 return Right;
             }
-#endif
+    #endif
         } else if (windowManagerName == "KWin") {
             // Use KWin settings
             QSettings kwinSettings(QDir::homePath() + "/.config/kwinrc", QSettings::IniFormat);
@@ -296,8 +296,8 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
 
 #ifdef HAVE_X11
             if (tX11Info::isPlatformX11()) {
-                int x = e->globalX();
-                int y = e->globalY();
+                int x = e->globalPosition().x();
+                int y = e->globalPosition().y();
                 XClientMessageEvent event;
                 XUngrabPointer(tX11Info::display(), tX11Info::appTime());
                 event.type = ClientMessage;

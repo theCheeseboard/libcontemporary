@@ -48,7 +48,7 @@ void tWindowTabberButton::init() {
     d->rootButton = new QPushButton(this);
     d->rootButton->setCheckable(true);
     d->rootButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-    connect(d->rootButton, &QPushButton::clicked, this, [=] {
+    connect(d->rootButton, &QPushButton::clicked, this, [this] {
         d->rootButton->setChecked(false);
         this->setSelected(true);
     });
@@ -69,7 +69,7 @@ void tWindowTabberButton::init() {
     d->actionsWidgetAnim = new tVariantAnimation(this);
     d->actionsWidgetAnim->setEasingCurve(QEasingCurve::OutCubic);
     d->actionsWidgetAnim->setDuration(250);
-    connect(d->actionsWidgetAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(d->actionsWidgetAnim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         d->actionsWidget->setFixedWidth(value.toInt());
     });
     d->actionsWidget->setFixedWidth(0);
@@ -143,10 +143,10 @@ void tWindowTabberButton::setParent(tWindowTabber* tabber) {
 }
 
 void tWindowTabberButton::syncWithStackedWidget(tStackedWidget* stackedWidget, QWidget* widget) {
-    connect(stackedWidget, &tStackedWidget::currentChanged, this, [=](int tab) {
+    connect(stackedWidget, &tStackedWidget::currentChanged, this, [this, widget, stackedWidget](int tab) {
         if (stackedWidget->widget(tab) == widget) this->setSelected(true);
     });
-    connect(stackedWidget, &tStackedWidget::removingWidget, this, [=](QWidget* removing) {
+    connect(stackedWidget, &tStackedWidget::removingWidget, this, [this, widget](QWidget* removing) {
         if (removing == widget) this->setVisible(false);
     });
     connect(this, &tWindowTabberButton::activated, stackedWidget, [=] {

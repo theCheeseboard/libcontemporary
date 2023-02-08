@@ -21,8 +21,8 @@
 #ifndef TPROMISE_H
 #define TPROMISE_H
 
-#include <QObject>
 #include <QFuture>
+#include <QObject>
 #include <QTimer>
 #include <QtConcurrent>
 #include <functional>
@@ -36,6 +36,13 @@
 
 #define TPROMISE_CREATE_NEW_THREAD_WITH_CALLBACK_NAMES(type, successCallback, failureCallback, fn) tPromise<type>::runOnNewThread([=](tPromiseFunctions<type>::SuccessFunction successCallback, tPromiseFunctions<type>::FailureFunction failureCallback) fn)
 #define TPROMISE_CREATE_NEW_THREAD(type, fn) TPROMISE_CREATE_NEW_THREAD_WITH_CALLBACK_NAMES(type, res, rej, fn)
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma warning(push)
+#pragma warning(disable: 4996)
 
 template<typename T> class tPromise;
 
@@ -146,7 +153,7 @@ public:
     }
 
     void deleteLater() {
-        QTimer::singleShot(0, [=] {
+        QTimer::singleShot(0, [this] {
             delete this;
         });
     }
@@ -180,7 +187,7 @@ template<> void tPromise<void>::callNextFunction();
 template<typename T> inline void tPromise<T>::watch() {
     QFutureWatcher<void>* runFutureWatcher = new QFutureWatcher<void>();
     runFutureWatcher->setFuture(d->runFuture);
-    QObject::connect(runFutureWatcher, &QFutureWatcher<T>::finished, [=] {
+    QObject::connect(runFutureWatcher, &QFutureWatcher<T>::finished, [this, runFutureWatcher] {
         runFutureWatcher->deleteLater();
         callNextFunction();
     });
@@ -188,7 +195,7 @@ template<typename T> inline void tPromise<T>::watch() {
 
 template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::RunFunction functionToRun) {
     d = new tPromisePrivate<T>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([this, functionToRun]() -> void {
         QString err;
         d->resolvedValue.result = functionToRun(err);
         d->resolvedValue.error.swap(err);
@@ -199,7 +206,7 @@ template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::R
 
 template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunFunction functionToRun) {
     d = new tPromisePrivate<void>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([this, functionToRun]() -> void {
         QString err;
         functionToRun(err);
         d->resolvedValue.error.swap(err);
@@ -210,15 +217,15 @@ template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunFu
 
 template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun) {
     d = new tPromisePrivate<T>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([this, functionToRun]() -> void {
         QEventLoop* loop = new QEventLoop;
 
-        typename tPromiseFunctions<T>::SuccessFunction successFunction = [=](T retVal) {
+        typename tPromiseFunctions<T>::SuccessFunction successFunction = [this, loop](T retVal) {
             d->resolvedValue.result = retVal;
             d->resolvedValue.error = "";
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
-        typename tPromiseFunctions<T>::FailureFunction failureFunction = [=](QString error) {
+        typename tPromiseFunctions<T>::FailureFunction failureFunction = [this, loop](QString error) {
             d->resolvedValue.error.swap(error);
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
@@ -234,14 +241,14 @@ template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::R
 
 template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAsyncFunction functionToRun) {
     d = new tPromisePrivate<void>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([this, functionToRun]() -> void {
         QEventLoop* loop = new QEventLoop;
 
-        typename tPromiseFunctions<void>::SuccessFunction successFunction = [=]() {
+        typename tPromiseFunctions<void>::SuccessFunction successFunction = [this, loop]() {
             d->resolvedValue.error = "";
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
-        typename tPromiseFunctions<void>::FailureFunction failureFunction = [=](QString error) {
+        typename tPromiseFunctions<void>::FailureFunction failureFunction = [this, loop](QString error) {
             d->resolvedValue.error.swap(error);
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
@@ -334,5 +341,9 @@ template<typename T> inline tPromiseResults<T> tPromise<T>::await() {
 template<typename T> tPromise<T>::tPromise() {
     d = new tPromisePrivate<T>;
 }
+
+#pragma warning(pop)
+#pragma GCC diagnostic pop
+#pragma clang diagnostic pop
 
 #endif // TPROMISE_H

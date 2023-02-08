@@ -19,21 +19,22 @@
  ******************************************************************************/
 #include "jobbutton.h"
 
+#include "jobspopover.h"
 #include "tjob.h"
 #include "tjobmanager.h"
-#include "jobspopover.h"
 #include "tpopover.h"
 #include <QPainter>
 #include <tvariantanimation.h>
 
 struct JobButtonPrivate {
-    QList<tJob*> trackedJobs;
-    qreal totalPercentage = 0;
+        QList<tJob*> trackedJobs;
+        qreal totalPercentage = 0;
 
-    tVariantAnimation* emblemPulse;
+        tVariantAnimation* emblemPulse;
 };
 
-JobButton::JobButton(QWidget* parent) : QToolButton(parent) {
+JobButton::JobButton(QWidget* parent) :
+    QToolButton(parent) {
     d = new JobButtonPrivate();
 
     d->emblemPulse = new tVariantAnimation();
@@ -41,19 +42,19 @@ JobButton::JobButton(QWidget* parent) : QToolButton(parent) {
     d->emblemPulse->setEndValue(1.0);
     d->emblemPulse->setEasingCurve(QEasingCurve::OutCubic);
     d->emblemPulse->setDuration(2000);
-    connect(d->emblemPulse, &tVariantAnimation::valueChanged, this, [ = ] {
+    connect(d->emblemPulse, &tVariantAnimation::valueChanged, this, [this] {
         this->update();
     });
 
     this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     connect(tJobManager::instance(), &tJobManager::jobAdded, this, &JobButton::trackJob);
-    connect(this, &JobButton::clicked, this, [ = ] {
+    connect(this, &JobButton::clicked, this, [this] {
         tJobManager::showJobsPopover(this);
 
         QList<tJob*> finishedJobs;
         for (tJob* job : d->trackedJobs) {
-            //If the job is finished remove it from the tracking
+            // If the job is finished remove it from the tracking
             if (job->state() == tJob::Finished || job->state() == tJob::Failed) {
                 finishedJobs.append(job);
             }
@@ -84,7 +85,7 @@ void JobButton::trackJob(tJob* job) {
 }
 
 void JobButton::updateJobs() {
-    //Remove any transient completed jobs
+    // Remove any transient completed jobs
     for (tJob* job : d->trackedJobs) {
         QList<tJob*> finishedJobs;
         if (job->isTransient() && job->state() == tJob::Finished) {
@@ -139,7 +140,7 @@ void JobButton::paintEvent(QPaintEvent* event) {
     painter.setBrush(this->palette().color(QPalette::WindowText));
     painter.drawPie(circleRect, 1440, d->totalPercentage * -5760);
 
-    //Draw an emblem
+    // Draw an emblem
     int emblemType = 0;
     for (tJob* job : d->trackedJobs) {
         if (job->state() == tJob::Finished && emblemType < 1) emblemType = 1;
@@ -148,11 +149,11 @@ void JobButton::paintEvent(QPaintEvent* event) {
     }
 
     QColor emblemCol = Qt::transparent;
-    if (emblemType == 1) { //Draw the success emblem
+    if (emblemType == 1) { // Draw the success emblem
         emblemCol = QColor(0, 255, 0);
-    } else if (emblemType == 2) { //Failure emblem
+    } else if (emblemType == 2) { // Failure emblem
         emblemCol = QColor(255, 150, 0);
-    } else if (emblemType == 3) { //Attention required emblem
+    } else if (emblemType == 3) { // Attention required emblem
         emblemCol = QColor(255, 150, 0);
     }
 

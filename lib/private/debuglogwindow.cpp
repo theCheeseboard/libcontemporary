@@ -20,33 +20,33 @@
 #include "debuglogwindow.h"
 #include "ui_debuglogwindow.h"
 
-#include <QScrollBar>
-#include <QFontDatabase>
-#include <QHeaderView>
-#include <QPainter>
-#include <QSortFilterProxyModel>
-#include <QMenu>
-#include "ticon.h"
-#include "tpopover.h"
 #include "debuglogpopover.h"
+#include "ticon.h"
 #include "tlogger.h"
 #include "tpaintcalculator.h"
+#include "tpopover.h"
+#include <QFontDatabase>
+#include <QHeaderView>
+#include <QMenu>
+#include <QPainter>
+#include <QScrollBar>
+#include <QSortFilterProxyModel>
 
 struct DebugLogWindowPrivate {
-    QSortFilterProxyModel* severityModel;
-    QSortFilterProxyModel* contextModel;
-    QSortFilterProxyModel* searchModel;
+        QSortFilterProxyModel* severityModel;
+        QSortFilterProxyModel* contextModel;
+        QSortFilterProxyModel* searchModel;
 
-    bool keepScrolling = true;
+        bool keepScrolling = true;
 };
 
 struct DebugLogModelPrivate {
-    struct DebugLogLogItem {
-        tLogger::LogItem base;
-        quint64 repeat = 0;
-    };
+        struct DebugLogLogItem {
+                tLogger::LogItem base;
+                quint64 repeat = 0;
+        };
 
-    QList<DebugLogLogItem> logs;
+        QList<DebugLogLogItem> logs;
 };
 
 DebugLogWindow::DebugLogWindow(QWidget* parent) :
@@ -86,11 +86,11 @@ DebugLogWindow::DebugLogWindow(QWidget* parent) :
     searchOptionsMenu->addAction(ui->actionFilterContext);
     ui->searchOptions->setMenu(searchOptionsMenu);
 
-    connect(ui->logView->verticalScrollBar(), &QScrollBar::rangeChanged, this, [ = ](int min, int max) {
+    connect(ui->logView->verticalScrollBar(), &QScrollBar::rangeChanged, this, [this](int min, int max) {
         Q_UNUSED(min)
         if (d->keepScrolling) ui->logView->verticalScrollBar()->setValue(max);
     });
-    connect(ui->logView->verticalScrollBar(), &QScrollBar::valueChanged, this, [ = ](int value) {
+    connect(ui->logView->verticalScrollBar(), &QScrollBar::valueChanged, this, [this](int value) {
         d->keepScrolling = ui->logView->verticalScrollBar()->maximum() == value;
     });
 }
@@ -103,7 +103,6 @@ DebugLogWindow::~DebugLogWindow() {
 void DebugLogWindow::on_clearButton_clicked() {
     tLogger::clearLog();
 }
-
 
 void LogDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
     tPaintCalculator paintCalculator = this->calculatePaint(painter, option, index);
@@ -126,7 +125,7 @@ tPaintCalculator LogDelegate::calculatePaint(QPainter* painter, const QStyleOpti
         severityRect.setWidth(6);
         rect.setLeft(severityRect.right());
 
-        paintCalculator.addRect(severityRect, [ = ](QRectF adjusted) {
+        paintCalculator.addRect(severityRect, [=](QRectF adjusted) {
             painter->setPen(Qt::transparent);
             switch (index.data(Qt::UserRole).toInt()) {
                 case QtDebugMsg:
@@ -155,7 +154,7 @@ tPaintCalculator LogDelegate::calculatePaint(QPainter* painter, const QStyleOpti
     textRect.adjust(3, 3, 3, 3);
     rect.setLeft(textRect.right());
 
-    paintCalculator.addRect(textRect, [ = ](QRectF adjusted) {
+    paintCalculator.addRect(textRect, [=](QRectF adjusted) {
         painter->setFont(option.font);
         painter->setPen(option.palette.color(QPalette::WindowText));
         painter->drawText(adjusted, Qt::AlignTop | Qt::AlignLeft, text);
@@ -168,7 +167,7 @@ tPaintCalculator LogDelegate::calculatePaint(QPainter* painter, const QStyleOpti
             QRect repeatRect = rect;
             repeatRect.adjust(3, 3, -3, -3);
 
-            paintCalculator.addRect(repeatRect, [ = ](QRectF adjusted) {
+            paintCalculator.addRect(repeatRect, [=](QRectF adjusted) {
                 painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
                 painter->drawText(adjusted, Qt::AlignLeft | Qt::AlignVCenter, text);
             });
@@ -187,7 +186,7 @@ DebugLogModel::DebugLogModel() {
     }
 
     connect(tLogger::instance(), &tLogger::newLogItem, this, &DebugLogModel::addLogItem);
-    connect(tLogger::instance(), &tLogger::logCleared, this, [ = ] {
+    connect(tLogger::instance(), &tLogger::logCleared, this, [this] {
         beginRemoveRows(QModelIndex(), 0, rowCount());
         d->logs.clear();
         endRemoveRows();
@@ -217,7 +216,6 @@ void DebugLogModel::addLogItem(tLogger::LogItem logItem) {
     endInsertRows();
 }
 
-
 int DebugLogModel::rowCount(const QModelIndex& parent) const {
     if (parent.isValid()) return 0;
 
@@ -238,7 +236,7 @@ QVariant DebugLogModel::data(const QModelIndex& index, int role) const {
     if (role == Qt::UserRole + 1) return QVariant::fromValue(log.base);
 
     switch (index.column()) {
-        case 0: //Timestamp
+        case 0: // Timestamp
             switch (role) {
                 case Qt::DisplayRole:
                     return log.base.timestamp.toString("[hh:mm:ss]");
@@ -247,10 +245,10 @@ QVariant DebugLogModel::data(const QModelIndex& index, int role) const {
             }
 
             break;
-        case 1: //Context
+        case 1: // Context
             if (role == Qt::DisplayRole) return log.base.context;
             break;
-        case 2: //Text
+        case 2: // Text
             switch (role) {
                 case Qt::DisplayRole:
                     return log.base.text;
@@ -263,7 +261,6 @@ QVariant DebugLogModel::data(const QModelIndex& index, int role) const {
 
     return QVariant();
 }
-
 
 QVariant DebugLogModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (orientation != Qt::Horizontal) return QVariant();
@@ -282,7 +279,7 @@ QVariant DebugLogModel::headerData(int section, Qt::Orientation orientation, int
 void DebugLogWindow::on_searchField_textChanged(const QString& arg1) {
     QString text = arg1;
 
-    //Try and find a context match
+    // Try and find a context match
     QRegularExpressionMatch contextMatch = QRegularExpression("(ctx|context):(\"(.+)\"|(\\w+)) ?").match(text);
     if (contextMatch.hasMatch()) {
         QString context;

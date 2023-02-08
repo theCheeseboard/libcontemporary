@@ -23,16 +23,17 @@
 #include "tjob.h"
 
 struct JobDbusPrivate {
-    tJob* job;
+        tJob* job;
 };
 
-JobDbus::JobDbus(QString path, tJob* job, QObject* parent) : QObject(parent) {
+JobDbus::JobDbus(QString path, tJob* job, QObject* parent) :
+    QObject(parent) {
     d = new JobDbusPrivate();
     d->job = job;
 
     connect(job, &tJob::progressChanged, this, &JobDbus::ProgressChanged);
     connect(job, &tJob::totalProgressChanged, this, &JobDbus::TotalProgressChanged);
-    connect(job, &tJob::stateChanged, this, [ = ] {
+    connect(job, &tJob::stateChanged, this, [this] {
         emit StateChanged(this->State());
     });
 
@@ -62,6 +63,6 @@ QString JobDbus::State() {
             return QStringLiteral("Failed");
         case tJob::RequiresAttention:
             return QStringLiteral("RequiresAttention");
-
     }
+    return QStringLiteral("");
 }

@@ -19,12 +19,13 @@
  ******************************************************************************/
 
 #include "tswitch.h"
-#include <tvariantanimation.h>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QStaticText>
+#include <tvariantanimation.h>
 
-tSwitch::tSwitch(QWidget* parent) : QPushButton(parent) {
+tSwitch::tSwitch(QWidget* parent) :
+    QPushButton(parent) {
     this->setCheckable(true);
     this->setFixedSize(this->sizeHint());
 
@@ -113,11 +114,11 @@ void tSwitch::checkChanging(bool checked) {
     }
 
     animation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(animation, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(animation, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         innerRect = value.toRect();
         this->update();
     });
-    connect(animation, &tVariantAnimation::finished, this, [ = ] {
+    connect(animation, &tVariantAnimation::finished, this, [this, animation] {
         innerRect = animation->endValue().toRect();
         this->update();
     });

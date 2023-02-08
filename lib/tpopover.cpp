@@ -125,11 +125,11 @@ void tPopover::setPopoverWidth(int width) {
         animation->setEndValue(endValue);
         animation->setDuration(250);
         animation->setEasingCurve(QEasingCurve::OutCubic);
-        connect(animation, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+        connect(animation, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
             d->width = value.toInt();
             this->updateGeometry();
         });
-        connect(animation, &tVariantAnimation::finished, this, [=] {
+        connect(animation, &tVariantAnimation::finished, this, [this, width, animation] {
             d->width = width;
             this->updateGeometry();
             animation->deleteLater();
@@ -218,7 +218,7 @@ void tPopover::show(QWidget* parent) {
 
     if (d->performBlanking) {
         tScrim* scrim = tScrim::scrimForWidget(parent);
-        connect(scrim, &tScrim::scrimClicked, this, [=] {
+        connect(scrim, &tScrim::scrimClicked, this, [this] {
             if (d->dismissable) this->dismiss();
         });
         scrim->show();
@@ -237,7 +237,7 @@ void tPopover::show(QWidget* parent) {
     }
     popoverAnim->setDuration(250);
     popoverAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(popoverAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(popoverAnim, &tVariantAnimation::valueChanged, [this](QVariant value) {
         if (d->side == Bottom) {
             d->popoverWidget->move(0, value.toInt());
             d->verticalSeperator->move(0, value.toInt() - 1);
@@ -297,7 +297,7 @@ void tPopover::dismiss() {
     }
     popoverAnim->setDuration(250);
     popoverAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(popoverAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(popoverAnim, &tVariantAnimation::valueChanged, [this](QVariant value) {
         if (d->side == Bottom) {
             d->popoverWidget->move(0, value.toInt());
             d->verticalSeperator->move(0, value.toInt() - 1);
@@ -309,7 +309,7 @@ void tPopover::dismiss() {
             d->verticalSeperator->move(value.toInt() + d->popoverWidget->width(), 0);
         }
     });
-    connect(popoverAnim, &tVariantAnimation::finished, [=] {
+    connect(popoverAnim, &tVariantAnimation::finished, [this] {
         d->popoverWidget->hide();
         d->verticalSeperator->hide();
 

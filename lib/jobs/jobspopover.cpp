@@ -20,12 +20,11 @@
 #include "jobspopover.h"
 #include "ui_jobspopover.h"
 
+#include "ticon.h"
 #include "tjob.h"
 #include "tjobmanager.h"
-#include "ticon.h"
 
 struct JobsPopoverPrivate {
-
 };
 
 JobsPopover::JobsPopover(QWidget* parent) :
@@ -60,7 +59,7 @@ void JobsPopover::addJob(tJob* job) {
         if (job->state() == tJob::Finished) return;
 
         ui->jobsLayout->insertWidget(0, progressWidget);
-        connect(job, &tJob::stateChanged, this, [ = ](tJob::State state) {
+        connect(job, &tJob::stateChanged, this, [this, progressWidget](tJob::State state) {
             if (state == tJob::Finished) {
                 ui->jobsLayout->removeWidget(progressWidget);
             }

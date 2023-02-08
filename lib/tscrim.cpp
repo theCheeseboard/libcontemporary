@@ -19,29 +19,30 @@
  ******************************************************************************/
 #include "tscrim.h"
 
-#include <QSet>
+#include "tvariantanimation.h"
+#include <QGraphicsEffect>
 #include <QMap>
 #include <QPainter>
-#include <QGraphicsEffect>
-#include "tvariantanimation.h"
+#include <QSet>
 
 struct tScrimPrivate {
-    static QMap<QWidget*, tScrim*> scrims;
-    QGraphicsBlurEffect* blurEffect;
-    QSet<QWidget*> ignoreWidgets;
-    QWidget* parentWidget;
-    double opacity = 1;
+        static QMap<QWidget*, tScrim*> scrims;
+        QGraphicsBlurEffect* blurEffect;
+        QSet<QWidget*> ignoreWidgets;
+        QWidget* parentWidget;
+        double opacity = 1;
 
-    bool showing = false;
+        bool showing = false;
 
-    tVariantAnimation* anim;
+        tVariantAnimation* anim;
 
-    const int scrimOverscan = SC_DPI(50);
+        const int scrimOverscan = 50;
 };
 
 QMap<QWidget*, tScrim*> tScrimPrivate::scrims = QMap<QWidget*, tScrim*>();
 
-tScrim::tScrim(QWidget* parent) : QWidget(parent) {
+tScrim::tScrim(QWidget* parent) :
+    QWidget(parent) {
     d = new tScrimPrivate();
     d->parentWidget = parent;
     d->scrims.insert(parent, this);
@@ -57,19 +58,19 @@ tScrim::tScrim(QWidget* parent) : QWidget(parent) {
     d->anim->setEndValue(1.0);
     d->anim->setDuration(250);
     d->anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(d->anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(d->anim, &tVariantAnimation::valueChanged, this, [this, parent](QVariant value) {
         d->blurEffect->setBlurRadius(value.toReal() * 10);
         d->opacity = 1 - value.toReal() * 0.75;
         this->update();
 
-        //Constantly change the size of the blanker because Qt doesn't seem to blur correctly otherwise
+        // Constantly change the size of the blanker because Qt doesn't seem to blur correctly otherwise
         if (this->geometry().size().height() == parent->height() + d->scrimOverscan * 2) {
             this->resize(this->width(), parent->height() + d->scrimOverscan * 2 + 1);
         } else {
             this->resize(this->width(), parent->height() + d->scrimOverscan * 2);
         }
     });
-    connect(d->anim, &tVariantAnimation::finished, this, [ = ] {
+    connect(d->anim, &tVariantAnimation::finished, this, [this] {
         if (d->anim->direction() == tVariantAnimation::Backward) {
             QWidget::hide();
         }
@@ -94,7 +95,7 @@ tScrim* tScrim::scrimForWidget(QWidget* widget) {
 }
 
 void tScrim::addIgnoreWidget(QWidget* ignoreWidget) {
-    connect(ignoreWidget, &QWidget::destroyed, this, [ = ] {
+    connect(ignoreWidget, &QWidget::destroyed, this, [this, ignoreWidget] {
         d->ignoreWidgets.remove(ignoreWidget);
     });
     d->ignoreWidgets.insert(ignoreWidget);
@@ -161,7 +162,6 @@ bool tScrim::eventFilter(QObject* watched, QEvent* event) {
     }
     return false;
 }
-
 
 void tScrim::mousePressEvent(QMouseEvent* event) {
 }

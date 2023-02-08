@@ -14,16 +14,16 @@
 #include <QToolButton>
 
 struct tWindowTabberPrivate {
-    QList<tWindowTabberButton*> buttons;
-    QBoxLayout* tabLayout;
-    QScrollArea* scrollArea;
+        QList<tWindowTabberButton*> buttons;
+        QBoxLayout* tabLayout;
+        QScrollArea* scrollArea;
 
-    QToolButton* newTabButton;
+        QToolButton* newTabButton;
 
-    bool scrollLeft = false;
-    QTimer* scrollTimer;
+        bool scrollLeft = false;
+        QTimer* scrollTimer;
 
-    bool updateWindowTitle = false;
+        bool updateWindowTitle = false;
 };
 
 tWindowTabber::tWindowTabber(QWidget* parent) {
@@ -69,12 +69,12 @@ tWindowTabber::tWindowTabber(QWidget* parent) {
     layout->addWidget(d->newTabButton);
     this->setLayout(layout);
 
-    libContemporaryCommon::fixateHeight(d->scrollArea, [ = ] {
+    libContemporaryCommon::fixateHeight(d->scrollArea, [this] {
         return fontMetrics().height() + 28;
     });
 
     d->scrollTimer = new QTimer(this);
-    connect(d->scrollTimer, &QTimer::timeout, this, [ = ] {
+    connect(d->scrollTimer, &QTimer::timeout, this, [this] {
         bool scrollLeft = d->scrollLeft;
         if (this->layoutDirection() == Qt::RightToLeft) scrollLeft = !scrollLeft;
         d->scrollArea->horizontalScrollBar()->setValue(d->scrollArea->horizontalScrollBar()->value() + (scrollLeft ? -1 : 1));
