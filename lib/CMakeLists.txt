@@ -53,6 +53,7 @@ cntp_sourcelist(
         tpaintcalculator.cpp
         tpopover.cpp
         tpromise.cpp
+        tpainter.cpp
         tprintpopover.cpp
         tpropertyanimation.cpp
         tscrim.cpp
@@ -144,6 +145,7 @@ cntp_sourcelist(
         tpopover.h
         tpromise.h
         tprintpopover.h
+        tpainter.h
         tpropertyanimation.h
         tscrim.h
         tsettings.h
