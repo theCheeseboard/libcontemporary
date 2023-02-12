@@ -30,6 +30,7 @@ class CsdSizeGrip : public QWidget
 
         void resizeGrip();
         static int borderWidth();
+        static int borderReserveWidth(QWidget *widget);
 
     signals:
 

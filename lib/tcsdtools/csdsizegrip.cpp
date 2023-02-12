@@ -77,6 +77,7 @@ bool CsdSizeGrip::eventFilter(QObject* watched, QEvent* event) {
 }
 
 void CsdSizeGrip::paintEvent(QPaintEvent* event) {
+#ifndef Q_OS_WIN
     QPainter painter(this);
     painter.setBrush(Qt::transparent);
     painter.setBrush(this->palette().color(QPalette::WindowText));
@@ -93,6 +94,7 @@ void CsdSizeGrip::paintEvent(QPaintEvent* event) {
         case 3: // Right
             painter.drawLine(0, borderWidth() - 1, 0, this->height() - borderWidth() * 2 + 2);
     }
+#endif
 }
 
 void CsdSizeGrip::mousePressEvent(QMouseEvent* e) {
@@ -237,7 +239,20 @@ void CsdSizeGrip::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 int CsdSizeGrip::borderWidth() {
+#ifdef Q_OS_WIN
+    return 5;
+#else
     return 3;
+#endif
+}
+
+int CsdSizeGrip::borderReserveWidth(QWidget* widget) {
+#ifdef Q_OS_WIN
+    return widget->isMaximized() ? 7 : 0;
+#else
+    Q_UNUSED(widget)
+    return borderWidth();
+#endif
 }
 
 int CsdSizeGrip::hitTest(QPoint pos) {
