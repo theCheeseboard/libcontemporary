@@ -21,6 +21,7 @@
 #define TCSDTOOLS_H
 
 #include <QObject>
+#include <QAbstractNativeEventFilter>
 #include "libcontemporary_global.h"
 
 class tPopover;
@@ -53,7 +54,7 @@ class LIBCONTEMPORARY_EXPORT tCsdGlobal : public QObject {
 
 struct tCsdToolsPrivate;
 struct ResizeWidget;
-class LIBCONTEMPORARY_EXPORT tCsdTools : public QObject {
+class LIBCONTEMPORARY_EXPORT tCsdTools : public QObject, public QAbstractNativeEventFilter {
         Q_OBJECT
     public:
         explicit tCsdTools(QObject* parent = nullptr);
@@ -93,6 +94,10 @@ class LIBCONTEMPORARY_EXPORT tCsdTools : public QObject {
 #endif
 
         bool eventFilter(QObject* watched, QEvent* event) override;
+
+        // QAbstractNativeEventFilter interface
+    public:
+        bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result);
 };
 
 #endif // TCSDTOOLS_H

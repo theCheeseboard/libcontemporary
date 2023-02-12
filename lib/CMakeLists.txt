@@ -301,7 +301,7 @@ IF(CF_FRAMEWORK_FOUND)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    target_link_libraries(libcontemporary User32 Kernel32 Comctl32 DbgHelp windowsapp)
+    target_link_libraries(libcontemporary User32 Kernel32 Comctl32 DbgHelp windowsapp Dwmapi)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

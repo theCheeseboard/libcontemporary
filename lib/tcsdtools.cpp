@@ -25,6 +25,7 @@
 #include <QMouseEvent>
 #include <QWidget>
 #include <QWindow>
+#include "tapplication.h"
 #include <tcsdtools/csdbuttonbox.h>
 #include <tcsdtools/csdsizegrip.h>
 
@@ -40,6 +41,7 @@
 
 #ifdef Q_OS_WIN
     #include <Windows.h>
+    #include <dwmapi.h>
 #endif
 
 struct tCsdGlobalPrivate {
@@ -66,10 +68,17 @@ struct tCsdToolsPrivate {
         QList<ResizeWidget*> resizeWidgets;
 
         static QList<QWidget*> csdWidgets;
+#ifdef Q_OS_WIN
+    static QList<HWND> csdHandles;
+#endif
 };
 
 tCsdGlobalPrivate* tCsdGlobal::d = new tCsdGlobalPrivate();
 QList<QWidget*> tCsdToolsPrivate::csdWidgets = QList<QWidget*>();
+
+#ifdef Q_OS_WIN
+    QList<HWND> tCsdToolsPrivate::csdHandles = QList<HWND>();
+#endif
 
 tCsdGlobal::tCsdGlobal() :
     QObject(nullptr) {
@@ -100,6 +109,10 @@ tCsdTools::tCsdTools(QObject* parent) :
     QObject(parent) {
     d = new tCsdToolsPrivate();
     connect(tCsdGlobal::instance(), &tCsdGlobal::csdsEnabledChanged, this, &tCsdTools::csdsEnabledChanged);
+
+#ifdef Q_OS_WIN
+    tApplication::instance()->installNativeEventFilter(this);
+#endif
 }
 
 tCsdTools::~tCsdTools() {
@@ -183,6 +196,10 @@ void tCsdTools::removeMoveAction(QObject* widget) {
 
 void tCsdTools::installResizeAction(QWidget* widget) {
     d->csdWidgets.append(widget);
+#ifdef Q_OS_WIN
+    auto hwnd = reinterpret_cast<HWND>(widget->winId());
+    d->csdHandles.append(hwnd);
+#endif
     connect(widget, &QWidget::destroyed, this, QOverload<QObject*>::of(&tCsdTools::removeResizeAction));
     widget->installEventFilter(this);
 
@@ -195,9 +212,18 @@ void tCsdTools::installResizeAction(QWidget* widget) {
     if (tCsdGlobal::csdsEnabled()) {
         int border = CsdSizeGrip::borderWidth();
         widget->setContentsMargins(border, border, border, border);
+#ifdef Q_OS_WIN
+        MARGINS borderless = {1, 1, 1, 1};
+        DwmExtendFrameIntoClientArea(hwnd, &borderless);
+
+        //Force the window to recalculate its frame
+        SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOREPOSITION | SWP_NOREDRAW);
+#else
         widget->setWindowFlag(Qt::FramelessWindowHint);
         widget->setAttribute(Qt::WA_NoSystemBackground);
         widget->setAttribute(Qt::WA_TranslucentBackground);
+
+#endif
     }
 
     for (int i = 0; i < 4; i++) {
@@ -227,6 +253,10 @@ void tCsdTools::removeResizeAction(QWidget* widget) {
     d->resizeWidgets.removeOne(rw);
     delete rw;
 
+#ifdef Q_OS_WIN
+    auto hwnd = reinterpret_cast<HWND>(widget->winId());
+    d->csdHandles.removeOne(hwnd);
+#endif
     d->csdWidgets.removeOne(widget);
 }
 
@@ -258,14 +288,20 @@ void tCsdTools::csdsEnabledChanged(bool enabled) {
         if (enabled) {
             int border = CsdSizeGrip::borderWidth();
             rw->widget->setContentsMargins(border, border, border, border);
+#ifdef Q_OS_WIN
+#else
             rw->widget->setWindowFlag(Qt::FramelessWindowHint);
             rw->widget->setAttribute(Qt::WA_NoSystemBackground);
             rw->widget->setAttribute(Qt::WA_TranslucentBackground);
+#endif
         } else {
             rw->widget->setContentsMargins(0, 0, 0, 0);
+#ifdef Q_OS_WIN
+#else
             rw->widget->setWindowFlag(Qt::FramelessWindowHint, false);
             rw->widget->setAttribute(Qt::WA_NoSystemBackground, false);
             rw->widget->setAttribute(Qt::WA_TranslucentBackground, false);
+#endif
         }
         // rw->widget->setWindowState(states);
         if (showing) rw->widget->show();
@@ -365,5 +401,20 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
             rw->setMarginsEnabled(marginsEnabled);
         }
     }
+    return false;
+}
+
+bool tCsdTools::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) {
+#ifdef Q_OS_WIN
+    if (eventType == "windows_generic_MSG") {
+        auto msg = static_cast<MSG*>(message);
+        if (msg->message == WM_NCCALCSIZE) {
+            if (d->csdHandles.contains(msg->hwnd)) {
+                result = 0;
+                return true;
+            }
+        }
+    }
+#endif
     return false;
 }
