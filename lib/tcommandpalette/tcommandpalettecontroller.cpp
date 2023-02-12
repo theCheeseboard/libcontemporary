@@ -10,16 +10,16 @@
 #include <QWindow>
 
 struct tCommandPaletteControllerPrivate {
-    QWidget* parent;
-    QPointer<tCommandPaletteWindow> activeWindow;
-    QAction* commandPaletteAction;
+        QWidget* parent;
+        QPointer<tCommandPaletteWindow> activeWindow;
+        QAction* commandPaletteAction;
 
-    QList<tCommandPaletteScope*> scopes;
-    tCommandPaletteScope* allScope;
+        QList<tCommandPaletteScope*> scopes;
+        tCommandPaletteScope* allScope;
 
-    QString currentQuery;
+        QString currentQuery;
 
-    bool awaitingNextShift = false;
+        bool awaitingNextShift = false;
 };
 
 tCommandPaletteController::tCommandPaletteController(QWidget* parent) :
@@ -92,7 +92,7 @@ QAction* tCommandPaletteController::commandPaletteAction() {
 }
 
 bool tCommandPaletteController::eventFilter(QObject* watched, QEvent* event) {
-    if ((watched == d->parent || (d->parent && watched == d->parent->windowHandle())) && event->type() == QEvent::KeyPress) {
+    if ((d->parent && watched == d->parent->windowHandle()) && event->type() == QEvent::KeyPress) {
         auto ke = static_cast<QKeyEvent*>(event);
         if (ke->key() == Qt::Key_Shift) {
             if (d->awaitingNextShift) {
