@@ -330,49 +330,51 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
         Q_ASSERT(widget);
 
         QMouseEvent* e = static_cast<QMouseEvent*>(event);
-        if (d->moveWidgets.contains(widget) && e->button() == Qt::LeftButton) {
-            // Move this window
-            if (widget->window()->windowHandle()->startSystemMove()) return true;
+        if (e->button() == Qt::LeftButton) {
+            if (d->moveWidgets.contains(widget) && e->button() == Qt::LeftButton) {
+                // Move this window
+                if (widget->window()->windowHandle()->startSystemMove()) return true;
 
 #ifdef HAVE_X11
-            if (tX11Info::isPlatformX11()) {
-                int x = e->globalPosition().x();
-                int y = e->globalPosition().y();
-                XClientMessageEvent event;
-                XUngrabPointer(tX11Info::display(), tX11Info::appTime());
-                event.type = ClientMessage;
-                event.message_type = XInternAtom(tX11Info::display(), "_NET_WM_MOVERESIZE", False);
-                event.window = widget->window()->winId(); // Move the parent window of the widget
-                event.format = 32;
-                event.data.l[0] = x;
-                event.data.l[1] = y;
-                event.data.l[2] = 8;
-                event.data.l[3] = Button1;
-                event.data.l[4] = 0;
+                if (tX11Info::isPlatformX11()) {
+                    int x = e->globalPosition().x();
+                    int y = e->globalPosition().y();
+                    XClientMessageEvent event;
+                    XUngrabPointer(tX11Info::display(), tX11Info::appTime());
+                    event.type = ClientMessage;
+                    event.message_type = XInternAtom(tX11Info::display(), "_NET_WM_MOVERESIZE", False);
+                    event.window = widget->window()->winId(); // Move the parent window of the widget
+                    event.format = 32;
+                    event.data.l[0] = x;
+                    event.data.l[1] = y;
+                    event.data.l[2] = 8;
+                    event.data.l[3] = Button1;
+                    event.data.l[4] = 0;
 
-                XSendEvent(tX11Info::display(), tX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, reinterpret_cast<XEvent*>(&event));
-                return false;
-            }
+                    XSendEvent(tX11Info::display(), tX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, reinterpret_cast<XEvent*>(&event));
+                    return false;
+                }
 #endif
 
 #ifdef Q_OS_WIN
-            // Use Windows APIs to move the window
-            ReleaseCapture();
-            SendMessage(reinterpret_cast<HWND>(widget->window()->winId()), WM_NCLBUTTONDOWN, HTCAPTION, 0);
-            return true;
+                // Use Windows APIs to move the window
+                ReleaseCapture();
+                SendMessage(reinterpret_cast<HWND>(widget->window()->winId()), WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                return true;
 #endif
 
 #ifdef Q_OS_MAC
-            macHandleDrag(e->globalPos(), widget->window());
-            return true;
+                macHandleDrag(e->globalPos(), widget->window());
+                return true;
 #endif
 
-            // Move window using Qt methods
-            qWarning() << "Unsupported platform; moving window manually.";
-            widget->setProperty("tcsdtools_action", "move");
-            widget->setProperty("tcsdtools_mousepoint", widget->window()->mapFromGlobal(e->globalPosition()));
+                // Move window using Qt methods
+                qWarning() << "Unsupported platform; moving window manually.";
+                widget->setProperty("tcsdtools_action", "move");
+                widget->setProperty("tcsdtools_mousepoint", widget->window()->mapFromGlobal(e->globalPosition()));
 
-            return true; // Prevent further handling of this event
+                return true; // Prevent further handling of this event
+            }
         }
     } else if (event->type() == QEvent::MouseMove) {
         QWidget* widget = qobject_cast<QWidget*>(watched);
@@ -390,9 +392,21 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
         Q_ASSERT(widget);
 
         QMouseEvent* e = static_cast<QMouseEvent*>(event);
-        if (d->moveWidgets.contains(widget) && widget->property("tcsdtools_action").toString() == "move") {
-            // Stop moving the window
-            widget->setProperty("tcsdtools_action", "none");
+        if (e->button() == Qt::RightButton) {
+#ifdef Q_OS_WIN
+            //Show the system menu
+            auto hwnd = reinterpret_cast<HWND>(widget->window()->winId());
+            auto menu = GetSystemMenu(hwnd, false);
+            auto cmd = TrackPopupMenu(menu, TPM_RETURNCMD, e->globalPosition().x(), e->globalPosition().y(), 0, hwnd, NULL);
+            if (cmd > 0) {
+                SendMessage(hwnd, WM_SYSCOMMAND, cmd, 0);
+            }
+#endif
+        } else {
+            if (d->moveWidgets.contains(widget) && widget->property("tcsdtools_action").toString() == "move") {
+                // Stop moving the window
+                widget->setProperty("tcsdtools_action", "none");
+            }
         }
     } else if (event->type() == QEvent::Resize || event->type() == QEvent::WindowStateChange) {
         QWidget* widget = qobject_cast<QWidget*>(watched);
