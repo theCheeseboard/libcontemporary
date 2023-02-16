@@ -41,7 +41,7 @@ tPrintPopover::tPrintPopover(QPrinter* printer, QWidget* parent) :
     d->printer = printer;
 
     d->printPreview = new QPrintPreviewWidget(d->printer);
-    connect(d->printPreview, &QPrintPreviewWidget::paintRequested, this, &tPrintPopover::paintRequested);
+    connect(d->printPreview, &QPrintPreviewWidget::paintRequested, this, &tPrintPopover::requestPaint);
     ui->printerLayout->addWidget(d->printPreview);
 
     ui->singlePixelHorizontalLine->setVisible(false);
@@ -99,7 +99,7 @@ void tPrintPopover::on_printerBox_currentIndexChanged(int index) {
 }
 
 void tPrintPopover::on_printButton_clicked() {
-    emit paintRequested(d->printer);
+    requestPaint(d->printer);
     emit done();
 }
 
@@ -113,13 +113,19 @@ void tPrintPopover::updatePageSizes() {
     ui->pageSizeBox->clear();
 
     QPrinterInfo printerInfo = QPrinterInfo::printerInfo(d->printer->printerName());
-    for (QPageSize pageSize : printerInfo.supportedPageSizes()) {
+    for (const QPageSize& pageSize : printerInfo.supportedPageSizes()) {
         ui->pageSizeBox->addItem(pageSize.name());
         if (printerInfo.defaultPageSize() == pageSize) {
             d->printer->setPageSize(pageSize);
             ui->pageSizeBox->setCurrentIndex(ui->pageSizeBox->count() - 1);
         }
     }
+}
+
+void tPrintPopover::requestPaint(QPrinter* printer) {
+    this->setEnabled(false);
+    emit paintRequested(printer);
+    this->setEnabled(true);
 }
 
 void tPrintPopover::on_grayscaleBox_toggled(bool checked) {
@@ -154,7 +160,7 @@ void tPrintPopover::on_pdfButton_clicked() {
         dialog, &QFileDialog::accepted, this, [this, dialog] {
             d->printer->setOutputFileName(dialog->selectedFiles().first());
             d->printer->setOutputFormat(QPrinter::PdfFormat);
-            emit paintRequested(d->printer);
+            requestPaint(d->printer);
             emit done();
         },
         Qt::QueuedConnection);

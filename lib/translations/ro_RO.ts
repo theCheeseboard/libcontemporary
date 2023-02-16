@@ -752,7 +752,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../tprintpopover.cpp" line="151"/>
+        <location filename="../tprintpopover.cpp" line="157"/>
         <source>Portable Document Format (*.pdf)</source>
         <translation></translation>
     </message>

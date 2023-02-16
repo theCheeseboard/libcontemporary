@@ -772,7 +772,7 @@
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../tprintpopover.cpp" line="151"/>
+        <location filename="../tprintpopover.cpp" line="157"/>
         <source>Portable Document Format (*.pdf)</source>
         <translation>Portable Document Format (*.pdf)</translation>
     </message>

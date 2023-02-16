@@ -77,6 +77,7 @@ class LIBCONTEMPORARY_EXPORT tPrintPopover : public QWidget {
         tPrintPopoverPrivate* d;
 
         void updatePageSizes();
+        void requestPaint(QPrinter* printer);
 
         // QWidget interface
     protected:
