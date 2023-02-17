@@ -48,12 +48,10 @@ module.exports = async options => {
                 cmakeArgs.push(`-DPKG_CONFIG_EXECUTABLE=${paths[0]}`);
             } else {
                 console.log("Unable to glob for pkg-config - pkg-config may not be found!");
-                console.log("usr:");
-                console.log(await fs.readdir("/usr"));
-                console.log("local:");
-                console.log(await fs.readdir("/usr/local"));
                 console.log("Cellar:");
-                console.log(await fs.readdir("/usr/local/Cellar"));
+                for (let dir of await fs.readdir("/usr/local/Cellar")) {
+                    console.log(dir);
+                }
                 console.log("pkg-config:");
                 console.log(await fs.readdir("/usr/local/Cellar/pkg-config"));
                 console.log("pkg-config/0.29.2_3:");
