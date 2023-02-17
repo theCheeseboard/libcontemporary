@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QPluginLoader>
+#include <tapplication.h>
 
 template<typename T>
 class tPluginManager {
