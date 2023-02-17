@@ -5,9 +5,6 @@ const fs = require('fs/promises');
 const path = require('path');
 const process = require('process');
 const clone = require('git-clone/promise');
-const fg = require("fast-glob");
-
-const enableDebug = process.env["RUNNER_DEBUG"] === "1";
 
 module.exports = async options => {
     let gitRoot;
@@ -39,26 +36,6 @@ module.exports = async options => {
         if (process.platform === "darwin") {
             cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
-
-            const paths = await fg("/usr/local/Cellar/pkg-config/*/bin/pkg-config", {
-                onlyFiles: false
-            });
-
-            if (paths.length > 0) {
-                cmakeArgs.push(`-DPKG_CONFIG_EXECUTABLE=${paths[0]}`);
-            } else {
-                console.log("Unable to glob for pkg-config - pkg-config may not be found!");
-                console.log("Cellar:");
-                for (let dir of await fs.readdir("/usr/local/Cellar")) {
-                    console.log(dir);
-                }
-                console.log("pkg-config:");
-                console.log(await fs.readdir("/usr/local/Cellar/pkg-config"));
-                console.log("pkg-config/0.29.2_3:");
-                console.log(await fs.readdir("/usr/local/Cellar/pkg-config/0.29.2_3"));
-                console.log("pkg-config/0.29.2_3/bin:");
-                console.log(await fs.readdir("/usr/local/Cellar/pkg-config/0.29.2_3/bin"));
-            }
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
         }
@@ -96,10 +73,8 @@ module.exports = async options => {
                 }
             });
 
-            if (enableDebug) {
-                console.log("Extracted properties from CMakeCache");
-                console.log(JSON.stringify(properties, null, 4));
-            }
+            console.log("Extracted properties from CMakeCache");
+            console.log(JSON.stringify(properties, null, 4));
 
             //Add required variables to the PATH
             if (properties["CMAKE_INSTALL_PREFIX"] && properties["CMAKE_INSTALL_BINDIR"]) {
