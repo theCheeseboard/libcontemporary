@@ -12,7 +12,11 @@ template<typename T>
 class tPluginManager {
     public:
         static tPluginManager<T>* instance() {
-            return instancePtr;
+            auto name = QString(typeid(T).name());
+            if (instances.contains(name)) return reinterpret_cast<tPluginManager<T>*>(instances.value(name));
+            auto instance = new tPluginManager<T>();
+            instances.insert(name, instance);
+            return instance;
         }
 
         void setLibraryDirectory(QString libraryDirectory) {
@@ -79,7 +83,7 @@ class tPluginManager {
         QString libraryDirectory;
         QMap<QUuid, QString> knownPlugins;
         QList<QUuid> loadedPlugins;
-        static inline tPluginManager<T>* instancePtr = new tPluginManager<T>();
+        static inline QMap<QString, void*> instances = QMap<QString, void*>();
 };
 
 #endif // TPLUGINMANAGER_H
