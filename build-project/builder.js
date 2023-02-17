@@ -46,6 +46,14 @@ module.exports = async options => {
 
             if (paths.length > 0) {
                 cmakeArgs.push(`-DPKG_CONFIG_EXECUTABLE=${paths[0]}`);
+            } else {
+                console.log("Unable to glob for pkg-config - pkg-config may not be found!");
+                console.log("pkg-config:");
+                console.log(await fs.readdir("/usr/local/Cellar/pkg-config"));
+                console.log("pkg-config/0.29.2_3:");
+                console.log(await fs.readdir("/usr/local/Cellar/pkg-config/0.29.2_3"));
+                console.log("pkg-config/0.29.2_3/bin:");
+                console.log(await fs.readdir("/usr/local/Cellar/pkg-config/0.29.2_3/bin"));
             }
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
