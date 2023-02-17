@@ -36,6 +36,7 @@ module.exports = async options => {
         if (process.platform === "darwin") {
             cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
+            cmakeArgs.push("-DPKG_CONFIG_EXECUTABLE=/usr/local/bin/pkg-config");
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
         }
