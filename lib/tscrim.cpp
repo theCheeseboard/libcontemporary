@@ -76,6 +76,10 @@ tScrim::tScrim(QWidget* parent) :
         }
     });
 
+    connect(parent, &QWidget::destroyed, this, [this, parent] {
+        d->scrims.remove(parent);
+    });
+
     QWidget::hide();
 
     updateGeometry();
