@@ -135,7 +135,7 @@ module.exports = async function(options) {
                          while (currentOutput.length > 1) {
                              let line = currentOutput.shift();
                              if (line.startsWith("Fetching: ")) {
-                                 bottleNames = line.substr(10).split(", ");
+                                 bottleNames.push(...line.substr(10).split(", "));
                              } else if (line.startsWith("Downloaded to:") || (line.startsWith("Already downloaded:") && line.endsWith(".bottle.tar.gz"))) {
                                  let downloadedFile = line.split(" ")[2];
                                  console.log(`Downloaded ${bottleNames[bottlePaths.length]}`);
