@@ -3,16 +3,17 @@
 
 #include <QObject>
 #include <QUuid>
+#include "libcontemporary_global.h"
 
 struct tPluginManagerHelperPrivate;
-class tPluginManagerHelper : public QObject {
+class LIBCONTEMPORARY_EXPORT tPluginManagerHelper : public QObject {
         Q_OBJECT
     public:
         static tPluginManagerHelper* instance();
 
         struct PluginRegistration {
-                QUuid uuid;
-                bool shouldLoad;
+            QUuid uuid;
+            bool shouldLoad;
         };
 
         PluginRegistration registerPlugin(QJsonObject data);

@@ -1,13 +1,14 @@
 #ifndef TPLUGINMANAGERPANE_H
 #define TPLUGINMANAGERPANE_H
 
+#include "libcontemporary_global.h"
 #include "tsettingswindow/tsettingspane.h"
 
 namespace Ui {
     class tPluginManagerPane;
 }
 
-class tPluginManagerPane : public tSettingsPane {
+class LIBCONTEMPORARY_EXPORT tPluginManagerPane : public tSettingsPane {
         Q_OBJECT
 
     public:
