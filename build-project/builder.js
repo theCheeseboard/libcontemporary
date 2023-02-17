@@ -6,6 +6,8 @@ const path = require('path');
 const process = require('process');
 const clone = require('git-clone/promise');
 
+const enableDebug = process.env["RUNNER_DEBUG"] === "1";
+
 module.exports = async options => {
     let gitRoot;
     if (options.project === ".") {
@@ -74,8 +76,10 @@ module.exports = async options => {
                 }
             });
 
-            console.log("Extracted properties from CMakeCache");
-            console.log(JSON.stringify(properties, null, 4));
+            if (enableDebug) {
+                console.log("Extracted properties from CMakeCache");
+                console.log(JSON.stringify(properties, null, 4));
+            }
 
             //Add required variables to the PATH
             if (properties["CMAKE_INSTALL_PREFIX"] && properties["CMAKE_INSTALL_BINDIR"]) {

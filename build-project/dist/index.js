@@ -12,6 +12,8 @@ const path = __nccwpck_require__(1017);
 const process = __nccwpck_require__(7282);
 const clone = __nccwpck_require__(9551);
 
+const enableDebug = process.env["RUNNER_DEBUG"] === "1";
+
 module.exports = async options => {
     let gitRoot;
     if (options.project === ".") {
@@ -42,6 +44,7 @@ module.exports = async options => {
         if (process.platform === "darwin") {
             cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
+            cmakeArgs.push("-DPKG_CONFIG_EXECUTABLE=/usr/local/bin/pkg-config");
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
         }
@@ -79,8 +82,10 @@ module.exports = async options => {
                 }
             });
 
-            console.log("Extracted properties from CMakeCache");
-            console.log(JSON.stringify(properties, null, 4));
+            if (enableDebug) {
+                console.log("Extracted properties from CMakeCache");
+                console.log(JSON.stringify(properties, null, 4));
+            }
 
             //Add required variables to the PATH
             if (properties["CMAKE_INSTALL_PREFIX"] && properties["CMAKE_INSTALL_BINDIR"]) {

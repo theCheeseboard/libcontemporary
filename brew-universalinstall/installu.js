@@ -8,6 +8,8 @@ const path = require('path');
 
 const mergeExts = [".dylib", ".a"];
 
+const enableDebug = process.env["RUNNER_DEBUG"] === "1";
+
 function libname(lib) {
     let name = path.basename(lib);
     if (name.includes(".")) name = name.substring(0, name.indexOf("."));
@@ -69,11 +71,14 @@ async function lipoIfRequired(arm, system) {
     })
 
     if (success) {
-        console.log(`Merging: arm: ${arm}, sys: ${system}`);
+        if (enableDebug) {
+            console.log(`Merging: arm: ${arm}, sys: ${system}`);
+        }
 
         for (let args of installNameToolArgs) {
             await exec.exec("install_name_tool", args, {
-                ignoreReturnCode: true
+                ignoreReturnCode: true,
+                silent: !enableDebug
             });
         }
 
