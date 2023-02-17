@@ -80,6 +80,8 @@ class tPluginManager {
         }
 
     private:
+        tPluginManager() {}
+
         QString libraryDirectory;
         QMap<QUuid, QString> knownPlugins;
         QList<QUuid> loadedPlugins;
