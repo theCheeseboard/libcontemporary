@@ -5,6 +5,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const process = require('process');
 const clone = require('git-clone/promise');
+const fg = require("fast-glob");
 
 const enableDebug = process.env["RUNNER_DEBUG"] === "1";
 
@@ -38,7 +39,14 @@ module.exports = async options => {
         if (process.platform === "darwin") {
             cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
-            cmakeArgs.push("-DPKG_CONFIG_EXECUTABLE=/usr/local/bin/pkg-config");
+
+            const paths = await fg("/usr/local/Cellar/pkg-config/*/bin/pkg-config", {
+                onlyFiles: false
+            });
+
+            if (paths.length > 0) {
+                cmakeArgs.push(`-DPKG_CONFIG_EXECUTABLE=${paths[0]}`);
+            }
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
         }

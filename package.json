@@ -24,6 +24,7 @@
     "@actions/io": "^1.1.2",
     "@vercel/ncc": "^0.33.4",
     "appdmg": "^0.6.4",
+    "fast-glob": "^3.2.12",
     "follow-redirects": "^1.15.2",
     "git-clone": "^0.2.0",
     "gunzip-maybe": "^1.4.2",
