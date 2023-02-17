@@ -256,33 +256,35 @@ void ApplicationBundle::installContemporaryIcons() {
     QNetworkAccessManager mgr;
     QEventLoop loop;
 
-    QNetworkReply* ghReply = mgr.get(QNetworkRequest(QUrl("https://api.github.com/repos/vicr123/contemporary-icons/releases/latest")));
-    connect(ghReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
+    QProcess ghProcess;
+    ghProcess.start("curl", {"-L", "https://api.github.com/repos/vicr123/contemporary-icons/releases/latest"});
+    ghProcess.waitForFinished(-1);
 
-    QJsonObject githubRoot = QJsonDocument::fromJson(ghReply->readAll()).object();
-    QString version = githubRoot.value("tag_name").toString();
-    QString zipUrl = QStringLiteral("https://github.com/vicr123/contemporary-icons/archive/refs/tags/%1.zip").arg(version);
-
-    QNetworkReply* zipReply = mgr.get(QNetworkRequest(QUrl(zipUrl)));
-    connect(zipReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    if (zipReply->error() != QNetworkReply::NoError) {
-        QTextStream(stderr) << "Could not obtain Contemporary Icons\n";
-        QTextStream(stderr) << zipReply->errorString();
+    if (ghProcess.exitCode() != 0) {
+        QTextStream(stderr) << "Could not obtain latest Contemporary Icons release\n";
+        QTextStream(stderr) << ghProcess.readAllStandardError();
         return;
     }
 
-    QFile zipFile(tempDir.filePath("archive.zip"));
-    zipFile.open(QFile::WriteOnly);
-    zipFile.write(zipReply->readAll());
-    zipFile.close();
+    QJsonObject githubRoot = QJsonDocument::fromJson(ghProcess.readAll()).object();
+    QString version = githubRoot.value("tag_name").toString();
+    QString zipUrl = QStringLiteral("https://github.com/vicr123/contemporary-icons/archive/refs/tags/%1.zip").arg(version);
+
+    auto zipFile = tempDir.filePath("archive.zip");
+    QProcess zipProcess;
+    zipProcess.start("curl", {"-L", zipUrl, "-o", zipFile});
+    zipProcess.waitForFinished(-1);
+
+    if (zipProcess.exitCode() != 0) {
+        QTextStream(stderr) << "Could not obtain Contemporary Icons\n";
+        QTextStream(stderr) << zipProcess.readAllStandardError();
+        return;
+    }
 
     QProcess zipProc;
     zipProc.setProcessChannelMode(QProcess::ForwardedChannels);
     zipProc.setWorkingDirectory(this->bundleDir(IconResources).absolutePath());
-    zipProc.start("unzip", {zipFile.fileName()});
+    zipProc.start("unzip", {zipFile});
     zipProc.waitForFinished();
 
     this->bundleDir(IconResources).rename(QStringLiteral("contemporary-icons-%1").arg(version.remove('v')), "contemporary-icons");
