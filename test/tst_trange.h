@@ -13,7 +13,9 @@ class TRange : public QObject {
         void trange_canIterate();
         void trange_canMap();
         void trange_canMapToDifferentType();
+        void trange_canMapWithIndex();
         void trange_canFilter();
+        void trange_canFilterWithIndex();
         void trange_canCompose();
         void trange_canReturn();
 };

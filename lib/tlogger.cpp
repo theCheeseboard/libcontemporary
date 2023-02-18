@@ -32,7 +32,10 @@ struct tLoggerPrivate {
 struct tLogWriterPrivate {
     tLogger::LogItem templ;
     QStringList bits;
+    static bool testMode;
 };
+
+bool tLogWriterPrivate::testMode = false;
 
 tLogger::tLogger(QObject* parent) : QObject(parent) {
     d = new tLoggerPrivate();
@@ -130,29 +133,52 @@ tLogWriter::~tLogWriter() {
     d->templ.text = d->bits.join(" ");
     tLogger::log(d->templ);
 
-    QTextStream output(stderr);
+    if (tLogWriterPrivate::testMode) {
+        switch (d->templ.severity) {
+            case QtDebugMsg:
+                qDebug() << d->templ.text;
+                break;
+            case QtWarningMsg:
+                qWarning() << d->templ.text;
+                break;
+            case QtCriticalMsg:
+                qCritical() << d->templ.text;
+                break;
+            case QtFatalMsg:
+                qCritical() << d->templ.text;
+                break;
+            case QtInfoMsg:
+                qInfo() << d->templ.text;
+        }
+    } else {
+        QTextStream output(stderr);
 
-    QString severity;
-    switch (d->templ.severity) {
-        case QtDebugMsg:
-            severity = "[ D ]";
-            break;
-        case QtWarningMsg:
-            severity = "[ ! ]";
-            break;
-        case QtCriticalMsg:
-            severity = "[! !]";
-            break;
-        case QtFatalMsg:
-            severity = "[!!!]";
-            break;
-        case QtInfoMsg:
-            severity = "[ i ]";
+        QString severity;
+        switch (d->templ.severity) {
+            case QtDebugMsg:
+                severity = "[ D ]";
+                break;
+            case QtWarningMsg:
+                severity = "[ ! ]";
+                break;
+            case QtCriticalMsg:
+                severity = "[! !]";
+                break;
+            case QtFatalMsg:
+                severity = "[!!!]";
+                break;
+            case QtInfoMsg:
+                severity = "[ i ]";
+        }
+
+        output << QStringLiteral("%1 %2 %3\n").arg(QDateTime::currentDateTime().toString("[hh:mm:ss]"), severity, d->templ.text);
     }
 
-    output << QStringLiteral("%1 %2 %3\n").arg(QDateTime::currentDateTime().toString("[hh:mm:ss]"), severity, d->templ.text);
-
     delete d;
+}
+
+void tLogWriter::setTestMode(bool testMode) {
+    tLogWriterPrivate::testMode = testMode;
 }
 
 tLogWriter& tLogWriter::operator<<(const char* str) {

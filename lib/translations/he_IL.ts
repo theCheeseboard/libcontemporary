@@ -574,31 +574,31 @@
         <translation type="vanished">מידע</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="106"/>
+        <location filename="../tlogger.cpp" line="109"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">איתור באגים</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="108"/>
+        <location filename="../tlogger.cpp" line="111"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">אזהרה</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="110"/>
+        <location filename="../tlogger.cpp" line="113"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">קריטי</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="112"/>
+        <location filename="../tlogger.cpp" line="115"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">חמור</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="114"/>
+        <location filename="../tlogger.cpp" line="117"/>
         <source>Info</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">מידע</translation>

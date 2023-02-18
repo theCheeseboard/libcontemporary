@@ -5,10 +5,12 @@
 #include <QList>
 #include <QCoroGenerator>
 #include <functional>
+#include <tlogger.h>
+#include <QUuid>
 
 template <typename T> class tRangeBacking {
     public:
-        tRangeBacking() : ran(true) {
+        tRangeBacking() {
         }
 
         tRangeBacking(QCoro::Generator<const T>&& backing) : _backing(std::move(backing)) {
@@ -17,9 +19,15 @@ template <typename T> class tRangeBacking {
         tRangeBacking(QList<T> list) : _backing(gen_list_impl(list)) {
         }
 
+        tRangeBacking(tRangeBacking<T>&) = delete;
+        tRangeBacking(tRangeBacking<T>&&) = delete;
+
         typename QCoro::Generator<const T>::iterator begin() {
-            if (ran) return end();
-            ran = true;
+            if (_ran) {
+                tWarn("tRangeBacking") << "tRangeBacking::begin called more than once";
+                return end();
+            }
+            _ran = true;
             return _backing.begin();
         }
 
@@ -33,7 +41,7 @@ template <typename T> class tRangeBacking {
 
     private:
         QCoro::Generator<const T> _backing;
-        bool ran = false;
+        bool _ran = false;
 
         QCoro::Generator<const T> gen_list_impl(QList<T> list) {
             for (auto i = list.cbegin(); i != list.cend(); i++) {
@@ -45,40 +53,44 @@ template <typename T> class tRangeBacking {
 template <typename T> class tRange {
     public:
         template <typename R> using MapFunction = std::function<const R(T)>;
+        template <typename R> using MapFunctionWithIndex = std::function<const R(T, int)>;
         using FilterFunction = std::function<bool(T)>;
+        using FilterFunctionWithIndex = std::function<bool(T, int)>;
 
-        tRange(QList<T> list) : _backing(new tRangeBacking<T>(tRangeBacking(list))) {
+        tRange(QList<T> list) : _backing(new tRangeBacking<T>(list)) {
         }
 
-        tRange(QCoro::Generator<T>&& gen) : _backing(new tRangeBacking<T>(tRangeBacking(std::move(gen)))) {
-        }
-
-        tRange(tRangeBacking<T>&& backing) : _backing(new tRangeBacking<T>(std::move(backing))) {
+        tRange(QCoro::Generator<T>&& gen) : _backing(new tRangeBacking<T>(std::move(gen))) {
         }
 
         tRange(tRange<T>&& other) {
-            if (_backing) delete _backing;
-            _backing = std::move(other._backing);
-            other._backing = new tRangeBacking<T>();
+            _backing = other._backing;
+            other._backing.clear();
         }
 
-        ~tRange() {
-            if (_backing) delete _backing;
+        tRange(tRangeBacking<T>* backing) : _backing(backing) {
         }
 
         tRange& operator=(tRange<T>&& other) {
-            if (_backing) delete _backing;
             _backing = other._backing;
-            other._backing = new tRangeBacking<T>();
+            other._backing.clear();
             return this;
         }
 
         template <typename R> tRange<R> map(MapFunction<R> mapping) {
-            return tRange<R>(map_impl(mapping));
+            return tRange<R>(new tRangeBacking(map_impl(mapping, _backing)));
+        }
+
+        template <typename R> tRange<R> map(MapFunctionWithIndex<R> mapping) {
+            return tRange<R>(new tRangeBacking(map_impl(mapping, _backing)));
         }
 
         tRange<T> filter(FilterFunction filtering) {
-            return tRange(filter_impl(filtering));
+            return tRange(new tRangeBacking(filter_impl(filtering, _backing)));
+        }
+
+        tRange<T> filter(FilterFunctionWithIndex filtering) {
+            return tRange(new tRangeBacking(filter_impl(filtering, _backing)));
         }
 
         bool every(FilterFunction filtering) {
@@ -108,17 +120,37 @@ template <typename T> class tRange {
         }
 
     private:
-        tRangeBacking<T>* _backing = nullptr;
+        using Backing = QSharedPointer<tRangeBacking<T>> ;
+        Backing _backing = nullptr;
 
-        template <typename R> QCoro::Generator<const R> map_impl(MapFunction<R> mapping) {
-            for (auto item : *_backing) {
-                co_yield mapping(item);
+        // The original tRange may go out of scope before these coroutines are called.
+        // Preserve the backing in order to be able to iterate over it.
+
+        template <typename R> QCoro::Generator<const R> map_impl(MapFunction<R> mapping, Backing backing) {
+            return map_impl<R>([mapping](T item, int index) {
+                return mapping(item);
+            }, backing);
+        }
+
+        template <typename R> QCoro::Generator<const R> map_impl(MapFunctionWithIndex<R> mapping, Backing backing) {
+            auto i = 0;
+            for (auto item : *backing) {
+                co_yield mapping(item, i);
+                i++;
             }
         }
 
-        QCoro::Generator<const T> filter_impl(FilterFunction filtering) {
-            for (auto item : *_backing) {
-                if (filtering(item)) co_yield item;
+        QCoro::Generator<const T> filter_impl(FilterFunction filtering, Backing backing) {
+            return filter_impl([filtering, backing](T item, int index) {
+                return filtering(item);
+            }, backing);
+        }
+
+        QCoro::Generator<const T> filter_impl(FilterFunctionWithIndex filtering, Backing backing) {
+            auto i = 0;
+            for (auto item : *backing) {
+                if (filtering(item, i)) co_yield item;
+                i++;
             }
         }
 };

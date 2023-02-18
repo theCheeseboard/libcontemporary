@@ -20,6 +20,7 @@ void TRange::trange_canIterate() {
         QCOMPARE(item, ints.at(i));
         i++;
     }
+    QCOMPARE(i, ints.length());
 }
 
 void TRange::trange_canMap() {
@@ -33,10 +34,10 @@ void TRange::trange_canMap() {
         QCOMPARE(item, ints.at(i) * 2);
         i++;
     }
+    QCOMPARE(i, ints.length());
 }
 
-void TRange::trange_canMapToDifferentType()
-{
+void TRange::trange_canMapToDifferentType() {
     QList<int> ints({1, 2, 3, 4, 5});
     auto range = tRange(ints).map<QString>([](int x) {
         return QString::number(x);
@@ -47,22 +48,52 @@ void TRange::trange_canMapToDifferentType()
         QCOMPARE(item, QString::number(ints.at(i)));
         i++;
     }
+    QCOMPARE(i, ints.length());
 }
 
-void TRange::trange_canFilter()
-{
+void TRange::trange_canMapWithIndex() {
+    QList<int> ints({632, 4632, 334, 42, 55});
+    auto range = tRange(ints).map<QString>([](int x, int y) {
+        return QString::number(y);
+    });
+
+    auto i = 0;
+    for (auto item : range) {
+        QCOMPARE(item, QString::number(i));
+        i++;
+    }
+    QCOMPARE(i, ints.length());
+}
+
+void TRange::trange_canFilter() {
     QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
     auto range = tRange(ints).filter([](int x) {
         return x % 2 == 0;
     });
 
+    auto i = 0;
     for (auto item : range) {
         QVERIFY(item % 2 == 0);
+        i++;
     }
+    QCOMPARE(i, ints.length() / 2);
 }
 
-void TRange::trange_canCompose()
-{
+void TRange::trange_canFilterWithIndex() {
+    QList<int> ints({2345, 162, 735, 9238, 5234});
+    auto range = tRange(ints).filter([](int x, int y) {
+        return y == 2;
+    });
+
+    auto i = 0;
+    for (auto item : range) {
+        QCOMPARE(item, ints.at(2));
+        i++;
+    }
+    QCOMPARE(i, 1);
+}
+
+void TRange::trange_canCompose() {
     QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
     auto range = tRange(ints).filter([](int x) {
         return x % 2 == 0;
@@ -75,8 +106,7 @@ void TRange::trange_canCompose()
     }
 }
 
-void TRange::trange_canReturn()
-{
+void TRange::trange_canReturn() {
     auto createRange = [] {
         QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
         auto range = tRange(ints).filter([](int x) {
