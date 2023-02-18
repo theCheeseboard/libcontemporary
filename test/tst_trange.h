@@ -12,6 +12,10 @@ class TRange : public QObject {
     private slots:
         void trange_canIterate();
         void trange_canMap();
+        void trange_canMapToDifferentType();
+        void trange_canFilter();
+        void trange_canCompose();
+        void trange_canReturn();
 };
 
 #endif // TST_TRANGE_H

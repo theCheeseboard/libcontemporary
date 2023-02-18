@@ -45,6 +45,7 @@ template <typename T> class tRangeBacking {
 template <typename T> class tRange {
     public:
         template <typename R> using MapFunction = std::function<const R(T)>;
+        using FilterFunction = std::function<bool(T)>;
 
         tRange(QList<T> list) : _backing(new tRangeBacking<T>(tRangeBacking(list))) {
         }
@@ -58,7 +59,7 @@ template <typename T> class tRange {
         tRange(tRange<T>&& other) {
             if (_backing) delete _backing;
             _backing = std::move(other._backing);
-            other._backing = tRangeBacking<T>();
+            other._backing = new tRangeBacking<T>();
         }
 
         ~tRange() {
@@ -73,7 +74,25 @@ template <typename T> class tRange {
         }
 
         template <typename R> tRange<R> map(MapFunction<R> mapping) {
-            return tRange(map_impl(mapping));
+            return tRange<R>(map_impl(mapping));
+        }
+
+        tRange<T> filter(FilterFunction filtering) {
+            return tRange(filter_impl(filtering));
+        }
+
+        bool every(FilterFunction filtering) {
+            for (auto item : *_backing) {
+                if (!filtering(item)) return false;
+            }
+            return true;
+        }
+
+        bool some(FilterFunction filtering) {
+            for (auto item : *_backing) {
+                if (filtering(item)) return true;
+            }
+            return false;
         }
 
         typename QCoro::Generator<const T>::iterator begin() {
@@ -91,9 +110,15 @@ template <typename T> class tRange {
     private:
         tRangeBacking<T>* _backing = nullptr;
 
-        template <typename R> QCoro::Generator<const T> map_impl(MapFunction<R> mapping) {
+        template <typename R> QCoro::Generator<const R> map_impl(MapFunction<R> mapping) {
             for (auto item : *_backing) {
                 co_yield mapping(item);
+            }
+        }
+
+        QCoro::Generator<const T> filter_impl(FilterFunction filtering) {
+            for (auto item : *_backing) {
+                if (filtering(item)) co_yield item;
             }
         }
 };
