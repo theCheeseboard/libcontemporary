@@ -10,7 +10,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
 
-find_package(Qt6 REQUIRED COMPONENTS Svg Xml)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Svg Xml)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
@@ -36,13 +36,14 @@ ENDIF()
 add_executable(cntp-appicontool ${SOURCES} ${HEADERS})
 set_target_properties(cntp-appicontool PROPERTIES
         MACOSX_BUNDLE FALSE)
+cntp_asan(cntp-appicontool)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set_target_properties(cntp-appicontool PROPERTIES
             INSTALL_RPATH_USE_LINK_PATH True)
 ENDIF()
 
-target_link_libraries(cntp-appicontool Qt6::Svg Qt6::Xml libcontemporary)
+target_link_libraries(cntp-appicontool Qt::Svg Qt::Xml libcontemporary)
 
 install(TARGETS cntp-appicontool
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

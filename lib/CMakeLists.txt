@@ -14,13 +14,13 @@ foreach(f ${EXTRA_FUNCTIONS})
     include(${f})
 endforeach()
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Network Multimedia PrintSupport Concurrent LinguistTools OPTIONAL_COMPONENTS DBus)
-find_package(QCoro6 COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets Svg Network Multimedia PrintSupport Concurrent LinguistTools OPTIONAL_COMPONENTS DBus)
+find_package(QCoro${QT_VERSION_MAJOR} COMPONENTS Core Network OPTIONAL_COMPONENTS DBus)
 find_library(CF_FRAMEWORK CoreFoundation)
 find_library(COCOA_FRAMEWORK Cocoa)
 
 
-if(NOT ${QCoro6Core_FOUND})
+if(NOT ${QCoro${QT_VERSION_MAJOR}Core_FOUND})
     message(FATAL_ERROR "QCoro6 library not found")
 ENDIF()
 
@@ -195,7 +195,7 @@ cntp_sourcelist(
 )
 
 
-if(${Qt6DBus_FOUND})
+if(${Qt${QT_VERSION_MAJOR}DBus_FOUND})
     qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
     qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
 endif()
@@ -267,15 +267,15 @@ set_target_properties(libcontemporary PROPERTIES
     )
 cntp_enable_coroutines(libcontemporary)
 
-target_link_libraries(libcontemporary Qt6::Widgets Qt6::Svg Qt6::Network Qt6::Multimedia Qt6::Concurrent Qt6::PrintSupport QCoro::Coro QCoro::Core QCoro::Network)
+target_link_libraries(libcontemporary Qt::Widgets Qt::Svg Qt::Network Qt::Multimedia Qt::Concurrent Qt::PrintSupport QCoro::Coro QCoro::Core QCoro::Network)
 target_compile_definitions(libcontemporary PRIVATE LIBCONTEMPORARY_LIBRARY)
 
-if(${Qt6DBus_FOUND})
+if(${Qt${QT_VERSION_MAJOR}DBus_FOUND})
     target_link_libraries(libcontemporary Qt6::DBus)
     target_compile_definitions(libcontemporary PRIVATE HAVE_QT_DBUS)
 ENDIF()
 
-if(${QCoro6DBus_FOUND})
+if(${QCoro${QT_VERSION_MAJOR}DBus_FOUND})
     target_link_libraries(libcontemporary QCoro::DBus)
 ENDIF()
 

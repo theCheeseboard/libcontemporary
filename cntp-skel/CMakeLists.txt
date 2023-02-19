@@ -8,7 +8,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
 
-find_package(Qt6 REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED)
 
 add_compile_definitions(SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
@@ -24,6 +24,7 @@ set(HEADERS
 add_executable(cntp-skel ${SOURCES} ${HEADERS})
 set_target_properties(cntp-skel PROPERTIES
         MACOSX_BUNDLE FALSE)
+cntp_asan(cntp-skel)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set_target_properties(cntp-skel PROPERTIES
