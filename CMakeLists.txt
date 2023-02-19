@@ -3,7 +3,7 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15)
 
 project(libcontemporary VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt REQUIRED NAMES Qt6)
+find_package(QT REQUIRED NAMES Qt6)
 
 add_subdirectory(lib)
 add_subdirectory(cntp-trdesktop)
