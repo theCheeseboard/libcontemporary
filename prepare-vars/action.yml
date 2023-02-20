@@ -27,3 +27,4 @@ runs:
         QT_VERSION: ${{ inputs.qtVersion }}
         QCORO_VERSION: ${{ inputs.qcoroVersion }}
       name: "Log Variables"
+      shell: bash
