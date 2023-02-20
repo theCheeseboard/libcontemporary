@@ -61,7 +61,13 @@ module.exports = async options => {
 
         await exec.exec(`cmake`, cmakeArgs);
         await exec.exec(`cmake`, ["--build", buildDir]);
-        await exec.exec(`cmake`, ["--install", buildDir]);
+
+        if (process.platform === "linux") {
+            //On Linux we need to escalate
+            await exec.exec(`sudo`, ["cmake", "--install", buildDir]);
+        } else {
+            await exec.exec(`cmake`, ["--install", buildDir]);
+        }
 
         if (process.platform === 'win32') {
             //Add the bin dir to the PATH
