@@ -1,4 +1,4 @@
-name: "macOS CI"
+name: "Linux CI"
 on:
   push:
   pull_request:
@@ -8,15 +8,24 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macOS-latest]
+        os: [ubuntu-latest]
+        qt: [6.3, 6.4.2]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: vicr123/libcontemporary/prepare-vars@actions
         id: vars
-      - uses: vicr123/libcontemporary/brew-universalinstall@actions
-        name: "Install Dependencies"
         with:
-          packages: "qt:cmake:ninja:pkg-config"
+          qtVersion: ${{ matrix.qt }}
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y cmake ninja
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ steps.vars.outputs.qtVersion }}
+          arch: gcc_64
+          modules: addons.qtmultimedia addons.qtwebsockets qt5compat
+          cache: true
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build QCoro"
         with:
