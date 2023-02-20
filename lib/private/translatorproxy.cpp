@@ -41,6 +41,7 @@ TranslatorProxy::TranslatorProxy(QTranslator* parentTranslator, QObject* parent)
 }
 
 TranslatorProxy::~TranslatorProxy() {
+    d->primaryTranslator->deleteLater();
     delete d;
 }
 
