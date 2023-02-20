@@ -1,6 +1,10 @@
 name: "Linux CI"
 on:
   push:
+    branches:
+      - "master"
+      - "blueprint"
+      - "features/*"
   pull_request:
   workflow_dispatch:
 
