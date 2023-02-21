@@ -52,6 +52,8 @@ jobs:
           git remote add origin $GIT_URL
           git checkout -b temporary
           git add .
-          git commit --author="$GIT_NAME <$GIT_EMAIL>" --committer="$GIT_NAME <$GIT_EMAIL>" -m "Build of $GIT_SHA"
+          git config user.name "$GIT_NAME"
+          git config user.email "$GIT_EMAIL"
+          git commit -m "Build of $GIT_SHA"
           git tag $TAG_NAME
           git push origin +refs/tags/$TAG_NAME
