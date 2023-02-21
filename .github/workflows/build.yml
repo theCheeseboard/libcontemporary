@@ -9,6 +9,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+      - name: "Save Git information"
+        id: git
+        run: |
+          echo "gitName=$(git log --format='%an' HEAD^!)" >> $GITHUB_OUTPUT
+          echo "gitEmail=$(git log --format='%ae' HEAD^!)" >> $GITHUB_OUTPUT
+          echo "gitSha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo "gitUrl=$(git remote get-url origin)" >> $GITHUB_OUTPUT
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
@@ -20,3 +27,31 @@ jobs:
         with:
           name: actions
           path: build-output
+    outputs:
+      gitName: ${{ steps.git.outputs.gitName }}
+      gitEmail: ${{ steps.git.outputs.gitEmail }}
+      gitSha: ${{ steps.git.outputs.gitSha }}
+      gitUrl: ${{ steps.git.outputs.gitUrl }}
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: actions
+      - name: "Commit"
+        env:
+          GIT_NAME: ${{ needs.build.outputs.gitName }}
+          GIT_EMAIL: ${{ needs.build.outputs.gitEmail }}
+          GIT_SHA: ${{ needs.build.outputs.gitSha }}
+          GIT_URL: ${{ needs.build.outputs.gitUrl }}
+          TAG_NAME: test-actions
+        run: |
+          cd build-output
+          git init
+          git remote add origin $GIT_URL
+          git checkout -b temporary
+          git add .
+          git commit --author="$GIT_NAME <$GIT_EMAIL>" -m "Build of $GIT_SHA"
+          git tag $TAG_NAME
+          git push origin +refs/tags/$TAG_NAME
