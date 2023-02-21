@@ -9,11 +9,13 @@ mkdir -p $OUTPUT
 
 for dir in *; do
     if [ -f $dir/action.yml ]; then
-        cp -r $dir $OUTPUT/
         if [ -f $dir/index.js ]; then
-            pushd $OUTPUT/$dir
-            ncc build index.js -o dist -m --source-map -C
+            pushd $dir
+            ncc build index.js -o $OUTPUT/$dir/dist -m --source-map -C
+            cp action.yml $OUTPUT/$dir
             popd
+        else
+          cp -r $dir $OUTPUT/
         fi
     fi
 done
