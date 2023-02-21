@@ -15,7 +15,6 @@ jobs:
           echo "gitName=$(git log --format='%an' HEAD^!)" >> $GITHUB_OUTPUT
           echo "gitEmail=$(git log --format='%ae' HEAD^!)" >> $GITHUB_OUTPUT
           echo "gitSha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-          echo "gitUrl=$(git remote get-url origin)" >> $GITHUB_OUTPUT
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
@@ -36,6 +35,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      contents: write
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -45,11 +46,10 @@ jobs:
           GIT_NAME: ${{ needs.build.outputs.gitName }}
           GIT_EMAIL: ${{ needs.build.outputs.gitEmail }}
           GIT_SHA: ${{ needs.build.outputs.gitSha }}
-          GIT_URL: ${{ needs.build.outputs.gitUrl }}
           TAG_NAME: test-actions
         run: |
           git init
-          git remote add origin $GIT_URL
+          git remote add origin https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
           git checkout -b temporary
           git add .
           git config user.name "$GIT_NAME"
