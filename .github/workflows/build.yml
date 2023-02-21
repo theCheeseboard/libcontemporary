@@ -47,7 +47,6 @@ jobs:
           GIT_URL: ${{ needs.build.outputs.gitUrl }}
           TAG_NAME: test-actions
         run: |
-          cd build-output
           git init
           git remote add origin $GIT_URL
           git checkout -b temporary
