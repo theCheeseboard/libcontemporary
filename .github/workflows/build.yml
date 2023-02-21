@@ -46,7 +46,7 @@ jobs:
           GIT_NAME: ${{ needs.build.outputs.gitName }}
           GIT_EMAIL: ${{ needs.build.outputs.gitEmail }}
           GIT_SHA: ${{ needs.build.outputs.gitSha }}
-          TAG_NAME: test-actions
+          TAG_NAME: actions
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git init
