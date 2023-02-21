@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: "npm"
       - name: "Install NPM dependencies"
         run: npm ci
       - name: "Build actions"
@@ -51,6 +52,6 @@ jobs:
           git remote add origin $GIT_URL
           git checkout -b temporary
           git add .
-          git commit --author="$GIT_NAME <$GIT_EMAIL>" -m "Build of $GIT_SHA"
+          git commit --author="$GIT_NAME <$GIT_EMAIL>" --committer="$GIT_NAME <$GIT_EMAIL>" -m "Build of $GIT_SHA"
           git tag $TAG_NAME
           git push origin +refs/tags/$TAG_NAME
