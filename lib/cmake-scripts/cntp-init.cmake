@@ -8,7 +8,7 @@ function(cntp_init target cxx-standard)
             CXX_STANDARD ${cxx-standard}
             CXX_STANDARD_REQUIRED ON)
             
-    find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS LinguistTools)
 
     cntp_dotcontemporary_desktopId(${target} DESKTOPID RESOLVE_BLUEPRINT)
 
@@ -17,15 +17,7 @@ function(cntp_init target cxx-standard)
     add_compile_definitions(SYSTEM_PREFIX_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_PREFIX}")
     add_compile_definitions(SYSTEM_DATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
 
-    if(CNTP_ASAN)
-        if(MSVC)
-            target_compile_options(${target} PRIVATE /fsanitize=address)
-            target_link_options(${target} PRIVATE /fsanitize=address)
-        else()
-            target_compile_options(${target} PRIVATE -fsanitize=address)
-            target_link_options(${target} PRIVATE -fsanitize=address)
-        endif()
-    endif()
+    cntp_asan(${target})
 
     if(NOT ${DESKTOPID} STREQUAL "${DESKTOPID}-NOTFOUND")
         add_compile_definitions(T_APPMETA_DESKTOP_ID="${DESKTOPID}")

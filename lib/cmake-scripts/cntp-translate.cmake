@@ -12,6 +12,7 @@ function(cntp_translate target)
         get_target_property(SOURCE_FILES ${target} SOURCES)
     endif()
 
+    set(QT_DEFAULT_MAJOR_VERSION ${QT_VERSION_MAJOR})
     qt_add_translations(${target}
         TS_FILES ${TRANSLATION_FILES}
         QM_FILES_OUTPUT_VARIABLE QM_FILES
