@@ -166,3 +166,7 @@ void MetainfoFile::writeTranslation(QString language, QString contents) {
     d->writer.writeCharacters(d->rightWhitespace);
     d->writer.writeEndElement();
 }
+
+bool MetainfoFile::isError() {
+    return d->reader.hasError();
+}

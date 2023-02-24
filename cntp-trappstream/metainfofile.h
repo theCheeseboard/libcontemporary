@@ -19,6 +19,8 @@ class MetainfoFile {
 
         void writeTranslation(QString language, QString contents);
 
+        bool isError();
+
     private:
         MetainfoFilePrivate* d;
 };

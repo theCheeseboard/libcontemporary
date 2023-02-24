@@ -25,13 +25,18 @@
 #include "metainfofile.h"
 #include <jsonfile.h>
 
-void genJsonFile(QString metainfoFile, QDir outputDirectory) {
+bool genJsonFile(QString metainfoFile, QDir outputDirectory) {
     QTextStream output(stdout);
 
     JsonFile file;
     MetainfoFile metainfo(metainfoFile);
     while (metainfo.moveToNext()) {
         file.insertString(metainfo.trKey(), metainfo.trContents());
+    }
+
+    if (metainfo.isError()) {
+        QTextStream(stderr) << "error: Unable to parse input metainfo file\n";
+        return false;
     }
 
     // Write the output to en.json
@@ -42,9 +47,10 @@ void genJsonFile(QString metainfoFile, QDir outputDirectory) {
     f.open(QFile::WriteOnly);
     f.write(file.output());
     f.close();
+    return true;
 }
 
-void genMetainfoFile(QString templateFile, QDir jsonDirectory, QString outputFile) {
+bool genMetainfoFile(QString templateFile, QDir jsonDirectory, QString outputFile) {
     QTextStream output(stdout);
     QMap<QString, JsonFile> jsonFiles;
     for (const QFileInfo& file : jsonDirectory.entryInfoList({"*.json"}, QDir::Files)) {
@@ -54,7 +60,6 @@ void genMetainfoFile(QString templateFile, QDir jsonDirectory, QString outputFil
 
     QFile f(outputFile);
     f.open(QFile::WriteOnly);
-    output << "Generating file " << outputFile << "...\n";
 
     MetainfoFile metainfo(templateFile);
     metainfo.setOutput(&f);
@@ -66,7 +71,14 @@ void genMetainfoFile(QString templateFile, QDir jsonDirectory, QString outputFil
         }
     }
 
+    if (metainfo.isError()) {
+        QTextStream(stderr) << "error: Unable to parse input metainfo file\n";
+        return false;
+    }
+    output << "Generating file " << outputFile << "...\n";
+
     f.close();
+    return true;
 }
 
 int main(int argc, char* argv[]) {
@@ -129,14 +141,15 @@ int main(int argc, char* argv[]) {
     QDir outputDirectory(parser.value("json-directory"));
     if (!outputDirectory.exists()) outputDirectory.mkpath(".");
 
+    bool success = false;
     if (genJson) {
         // Generate the en JSON file from a .desktop file
-        genJsonFile(metainfoTemplate, outputDirectory);
+        success = genJsonFile(metainfoTemplate, outputDirectory);
     }
     if (genmetaInfo) {
         // Generate the final .desktop file from JSON files
-        genMetainfoFile(metainfoTemplate, outputDirectory, parser.value("metainfo-output"));
+        success = genMetainfoFile(metainfoTemplate, outputDirectory, parser.value("metainfo-output"));
     }
 
-    return 0;
+    return success ? 0 : 1;
 }
