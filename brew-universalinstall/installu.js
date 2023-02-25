@@ -1,10 +1,12 @@
 const exec = require('@actions/exec');
 const io = require('@actions/io');
+const core = require("@actions/core");
 const fs = require('fs/promises');
 const legacyFs = require('fs');
 const tar = require('tar-fs');
 const gunzip = require('gunzip-maybe');
 const path = require('path');
+const process = require("process");
 
 const mergeExts = [".dylib", ".a"];
 
@@ -115,9 +117,16 @@ module.exports = async function(options) {
             console.log(`Processing package ${pk}`);
             //Install x86_64 version
             let x86install = exec.exec("brew", ["install", pk], {
-                silent: false
+                silent: !core.isDebug()
             });
             await x86install;
+
+            if (process.platform === "darwin" && pk === "qt") {
+                //HACK: Qt isn't being linked for some reason so link it manually here
+                await exec.exec("brew", ["link", pk], {
+                    silent: !core.isDebug()
+                });
+            }
 
             let armBrewOutput = "";
             await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_big_sur", pk], {
