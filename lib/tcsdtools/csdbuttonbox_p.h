@@ -22,6 +22,7 @@
 #define CSDBUTTONBOX_P_H
 
 #include <QWidget>
+#include <QPointer>
 
 class CsdButtonBox;
 struct CsdButtonBoxPrivate {
@@ -32,9 +33,9 @@ struct CsdButtonBoxPrivate {
     void windowShown();
     void windowHidden();
 
-    QWidget* closeWidget;
-    QWidget* minWidget;
-    QWidget* fsWidget;
+    QPointer<QWidget> closeWidget;
+    QPointer<QWidget> minWidget;
+    QPointer<QWidget> fsWidget;
 #endif
 };
 

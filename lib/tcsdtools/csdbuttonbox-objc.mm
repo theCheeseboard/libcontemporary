@@ -26,32 +26,40 @@
 #import <AppKit/AppKit.h>
 
 void CsdButtonBoxPrivate::windowHidden() {
-    box->ui->macWindowControlsLayout->removeWidget(closeWidget);
-    box->ui->macWindowControlsLayout->removeWidget(minWidget);
-    box->ui->macWindowControlsLayout->removeWidget(fsWidget);
+    if (closeWidget) {
+        box->ui->macWindowControlsLayout->removeWidget(closeWidget);
+        box->ui->macWindowControlsLayout->removeWidget(minWidget);
+        box->ui->macWindowControlsLayout->removeWidget(fsWidget);
 
-    closeWidget->deleteLater();
-    minWidget->deleteLater();
-    fsWidget->deleteLater();
+        closeWidget->deleteLater();
+        minWidget->deleteLater();
+        fsWidget->deleteLater();
+
+        closeWidget = nullptr;
+        minWidget = nullptr;
+        fsWidget = nullptr;
+    }
 }
 
 void CsdButtonBoxPrivate::windowShown() {
-    NSWindowStyleMask styleMask = NSWindowStyleMaskFullSizeContentView|NSWindowStyleMaskResizable|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
+    if (!closeWidget) {
+        NSWindowStyleMask styleMask = NSWindowStyleMaskFullSizeContentView|NSWindowStyleMaskResizable|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
 
-    NSButton* closeButton = [NSWindow standardWindowButton:NSWindowCloseButton forStyleMask:styleMask];
-    closeWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(closeButton)), box);
-    closeWidget->setFixedSize(14, 16);
-    box->ui->macWindowControlsLayout->addWidget(closeWidget);
+        NSButton* closeButton = [NSWindow standardWindowButton:NSWindowCloseButton forStyleMask:styleMask];
+        closeWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(closeButton)), box);
+        closeWidget->setFixedSize(14, 16);
+        box->ui->macWindowControlsLayout->addWidget(closeWidget);
 
-    NSButton* minButton = [NSWindow standardWindowButton:NSWindowMiniaturizeButton forStyleMask:styleMask];
-    minWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(minButton)), box);
-    minWidget->setFixedSize(14, 16);
-    box->ui->macWindowControlsLayout->addWidget(minWidget);
+        NSButton* minButton = [NSWindow standardWindowButton:NSWindowMiniaturizeButton forStyleMask:styleMask];
+        minWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(minButton)), box);
+        minWidget->setFixedSize(14, 16);
+        box->ui->macWindowControlsLayout->addWidget(minWidget);
 
-    NSButton* fsButton = [NSWindow standardWindowButton:NSWindowZoomButton forStyleMask:styleMask];
-    fsWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(fsButton)), box);
-    fsWidget->setFixedSize(14, 16);
-    box->ui->macWindowControlsLayout->addWidget(fsWidget);
+        NSButton* fsButton = [NSWindow standardWindowButton:NSWindowZoomButton forStyleMask:styleMask];
+        fsWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(fsButton)), box);
+        fsWidget->setFixedSize(14, 16);
+        box->ui->macWindowControlsLayout->addWidget(fsWidget);
+    }
 }
 
 void CsdButtonBox::setupMacOs() {
