@@ -75,13 +75,14 @@ async function lipoIfRequired(arm, system) {
 
         for (let args of installNameToolArgs) {
             await exec.exec("install_name_tool", args, {
-                ignoreReturnCode: true
+                ignoreReturnCode: true,
+                silent: !core.isDebug()
             });
         }
 
         await exec.exec("lipo", ["-create", arm, system, "-output", system], {
             ignoreReturnCode: true,
-            silent: true
+            silent: !core.isDebug()
         });
     }
 }
@@ -129,7 +130,7 @@ module.exports = async function(options) {
             }
 
             let armBrewOutput = "";
-            await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_big_sur", pk], {
+            await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_monterey", pk], {
                 listeners: {
                      stdout: data => {
                          armBrewOutput += data.toString();
