@@ -115,7 +115,7 @@ module.exports = async function(options) {
             console.log(`Processing package ${pk}`);
             //Install x86_64 version
             let x86install = exec.exec("brew", ["install", pk], {
-                silent: true
+                silent: false
             });
             await x86install;
 
