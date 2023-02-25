@@ -118,16 +118,12 @@ module.exports = async function(options) {
             console.log(`Processing package ${pk}`);
             //Install x86_64 version
             let x86install = exec.exec("brew", ["install", pk], {
-                silent: !core.isDebug()
+                silent: !core.isDebug(),
+                env: {
+                    "HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK": "1"
+                }
             });
             await x86install;
-
-            if (process.platform === "darwin" && pk === "qt") {
-                //HACK: Qt isn't being linked for some reason so link it manually here
-                await exec.exec("brew", ["link", pk], {
-                    silent: !core.isDebug()
-                });
-            }
 
             let armBrewOutput = "";
             await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_monterey", pk], {
