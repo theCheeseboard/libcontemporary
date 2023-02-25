@@ -120,6 +120,7 @@ module.exports = async function(options) {
             let x86install = exec.exec("brew", ["install", pk], {
                 silent: !core.isDebug(),
                 env: {
+                    ...process.env,
                     "HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK": "1"
                 }
             });
