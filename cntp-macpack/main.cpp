@@ -1,10 +1,13 @@
 #include "diskimage.h"
+#include "dsstore.h"
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QDir>
 #include <QDirIterator>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QPainter>
+#include <QSvgRenderer>
 #include <QTemporaryDir>
 
 void copyDir(QDir dir, QString to) {
@@ -38,6 +41,8 @@ void copyDir(QDir dir, QString to) {
         }
     }
 }
+
+#include <QImageWriter>
 
 int main(int argc, char** argv) {
     QCoreApplication a(argc, argv);
@@ -105,6 +110,11 @@ int main(int argc, char** argv) {
     }
     auto dmg = contemporaryJson.value("dmg").toObject();
 
+    auto windowWidth = dmg.value("width").toInt(600);
+    auto windowHeight = dmg.value("height").toInt(420);
+
+    QDir contemporaryJsonDir = QFileInfo(contemporaryJsonFilePath).dir();
+
     // Count the size of the application bundle
     qulonglong size = 0;
     QDirIterator iterator(bundle, QDirIterator::Subdirectories);
@@ -128,14 +138,41 @@ int main(int argc, char** argv) {
             return 1;
         }
 
-        temporaryImage.mountPath().mkdir(".background");
-        auto backgroundDir = QDir(temporaryImage.mountPath().absoluteFilePath(".background"));
+        // Render out the background
+        if (dmg.contains("background")) {
+            auto backgroundSourceFile = contemporaryJsonDir.absoluteFilePath(dmg.value("background").toString());
+            if (!QFile::exists(backgroundSourceFile)) {
+                eoutput << "error: background source file does not exist.\n";
+                return 1;
+            }
+
+            temporaryImage.mountPath().mkdir(".background");
+            auto backgroundDir = QDir(temporaryImage.mountPath().absoluteFilePath(".background"));
+
+            QImage image(windowWidth, windowHeight, QImage::Format_ARGB32);
+            image.setDotsPerMeterX(72);
+            image.setDotsPerMeterY(72);
+            QPainter painter(&image);
+            QSvgRenderer renderer(backgroundSourceFile);
+            renderer.render(&painter, QRectF(0, 0, windowWidth, windowHeight));
+            painter.end();
+
+            image.save(backgroundDir.absoluteFilePath("background.tiff"), "TIFF");
+        }
 
         // Copy the application bundle
         copyDir(bundle, temporaryImage.mountPath().absoluteFilePath(bundle.dirName()));
 
         // Create link to Applications folder
         QFile::link("/Applications", temporaryImage.mountPath().absoluteFilePath("Applications"));
+
+        // Create DS_Store file
+        DsStore dsStore;
+        dsStore.vSrn(1);
+        dsStore.moveIcon("Applications", 75, 75);
+        dsStore.moveIcon("theBeat Blueprint.app", 300, 100);
+        dsStore.write("/Users/victor/Documents/untitled folder/newdss");
+        dsStore.write(temporaryImage.mountPath().absoluteFilePath(".DS_Store"));
     }
 
     // Finalise the disk image

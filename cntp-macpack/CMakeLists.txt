@@ -1,17 +1,26 @@
 cmake_minimum_required(VERSION 3.21.0)
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 include(GNUInstallDirs)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Svg)
 
 set(SOURCES
     main.cpp
     diskimage.cpp
+    dsstore.cpp
+    dsstoreentry.cpp
+    utils.cpp
+
+    resources.qrc
 )
 
 set(HEADERS
     diskimage.h
+    dsstore.h
+    dsstoreentry.h
+    utils.h
 )
 
 add_executable(cntp-macpack ${SOURCES} ${HEADERS})
@@ -23,7 +32,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             INSTALL_RPATH_USE_LINK_PATH True)
 ENDIF()
 
-target_link_libraries(cntp-macpack libcontemporary Qt6::Core)
+target_link_libraries(cntp-macpack libcontemporary Qt::Core Qt::Svg)
 
 install(TARGETS cntp-macpack
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
