@@ -17,7 +17,7 @@ QByteArray Utils::toBinaryPlist(QVariantMap data) {
     writer.writeAttribute("version", "1.0");
     writer.writeStartElement("dict");
 
-    for (auto key : data.keys()) {
+    for (const auto &key : data.keys()) {
         auto value = data.value(key);
         writer.writeStartElement("key");
         writer.writeCharacters(key);

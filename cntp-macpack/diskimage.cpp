@@ -23,7 +23,6 @@ DiskImage::DiskImage(qulonglong size, QString name, QString output, QString file
     QProcess hdiutilProc;
     hdiutilProc.start("hdiutil", {"create", output, "-ov", "-fs", filesystem, "-size", QString::number(size), "-volname", name});
     hdiutilProc.waitForFinished(-1);
-    auto out = hdiutilProc.readAllStandardError();
     if (hdiutilProc.exitCode() != 0) {
         d->valid = false;
         return;
@@ -52,7 +51,6 @@ bool DiskImage::mount() {
     QProcess hdiutilProc;
     hdiutilProc.start("hdiutil", {"attach", d->diskImagePath, "-nobrowse", "-noverify", "-noautoopen"});
     hdiutilProc.waitForFinished(-1);
-    auto out = hdiutilProc.readAllStandardError();
     if (hdiutilProc.exitCode() != 0) {
         return false;
     }
