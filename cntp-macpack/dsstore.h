@@ -14,6 +14,8 @@ class DsStore : public QObject {
 
         void vSrn(int value);
         void moveIcon(QString file, int x, int y);
+        void setWindowGeometry(QRect geometry);
+        void setWindowProperties(int iconSize, QByteArray backgroundAlias);
 
     signals:
 

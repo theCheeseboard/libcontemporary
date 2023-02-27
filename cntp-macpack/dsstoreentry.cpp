@@ -52,6 +52,41 @@ DsStoreEntry DsStoreEntry::entryFor(QString filename, QString structureId, QVari
     } else if (structureId == "vSrn") {
         dataType = "long";
         Utils::write32BigEndian(blob, options.value("value").toInt());
+    } else if (structureId == "bwsp") {
+        dataType = "blob";
+        Utils::writeBinaryPlist(blob, {
+                                          {"ContainerShowSidebar", true                                                                                       },
+                                          {"ShowPathbar",          false                                                                                      },
+                                          {"ShowSidebar",          true                                                                                       },
+                                          {"ShowStatusBar",        false                                                                                      },
+                                          {"ShowTabView",          false                                                                                      },
+                                          {"ShowToolbar",          false                                                                                      },
+                                          {"SidebarWidth",         0                                                                                          },
+                                          {"WindowBounds",         QStringLiteral("{{%1,%2},{%3,%4}}")
+                                                               .arg(options.value("x").toInt())
+                                                               .arg(options.value("y").toInt())
+                                                               .arg(options.value("width").toInt())
+                                                               .arg(options.value("height").toInt())}
+        });
+    } else if (structureId == "icvp") {
+        dataType = "blob";
+        Utils::writeBinaryPlist(blob, {
+                                          {"backgroundType",       2                                      },
+                                          {"backgroundColorRed",   1.0                                    },
+                                          {"backgroundColorGreen", 1.0                                    },
+                                          {"backgroundColorBlue",  1.0                                    },
+                                          {"showIconPreview",      true                                   },
+                                          {"showItemInfo",         false                                  },
+                                          {"textSize",             12                                     },
+                                          {"iconSize",             options.value("iconSize").toInt()      },
+                                          {"viewOptionsVersion",   1                                      },
+                                          {"gridSpacing",          100.0                                  },
+                                          {"gridOffsetX",          0.0                                    },
+                                          {"gridOffsetY",          0.0                                    },
+                                          {"labelOnBottom",        true                                   },
+                                          {"arrangeBy",            "none"                                 },
+                                          {"backgroundImageAlias", options.value("rawAlias").toByteArray()}
+        });
     }
 
     blob.close();

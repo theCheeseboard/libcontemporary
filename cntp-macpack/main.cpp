@@ -42,8 +42,6 @@ void copyDir(QDir dir, QString to) {
     }
 }
 
-#include <QImageWriter>
-
 int main(int argc, char** argv) {
     QCoreApplication a(argc, argv);
 
@@ -110,7 +108,7 @@ int main(int argc, char** argv) {
     }
     auto dmg = contemporaryJson.value("dmg").toObject();
 
-    auto windowWidth = dmg.value("width").toInt(600);
+    auto windowWidth = dmg.value("width").toInt(500);
     auto windowHeight = dmg.value("height").toInt(420);
 
     QDir contemporaryJsonDir = QFileInfo(contemporaryJsonFilePath).dir();
@@ -139,6 +137,7 @@ int main(int argc, char** argv) {
         }
 
         // Render out the background
+        QByteArray bookmarkAlias;
         if (dmg.contains("background")) {
             auto backgroundSourceFile = contemporaryJsonDir.absoluteFilePath(dmg.value("background").toString());
             if (!QFile::exists(backgroundSourceFile)) {
@@ -168,6 +167,8 @@ int main(int argc, char** argv) {
 
         // Create DS_Store file
         DsStore dsStore;
+        dsStore.setWindowGeometry(QRect(100, 100, windowWidth, windowHeight));
+        dsStore.setWindowProperties(48, bookmarkAlias);
         dsStore.vSrn(1);
         dsStore.moveIcon("Applications", 75, 75);
         dsStore.moveIcon("theBeat Blueprint.app", 300, 100);

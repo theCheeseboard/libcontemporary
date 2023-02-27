@@ -4,6 +4,7 @@
 #include "utils.h"
 #include <QBuffer>
 #include <QFile>
+#include <QRect>
 #include <QVariantMap>
 
 struct DsStorePrivate {
@@ -63,5 +64,21 @@ void DsStore::moveIcon(QString file, int x, int y) {
     d->entries.append(DsStoreEntry::entryFor(file, "Iloc", {
                                                                {"x", x},
                                                                {"y", y}
+    }));
+}
+
+void DsStore::setWindowGeometry(QRect geometry) {
+    d->entries.append(DsStoreEntry::entryFor(".", "bwsp", {
+                                                              {"x",      geometry.x()          },
+                                                              {"y",      geometry.y()          },
+                                                              {"width",  geometry.width()      },
+                                                              {"height", geometry.height() + 22}
+    }));
+}
+
+void DsStore::setWindowProperties(int iconSize, QByteArray backgroundAlias) {
+    d->entries.append(DsStoreEntry::entryFor(".", "icvp", {
+                                                              {"iconSize", iconSize       },
+                                                              {"rawAlias", backgroundAlias},
     }));
 }
