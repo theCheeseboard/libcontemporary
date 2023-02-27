@@ -1,3 +1,4 @@
+#include "alias.h"
 #include "diskimage.h"
 #include "dsstore.h"
 #include <QCommandLineParser>
@@ -108,8 +109,15 @@ int main(int argc, char** argv) {
     }
     auto dmg = contemporaryJson.value("dmg").toObject();
 
-    auto windowWidth = dmg.value("width").toInt(500);
-    auto windowHeight = dmg.value("height").toInt(420);
+    if (!dmg.contains("title")) {
+        eoutput << "error: .contemporary.json file does not contain dmg title.\n";
+        return 1;
+    }
+
+    if (!dmg.contains("background")) {
+        eoutput << "error: .contemporary.json file does not contain dmg background file.\n";
+        return 1;
+    }
 
     QDir contemporaryJsonDir = QFileInfo(contemporaryJsonFilePath).dir();
 
@@ -125,7 +133,7 @@ int main(int argc, char** argv) {
 
     QTemporaryDir tempDir;
     {
-        auto temporaryImage = DiskImage(size, "Test Image", tempDir.filePath("testdmg.dmg"));
+        auto temporaryImage = DiskImage(size, dmg.value("title").toString(), tempDir.filePath("testdmg.dmg"));
         if (!temporaryImage.isValid()) {
             eoutput << "error: unable to create temporary disk image.\n";
             return 1;
@@ -137,27 +145,50 @@ int main(int argc, char** argv) {
         }
 
         // Render out the background
-        QByteArray bookmarkAlias;
-        if (dmg.contains("background")) {
-            auto backgroundSourceFile = contemporaryJsonDir.absoluteFilePath(dmg.value("background").toString());
-            if (!QFile::exists(backgroundSourceFile)) {
-                eoutput << "error: background source file does not exist.\n";
-                return 1;
-            }
 
-            temporaryImage.mountPath().mkdir(".background");
-            auto backgroundDir = QDir(temporaryImage.mountPath().absoluteFilePath(".background"));
-
-            QImage image(windowWidth, windowHeight, QImage::Format_ARGB32);
-            image.setDotsPerMeterX(72);
-            image.setDotsPerMeterY(72);
-            QPainter painter(&image);
-            QSvgRenderer renderer(backgroundSourceFile);
-            renderer.render(&painter, QRectF(0, 0, windowWidth, windowHeight));
-            painter.end();
-
-            image.save(backgroundDir.absoluteFilePath("background.tiff"), "TIFF");
+        auto backgroundSourceFile = contemporaryJsonDir.absoluteFilePath(dmg.value("background").toString());
+        if (!QFile::exists(backgroundSourceFile)) {
+            eoutput << "error: background source file does not exist.\n";
+            return 1;
         }
+
+        QSvgRenderer renderer(backgroundSourceFile);
+        if (!renderer.isValid()) {
+            eoutput << "error: unable to load background file.\n";
+            return 1;
+        }
+
+        if (!renderer.elementExists("applications")) {
+            eoutput << "error: background SVG does not contain an element with ID #applications.\n";
+            return 1;
+        }
+
+        if (!renderer.elementExists("app")) {
+            eoutput << "error: background SVG does not contain an element with ID #app.\n";
+            return 1;
+        }
+
+        temporaryImage.mountPath().mkdir(".background");
+        auto backgroundDir = QDir(temporaryImage.mountPath().absoluteFilePath(".background"));
+
+        QSize imageSize = renderer.defaultSize();
+        double qualityScale = 2;
+
+        const double dpiToDpm = 39.37;
+
+        auto finderScale = imageSize.width() / renderer.viewBoxF().width();
+
+        auto applicationsLinkLocation = (renderer.transformForElement("applications").mapRect(renderer.boundsOnElement("applications")).center().toPoint() * finderScale) - QPoint(0, 10);
+        auto appLocation = (renderer.transformForElement("app").mapRect(renderer.boundsOnElement("app")).center().toPoint() * finderScale) - QPoint(0, 10);
+
+        QImage image(imageSize * qualityScale, QImage::Format_ARGB32);
+        image.setDotsPerMeterX(72 * dpiToDpm * qualityScale);
+        image.setDotsPerMeterY(72 * dpiToDpm * qualityScale);
+        QPainter painter(&image);
+        renderer.render(&painter, QRectF(QPointF(0, 0), imageSize * qualityScale));
+        painter.end();
+
+        image.save(backgroundDir.absoluteFilePath("background.tiff"), "TIFF");
 
         // Copy the application bundle
         copyDir(bundle, temporaryImage.mountPath().absoluteFilePath(bundle.dirName()));
@@ -167,12 +198,11 @@ int main(int argc, char** argv) {
 
         // Create DS_Store file
         DsStore dsStore;
-        dsStore.setWindowGeometry(QRect(100, 100, windowWidth, windowHeight));
-        dsStore.setWindowProperties(48, bookmarkAlias);
+        dsStore.setWindowGeometry(QRect(QPoint(100, 100), imageSize));
+        dsStore.setWindowProperties(48, Alias::aliasFor(backgroundDir.absoluteFilePath("background.tiff")));
         dsStore.vSrn(1);
-        dsStore.moveIcon("Applications", 75, 75);
-        dsStore.moveIcon("theBeat Blueprint.app", 300, 100);
-        dsStore.write("/Users/victor/Documents/untitled folder/newdss");
+        dsStore.moveIcon("Applications", applicationsLinkLocation.x(), applicationsLinkLocation.y());
+        dsStore.moveIcon(bundle.dirName(), appLocation.x(), appLocation.y());
         dsStore.write(temporaryImage.mountPath().absoluteFilePath(".DS_Store"));
     }
 
@@ -181,6 +211,6 @@ int main(int argc, char** argv) {
         eoutput << "error: unable to create compressed image at the output.\n";
         return 1;
     }
-    output << "Created deployable disk image at " << dmgOut;
+    output << "Created deployable disk image at " << dmgOut << "\n";
     return 0;
 }

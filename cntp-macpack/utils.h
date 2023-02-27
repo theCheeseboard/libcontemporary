@@ -5,9 +5,13 @@
 #include <QJsonObject>
 
 namespace Utils {
-    void write32BigEndian(QBuffer& buffer, quint32 value);
+    QByteArray to8(quint8 value);
+    QByteArray to16BigEndian(quint16 value);
+    QByteArray to16SignedBigEndian(qint16 value);
+    QByteArray to32BigEndian(quint32 value);
     void writeBinaryPlist(QBuffer& buffer, QVariantMap data);
     QByteArray toBinaryPlist(QVariantMap data);
+    QByteArray padBytes(QByteArray data, int length);
 }; // namespace Utils
 
 #endif // UTILS_H

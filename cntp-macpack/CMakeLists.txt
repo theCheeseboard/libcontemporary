@@ -12,6 +12,7 @@ set(SOURCES
     dsstore.cpp
     dsstoreentry.cpp
     utils.cpp
+    alias.cpp
 
     resources.qrc
 )
@@ -21,6 +22,7 @@ set(HEADERS
     dsstore.h
     dsstoreentry.h
     utils.h
+    alias.h
 )
 
 add_executable(cntp-macpack ${SOURCES} ${HEADERS})

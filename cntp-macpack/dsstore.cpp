@@ -26,8 +26,8 @@ void DsStore::write(QString file) {
     auto currentPos = 0;
     auto P = 0;
     auto count = d->entries.length();
-    Utils::write32BigEndian(modified, P);
-    Utils::write32BigEndian(modified, count);
+    modified.write(Utils::to32BigEndian(P));
+    modified.write(Utils::to32BigEndian(count));
 
     for (auto entry : d->entries) {
         modified.write(entry.buffer());
@@ -43,7 +43,7 @@ void DsStore::write(QString file) {
     QBuffer buf(&dsstoreFileContents);
     buf.open(QBuffer::ReadWrite | QBuffer::Append);
     buf.seek(76);
-    Utils::write32BigEndian(buf, d->entries.length());
+    buf.write(Utils::to32BigEndian(d->entries.length()));
     buf.seek(4100);
     buf.write(modified.buffer());
     buf.close();

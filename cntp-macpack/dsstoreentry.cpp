@@ -31,27 +31,27 @@ DsStoreEntry DsStoreEntry::entryFor(QString filename, QString structureId, QVari
     if (structureId == "BKGD") {
         dataType = "blob";
 
-        Utils::write32BigEndian(blob, 8);
+        blob.write(Utils::to32BigEndian(8));
 
         if (options.contains("pictureByteLength")) {
             blob.write(QStringLiteral("PctB").toLatin1());
 
-            Utils::write32BigEndian(blob, options.value("pictureByteLength").toInt());
+            blob.write(Utils::to32BigEndian(options.value("pictureByteLength").toInt()));
         } else {
             blob.write(QStringLiteral("DefB").toLatin1());
         }
     } else if (structureId == "Iloc") {
         dataType = "blob";
 
-        Utils::write32BigEndian(blob, 12);
+        blob.write(Utils::to32BigEndian(12));
 
-        Utils::write32BigEndian(blob, options.value("x").toInt());
-        Utils::write32BigEndian(blob, options.value("y").toInt());
+        blob.write(Utils::to32BigEndian(options.value("x").toInt()));
+        blob.write(Utils::to32BigEndian(options.value("y").toInt()));
         const char* sentinel = "\xFF\xFF\xFF\x00";
         blob.write(sentinel, 4);
     } else if (structureId == "vSrn") {
         dataType = "long";
-        Utils::write32BigEndian(blob, options.value("value").toInt());
+        blob.write(Utils::to32BigEndian(options.value("value").toInt()));
     } else if (structureId == "bwsp") {
         dataType = "blob";
         Utils::writeBinaryPlist(blob, {
@@ -121,7 +121,7 @@ DsStoreEntry::DsStoreEntry(QString filename, QString structureId, QString dataTy
 
     QBuffer buf(&d->buffer);
     buf.open(QBuffer::WriteOnly);
-    Utils::write32BigEndian(buf, filenameLength);
+    buf.write(Utils::to32BigEndian(filenameLength));
     buf.write(converter.encode(filename));
     buf.write(structureId.toLatin1());
     buf.write(dataType.toLatin1());

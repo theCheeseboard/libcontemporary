@@ -6,11 +6,6 @@
 #include <QXmlStreamWriter>
 #include <QtEndian>
 
-void Utils::write32BigEndian(QBuffer& buffer, quint32 value) {
-    auto be = qToBigEndian(static_cast<quint32>(value));
-    buffer.write(reinterpret_cast<char*>(&be), sizeof(be));
-}
-
 QByteArray Utils::toBinaryPlist(QVariantMap data) {
     QBuffer payload;
     payload.open(QBuffer::WriteOnly);
@@ -76,6 +71,29 @@ QByteArray Utils::toBinaryPlist(QVariantMap data) {
 
 void Utils::writeBinaryPlist(QBuffer& buffer, QVariantMap data) {
     auto plistContents = toBinaryPlist(data);
-    write32BigEndian(buffer, plistContents.length());
+    buffer.write(to32BigEndian(plistContents.length()));
     buffer.write(plistContents);
+}
+
+QByteArray Utils::to32BigEndian(quint32 value) {
+    auto be = qToBigEndian(value);
+    return QByteArray(reinterpret_cast<const char*>(&be), sizeof(be));
+}
+
+QByteArray Utils::to16BigEndian(quint16 value) {
+    auto be = qToBigEndian(value);
+    return QByteArray(reinterpret_cast<const char*>(&be), sizeof(be));
+}
+
+QByteArray Utils::to8(quint8 value) {
+    return QByteArray(reinterpret_cast<const char*>(&value), sizeof(value));
+}
+
+QByteArray Utils::padBytes(QByteArray data, int length) {
+    return data.append(QByteArray(length - data.length(), '\0'));
+}
+
+QByteArray Utils::to16SignedBigEndian(qint16 value) {
+    auto be = qToBigEndian(value);
+    return QByteArray(reinterpret_cast<const char*>(&be), sizeof(be));
 }
