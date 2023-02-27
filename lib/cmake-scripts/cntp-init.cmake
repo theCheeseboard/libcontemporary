@@ -23,6 +23,11 @@ function(cntp_init target cxx-standard)
         add_compile_definitions(T_APPMETA_DESKTOP_ID="${DESKTOPID}")
     endif()
 
+    cntp_dotcontemporary_path(${target} DOTCONTEMPORARY_FILE)
+    if(NOT ${DOTCONTEMPORARY_FILE} STREQUAL "DOTCONTEMPORARY_FILE-NOTFOUND")
+        configure_file(${DOTCONTEMPORARY_FILE} ".contemporary.json" COPYONLY)
+    endif()
+
     cntp_enable_coroutines(${target})
 endfunction()
 

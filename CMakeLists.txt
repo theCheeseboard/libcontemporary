@@ -12,6 +12,7 @@ add_subdirectory(cntp-skel)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     add_subdirectory(cntp-macdeploy)
+    add_subdirectory(cntp-macpack)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
