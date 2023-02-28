@@ -11,6 +11,8 @@
 #include <QSvgRenderer>
 #include <QTemporaryDir>
 
+#include <AppKit/AppKit.h>
+
 void copyDir(QDir dir, QString to) {
     QDir toDir(to);
     QDir::root().mkpath(toDir.absolutePath());
@@ -49,10 +51,6 @@ int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.addPositionalArgument("bundle", "Application bundle to package");
     parser.addPositionalArgument("output", "Output path of the final DMG");
-    parser.addOption({
-        {"c", "contemporary-json"},
-        "Path to .contemporary.json file (optional)", "contemporary-json"
-    });
     QCommandLineOption helpOption = parser.addHelpOption();
     parser.parse(a.arguments());
 
@@ -76,51 +74,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    QString contemporaryJsonFilePath;
-    if (parser.isSet("contemporary-json")) {
-        contemporaryJsonFilePath = parser.value("contemporary-json");
-    } else {
-        // Attempt to find .contemporary.json by recursively searching the bundle's parent folders
-        auto dir = QFileInfo(bundle.absolutePath()).dir();
-        while (!QFile::exists(dir.absoluteFilePath(".contemporary.json")) && !dir.isRoot()) {
-            dir = QFileInfo(dir.absolutePath()).dir();
-        }
-        contemporaryJsonFilePath = dir.absoluteFilePath(".contemporary.json");
-    }
-
-    auto contemporaryJsonFile = QFile(contemporaryJsonFilePath);
-    if (!contemporaryJsonFile.exists()) {
-        eoutput << "error: unable to find .contemporary.json file.\n";
-        return 1;
-    }
-
-    contemporaryJsonFile.open(QFile::ReadOnly);
-    QJsonParseError parseError;
-    auto contemporaryJson = QJsonDocument::fromJson(contemporaryJsonFile.readAll(), &parseError).object();
-    contemporaryJsonFile.close();
-    if (parseError.error != QJsonParseError::NoError) {
-        eoutput << "error: unable to parse .contemporary.json file.\n";
-        return 1;
-    }
-
-    if (!contemporaryJson.contains("dmg")) {
-        eoutput << "error: .contemporary.json file does not contain dmg section.\n";
-        return 1;
-    }
-    auto dmg = contemporaryJson.value("dmg").toObject();
-
-    if (!dmg.contains("title")) {
-        eoutput << "error: .contemporary.json file does not contain dmg title.\n";
-        return 1;
-    }
-
-    if (!dmg.contains("background")) {
-        eoutput << "error: .contemporary.json file does not contain dmg background file.\n";
-        return 1;
-    }
-
-    QDir contemporaryJsonDir = QFileInfo(contemporaryJsonFilePath).dir();
-
     // Count the size of the application bundle
     qulonglong size = 0;
     QDirIterator iterator(bundle, QDirIterator::Subdirectories);
@@ -131,9 +84,22 @@ int main(int argc, char** argv) {
         }
     }
 
+    if (size < 536870912) {
+        size = 536870912;
+    }
+
     QTemporaryDir tempDir;
     {
-        auto temporaryImage = DiskImage(size, dmg.value("title").toString(), tempDir.filePath("testdmg.dmg"));
+        auto infoPlistPath = bundle.absoluteFilePath("Contents/Info.plist");
+        if (!QFile::exists(infoPlistPath)) {
+            eoutput << "error: Info.plist file cannot be found.\n";
+            return 1;
+        }
+
+        auto infoPlist = [NSDictionary dictionaryWithContentsOfFile:infoPlistPath.toNSString()];
+        NSString *bundleExecutable = [infoPlist valueForKey:@"CFBundleExecutable"];
+
+        auto temporaryImage = DiskImage(size, QString::fromNSString(bundleExecutable), tempDir.filePath("testdmg.dmg"));
         if (!temporaryImage.isValid()) {
             eoutput << "error: unable to create temporary disk image.\n";
             return 1;
@@ -145,11 +111,17 @@ int main(int argc, char** argv) {
         }
 
         // Render out the background
+        auto dmgDir = QDir(bundle.absoluteFilePath("Contents/Resources/cntp/dmg"));
+        QString backgroundSourceFile;
 
-        auto backgroundSourceFile = contemporaryJsonDir.absoluteFilePath(dmg.value("background").toString());
-        if (!QFile::exists(backgroundSourceFile)) {
+        for (auto entry : dmgDir.entryInfoList()) {
+            if (entry.suffix() == "svg" && entry.isFile()) {
+                backgroundSourceFile = entry.absoluteFilePath();
+            }
+        }
+
+        if (backgroundSourceFile.isEmpty()) {
             eoutput << "error: background source file does not exist.\n";
-            return 1;
         }
 
         QSvgRenderer renderer(backgroundSourceFile);

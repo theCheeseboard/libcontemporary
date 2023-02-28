@@ -7,7 +7,7 @@ include(GNUInstallDirs)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Svg)
 
 set(SOURCES
-    main.cpp
+    main.mm
     diskimage.cpp
     dsstore.cpp
     dsstoreentry.cpp
