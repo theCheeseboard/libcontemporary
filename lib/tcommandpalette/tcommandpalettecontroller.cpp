@@ -30,6 +30,7 @@ tCommandPaletteController::tCommandPaletteController(QWidget* parent) :
     d->commandPaletteAction = new QAction();
     d->commandPaletteAction->setText(tr("Command Palette"));
     d->commandPaletteAction->setShortcut(QKeySequence(Qt::Key_Shift, Qt::Key_Shift));
+    d->commandPaletteAction->setMenuRole(QAction::ApplicationSpecificRole);
     connect(d->commandPaletteAction, &QAction::triggered, this, &tCommandPaletteController::activate);
 
     d->allScope = new tCommandPaletteAllScope(this);
