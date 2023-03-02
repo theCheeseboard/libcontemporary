@@ -51,6 +51,7 @@ int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.addPositionalArgument("bundle", "Application bundle to package");
     parser.addPositionalArgument("output", "Output path of the final DMG");
+    parser.addOption({{"u", "uncompressed"}, "Generate an uncompressed image"});
     QCommandLineOption helpOption = parser.addHelpOption();
     parser.parse(a.arguments());
 
@@ -179,10 +180,15 @@ int main(int argc, char** argv) {
     }
 
     // Finalise the disk image
-    if (!DiskImage::convert(tempDir.filePath("testdmg.dmg"), dmgOut)) {
-        eoutput << "error: unable to create compressed image at the output.\n";
-        return 1;
+    if (parser.isSet("uncompressed")) {
+        QFile::copy(tempDir.filePath("testdmg.dmg"), dmgOut);
+    } else {
+        if (!DiskImage::convert(tempDir.filePath("testdmg.dmg"), dmgOut)) {
+            eoutput << "error: unable to create compressed image at the output.\n";
+            return 1;
+        }
     }
+
     output << "Created deployable disk image at " << dmgOut << "\n";
     return 0;
 }
