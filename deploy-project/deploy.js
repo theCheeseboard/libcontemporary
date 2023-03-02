@@ -40,7 +40,7 @@ module.exports = async options => {
 
             console.log("Creating disk image...");
             let output = `${process.env["HOME"]}/${executableName}.dmg`;
-            await exec.exec("cntp-macpack", [target, output]);
+            await exec.exec("cntp-macpack", [target, output, "-u"]);
 
             core.setOutput("package", output);
             break;
