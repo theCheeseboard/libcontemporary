@@ -8,7 +8,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(GNUInstallDirs)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Network)
 
 set(SOURCES
         main.cpp
@@ -30,7 +30,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             INSTALL_RPATH_USE_LINK_PATH True)
 ENDIF()
 
-target_link_libraries(cntp-macdeploy libcontemporary Qt6::Network)
+target_link_libraries(cntp-macdeploy libcontemporary Qt::Network)
 
 install(TARGETS cntp-macdeploy
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
