@@ -55,11 +55,13 @@ bool DiskImage::mount() {
     hdiutilProc.start("hdiutil", {"attach", d->diskImagePath, "-nobrowse", "-noverify", "-noautoopen"});
     hdiutilProc.waitForFinished(-1);
     if (hdiutilProc.exitCode() != 0) {
+        QTextStream(stderr) << "Unable to mount the disk image.\n";
         return false;
     }
 
     auto matches = DiskImagePrivate::mountPathSearch.match(QString(hdiutilProc.readAllStandardOutput()));
     if (!matches.hasMatch()) {
+        QTextStream(stderr) << "Unable to locate the mount point of the disk image.\n";
         return false;
     }
 
@@ -78,12 +80,24 @@ void DiskImage::unmount() {
         hdiutilProc.start("hdiutil", {"detach", d->mountPath});
         hdiutilProc.waitForFinished(-1);
         if (hdiutilProc.exitCode() != 16) {
+            d->mounted = false;
             return;
         }
 
         QThread::sleep(pow(2, attempts));
         attempts++;
     } while (attempts < 8);
+
+    // Try one more time
+    QProcess hdiutilProc;
+    hdiutilProc.start("hdiutil", {"detach", d->mountPath, "-force"});
+    hdiutilProc.waitForFinished(-1);
+    if (hdiutilProc.exitCode() != 16) {
+        d->mounted = false;
+        return;
+    }
+
+    QTextStream(stderr) << "Unable to detach the disk image. The disk image may not be created correctly.\n";
 }
 
 QDir DiskImage::mountPath() {
