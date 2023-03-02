@@ -38,6 +38,9 @@ bool DiskImage::convert(QString input, QString output, QString format) {
     QProcess hdiutilProc;
     hdiutilProc.start("hdiutil", {"convert", input, "-ov", "-format", format, "-imagekey", "zlib-level=9", "-o", output});
     hdiutilProc.waitForFinished(-1);
+    if (hdiutilProc.exitCode() != 0) {
+        QTextStream(stderr) << hdiutilProc.readAllStandardError();
+    }
     return hdiutilProc.exitCode() == 0;
 }
 
