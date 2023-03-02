@@ -8,6 +8,7 @@ find_package(QT REQUIRED NAMES Qt6)
 add_subdirectory(lib)
 add_subdirectory(cntp-trcommon)
 add_subdirectory(cntp-trdesktop)
+add_subdirectory(cntp-trappstream)
 add_subdirectory(cntp-appicontool)
 add_subdirectory(cntp-skel)
 
@@ -17,8 +18,4 @@ ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_subdirectory(cntp-windeploy)
-ENDIF()
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    add_subdirectory(cntp-trappstream)
 ENDIF()

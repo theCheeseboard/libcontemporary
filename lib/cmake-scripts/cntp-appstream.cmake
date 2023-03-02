@@ -14,28 +14,26 @@ function(cntp_target_install_appstream_metainfo_file target translationfile)
 endfunction()
 
 function(cntp_target_translate_appstream_metainfo_file target translationfile)
-    IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-        find_path(CNTPTRAPPSTREAM_PATH cntp-trappstream)
-        IF(${CNTPTRAPPSTREAM_PATH} STREQUAL "CNTPTRAPPSTREAM_PATH-NOTFOUND")
-            message(FATAL_ERROR "cntp-trappstream executable not available, appstream metainfo file translations cannot be created")
-        ELSE()
-            message("-- Finding appstream metainfo files to generate translations for (target ${target})")
-            get_filename_component(translationfile_noext ${translationfile} NAME_WLE)
+    find_path(CNTPTRAPPSTREAM_PATH cntp-trappstream)
+    IF(${CNTPTRAPPSTREAM_PATH} STREQUAL "CNTPTRAPPSTREAM_PATH-NOTFOUND")
+        message(FATAL_ERROR "cntp-trappstream executable not available, appstream metainfo file translations cannot be created")
+    ELSE()
+        message("-- Finding appstream metainfo files to generate translations for (target ${target})")
+        get_filename_component(translationfile_noext ${translationfile} NAME_WLE)
 
-            add_custom_target(${target}_CNTPAPPSTREAMTRANSLATIONS_${translationfile_noext}
-                    COMMAND ${CNTPTRAPPSTREAM_PATH}/cntp-trappstream --json-generate --json-directory ${CMAKE_CURRENT_SOURCE_DIR}/translations/appstream/${translationfile_noext}/ --metainfo-template ${translationfile}
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                    COMMENT "Generating appstream metainfo translation files"
-                    VERBATIM)
-            add_dependencies(${target} ${target}_CNTPAPPSTREAMTRANSLATIONS_${translationfile_noext})
+        add_custom_target(${target}_CNTPAPPSTREAMTRANSLATIONS_${translationfile_noext}
+                COMMAND ${CNTPTRAPPSTREAM_PATH}/cntp-trappstream --json-generate --json-directory ${CMAKE_CURRENT_SOURCE_DIR}/translations/appstream/${translationfile_noext}/ --metainfo-template ${translationfile}
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                COMMENT "Generating appstream metainfo translation files"
+                VERBATIM)
+        add_dependencies(${target} ${target}_CNTPAPPSTREAMTRANSLATIONS_${translationfile_noext})
 
-            add_custom_target(${target}_CNTPAPPSTREAMTRANSLATIONMERGE_${translationfile_noext}
-                    COMMAND ${CNTPTRAPPSTREAM_PATH}/cntp-trappstream --metainfo-generate --json-directory ${CMAKE_CURRENT_SOURCE_DIR}/translations/appstream/${translationfile_noext}/ --metainfo-template ${translationfile} --metainfo-output ${CMAKE_CURRENT_BINARY_DIR}/${translationfile_noext}.xml
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                    COMMENT "Generating appstream metainfo file from translations"
-                    VERBATIM)
-            add_dependencies(${target} ${target}_CNTPAPPSTREAMTRANSLATIONMERGE_${translationfile_noext})
-        ENDIF()
+        add_custom_target(${target}_CNTPAPPSTREAMTRANSLATIONMERGE_${translationfile_noext}
+                COMMAND ${CNTPTRAPPSTREAM_PATH}/cntp-trappstream --metainfo-generate --json-directory ${CMAKE_CURRENT_SOURCE_DIR}/translations/appstream/${translationfile_noext}/ --metainfo-template ${translationfile} --metainfo-output ${CMAKE_CURRENT_BINARY_DIR}/${translationfile_noext}.xml
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                COMMENT "Generating appstream metainfo file from translations"
+                VERBATIM)
+        add_dependencies(${target} ${target}_CNTPAPPSTREAMTRANSLATIONMERGE_${translationfile_noext})
     ENDIF()
 endfunction()
 
