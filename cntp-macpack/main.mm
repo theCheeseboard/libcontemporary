@@ -85,8 +85,8 @@ int main(int argc, char** argv) {
         }
     }
 
-    if (size < 536870912) {
-        size = 536870912;
+    if (size < 52428800) {
+        size = 52428800;
     }
 
     QTemporaryDir tempDir;
