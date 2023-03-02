@@ -4,27 +4,8 @@ const io = require("@actions/io");
 const process = require("process");
 const exec = require("@actions/exec");
 const fs = require("fs/promises")
-const ProjectConfig = require("../project-config");
-
-function createDmg(properties) {
-    return new Promise((res, rej) => {
-        const appdmg = require("appdmg");
-        let dmg = appdmg(properties);
-
-        dmg.on('finish', res);
-        dmg.on('error', rej);
-        dmg.on('progress', info => {
-            if (info.type === "step-begin") {
-                console.log(`[ ${info.current}/${info.total} ] ${info.title}`);
-            } else {
-                console.log(`[ ${info.current}/${info.total} ] ${info.status}`);
-            }
-        });
-    });
-}
 
 module.exports = async options => {
-    let config = await ProjectConfig.getProjectConfig(".");
     let outputDir = path.resolve(".", "build", options.subdir);
 
     let foundFiles = (await fs.readdir(outputDir)).filter(filename => {
@@ -58,38 +39,8 @@ module.exports = async options => {
             await exec.exec("cntp-macdeploy", [target]);
 
             console.log("Creating disk image...");
-
             let output = `${process.env["HOME"]}/${executableName}.dmg`;
-            await createDmg({
-                target: output,
-                basepath: path.resolve("."),
-                specification: {
-                    title: executableName,
-                    icon: config.value("dmg")?.icon,
-                    background: config.value("dmg")?.background,
-                    "icon-size": 48,
-                    window: {
-                        size: {
-                            width: 600,
-                            height: 420
-                        }
-                    },
-                    contents: [
-                        {
-                            x: 125,
-                            y: 225,
-                            type: "file",
-                            path: target
-                        },
-                        {
-                            x: 470,
-                            y: 225,
-                            type: "link",
-                            path: "/Applications"
-                        }
-                    ]
-                }
-            });
+            await exec.exec("cntp-macpack", [target, output]);
 
             core.setOutput("package", output);
             break;
@@ -104,8 +55,4 @@ module.exports = async options => {
             break;
         }
     }
-
-    // await exec.exec(`cmake`, ["--build", buildDir]);
-    // await exec.exec(`cmake`, ["--install", buildDir]);
-
 }
