@@ -6,7 +6,9 @@ project(libcontemporary VERSION 1.0.0 LANGUAGES CXX)
 find_package(QT REQUIRED NAMES Qt6)
 
 add_subdirectory(lib)
+add_subdirectory(cntp-trcommon)
 add_subdirectory(cntp-trdesktop)
+add_subdirectory(cntp-trappstream)
 add_subdirectory(cntp-appicontool)
 add_subdirectory(cntp-skel)
 
