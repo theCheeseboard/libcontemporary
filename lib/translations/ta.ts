@@ -115,12 +115,8 @@
     </message>
     <message>
         <location filename="../tapplication.cpp" line="134"/>
-        <source>Settings...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Preferences...</source>
-        <translation type="vanished">விருப்பத்தேர்வுகள்</translation>
+        <translation>விருப்பத்தேர்வுகள்</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="135"/>
@@ -346,19 +342,19 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="687"/>
+        <location filename="../tapplication.cpp" line="690"/>
         <source>Copyright © %1.</source>
         <translation>பதிப்புரிமை © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="660"/>
-        <location filename="../tapplication.cpp" line="663"/>
-        <location filename="../tapplication.cpp" line="666"/>
-        <location filename="../tapplication.cpp" line="669"/>
-        <location filename="../tapplication.cpp" line="672"/>
-        <location filename="../tapplication.cpp" line="675"/>
-        <location filename="../tapplication.cpp" line="678"/>
-        <location filename="../tapplication.cpp" line="681"/>
+        <location filename="../tapplication.cpp" line="662"/>
+        <location filename="../tapplication.cpp" line="665"/>
+        <location filename="../tapplication.cpp" line="668"/>
+        <location filename="../tapplication.cpp" line="671"/>
+        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>%1இன் விதிமுறைகளின் கீழ் உரிமம் பெற்றது</translation>
     </message>
@@ -403,42 +399,42 @@
         <translation>இயங்குதளம்</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="660"/>
+        <location filename="../tapplication.cpp" line="662"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU General Public License, பதிப்பு 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="663"/>
+        <location filename="../tapplication.cpp" line="665"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU General Public License, பதிப்பு 3, அல்லது பிறகுள்ளவை</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="666"/>
+        <location filename="../tapplication.cpp" line="668"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU General Public License, பதிப்பு 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="669"/>
+        <location filename="../tapplication.cpp" line="671"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU General Public License, பதிப்பு 2, அல்லது பிறகுள்ளவை</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="672"/>
+        <location filename="../tapplication.cpp" line="674"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Lesser General Public License, பதிப்பு 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="675"/>
+        <location filename="../tapplication.cpp" line="677"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Lesser General Public License, பதிப்பு 3, அல்லது பிறகுள்ளவை</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="678"/>
+        <location filename="../tapplication.cpp" line="680"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Lesser General Public License, பதிப்பு 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="681"/>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Lesser General Public License, பதிப்பு 2.1, அல்லது பிறகுள்ளவை</translation>
     </message>
