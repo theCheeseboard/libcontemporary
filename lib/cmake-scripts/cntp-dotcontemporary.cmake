@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_dotcontemporary_path targetName outputVar)
     set(options REQUIRED)
     cmake_parse_arguments(DOTCONTEMPORARY_PATH "${options}" "" "" ${ARGN})

@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_mac_icon targetName)
     set(singleValueArgs ICON BLUEPRINT_ICON)
     cmake_parse_arguments(MAC_ICON "" "${singleValueArgs}" "" ${ARGN})

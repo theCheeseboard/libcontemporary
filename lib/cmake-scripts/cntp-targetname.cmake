@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_target_name targetName targetReadableName)
     IF(BLUEPRINT)
         set(TARGET_READABLE_NAME "${targetReadableName} Blueprint")

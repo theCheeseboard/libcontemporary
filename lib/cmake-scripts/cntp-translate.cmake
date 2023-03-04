@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_translate target)
     set(oneValueArgs OUTPUT)
     cmake_parse_arguments(TRANSLATE "" "${oneValueArgs}" "" ${ARGN})

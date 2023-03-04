@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_defaults_file targetName)
     set(multiValueArgs DEFAULTS_FILE)
     cmake_parse_arguments(DEFAULTS "" "" "${multiValueArgs}" ${ARGN})

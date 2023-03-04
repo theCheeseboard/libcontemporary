@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_generate_translations target)
     message("-- Finding translation files to generate translations for (target ${target})")
 

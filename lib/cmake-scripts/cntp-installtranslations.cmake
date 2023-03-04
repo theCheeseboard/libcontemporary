@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_install_translations target)
     include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/cntp-sharedir.cmake)
     cntp_get_target_share_dir(SHARE_DIR ${target})

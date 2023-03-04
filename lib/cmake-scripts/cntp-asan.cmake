@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_asan target)
     if(CNTP_ASAN)
         if(MSVC)

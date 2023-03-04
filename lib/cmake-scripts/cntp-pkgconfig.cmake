@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_find_pkgconfig targetName packageName)
     set(options REQUIRED FAIL_ON_ANDROID)
     set(multiValueArgs WIN_FALLBACK_DLL WIN_FALLBACK_IMPLIB WIN_FALLBACK_INCLUDE)

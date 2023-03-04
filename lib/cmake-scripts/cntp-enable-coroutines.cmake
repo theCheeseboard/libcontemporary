@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_enable_coroutines target)
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU") # GCC
         target_compile_options(${target} PUBLIC "-fcoroutines")

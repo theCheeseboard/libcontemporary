@@ -1,7 +1,8 @@
+include_guard()
+
 function(cntp_app_icon targetName)
     set(singleValueArgs BASEICON BASEICON_MAC)
     cmake_parse_arguments(APP_ICON "" "${singleValueArgs}" "" ${ARGN})
-
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
         return()
@@ -49,6 +50,8 @@ function(cntp_app_icon targetName)
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
     ENDIF()
+
+    cntp_find_tool(CNTPAPPICONTOOL_PATH cntp-appicontool)
 
     add_custom_command(OUTPUT ${ICONTOOL_OUTPUTS}
         COMMAND ${CNTPAPPICONTOOL_PATH} ARGS ${ICONTOOL_ARGS}

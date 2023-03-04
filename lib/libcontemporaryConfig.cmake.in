@@ -6,8 +6,6 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include("${CMAKE_CURRENT_LIST_DIR}/libcontemporaryTargets.cmake")
 
-find_program(CNTPAPPICONTOOL_PATH cntp-appicontool REQUIRED)
-
 file(GLOB EXTRA_FUNCTIONS "${CMAKE_CURRENT_LIST_DIR}/cmake-scripts/*.cmake")
 foreach(f ${EXTRA_FUNCTIONS})
     include(${f})

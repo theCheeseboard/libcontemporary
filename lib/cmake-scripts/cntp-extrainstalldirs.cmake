@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_define_build_dirs)
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")

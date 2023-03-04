@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_init target cxx-standard)
     option(CNTP_ASAN "Enable the use of AddressSanitizer" OFF)
 

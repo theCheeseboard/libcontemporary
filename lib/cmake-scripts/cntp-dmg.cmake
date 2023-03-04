@@ -1,3 +1,5 @@
+include_guard()
+
 function(cntp_dmg target svg)
     get_target_property(INSTALL_TARGET ${target} CNTP_PARENT_TARGET)
     if(NOT INSTALL_TARGET STREQUAL "INSTALL_TARGET-NOTFOUND")
