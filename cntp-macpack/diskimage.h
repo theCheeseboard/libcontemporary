@@ -9,6 +9,7 @@ class DiskImage : public QObject {
         Q_OBJECT
     public:
         explicit DiskImage(qulonglong size, QString name, QString output, QString filesystem = "HFS+", QObject* parent = nullptr);
+        explicit DiskImage(QString name);
         ~DiskImage();
 
         static bool convert(QString input, QString output, QString format = "UDZO");

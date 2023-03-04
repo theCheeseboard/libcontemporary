@@ -180,14 +180,19 @@ int main(int argc, char** argv) {
     }
 
     // Finalise the disk image
-    if (parser.isSet("uncompressed")) {
-        QFile::copy(tempDir.filePath("testdmg.dmg"), dmgOut);
-    } else {
-        if (!DiskImage::convert(tempDir.filePath("testdmg.dmg"), dmgOut)) {
+//    if (parser.isSet("uncompressed")) {
+        QFile::copy(tempDir.filePath("testdmg.dmg"), tempDir.filePath("stagingdmg.dmg"));
+
+        DiskImage staging(tempDir.filePath("stagingdmg.dmg"));
+        staging.mount();
+        staging.unmount();
+
+//    } else {
+        if (!DiskImage::convert(tempDir.filePath("stagingdmg.dmg"), dmgOut)) {
             eoutput << "error: unable to create compressed image at the output.\n";
             return 1;
         }
-    }
+//    }
 
     output << "Created deployable disk image at " << dmgOut << "\n";
     return 0;

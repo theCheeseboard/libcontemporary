@@ -29,6 +29,11 @@ DiskImage::DiskImage(qulonglong size, QString name, QString output, QString file
     }
 }
 
+DiskImage::DiskImage(QString name) {
+    d = new DiskImagePrivate();
+    d->diskImagePath = name;
+}
+
 DiskImage::~DiskImage() {
     if (d->mounted) this->unmount();
     delete d;
@@ -52,7 +57,7 @@ bool DiskImage::mount() {
     if (d->mounted) return true;
 
     QProcess hdiutilProc;
-    hdiutilProc.start("hdiutil", {"attach", d->diskImagePath, "-nobrowse", "-noverify", "-noautoopen"});
+    hdiutilProc.start("hdiutil", {"attach", d->diskImagePath, "-nobrowse", "-noverify", "-noautoopen", "-noautofsck"});
     hdiutilProc.waitForFinished(-1);
     if (hdiutilProc.exitCode() != 0) {
         QTextStream(stderr) << "Unable to mount the disk image.\n";
