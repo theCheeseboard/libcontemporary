@@ -1,10 +1,11 @@
 #ifndef TCOMMANDPALETTEDOCUMENTSPECIFICSCOPE_H
 #define TCOMMANDPALETTEDOCUMENTSPECIFICSCOPE_H
 
+#include "libcontemporary_global.h"
 #include "tcommandpalettecompositescope.h"
 
 struct tCommandPaletteDocumentSpecificScopePrivate;
-class tCommandPaletteDocumentSpecificScope : public tCommandPaletteCompositeScope {
+class LIBCONTEMPORARY_EXPORT tCommandPaletteDocumentSpecificScope : public tCommandPaletteCompositeScope {
         Q_OBJECT
     public:
         explicit tCommandPaletteDocumentSpecificScope(QObject* parent = nullptr);
