@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
     while (iterator.hasNext()) {
         auto fileInfo = iterator.nextFileInfo();
         if (fileInfo.isFile()) {
-            size += fileInfo.size() * 1.5 + 32;
+            size += fileInfo.size() * 2 + 32;
         }
     }
 
