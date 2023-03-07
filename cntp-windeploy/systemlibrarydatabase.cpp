@@ -41,7 +41,13 @@ SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObje
     // Exclude C++ runtime
     QProcess vsWhere;
     auto vsWherePath = QDir(qEnvironmentVariable("ProgramFiles(x86)")).absoluteFilePath("Microsoft Visual Studio/Installer/vswhere.exe");
-    vsWhere.start(vsWherePath, {"-prerelease", "-latest" "-products *", "-requires Microsoft.VisualStudio.Component.VC.Tools.*", "-property installationPath"});
+    vsWhere.start(vsWherePath, {
+        "-prerelease", 
+        "-latest", 
+        "-products", "*", 
+        "-requires", "Microsoft.VisualStudio.Component.VC.Tools.*", 
+        "-property", "installationPath"
+    });
     vsWhere.waitForFinished(-1);
 
     bool readingLibraries = false;
@@ -55,6 +61,9 @@ SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObje
             d->ignoreLibraries.insert(iterator.fileName().toLower());
         }
     }
+
+    d->ignoreLibraries << "ucrtbase.dll"
+                       << "ucrtbased.dll";
 
     QStringList deepSearchPaths({"/Program Files", "/Program Files (x86)"});
     for (QString path : deepSearchPaths) {
@@ -81,6 +90,7 @@ bool SystemLibraryDatabase::ignore(QString libraryName) {
     //            if (IsApiSetImplemented(library.toUtf8().constData())) continue;
     if (libraryName.startsWith("api-ms") || libraryName.startsWith("ext-ms")) return true;
 
+    if (d->ignoreLibraries.contains(libraryName.toLower())) return true;
     libraryName.replace(".dll", ".lib");
     if (d->ignoreLibraries.contains(libraryName.toLower())) return true;
 

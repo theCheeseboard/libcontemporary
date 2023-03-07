@@ -149,6 +149,7 @@ bool DeployFolder::doMakeSelfContained(SystemLibraryDatabase* libraryDatabase) {
         iterator.next();
 
         if (iterator.fileInfo().isSymLink()) continue;
+        if (iterator.fileInfo().suffix() == "svg") continue;
         if (d->processed.contains(iterator.filePath())) continue;
         d->processed.append(iterator.filePath());
 
