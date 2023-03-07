@@ -4,10 +4,11 @@
 #include <QSettings>
 #include <QDir>
 #include <QDirIterator>
+#include <QProcess>
 
 struct SystemLibraryDatabasePrivate {
     QMap<QString, QString> libraries;
-    QStringList ignoreLibraries;
+    QSet<QString> ignoreLibraries;
 };
 
 SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObject *parent) : QObject(parent) {
@@ -17,8 +18,10 @@ SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObje
 
     //TODO: pass some of these as parameters
     QDir winSdkPath = QDir(winSdkSettings.value("KitsRoot10").toString()).absoluteFilePath("Lib/10.0.22000.0/um/x64");
-    d->ignoreLibraries = winSdkPath.entryList(QDir::Files);
 
+    for (auto& entry : winSdkPath.entryList(QDir::Files)) {
+        d->ignoreLibraries.insert(entry.toLower());
+    }
 
     //Find DLL files
     QStringList searchPaths = extraSearchPaths;
@@ -26,13 +29,30 @@ SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObje
     searchPaths.removeAll("");
     searchPaths.removeDuplicates();
 
-
     for (QString path : searchPaths) {
         QDir dir(path);
         for (QFileInfo libFile: dir.entryInfoList({"*.dll", "*.DLL"}, QDir::Files)) {
             if (d->libraries.contains(libFile.fileName().toLower())) continue;
             if (!libFile.fileName().toLower().startsWith("msvc") && isInDisallowedPath(libFile.absoluteFilePath().toLower())) continue;
             d->libraries.insert(libFile.fileName().toLower(), libFile.absoluteFilePath());
+        }
+    }
+
+    // Exclude C++ runtime
+    QProcess vsWhere;
+    auto vsWherePath = QDir(qEnvironmentVariable("ProgramFiles(x86)")).absoluteFilePath("Microsoft Visual Studio/Installer/vswhere.exe");
+    vsWhere.start(vsWherePath, {"-prerelease", "-latest" "-products *", "-requires Microsoft.VisualStudio.Component.VC.Tools.*", "-property installationPath"});
+    vsWhere.waitForFinished(-1);
+
+    bool readingLibraries = false;
+    while (vsWhere.canReadLine()) {
+        auto vsPath = vsWhere.readLine().trimmed();
+        auto dllRoot = QDir(vsPath).absoluteFilePath("VC/Redist/MSVC/");
+        QDirIterator iterator(dllRoot, {"*.dll"}, QDir::Files, QDirIterator::Subdirectories);
+        while (iterator.hasNext()) {
+            iterator.next();
+
+            d->ignoreLibraries.insert(iterator.fileName().toLower());
         }
     }
 
@@ -62,7 +82,7 @@ bool SystemLibraryDatabase::ignore(QString libraryName) {
     if (libraryName.startsWith("api-ms") || libraryName.startsWith("ext-ms")) return true;
 
     libraryName.replace(".dll", ".lib");
-    if (d->ignoreLibraries.contains(libraryName.toLower(), Qt::CaseInsensitive)) return true;
+    if (d->ignoreLibraries.contains(libraryName.toLower())) return true;
 
     return false;
 }
