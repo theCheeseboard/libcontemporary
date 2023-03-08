@@ -343,19 +343,19 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="690"/>
+        <location filename="../tapplication.cpp" line="697"/>
         <source>Copyright © %1.</source>
         <translation>Bản Quyền © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="662"/>
-        <location filename="../tapplication.cpp" line="665"/>
-        <location filename="../tapplication.cpp" line="668"/>
-        <location filename="../tapplication.cpp" line="671"/>
-        <location filename="../tapplication.cpp" line="674"/>
-        <location filename="../tapplication.cpp" line="677"/>
-        <location filename="../tapplication.cpp" line="680"/>
-        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="670"/>
+        <location filename="../tapplication.cpp" line="673"/>
+        <location filename="../tapplication.cpp" line="676"/>
+        <location filename="../tapplication.cpp" line="679"/>
+        <location filename="../tapplication.cpp" line="682"/>
+        <location filename="../tapplication.cpp" line="685"/>
+        <location filename="../tapplication.cpp" line="688"/>
+        <location filename="../tapplication.cpp" line="691"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Được cấp phép theo điều khoản của %1.</translation>
     </message>
@@ -400,42 +400,42 @@
         <translation>Nền tảng</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="662"/>
+        <location filename="../tapplication.cpp" line="670"/>
         <source>GNU General Public License, version 3</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="665"/>
+        <location filename="../tapplication.cpp" line="673"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 3, hoặc mới hơn</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="668"/>
+        <location filename="../tapplication.cpp" line="676"/>
         <source>GNU General Public License, version 2</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="671"/>
+        <location filename="../tapplication.cpp" line="679"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 2, hoặc mới hơn</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="682"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="685"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3, hoặc mới hơn</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="688"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="691"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1, hoặc mới hơn</translation>
     </message>
