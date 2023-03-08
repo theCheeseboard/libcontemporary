@@ -222,11 +222,6 @@
 <context>
     <name>PluginManagementPopover</name>
     <message>
-        <location filename="../plugins/pluginmanagementpopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../plugins/pluginmanagementpopover.ui" line="57"/>
         <source>Manage Plugins</source>
         <translation type="unfinished"></translation>
@@ -669,11 +664,6 @@
 </context>
 <context>
     <name>tPluginManagerPane</name>
-    <message>
-        <location filename="../plugins/tpluginmanagerpane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../plugins/tpluginmanagerpane.ui" line="27"/>
         <source>Manage Plugins</source>
