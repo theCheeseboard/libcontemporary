@@ -19,13 +19,14 @@
  ******************************************************************************/
 #include "tcsdtools.h"
 
+#include "tapplication.h"
 #include <QDebug>
 #include <QDir>
 #include <QMainWindow>
 #include <QMouseEvent>
+#include <QTimer>
 #include <QWidget>
 #include <QWindow>
-#include "tapplication.h"
 #include <tcsdtools/csdbuttonbox.h>
 #include <tcsdtools/csdsizegrip.h>
 
@@ -45,31 +46,31 @@
 #endif
 
 struct tCsdGlobalPrivate {
-    tCsdGlobal* instance = nullptr;
-    bool enableCSDs;
+        tCsdGlobal* instance = nullptr;
+        bool enableCSDs;
 };
 
 struct ResizeWidget {
-    QWidget* widget;
-    CsdSizeGrip* sizeGrips[4];
+        QWidget* widget;
+        CsdSizeGrip* sizeGrips[4];
 
-    void setMarginsEnabled(bool marginsEnabled) {
-        if (marginsEnabled) {
-            int width = CsdSizeGrip::borderReserveWidth(widget);
-            widget->setContentsMargins(width, width, width, width);
-        } else {
-            widget->setContentsMargins(0, 0, 0, 0);
+        void setMarginsEnabled(bool marginsEnabled) {
+            if (marginsEnabled) {
+                int width = CsdSizeGrip::borderReserveWidth(widget);
+                widget->setContentsMargins(width, width, width, width);
+            } else {
+                widget->setContentsMargins(0, 0, 0, 0);
+            }
         }
-    }
 };
 
 struct tCsdToolsPrivate {
-    QList<QWidget*> moveWidgets;
-    QList<ResizeWidget*> resizeWidgets;
+        QList<QWidget*> moveWidgets;
+        QList<ResizeWidget*> resizeWidgets;
 
-    static QList<QWidget*> csdWidgets;
+        static QList<QWidget*> csdWidgets;
 #ifdef Q_OS_WIN
-    static QList<HWND> csdHandles;
+        static QList<HWND> csdHandles;
 #endif
 };
 
@@ -77,7 +78,7 @@ tCsdGlobalPrivate* tCsdGlobal::d = new tCsdGlobalPrivate();
 QList<QWidget*> tCsdToolsPrivate::csdWidgets = QList<QWidget*>();
 
 #ifdef Q_OS_WIN
-    QList<HWND> tCsdToolsPrivate::csdHandles = QList<HWND>();
+QList<HWND> tCsdToolsPrivate::csdHandles = QList<HWND>();
 #endif
 
 tCsdGlobal::tCsdGlobal() :
@@ -150,7 +151,7 @@ tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
         XFree(data);
 
         if (windowManagerName == "GNOME Shell") {
-#ifdef HAVE_GSETTINGS
+    #ifdef HAVE_GSETTINGS
             // Use GNOME settings
             QGSettings gsettings("org.gnome.desktop.wm.preferences");
             QString buttonLayout = gsettings.get("button-layout").toString();
@@ -160,7 +161,7 @@ tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
             } else {
                 return Right;
             }
-#endif
+    #endif
         } else if (windowManagerName == "KWin") {
             // Use KWin settings
             QSettings kwinSettings(QDir::homePath() + "/.config/kwinrc", QSettings::IniFormat);
@@ -203,7 +204,7 @@ void tCsdTools::installResizeAction(QWidget* widget) {
     connect(widget, &QWidget::destroyed, this, QOverload<QObject*>::of(&tCsdTools::removeResizeAction));
     widget->installEventFilter(this);
 
-    ResizeWidget* resize = new ResizeWidget();
+    auto resize = new ResizeWidget();
     resize->widget = widget;
 
 #ifdef Q_OS_MAC
@@ -212,30 +213,29 @@ void tCsdTools::installResizeAction(QWidget* widget) {
     if (tCsdGlobal::csdsEnabled()) {
         int border = CsdSizeGrip::borderReserveWidth(widget);
         widget->setContentsMargins(border, border, border, border);
-#ifdef Q_OS_WIN
+    #ifdef Q_OS_WIN
         MARGINS borderless = {1, 1, 1, 1};
         DwmExtendFrameIntoClientArea(hwnd, &borderless);
 
-        //Force the window to recalculate its frame
+        // Force the window to recalculate its frame
         SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOREPOSITION | SWP_NOREDRAW);
-#else
+    #else
         widget->setWindowFlag(Qt::FramelessWindowHint);
         widget->setAttribute(Qt::WA_NoSystemBackground);
         widget->setAttribute(Qt::WA_TranslucentBackground);
-#endif
+    #endif
     }
 
     for (int i = 0; i < 4; i++) {
         CsdSizeGrip* grip = new CsdSizeGrip(i, widget);
         resize->sizeGrips[i] = grip;
     }
-
-    d->resizeWidgets.append(resize);
 #endif
+    d->resizeWidgets.append(resize);
 }
 
 void tCsdTools::removeResizeAction(QWidget* widget) {
-    ResizeWidget* rw = getResizeWidget(widget);
+    auto rw = getResizeWidget(widget);
     Q_ASSERT(rw);
 
     widget->removeEventFilter(this);
@@ -290,7 +290,7 @@ void tCsdTools::csdsEnabledChanged(bool enabled) {
             int border = CsdSizeGrip::borderReserveWidth(rw->widget);
             rw->widget->setContentsMargins(border, border, border, border);
 #ifdef Q_OS_WIN
-            //Force the window to recalculate its frame
+            // Force the window to recalculate its frame
             SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOREPOSITION | SWP_NOREDRAW);
 #else
             rw->widget->setWindowFlag(Qt::FramelessWindowHint);
@@ -300,7 +300,7 @@ void tCsdTools::csdsEnabledChanged(bool enabled) {
         } else {
             rw->widget->setContentsMargins(0, 0, 0, 0);
 #ifdef Q_OS_WIN
-            //Force the window to recalculate its frame
+            // Force the window to recalculate its frame
             SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOREPOSITION | SWP_NOREDRAW);
 #else
             rw->widget->setWindowFlag(Qt::FramelessWindowHint, false);
@@ -394,7 +394,7 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
         QMouseEvent* e = static_cast<QMouseEvent*>(event);
         if (e->button() == Qt::RightButton) {
 #ifdef Q_OS_WIN
-            //Show the system menu
+            // Show the system menu
             auto hwnd = reinterpret_cast<HWND>(widget->window()->winId());
             auto menu = GetSystemMenu(hwnd, false);
             auto cmd = TrackPopupMenu(menu, TPM_RETURNCMD, e->globalPosition().x(), e->globalPosition().y(), 0, hwnd, NULL);
@@ -420,6 +420,16 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
 #endif
             rw->setMarginsEnabled(marginsEnabled);
         }
+    } else if (event->type() == QEvent::Show) {
+        QWidget* widget = qobject_cast<QWidget*>(watched);
+        Q_ASSERT(widget);
+
+        QTimer::singleShot(0, [this, widget] {
+            if (d->csdWidgets.contains(widget)) {
+                this->removeResizeAction(widget);
+                this->installResizeAction(widget);
+            }
+        });
     }
     return false;
 }

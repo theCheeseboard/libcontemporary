@@ -49,7 +49,8 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         enum UrlType {
             HelpContents,
             Sources,
-            FileBug
+            FileBug,
+            Website
         };
 
         enum Platform {
@@ -66,7 +67,7 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         static QStringList shareDirs();
         static QStringList systemShareDirs();
         static QString genericName();
-        static QPixmap aboutDialogSplashGraphic();
+        [[deprecated]] static QPixmap aboutDialogSplashGraphic();
         static QList<QPair<QString, QString>> versions();
         static QStringList copyrightLines();
         static QString copyrightHolder();
@@ -91,7 +92,7 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         static void setApplicationIcon(QIcon icon);
         static void setApplicationShareDir(QString shareDir);
         static void setGenericName(QString genericName);
-        static void setAboutDialogSplashGraphic(QPixmap aboutDialogSplashGraphic);
+        [[deprecated]] static void setAboutDialogSplashGraphic(QPixmap aboutDialogSplashGraphic);
         static void addLibraryVersion(QString libraryName, QString version);
         static void addCopyrightLine(QString copyrightLine);
         static void setCopyrightHolder(QString copyrightHolder);

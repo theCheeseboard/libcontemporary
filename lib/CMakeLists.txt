@@ -114,6 +114,8 @@ cntp_sourcelist(
         private/debuglogpopover.ui
         private/debuglogwindow.ui
 
+        private/licensetextpopover.cpp private/licensetextpopover.ui
+
         thelibs_icons.qrc
 
         private/tmessageboxbackend.h
@@ -192,6 +194,7 @@ cntp_sourcelist(
         tcommandpalette/tcommandpaletteallscope.h
         plugins/pluginmanagementpopover.h
         plugins/knownpluginmodel.h
+        private/licensetextpopover.h
 )
 
 
@@ -317,6 +320,13 @@ qt_add_resources(libcontemporary "thelibs_translations"
     PREFIX "/the-libs/translations"
     BASE "${CMAKE_CURRENT_BINARY_DIR}"
     FILES "${QM_FILES}")
+
+file(GLOB LICENSE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/licenses/*")
+qt_add_resources(libcontemporary "libcontemporary_licenses"
+    PREFIX "/the-libs/licenses"
+    BASE "${CMAKE_CURRENT_SOURCE_DIR}"
+    FILES "${LICENSE_FILES}"
+)
 
 install(TARGETS libcontemporary
         EXPORT libcontemporaryTargets

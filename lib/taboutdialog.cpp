@@ -21,43 +21,97 @@
 #include "taboutdialog.h"
 #include "ui_taboutdialog.h"
 
+#include "private/licensetextpopover.h"
 #include "tapplication.h"
+#include "tcontentsizer.h"
+#include "tcsdtools.h"
 #include "ticon.h"
+#include "tpopover.h"
+#include <QDesktopServices>
+#include <QPushButton>
 #include <QScroller>
 #include <QToolButton>
+
+struct tAboutDialogPrivate {
+        tCsdTools csd;
+};
 
 tAboutDialog::tAboutDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::tAboutDialog) {
     ui->setupUi(this);
     tIcon::processWidgetLater(this);
+    this->setWindowFlag(Qt::WindowMinimizeButtonHint, false);
+    this->setWindowFlag(Qt::WindowMaximizeButtonHint, false);
+
+    d = new tAboutDialogPrivate();
+    d->csd.installMoveAction(ui->topWidget);
+    d->csd.installResizeAction(this);
+
+    if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
+        ui->leftCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
+    } else {
+        ui->rightCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
+    }
+
+    ui->topWidget->setFixedHeight(48);
+#ifdef Q_OS_MAC
+    ui->topWidget->setFixedHeight(24);
+//    ui->topWidget->setContentsMargins(12, 0, 12, 0);
+#endif
+    this->layout()->removeWidget(ui->topWidget);
+    ui->topWidget->setFixedWidth(this->width());
+    ui->topWidget->raise();
+    ui->scrollAreaWidgetContents->setContentsMargins(0, ui->topWidget->height(), 0, 0);
+
+    this->setMinimumWidth(700);
 
     this->setWindowTitle((tr("About %1").arg(tApplication::applicationName())));
-    ui->titleLabel->setText(tr("About %1").arg(tApplication::applicationName()));
-    ui->applicationTitle->setText(tApplication::applicationName() + " " + tApplication::applicationVersion());
+    ui->applicationIcon->setPixmap(tApplication::applicationIcon().pixmap(QSize(ui->applicationTitle->sizeHint().height(), ui->applicationTitle->sizeHint().height())));
+    ui->applicationTitle->setText(tApplication::applicationName());
     ui->genericName->setText(tApplication::genericName());
     ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
+    new tContentSizer(ui->headWidget);
+    new tContentSizer(ui->versionsWidget);
+    new tContentSizer(ui->copyrightWidget);
 
-    QPixmap splashGraphic = tApplication::aboutDialogSplashGraphic();
-    bool graphicAvailable;
-    if (splashGraphic.isNull()) {
-        ui->splashGraphicLabel->setVisible(false);
-        this->setFixedSize(QSize(430, 340));
-        graphicAvailable = false;
-    } else {
-        ui->splashGraphicLabel->setPixmap(splashGraphic);
-        this->setFixedSize(QSize(530, 340));
-        graphicAvailable = true;
+    if (tApplication::haveApplicationUrl(tApplication::Website)) {
+        auto button = new QPushButton(this);
+        button->setText(tr("Website"));
+        button->setIcon(QIcon::fromTheme("text-html"));
+        connect(button, &QPushButton::clicked, this, [] {
+            QDesktopServices::openUrl(tApplication::applicationUrl(tApplication::Website));
+        });
+        ui->buttonLayout->addWidget(button);
+    }
+    if (tApplication::haveApplicationUrl(tApplication::FileBug)) {
+        auto button = new QPushButton(this);
+        button->setText(tr("File Bug"));
+        button->setIcon(QIcon::fromTheme("tools-report-bug"));
+        connect(button, &QPushButton::clicked, this, [] {
+            QDesktopServices::openUrl(tApplication::applicationUrl(tApplication::FileBug));
+        });
+        ui->buttonLayout->addWidget(button);
+    }
+    if (tApplication::haveApplicationUrl(tApplication::Sources)) {
+        auto button = new QPushButton(this);
+        button->setText(tr("Sources"));
+        button->setIcon(QIcon::fromTheme("commit"));
+        connect(button, &QPushButton::clicked, this, [] {
+            QDesktopServices::openUrl(tApplication::applicationUrl(tApplication::Sources));
+        });
+        ui->buttonLayout->addWidget(button);
     }
 
     QList<QPair<QString, QString>> softwareVersions = tApplication::versions();
     for (int i = 0; i < softwareVersions.count(); i++) {
-        QLabel* label1 = new QLabel(this);
+        auto* label1 = new QLabel(this);
         label1->setText(softwareVersions.at(i).first);
+        label1->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
         ui->versionsLayout->addWidget(label1, i + 1, 0);
         ui->versionsLayout->setAlignment(label1, Qt::AlignLeft);
 
-        QLabel* label2 = new QLabel(this);
+        auto* label2 = new QLabel(this);
         label2->setText(softwareVersions.at(i).second);
         label2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         ui->versionsLayout->addWidget(label2, i + 1, 1);
@@ -72,43 +126,39 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     }
     QStringList copyrightLines = tApplication::copyrightLines();
     for (int i = 0; i < copyrightLines.count(); i++) {
-        QLabel* label = new QLabel(this);
+        auto* label = new QLabel(this);
         label->setText(copyrightLines.at(i));
         label->setWordWrap(true);
         label->setFont(copyrightFont);
+        connect(label, &QLabel::linkActivated, this, &tAboutDialog::openAboutUrl);
         ui->copyrightLayout->addWidget(label);
     }
-
-#ifndef Q_OS_MAC
-    QToolButton* backButton = new QToolButton(this);
-    backButton->setAutoRaise(true);
-    backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/the-libs/icons/go-previous.svg")));
-    if (graphicAvailable) {
-        backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        backButton->setParent(ui->splashGraphicLabel);
-        backButton->setFixedHeight(ui->titleLabel->sizeHint().height());
-
-        if (this->layoutDirection() == Qt::LeftToRight) {
-            backButton->move(0, 0);
-        } else {
-            backButton->move(100 - backButton->width(), 0);
-        }
-    } else {
-        backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        ui->titleLayout->insertWidget(0, backButton);
-    }
-    connect(backButton, &QToolButton::clicked, this, &tAboutDialog::on_okButton_clicked);
-
-    ui->macOkPanel->setVisible(false);
-#endif
 
     QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
 }
 
 tAboutDialog::~tAboutDialog() {
     delete ui;
+    delete d;
 }
 
 void tAboutDialog::on_okButton_clicked() {
     this->close();
+}
+
+void tAboutDialog::openAboutUrl(QUrl url) {
+    if (url.scheme() == "license") {
+        auto jp = new LicenseTextPopover();
+        auto* popover = new tPopover(jp);
+        popover->setPopoverWidth(-200);
+        popover->setPopoverSide(tPopover::Trailing);
+        connect(jp, &LicenseTextPopover::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        connect(popover, &tPopover::dismissed, jp, &LicenseTextPopover::deleteLater);
+        popover->show(this->window());
+    }
+}
+
+void tAboutDialog::resizeEvent(QResizeEvent* event) {
+    ui->topWidget->setFixedWidth(this->width());
 }

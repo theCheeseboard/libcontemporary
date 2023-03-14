@@ -21,26 +21,33 @@
 #ifndef TABOUTDIALOG_H
 #define TABOUTDIALOG_H
 
-#include <QDialog>
 #include "libcontemporary_global.h"
+#include <QDialog>
 
 namespace Ui {
     class tAboutDialog;
 }
 
-class LIBCONTEMPORARY_EXPORT tAboutDialog : public QDialog
-{
+struct tAboutDialogPrivate;
+class LIBCONTEMPORARY_EXPORT tAboutDialog : public QDialog {
         Q_OBJECT
 
     public:
-        explicit tAboutDialog(QWidget *parent = nullptr);
+        explicit tAboutDialog(QWidget* parent = nullptr);
         ~tAboutDialog();
 
     private slots:
         void on_okButton_clicked();
 
     private:
-        Ui::tAboutDialog *ui;
+        Ui::tAboutDialog* ui;
+        tAboutDialogPrivate* d;
+
+        void openAboutUrl(QUrl url);
+
+        // QWidget interface
+    protected:
+        void resizeEvent(QResizeEvent* event);
 };
 
 #endif // TABOUTDIALOG_H

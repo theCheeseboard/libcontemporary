@@ -45,6 +45,7 @@ CsdButtonBox::CsdButtonBox(QWidget* parent) :
 
     connect(tCsdGlobal::instance(), &tCsdGlobal::csdsEnabledChanged, this, &CsdButtonBox::csdsEnabledChanged);
     csdsEnabledChanged(tCsdGlobal::csdsEnabled());
+    updateButtons();
 
 #ifdef Q_OS_MAC
     setupMacOs();
@@ -70,12 +71,28 @@ bool CsdButtonBox::eventFilter(QObject* watched, QEvent* event) {
         d->windowHidden();
     } else if (event->type() == QEvent::Show) {
         d->windowShown();
-    } else if (event->type() == QEvent::ActivationChange) {
+    } else if (event->type() == QEvent::ActivationChange || event->type() == QEvent::WindowStateChange) {
         d->windowHidden();
         d->windowShown();
     }
 #endif
     return false;
+}
+
+void CsdButtonBox::updateButtons() {
+#ifndef Q_OS_MAC
+    auto flags = this->window()->windowFlags();
+    if (flags & Qt::WindowMinimizeButtonHint && flags & Qt::WindowMaximizeButtonHint) {
+        ui->maxButton->setVisible(true);
+        ui->minButton->setVisible(true);
+
+        ui->maxButton->setEnabled(flags & Qt::WindowMaximizeButtonHint);
+        ui->minButton->setEnabled(flags & Qt::WindowMinimizeButtonHint);
+    } else {
+        ui->maxButton->setVisible(false);
+        ui->minButton->setVisible(false);
+    }
+#endif
 }
 
 void CsdButtonBox::on_closeButton_clicked() {

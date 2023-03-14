@@ -88,6 +88,19 @@
     </message>
 </context>
 <context>
+    <name>LicenseTextPopover</name>
+    <message>
+        <location filename="../private/licensetextpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/licensetextpopover.ui" line="35"/>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <location filename="../tapplication.cpp" line="130"/>
@@ -308,43 +321,56 @@
 <context>
     <name>tAboutDialog</name>
     <message>
-        <location filename="../taboutdialog.ui" line="194"/>
+        <location filename="../taboutdialog.ui" line="230"/>
         <source>SOFTWARE</source>
         <translation>软件</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="239"/>
+        <location filename="../taboutdialog.ui" line="276"/>
         <source>COPYRIGHT</source>
         <translation>版权</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation>好的</translation>
+        <translation type="vanished">好的</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="35"/>
-        <location filename="../taboutdialog.cpp" line="36"/>
+        <location filename="../taboutdialog.cpp" line="69"/>
         <source>About %1</source>
         <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../taboutdialog.cpp" line="80"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../taboutdialog.cpp" line="89"/>
+        <source>File Bug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../taboutdialog.cpp" line="98"/>
+        <source>Sources</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="697"/>
+        <location filename="../tapplication.cpp" line="701"/>
         <source>Copyright © %1.</source>
         <translation>版权</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="670"/>
-        <location filename="../tapplication.cpp" line="673"/>
-        <location filename="../tapplication.cpp" line="676"/>
-        <location filename="../tapplication.cpp" line="679"/>
-        <location filename="../tapplication.cpp" line="682"/>
-        <location filename="../tapplication.cpp" line="685"/>
-        <location filename="../tapplication.cpp" line="688"/>
-        <location filename="../tapplication.cpp" line="691"/>
+        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="686"/>
+        <location filename="../tapplication.cpp" line="689"/>
+        <location filename="../tapplication.cpp" line="692"/>
+        <location filename="../tapplication.cpp" line="695"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>授权</translation>
     </message>
@@ -389,42 +415,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="670"/>
+        <location filename="../tapplication.cpp" line="674"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU版权， 第三版</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="673"/>
+        <location filename="../tapplication.cpp" line="677"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU版权， 第三版或之后</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="676"/>
+        <location filename="../tapplication.cpp" line="680"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU版权，第二版</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="679"/>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU版权，第二版或之后</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="682"/>
+        <location filename="../tapplication.cpp" line="686"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU版权，第三版</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="685"/>
+        <location filename="../tapplication.cpp" line="689"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU版权， 第三版或之后</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="688"/>
+        <location filename="../tapplication.cpp" line="692"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU版权，第2.1版</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="691"/>
+        <location filename="../tapplication.cpp" line="695"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU版权，2.1版或之后</translation>
     </message>

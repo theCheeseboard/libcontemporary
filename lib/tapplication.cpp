@@ -665,30 +665,34 @@ QList<QPair<QString, QString>> tApplication::versions() {
 QStringList tApplication::copyrightLines() {
     QStringList copyrightLines = d->copyrightLines;
 
+    auto wrapLicense = [](QString text) {
+        return QStringLiteral(R"(<a href="license://">%1</a>)").arg(text);
+    };
+
     switch (d->license) {
         case Gpl3:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 3")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU General Public License, version 3"))));
             break;
         case Gpl3OrLater:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 3, or later")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU General Public License, version 3, or later"))));
             break;
         case Gpl2:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 2")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU General Public License, version 2"))));
             break;
         case Gpl2OrLater:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 2, or later")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU General Public License, version 2, or later"))));
             break;
         case Lgpl3:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 3")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU Lesser General Public License, version 3"))));
             break;
         case Lgpl3OrLater:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 3, or later")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU Lesser General Public License, version 3, or later"))));
             break;
         case Lgpl2_1:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 2.1")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU Lesser General Public License, version 2.1"))));
             break;
         case Lgpl2_1OrLater:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 2.1, or later")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU Lesser General Public License, version 2.1, or later"))));
             break;
         case Other:;
     }

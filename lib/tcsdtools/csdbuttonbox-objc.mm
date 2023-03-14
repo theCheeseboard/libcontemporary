@@ -43,6 +43,8 @@ void CsdButtonBoxPrivate::windowHidden() {
 
 void CsdButtonBoxPrivate::windowShown() {
     if (!closeWidget) {
+        auto flags = this->parentWidget->window()->windowFlags();
+//        NSWindowStyleMask styleMask = [view.window styleMask];
         NSWindowStyleMask styleMask = NSWindowStyleMaskFullSizeContentView|NSWindowStyleMaskResizable|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
 
         NSButton* closeButton = [NSWindow standardWindowButton:NSWindowCloseButton forStyleMask:styleMask];
@@ -50,15 +52,17 @@ void CsdButtonBoxPrivate::windowShown() {
         closeWidget->setFixedSize(14, 16);
         box->ui->macWindowControlsLayout->addWidget(closeWidget);
 
-        NSButton* minButton = [NSWindow standardWindowButton:NSWindowMiniaturizeButton forStyleMask:styleMask];
-        minWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(minButton)), box);
-        minWidget->setFixedSize(14, 16);
-        box->ui->macWindowControlsLayout->addWidget(minWidget);
+        if (flags & Qt::WindowMinimizeButtonHint && flags & Qt::WindowMaximizeButtonHint) {
+            NSButton* minButton = [NSWindow standardWindowButton:NSWindowMiniaturizeButton forStyleMask:styleMask];
+            minWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(minButton)), box);
+            minWidget->setFixedSize(14, 16);
+            box->ui->macWindowControlsLayout->addWidget(minWidget);
 
-        NSButton* fsButton = [NSWindow standardWindowButton:NSWindowZoomButton forStyleMask:styleMask];
-        fsWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(fsButton)), box);
-        fsWidget->setFixedSize(14, 16);
-        box->ui->macWindowControlsLayout->addWidget(fsWidget);
+            NSButton* fsButton = [NSWindow standardWindowButton:NSWindowZoomButton forStyleMask:styleMask];
+            fsWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(fsButton)), box);
+            fsWidget->setFixedSize(14, 16);
+            box->ui->macWindowControlsLayout->addWidget(fsWidget);
+        }
     }
 }
 
