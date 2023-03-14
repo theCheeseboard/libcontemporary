@@ -20,6 +20,8 @@ class LicenseTextPopover : public QWidget {
     private slots:
         void on_titleLabel_backButtonClicked();
 
+        void on_textBrowser_anchorClicked(const QUrl& arg1);
+
     private:
         Ui::LicenseTextPopover* ui;
 };

@@ -319,12 +319,13 @@ cntp_translate(libcontemporary OUTPUT QM_FILES)
 qt_add_resources(libcontemporary "thelibs_translations"
     PREFIX "/the-libs/translations"
     BASE "${CMAKE_CURRENT_BINARY_DIR}"
-    FILES "${QM_FILES}")
+    FILES "${QM_FILES}"
+)
 
 file(GLOB LICENSE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/licenses/*")
 qt_add_resources(libcontemporary "libcontemporary_licenses"
     PREFIX "/the-libs/licenses"
-    BASE "${CMAKE_CURRENT_SOURCE_DIR}"
+    BASE "${CMAKE_CURRENT_SOURCE_DIR}/licenses"
     FILES "${LICENSE_FILES}"
 )
 

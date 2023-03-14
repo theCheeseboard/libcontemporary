@@ -151,7 +151,7 @@ void tAboutDialog::openAboutUrl(QUrl url) {
         auto jp = new LicenseTextPopover();
         auto* popover = new tPopover(jp);
         popover->setPopoverWidth(-200);
-        popover->setPopoverSide(tPopover::Trailing);
+        popover->setPopoverSide(tPopover::Bottom);
         connect(jp, &LicenseTextPopover::done, popover, &tPopover::dismiss);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         connect(popover, &tPopover::dismissed, jp, &LicenseTextPopover::deleteLater);
