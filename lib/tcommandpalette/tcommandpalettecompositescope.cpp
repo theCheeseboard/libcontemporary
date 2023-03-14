@@ -41,6 +41,7 @@ void tCommandPaletteCompositeScope::endReset() {
 }
 
 void tCommandPaletteCompositeScope::registerScope(tCommandPaletteScope* scope) {
+    this->startReset();
     connect(scope, &tCommandPaletteScope::modelAboutToBeReset, this, [this] {
         startReset();
     });
@@ -51,11 +52,14 @@ void tCommandPaletteCompositeScope::registerScope(tCommandPaletteScope* scope) {
         deregisterScope(scope);
     });
     d->registeredScopes.append(scope);
+    this->endReset();
 }
 
 void tCommandPaletteCompositeScope::deregisterScope(tCommandPaletteScope* scope) {
+    this->startReset();
     scope->disconnect(this);
     d->registeredScopes.removeAll(scope);
+    this->endReset();
 }
 
 bool tCommandPaletteCompositeScope::scopeRegistered(tCommandPaletteScope* scope) {

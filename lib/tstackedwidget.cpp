@@ -280,6 +280,7 @@ int tStackedWidget::addWidget(QWidget* w) {
     w->setAutoFillBackground(true);
     int index = QStackedWidget::addWidget(w);
     emit widgetAdded();
+    emit switchingFrame(this->currentIndex());
     return index;
 }
 
@@ -288,6 +289,7 @@ int tStackedWidget::insertWidget(int index, QWidget* w) {
     w->setAutoFillBackground(true);
     int indexReturn = QStackedWidget::insertWidget(index, w);
     emit widgetAdded();
+    emit switchingFrame(this->currentIndex());
     return indexReturn;
 }
 
@@ -296,6 +298,7 @@ void tStackedWidget::removeWidget(QWidget* w) {
     QStackedWidget::removeWidget(w);
 
     if (this->count() == 0 && d->defaultWidget) d->defaultWidget->show();
+    emit switchingFrame(this->currentIndex());
 }
 
 void tStackedWidget::setDefaultWidget(QWidget* defaultWidget) {
@@ -304,6 +307,7 @@ void tStackedWidget::setDefaultWidget(QWidget* defaultWidget) {
         d->defaultWidget->setGeometry(QRect(QPoint(0, 0), this->size()));
         d->defaultWidget->setParent(this);
         if (this->count() == 0) d->defaultWidget->show();
+        emit switchingFrame(this->currentIndex());
     }
 }
 
