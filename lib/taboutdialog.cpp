@@ -61,7 +61,7 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     ui->topWidget->setFixedHeight(24);
 //    ui->topWidget->setContentsMargins(12, 0, 12, 0);
 #endif
-    this->layout()->removeWidget(ui->topWidget);
+    ui->centralWidget->layout()->removeWidget(ui->topWidget);
     ui->topWidget->setFixedWidth(this->width());
     ui->topWidget->raise();
     ui->scrollAreaWidgetContents->setContentsMargins(0, ui->topWidget->height(), 0, 0);
@@ -162,5 +162,5 @@ void tAboutDialog::openAboutUrl(QUrl url) {
 }
 
 void tAboutDialog::resizeEvent(QResizeEvent* event) {
-    ui->topWidget->setFixedWidth(this->width());
+    ui->topWidget->setFixedWidth(ui->centralWidget->width());
 }
