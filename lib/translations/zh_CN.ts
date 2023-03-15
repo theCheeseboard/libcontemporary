@@ -321,12 +321,12 @@
 <context>
     <name>tAboutDialog</name>
     <message>
-        <location filename="../taboutdialog.ui" line="230"/>
+        <location filename="../taboutdialog.ui" line="251"/>
         <source>SOFTWARE</source>
         <translation>软件</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="276"/>
+        <location filename="../taboutdialog.ui" line="297"/>
         <source>COPYRIGHT</source>
         <translation>版权</translation>
     </message>
@@ -335,22 +335,22 @@
         <translation type="vanished">好的</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="69"/>
+        <location filename="../taboutdialog.cpp" line="71"/>
         <source>About %1</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="80"/>
+        <location filename="../taboutdialog.cpp" line="82"/>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="89"/>
+        <location filename="../taboutdialog.cpp" line="91"/>
         <source>File Bug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="98"/>
+        <location filename="../taboutdialog.cpp" line="100"/>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>

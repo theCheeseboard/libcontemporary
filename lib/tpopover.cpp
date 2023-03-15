@@ -161,7 +161,8 @@ QWidget* tPopover::parentWidget() {
 }
 
 void tPopover::show(QWidget* parent) {
-    parent = tCsdTools::widgetForPopover(parent);
+    auto scrimWidget = tScrim::scrimWidget(parent);
+    parent = tCsdTools::widgetForPopover(scrimWidget);
     if (d->showing) return;
     tPopoverPrivate::activePopovers.insert(d->popoverWidget, this);
 
@@ -337,7 +338,8 @@ bool tPopover::eventFilter(QObject* watched, QEvent* event) {
 }
 
 tPopover* tPopover::popoverForWidget(QWidget* popoverWidget) {
-    return tPopoverPrivate::activePopovers.value(popoverWidget, nullptr);
+    auto scrimWidget = tScrim::scrimWidget(popoverWidget);
+    return tPopoverPrivate::activePopovers.value(scrimWidget, nullptr);
 }
 
 tPopover* tPopover::popoverForPopoverWidget(QWidget* popoverWidget) {

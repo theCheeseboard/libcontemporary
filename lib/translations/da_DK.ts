@@ -328,12 +328,12 @@
 <context>
     <name>tAboutDialog</name>
     <message>
-        <location filename="../taboutdialog.ui" line="230"/>
+        <location filename="../taboutdialog.ui" line="251"/>
         <source>SOFTWARE</source>
         <translation>SOFTWARE</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="276"/>
+        <location filename="../taboutdialog.ui" line="297"/>
         <source>COPYRIGHT</source>
         <translation>OPHAVSRET</translation>
     </message>
@@ -342,22 +342,22 @@
         <translation type="vanished">OKAY</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="69"/>
+        <location filename="../taboutdialog.cpp" line="71"/>
         <source>About %1</source>
         <translation>Om %1</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="80"/>
+        <location filename="../taboutdialog.cpp" line="82"/>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="89"/>
+        <location filename="../taboutdialog.cpp" line="91"/>
         <source>File Bug</source>
         <translation type="unfinished">Rapporter fejl</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="98"/>
+        <location filename="../taboutdialog.cpp" line="100"/>
         <source>Sources</source>
         <translation type="unfinished">Kildekode</translation>
     </message>

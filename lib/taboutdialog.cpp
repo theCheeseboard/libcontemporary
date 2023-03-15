@@ -27,6 +27,7 @@
 #include "tcsdtools.h"
 #include "ticon.h"
 #include "tpopover.h"
+#include "tscrim.h"
 #include <QDesktopServices>
 #include <QPushButton>
 #include <QScroller>
@@ -43,6 +44,7 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     tIcon::processWidgetLater(this);
     this->setWindowFlag(Qt::WindowMinimizeButtonHint, false);
     this->setWindowFlag(Qt::WindowMaximizeButtonHint, false);
+    tScrim::setScrimProxy(this->window(), ui->centralWidget);
 
     d = new tAboutDialogPrivate();
     d->csd.installMoveAction(ui->topWidget);
@@ -71,7 +73,7 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     ui->applicationTitle->setText(tApplication::applicationName());
     ui->genericName->setText(tApplication::genericName());
     ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    new tContentSizer(ui->headWidget);
+    //    new tContentSizer(ui->headWidget);
     new tContentSizer(ui->versionsWidget);
     new tContentSizer(ui->copyrightWidget);
 

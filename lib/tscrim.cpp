@@ -27,6 +27,7 @@
 
 struct tScrimPrivate {
         static QMap<QWidget*, tScrim*> scrims;
+        static QMap<QWidget*, QWidget*> scrimProxies;
         QGraphicsBlurEffect* blurEffect;
         QSet<QWidget*> ignoreWidgets;
         QWidget* parentWidget;
@@ -40,6 +41,7 @@ struct tScrimPrivate {
 };
 
 QMap<QWidget*, tScrim*> tScrimPrivate::scrims = QMap<QWidget*, tScrim*>();
+QMap<QWidget*, QWidget*> tScrimPrivate::scrimProxies = QMap<QWidget*, QWidget*>();
 
 tScrim::tScrim(QWidget* parent) :
     QWidget(parent) {
@@ -90,12 +92,34 @@ tScrim::~tScrim() {
 }
 
 tScrim* tScrim::scrimForWidget(QWidget* widget) {
-    if (tScrimPrivate::scrims.contains(widget)) {
-        return tScrimPrivate::scrims.value(widget);
+    auto scrimWidget = tScrim::scrimWidget(widget);
+    if (tScrimPrivate::scrims.contains(scrimWidget)) {
+        return tScrimPrivate::scrims.value(scrimWidget);
     } else {
-        tScrim* scrim = new tScrim(widget);
+        tScrim* scrim = new tScrim(scrimWidget);
         return scrim;
     }
+}
+
+void tScrim::setScrimProxy(QWidget* forWidget, QWidget* toWidget) {
+    tScrimPrivate::scrimProxies.insert(forWidget, toWidget);
+    connect(forWidget, &QWidget::destroyed, forWidget, [forWidget, toWidget] {
+        tScrimPrivate::scrimProxies.removeIf([forWidget, toWidget](QPair<QWidget*, QWidget*> x) {
+            return x.first == forWidget && x.second == toWidget;
+        });
+    });
+    connect(toWidget, &QWidget::destroyed, toWidget, [forWidget, toWidget] {
+        tScrimPrivate::scrimProxies.removeIf([forWidget, toWidget](QPair<QWidget*, QWidget*> x) {
+            return x.first == forWidget && x.second == toWidget;
+        });
+    });
+}
+
+QWidget* tScrim::scrimWidget(QWidget* widget) {
+    if (tScrimPrivate::scrimProxies.contains(widget)) {
+        return tScrimPrivate::scrimProxies.value(widget);
+    }
+    return widget;
 }
 
 void tScrim::addIgnoreWidget(QWidget* ignoreWidget) {
