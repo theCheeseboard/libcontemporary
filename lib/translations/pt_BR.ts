@@ -319,6 +319,20 @@
     </message>
 </context>
 <context>
+    <name>StandardJobProgressWidget</name>
+    <message>
+        <location filename="../jobs/standardjobprogresswidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/standardjobprogresswidget.ui" line="20"/>
+        <location filename="../jobs/standardjobprogresswidget.ui" line="27"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tAboutDialog</name>
     <message>
         <location filename="../taboutdialog.ui" line="251"/>

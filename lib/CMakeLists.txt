@@ -46,6 +46,7 @@ cntp_sourcelist(
         ticon.cpp
         tinputdialog.cpp
         tjob.cpp
+        tstandardjob.cpp
         tjobmanager.cpp
         tlocale.cpp
         tlogger.cpp
@@ -87,6 +88,7 @@ cntp_sourcelist(
         tnotification/tnotification-common.cpp
         jobs/jobbutton.cpp
         jobs/jobspopover.cpp
+        jobs/standardjobprogresswidget.cpp jobs/standardjobprogresswidget.ui
         private/errorflashwidget.cpp 
         private/errorflashwidget.ui
         plugins/tpluginmanagerpane.cpp plugins/tpluginmanagerpane.ui
@@ -137,6 +139,7 @@ cntp_sourcelist(
         ticon.h
         tinputdialog.h
         tjob.h
+        tstandardjob.h
         tjobmanager.h
         tlocale.h
         tlogger.h
@@ -195,6 +198,7 @@ cntp_sourcelist(
         plugins/pluginmanagementpopover.h
         plugins/knownpluginmodel.h
         private/licensetextpopover.h
+        jobs/standardjobprogresswidget.h
 )
 
 
