@@ -147,7 +147,7 @@
               <number>9</number>
              </property>
              <property name="bottomMargin">
-              <number>40</number>
+              <number>6</number>
              </property>
              <item alignment="Qt::AlignTop">
               <widget class="QLabel" name="applicationIcon">
@@ -199,7 +199,7 @@
                    <number>0</number>
                   </property>
                   <property name="bottomMargin">
-                   <number>0</number>
+                   <number>40</number>
                   </property>
                  </layout>
                 </widget>

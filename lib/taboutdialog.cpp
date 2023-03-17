@@ -73,9 +73,12 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
     ui->applicationTitle->setText(tApplication::applicationName());
     ui->genericName->setText(tApplication::genericName());
     ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    //    new tContentSizer(ui->headWidget);
+    new tContentSizer(ui->headWidget);
     new tContentSizer(ui->versionsWidget);
     new tContentSizer(ui->copyrightWidget);
+
+    //    ui->versionsWidget->layout()->setContentsMargins(15 + ui->applicationTitle->sizeHint().height(), 9, 9, 9);
+    //    ui->copyrightLayout->layout()->setContentsMargins(15 + ui->applicationTitle->sizeHint().height(), 9, 9, 9);
 
     if (tApplication::haveApplicationUrl(tApplication::Website)) {
         auto button = new QPushButton(this);
