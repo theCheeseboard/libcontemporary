@@ -123,10 +123,10 @@ void tSettingsWindow::openStaticSettingsWindow(QWidget* parent) {
     tSettingsWindow settingsWindow(parent);
 
     auto sections = tSettingsWindowPrivate::staticSections;
-    std::sort(sections.begin(), sections.end(), [](const tSettingsWindowPrivate::StaticSection& first, const tSettingsWindowPrivate::StaticSection& second) {
-        return std::get<0>(first) - std::get<0>(second);
+    std::stable_sort(sections.begin(), sections.end(), [](const tSettingsWindowPrivate::StaticSection& first, const tSettingsWindowPrivate::StaticSection& second) {
+        return std::get<0>(second) - std::get<0>(first) > 0;
     });
-    for (auto [sectionPriority, sectionName, sectionText] : sections) {
+    for (const auto& [sectionPriority, sectionName, sectionText] : sections) {
         settingsWindow.appendSection(sectionText);
 
         QList<tSettingsWindowPrivate::StaticPane> panes;
@@ -134,10 +134,10 @@ void tSettingsWindow::openStaticSettingsWindow(QWidget* parent) {
             if (std::get<1>(pane) == sectionName) panes.append(pane);
         }
 
-        std::sort(panes.begin(), panes.end(), [](const tSettingsWindowPrivate::StaticPane& first, const tSettingsWindowPrivate::StaticPane& second) {
-            return std::get<0>(first) - std::get<0>(second);
+        std::stable_sort(panes.begin(), panes.end(), [](const tSettingsWindowPrivate::StaticPane& first, const tSettingsWindowPrivate::StaticPane& second) {
+            return std::get<0>(second) - std::get<0>(first) > 0;
         });
-        for (auto [panePriority, paneSection, paneFunction] : panes) {
+        for (const auto& [panePriority, paneSection, paneFunction] : panes) {
             settingsWindow.appendPane(paneFunction());
         }
     }

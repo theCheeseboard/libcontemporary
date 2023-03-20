@@ -361,17 +361,17 @@
         <translation>حول %1</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="82"/>
+        <location filename="../taboutdialog.cpp" line="85"/>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="91"/>
+        <location filename="../taboutdialog.cpp" line="94"/>
         <source>File Bug</source>
         <translation type="unfinished">إرسال مشكلة</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="100"/>
+        <location filename="../taboutdialog.cpp" line="103"/>
         <source>Sources</source>
         <translation type="unfinished">مصادر</translation>
     </message>
