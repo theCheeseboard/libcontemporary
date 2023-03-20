@@ -75,6 +75,7 @@ cntp_sourcelist(
         twindowtabberbutton.cpp
         twindowthumbnail.cpp
         texception.cpp
+        tqueueguard.cpp
         tx11info.cpp
         tcontentsizer.cpp
         private/debuglogpopover.cpp
@@ -117,6 +118,7 @@ cntp_sourcelist(
         private/debuglogwindow.ui
 
         private/licensetextpopover.cpp private/licensetextpopover.ui
+        private/tqueueguardhelper.cpp
 
         thelibs_icons.qrc
 
@@ -172,6 +174,7 @@ cntp_sourcelist(
         tsubtitlelabel.h
         tcontentsizer.h
         texception.h
+        tqueueguard.h
         plugins/plugininterface.h
         plugins/tpluginmanager.h
         plugins/tpluginmanagerpane.h
@@ -199,6 +202,7 @@ cntp_sourcelist(
         plugins/knownpluginmodel.h
         private/licensetextpopover.h
         jobs/standardjobprogresswidget.h
+        private/tqueueguardhelper.h
 )
 
 
