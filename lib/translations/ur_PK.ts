@@ -783,7 +783,7 @@
     <name>tSettingsWindow</name>
     <message>
         <location filename="../tsettingswindow/tsettingswindow.ui" line="44"/>
-        <location filename="../tsettingswindow/tsettingswindow.cpp" line="42"/>
+        <location filename="../tsettingswindow/tsettingswindow.cpp" line="51"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
