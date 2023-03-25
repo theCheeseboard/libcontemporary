@@ -31,6 +31,8 @@ class LIBCONTEMPORARY_EXPORT tScrim : public QWidget {
         ~tScrim();
 
         static tScrim* scrimForWidget(QWidget* widget);
+        static void setScrimProxy(QWidget* forWidget, QWidget* toWidget);
+        static QWidget* scrimWidget(QWidget* widget);
 
         void addIgnoreWidget(QWidget* ignoreWidget);
         void setBlurEnabled(bool blurEnabled);

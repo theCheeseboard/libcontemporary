@@ -53,7 +53,7 @@ void tIcon::processWidget(QWidget* widget) {
 void tIcon::processWidget(QWidget* widget, QLocale locale) {
     QList<QWidget*> widgets = widget->findChildren<QWidget*>();
     for (QWidget* widget : qAsConst(widgets)) {
-        if (QAbstractButton* button = qobject_cast<QAbstractButton*>(widget)) {
+        if (auto* button = qobject_cast<QAbstractButton*>(widget)) {
             if (!button->icon().name().isEmpty()) button->setIcon(fromTheme(locale, button->icon().name()));
         }
     }

@@ -99,6 +99,19 @@
     </message>
 </context>
 <context>
+    <name>LicenseTextPopover</name>
+    <message>
+        <location filename="../private/licensetextpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/licensetextpopover.ui" line="35"/>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <location filename="../tapplication.cpp" line="130"/>
@@ -317,45 +330,72 @@
     </message>
 </context>
 <context>
+    <name>StandardJobProgressWidget</name>
+    <message>
+        <location filename="../jobs/standardjobprogresswidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/standardjobprogresswidget.ui" line="20"/>
+        <location filename="../jobs/standardjobprogresswidget.ui" line="27"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tAboutDialog</name>
     <message>
-        <location filename="../taboutdialog.ui" line="194"/>
+        <location filename="../taboutdialog.ui" line="251"/>
         <source>SOFTWARE</source>
         <translation>PHẦN MỀM</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="239"/>
+        <location filename="../taboutdialog.ui" line="297"/>
         <source>COPYRIGHT</source>
         <translation>BẢN QUYỀN</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="vanished">OK</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="35"/>
-        <location filename="../taboutdialog.cpp" line="36"/>
+        <location filename="../taboutdialog.cpp" line="71"/>
         <source>About %1</source>
         <translation>Giới thiệu về %1</translation>
+    </message>
+    <message>
+        <location filename="../taboutdialog.cpp" line="85"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../taboutdialog.cpp" line="94"/>
+        <source>File Bug</source>
+        <translation type="unfinished">Báo cáo lỗi</translation>
+    </message>
+    <message>
+        <location filename="../taboutdialog.cpp" line="103"/>
+        <source>Sources</source>
+        <translation type="unfinished">Mã nguồn</translation>
     </message>
 </context>
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="697"/>
+        <location filename="../tapplication.cpp" line="701"/>
         <source>Copyright © %1.</source>
         <translation>Bản Quyền © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="670"/>
-        <location filename="../tapplication.cpp" line="673"/>
-        <location filename="../tapplication.cpp" line="676"/>
-        <location filename="../tapplication.cpp" line="679"/>
-        <location filename="../tapplication.cpp" line="682"/>
-        <location filename="../tapplication.cpp" line="685"/>
-        <location filename="../tapplication.cpp" line="688"/>
-        <location filename="../tapplication.cpp" line="691"/>
+        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="686"/>
+        <location filename="../tapplication.cpp" line="689"/>
+        <location filename="../tapplication.cpp" line="692"/>
+        <location filename="../tapplication.cpp" line="695"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Được cấp phép theo điều khoản của %1.</translation>
     </message>
@@ -400,42 +440,42 @@
         <translation>Nền tảng</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="670"/>
+        <location filename="../tapplication.cpp" line="674"/>
         <source>GNU General Public License, version 3</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="673"/>
+        <location filename="../tapplication.cpp" line="677"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 3, hoặc mới hơn</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="676"/>
+        <location filename="../tapplication.cpp" line="680"/>
         <source>GNU General Public License, version 2</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="679"/>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>Giấy phép Công cộng GNU, phiên bản 2, hoặc mới hơn</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="682"/>
+        <location filename="../tapplication.cpp" line="686"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="685"/>
+        <location filename="../tapplication.cpp" line="689"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3, hoặc mới hơn</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="688"/>
+        <location filename="../tapplication.cpp" line="692"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="691"/>
+        <location filename="../tapplication.cpp" line="695"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1, hoặc mới hơn</translation>
     </message>
@@ -778,7 +818,7 @@
     <name>tSettingsWindow</name>
     <message>
         <location filename="../tsettingswindow/tsettingswindow.ui" line="44"/>
-        <location filename="../tsettingswindow/tsettingswindow.cpp" line="42"/>
+        <location filename="../tsettingswindow/tsettingswindow.cpp" line="51"/>
         <source>Settings</source>
         <translation>Cài đặt</translation>
     </message>

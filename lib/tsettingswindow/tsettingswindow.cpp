@@ -27,11 +27,20 @@
 #include <QStandardItemModel>
 
 struct tSettingsWindowPrivate {
-    QStandardItemModel* leftModel;
+        QStandardItemModel* leftModel;
 
-    QList<QWidget*> rightSide;
-    bool addedFirst = false;
+        QList<QWidget*> rightSide;
+        bool addedFirst = false;
+
+        typedef std::tuple<int, QString, QString> StaticSection;
+        typedef std::tuple<int, QString, std::function<tSettingsPane*()>> StaticPane;
+
+        static QList<StaticSection> staticSections;
+        static QList<StaticPane> staticPanes;
 };
+
+QList<tSettingsWindowPrivate::StaticSection> tSettingsWindowPrivate::staticSections = QList<tSettingsWindowPrivate::StaticSection>();
+QList<tSettingsWindowPrivate::StaticPane> tSettingsWindowPrivate::staticPanes = QList<tSettingsWindowPrivate::StaticPane>();
 
 tSettingsWindow::tSettingsWindow(QWidget* parent) :
     QDialog(parent),
@@ -96,6 +105,44 @@ void tSettingsWindow::appendPane(tSettingsPane* pane) {
 
 void tSettingsWindow::appendSeparator() {
     this->appendSection("");
+}
+
+void tSettingsWindow::addStaticSection(int priority, QString name, QString text) {
+    for (auto section : tSettingsWindowPrivate::staticSections) {
+        if (std::get<1>(section) == name) return;
+    }
+
+    tSettingsWindowPrivate::staticSections.append({priority, name, text});
+}
+
+void tSettingsWindow::addStaticPane(int priority, QString sectionName, std::function<tSettingsPane*()> paneGenerator) {
+    tSettingsWindowPrivate::staticPanes.append({priority, sectionName, paneGenerator});
+}
+
+void tSettingsWindow::openStaticSettingsWindow(QWidget* parent) {
+    tSettingsWindow settingsWindow(parent);
+
+    auto sections = tSettingsWindowPrivate::staticSections;
+    std::stable_sort(sections.begin(), sections.end(), [](const tSettingsWindowPrivate::StaticSection& first, const tSettingsWindowPrivate::StaticSection& second) {
+        return std::get<0>(second) - std::get<0>(first) > 0;
+    });
+    for (const auto& [sectionPriority, sectionName, sectionText] : sections) {
+        settingsWindow.appendSection(sectionText);
+
+        QList<tSettingsWindowPrivate::StaticPane> panes;
+        for (auto pane : tSettingsWindowPrivate::staticPanes) {
+            if (std::get<1>(pane) == sectionName) panes.append(pane);
+        }
+
+        std::stable_sort(panes.begin(), panes.end(), [](const tSettingsWindowPrivate::StaticPane& first, const tSettingsWindowPrivate::StaticPane& second) {
+            return std::get<0>(second) - std::get<0>(first) > 0;
+        });
+        for (const auto& [panePriority, paneSection, paneFunction] : panes) {
+            settingsWindow.appendPane(paneFunction());
+        }
+    }
+
+    settingsWindow.exec();
 }
 
 void tSettingsWindow::on_titleLabel_backButtonClicked() {

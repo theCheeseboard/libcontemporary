@@ -46,6 +46,7 @@ cntp_sourcelist(
         ticon.cpp
         tinputdialog.cpp
         tjob.cpp
+        tstandardjob.cpp
         tjobmanager.cpp
         tlocale.cpp
         tlogger.cpp
@@ -74,6 +75,7 @@ cntp_sourcelist(
         twindowtabberbutton.cpp
         twindowthumbnail.cpp
         texception.cpp
+        tqueueguard.cpp
         tx11info.cpp
         tcontentsizer.cpp
         private/debuglogpopover.cpp
@@ -87,6 +89,7 @@ cntp_sourcelist(
         tnotification/tnotification-common.cpp
         jobs/jobbutton.cpp
         jobs/jobspopover.cpp
+        jobs/standardjobprogresswidget.cpp jobs/standardjobprogresswidget.ui
         private/errorflashwidget.cpp 
         private/errorflashwidget.ui
         plugins/tpluginmanagerpane.cpp plugins/tpluginmanagerpane.ui
@@ -114,6 +117,9 @@ cntp_sourcelist(
         private/debuglogpopover.ui
         private/debuglogwindow.ui
 
+        private/licensetextpopover.cpp private/licensetextpopover.ui
+        private/tqueueguardhelper.cpp
+
         thelibs_icons.qrc
 
         private/tmessageboxbackend.h
@@ -135,6 +141,7 @@ cntp_sourcelist(
         ticon.h
         tinputdialog.h
         tjob.h
+        tstandardjob.h
         tjobmanager.h
         tlocale.h
         tlogger.h
@@ -167,6 +174,7 @@ cntp_sourcelist(
         tsubtitlelabel.h
         tcontentsizer.h
         texception.h
+        tqueueguard.h
         plugins/plugininterface.h
         plugins/tpluginmanager.h
         plugins/tpluginmanagerpane.h
@@ -192,6 +200,9 @@ cntp_sourcelist(
         tcommandpalette/tcommandpaletteallscope.h
         plugins/pluginmanagementpopover.h
         plugins/knownpluginmodel.h
+        private/licensetextpopover.h
+        jobs/standardjobprogresswidget.h
+        private/tqueueguardhelper.h
 )
 
 
@@ -316,7 +327,15 @@ cntp_translate(libcontemporary OUTPUT QM_FILES)
 qt_add_resources(libcontemporary "thelibs_translations"
     PREFIX "/the-libs/translations"
     BASE "${CMAKE_CURRENT_BINARY_DIR}"
-    FILES "${QM_FILES}")
+    FILES "${QM_FILES}"
+)
+
+file(GLOB LICENSE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/licenses/*")
+qt_add_resources(libcontemporary "libcontemporary_licenses"
+    PREFIX "/the-libs/licenses"
+    BASE "${CMAKE_CURRENT_SOURCE_DIR}/licenses"
+    FILES "${LICENSE_FILES}"
+)
 
 install(TARGETS libcontemporary
         EXPORT libcontemporaryTargets

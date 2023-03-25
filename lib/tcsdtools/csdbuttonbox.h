@@ -56,6 +56,7 @@ class CsdButtonBox : public QWidget
 #endif
 
         bool eventFilter(QObject* watched, QEvent* event) override;
+        void updateButtons();
 };
 
 #endif // CSDBUTTONBOX_H

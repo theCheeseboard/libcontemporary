@@ -27,21 +27,24 @@ void tCsdTools::macHandleDrag(QPoint screenPos, QWidget* dragWindow) {
     CGEventRef cgEvent = CGEventCreateMouseEvent(nullptr, kCGEventLeftMouseDown, screenPos.toCGPoint(), kCGMouseButtonLeft);
     NSEvent* nsEvent = [NSEvent eventWithCGEvent:cgEvent];
 
-    NSView* view = reinterpret_cast<NSView*>(dragWindow->winId());
+    auto view = reinterpret_cast<NSView*>(dragWindow->winId());
     [view.window performWindowDragWithEvent:nsEvent];
     CFRelease(cgEvent);
 }
 
 void tCsdTools::macInstallResizeAction(QWidget* widget) {
-    NSView* view = reinterpret_cast<NSView*>(widget->winId());
+    auto view = reinterpret_cast<NSView*>(widget->winId());
 
-    NSWindowStyleMask styleMask = NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskUnifiedTitleAndToolbar | NSWindowStyleMaskResizable | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
+    NSWindowStyleMask styleMask = NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskUnifiedTitleAndToolbar | NSWindowStyleMaskResizable;
     if ([view.window styleMask] & NSWindowStyleMaskFullScreen) styleMask |= NSWindowStyleMaskFullScreen;
+    if (widget->windowFlags() & Qt::WindowMinimizeButtonHint) styleMask |= NSWindowStyleMaskMiniaturizable;
+    if (widget->windowFlags() & Qt::WindowCloseButtonHint) styleMask |= NSWindowStyleMaskClosable;
     [view.window setStyleMask:styleMask];
+    [view.layer setCornerRadius:10.0];
 }
 
 void tCsdTools::macRemoveResizeAction(QWidget* widget) {
-    NSView* view = reinterpret_cast<NSView*>(widget->winId());
+    auto view = reinterpret_cast<NSView*>(widget->winId());
 
     NSWindowStyleMask styleMask = NSWindowStyleMaskResizable | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
     [view.window setStyleMask:styleMask];

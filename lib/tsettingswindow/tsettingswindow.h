@@ -40,6 +40,10 @@ class LIBCONTEMPORARY_EXPORT tSettingsWindow : public QDialog {
         void appendPane(tSettingsPane* pane);
         void appendSeparator();
 
+        static void addStaticSection(int priority, QString name, QString text);
+        static void addStaticPane(int priority, QString sectionName, std::function<tSettingsPane*()> paneGenerator);
+        static void openStaticSettingsWindow(QWidget* parent);
+
     private slots:
         void on_titleLabel_backButtonClicked();
 
