@@ -65,7 +65,7 @@ function(cntp_dotcontemporary_desktopId targetName outputVar)
         endif()
     endif()
 
-    if(${DESKTOP_ID_RESOLVE_BLUEPRINT})
+    if(${DESKTOP_ID_RESOLVE_BLUEPRINT} AND BLUEPRINT)
         set(DESKTOPID "${DESKTOPID}_blueprint")
     endif()
 
