@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.4.0)
 
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(libcontemporary REQUIRED)
 
 set(SOURCES
@@ -17,7 +17,7 @@ set(PRIVATE_HEADERS
 )
 
 add_library(lib$($LCPNAME) SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS})
-cntp_init(lib$($LCPNAME) 17)
+cntp_init(lib$($LCPNAME) 20)
 set_target_properties(lib$($LCPNAME) PROPERTIES
         OUTPUT_NAME $($LCPNAME)
         FRAMEWORK TRUE
@@ -25,7 +25,7 @@ set_target_properties(lib$($LCPNAME) PROPERTIES
         VERSION 1.0.0
         PUBLIC_HEADER "${HEADERS}")
 
-target_link_libraries(lib$($LCPNAME) Qt6::Widgets)
+target_link_libraries(lib$($LCPNAME) Qt::Widgets)
 target_compile_definitions(lib$($LCPNAME) PRIVATE LIB$($UCPNAME)_LIBRARY)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

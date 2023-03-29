@@ -1,5 +1,4 @@
 #include <QCommandLineParser>
-#include <QDir>
 #include <QJsonArray>
 #include <QUrl>
 #include <tapplication.h>
@@ -10,25 +9,17 @@
 
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
-
-    if (QDir(QStringLiteral("%1/share/$($LCPNAME)/").arg(SYSTEM_PREFIX_DIRECTORY)).exists()) {
-        a.setShareDir(QStringLiteral("%1/share/$($LCPNAME)/").arg(SYSTEM_PREFIX_DIRECTORY));
-    } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/$($LCPNAME)/")).exists()) {
-        a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/$($LCPNAME)/"));
-    }
+    a.setApplicationShareDir("$($LCPNAME)");
     a.installTranslators();
 
     a.setApplicationVersion("1.0");
     a.setGenericName(QApplication::translate("main", "$($project-description)"));
-    a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("$($copyright-holder)");
     a.setCopyrightYear("$($YEAR)");
     a.setOrganizationName("$($organization)");
     a.setApplicationName(T_APPMETA_READABLE_NAME);
     a.setDesktopFileName(T_APPMETA_DESKTOP_ID);
-
-    a.registerCrashTrap();
 
 #if defined(Q_OS_MAC)
     a.setQuitOnLastWindowClosed(false);

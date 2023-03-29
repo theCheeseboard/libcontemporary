@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21.0)
 
 project($($LCPNAME) VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(libcontemporary REQUIRED)
 
 set(SOURCES
@@ -37,7 +37,7 @@ set_target_properties($($LCPNAME) PROPERTIES
         WIN32_EXECUTABLE TRUE
         CNTP_DATA_SUBDIR $($LCPNAME))
 
-cntp_init($($LCPNAME) 17)
+cntp_init($($LCPNAME) 20)
 cntp_translate($($LCPNAME))
 cntp_target_name($($LCPNAME) "$($PNAME)")
 cntp_app_icon($($LCPNAME)
@@ -49,7 +49,7 @@ cntp_target_desktop_file($($LCPNAME)
 cntp_defaults_file($($LCPNAME)
     DEFAULTS_FILE $($LCPNAME).conf)
 
-target_link_libraries($($LCPNAME) Qt6::Widgets libcontemporary)
+target_link_libraries($($LCPNAME) Qt::Widgets libcontemporary)
 target_include_directories($($LCPNAME) PUBLIC ../lib$($LCPNAME)/)
 
 install(TARGETS $($LCPNAME)
