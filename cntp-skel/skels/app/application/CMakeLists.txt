@@ -49,7 +49,7 @@ cntp_target_desktop_file($($LCPNAME)
 cntp_defaults_file($($LCPNAME)
     DEFAULTS_FILE $($LCPNAME).conf)
 
-target_link_libraries($($LCPNAME) Qt::Widgets libcontemporary)
+target_link_libraries($($LCPNAME) Qt::Widgets libcontemporary lib$($LCPNAME))
 target_include_directories($($LCPNAME) PUBLIC ../lib$($LCPNAME)/)
 
 install(TARGETS $($LCPNAME)
