@@ -24,7 +24,7 @@
 #include "tapplication.h"
 
 #if QT_CONFIG(xcb) || defined(Q_CLANG_QDOC)
-#define HAVE_TX11INFO
+    #define HAVE_TX11INFO
 #endif
 
 #ifndef HAVE_TX11INFO
@@ -40,7 +40,7 @@ class LIBCONTEMPORARY_EXPORT tX11Info : public QObject {
         static Window appRootWindow();
         static unsigned long appTime();
 
-    signals:
+    Q_SIGNALS:
 
     private:
         explicit tX11Info(QObject* parent = nullptr);

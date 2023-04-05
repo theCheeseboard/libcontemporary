@@ -21,9 +21,9 @@
 #define TLOGGER_H
 
 #include "libcontemporary_global.h"
-#include <QObject>
 #include <QDateTime>
 #include <QDebug>
+#include <QObject>
 
 struct tLoggerPrivate;
 struct tLogWriterPrivate;
@@ -33,13 +33,13 @@ class LIBCONTEMPORARY_EXPORT tLogger : public QObject {
         ~tLogger();
 
         struct LogItem {
-            QDateTime timestamp;
-            QString text;
-            QString context;
-            QString file;
-            int line;
-            QString function;
-            QtMsgType severity;
+                QDateTime timestamp;
+                QString text;
+                QString context;
+                QString file;
+                int line;
+                QString function;
+                QtMsgType severity;
         };
 
         static tLogger* instance();
@@ -52,7 +52,7 @@ class LIBCONTEMPORARY_EXPORT tLogger : public QObject {
 
         static QString severityToString(QtMsgType severity);
 
-    signals:
+    Q_SIGNALS:
         void newLogItem(LogItem item);
         void logCleared();
 

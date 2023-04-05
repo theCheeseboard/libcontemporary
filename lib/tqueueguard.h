@@ -13,7 +13,7 @@ class LIBCONTEMPORARY_EXPORT tQueueGuard : public QObject {
         ~tQueueGuard();
 
         struct GuardLockPrivate;
-        class GuardLock {
+        class LIBCONTEMPORARY_EXPORT GuardLock {
             public:
                 GuardLock(GuardLock&& other);
                 ~GuardLock();
