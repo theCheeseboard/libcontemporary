@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs/promises");
 
 async function run() {
-    await installMatcher("gcc-matcher");
+    await installMatcher("gcc-matcher.json");
 }
 
 async function installMatcher(file) {
