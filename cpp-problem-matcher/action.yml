@@ -1,0 +1,8 @@
+name: 'C++ Problem Matcher'
+description: 'Install problem matchers for C++'
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        echo "::add-matcher::gcc-matcher.json"
+      shell: bash

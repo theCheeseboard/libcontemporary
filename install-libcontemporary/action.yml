@@ -12,6 +12,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - uses: vicr123/libcontemporary/cpp-problem-matcher@actions
+      name: "Install C++ problem matcher"
     - uses: vicr123/libcontemporary/build-project@actions
       name: "Build QCoro"
       with:
