@@ -13,6 +13,13 @@ for dir in *; do
             pushd $dir
             ncc build index.js -o $OUTPUT/$dir/dist -m --source-map -C
             cp action.yml $OUTPUT/$dir
+
+            if [ -f ".resources" ]; then
+                while read resource; do
+                    cp $resource $OUTPUT/$dir/dist
+                done <.resources
+            fi
+
             popd
         else
           cp -r $dir $OUTPUT/
