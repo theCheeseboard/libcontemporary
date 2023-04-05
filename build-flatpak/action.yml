@@ -19,6 +19,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - uses: vicr123/libcontemporary/cpp-problem-matcher@actions
+      name: "Install C++ problem matcher"
     - uses: actions/checkout@v2
     # Docker is required by the docker/setup-qemu-action which enables emulation
     - name: Install Docker dependency
