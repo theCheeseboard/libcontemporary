@@ -39,13 +39,16 @@ class LIBCONTEMPORARY_EXPORT tJob : public QObject {
         virtual quint64 totalProgress() = 0;
         virtual State state() = 0;
         virtual QWidget* makeProgressWidget() = 0;
+        virtual QString titleString();
+        virtual QString statusString();
         virtual bool isTransient();
 
     signals:
         void progressChanged(quint64 progress);
         void totalProgressChanged(quint64 totalProgress);
-        void stateChanged(State state);
-
+        void stateChanged(tJob::State state);
+        void titleStringChanged(QString titleString);
+        void statusStringChanged(QString statusString);
 };
 
 #endif // TJOB_H

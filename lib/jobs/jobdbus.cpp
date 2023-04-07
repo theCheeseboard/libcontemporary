@@ -33,6 +33,8 @@ JobDbus::JobDbus(QString path, tJob* job, QObject* parent) :
 
     connect(job, &tJob::progressChanged, this, &JobDbus::ProgressChanged);
     connect(job, &tJob::totalProgressChanged, this, &JobDbus::TotalProgressChanged);
+    connect(job, &tJob::titleStringChanged, this, &JobDbus::TitleChanged);
+    connect(job, &tJob::statusStringChanged, this, &JobDbus::StatusChanged);
     connect(job, &tJob::stateChanged, this, [this] {
         emit StateChanged(this->State());
     });
@@ -65,4 +67,12 @@ QString JobDbus::State() {
             return QStringLiteral("RequiresAttention");
     }
     return QStringLiteral("");
+}
+
+QString JobDbus::Title() {
+    return d->job->titleString();
+}
+
+QString JobDbus::Status() {
+    return d->job->statusString();
 }

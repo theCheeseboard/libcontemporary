@@ -19,23 +19,24 @@
  ******************************************************************************/
 #include "jobdbusmanager.h"
 
-#include <tapplication.h>
-#include <QDBusConnection>
+#include "jobdbus.h"
 #include "tjob.h"
 #include "tjobmanager.h"
-#include "jobdbus.h"
+#include <QDBusConnection>
+#include <tapplication.h>
 
 #include "manageradaptor.h"
 
 struct JobDbusManagerPrivate {
-    QList<QDBusObjectPath> jobs;
+        QList<QDBusObjectPath> jobs;
 };
 
-JobDbusManager::JobDbusManager(QObject* parent) : QObject(parent) {
+JobDbusManager::JobDbusManager(QObject* parent) :
+    QObject(parent) {
     d = new JobDbusManagerPrivate();
-    QDBusConnection::sessionBus().registerService(QStringLiteral("com.vicr123.thelibs.tjob.%1").arg(qApp->applicationName()));
     new ManagerAdaptor(this);
-    QDBusConnection::sessionBus().registerObject("/com/vicr123/thelibs/tjob", this);
+    QDBusConnection::sessionBus().registerObject("/com/vicr123/libcontemporary/tjob", this);
+    QDBusConnection::sessionBus().registerService(QStringLiteral("com.vicr123.libcontemporary.tjob.app%1").arg(qApp->applicationPid()));
 
     connect(tJobManager::instance(), &tJobManager::jobAdded, this, &JobDbusManager::addJob);
     for (tJob* job : tJobManager::jobs()) {
@@ -51,8 +52,16 @@ QList<QDBusObjectPath> JobDbusManager::Jobs() {
     return d->jobs;
 }
 
+QString JobDbusManager::applicationName() {
+    return qApp->applicationName();
+}
+
+QString JobDbusManager::applicationDesktopEntry() {
+    return tApplication::desktopFileName();
+}
+
 void JobDbusManager::addJob(tJob* job) {
-    QDBusObjectPath path(QStringLiteral("/com/vicr123/thelibs/tjob/%1").arg(d->jobs.count() + 1));
+    QDBusObjectPath path(QStringLiteral("/com/vicr123/libcontemporary/tjob/%1").arg(d->jobs.count() + 1));
     new JobDbus(path.path(), job, this);
     d->jobs.append(path);
 

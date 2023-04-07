@@ -19,8 +19,16 @@
  ******************************************************************************/
 #include "tjob.h"
 
-tJob::tJob(QObject* parent) : QObject(parent) {
+tJob::tJob(QObject* parent) :
+    QObject(parent) {
+}
 
+QString tJob::titleString() {
+    return "";
+}
+
+QString tJob::statusString() {
+    return "";
 }
 
 bool tJob::isTransient() {

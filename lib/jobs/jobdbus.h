@@ -26,7 +26,7 @@ class tJob;
 struct JobDbusPrivate;
 class JobDbus : public QObject {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", "com.vicr123.thelibs.tjob.Job")
+        Q_CLASSINFO("D-Bus Interface", "com.vicr123.libcontemporary.tjob.Job")
     public:
         explicit JobDbus(QString path, tJob* job, QObject* parent = nullptr);
         ~JobDbus();
@@ -35,11 +35,15 @@ class JobDbus : public QObject {
         Q_SCRIPTABLE quint64 Progress();
         Q_SCRIPTABLE quint64 TotalProgress();
         Q_SCRIPTABLE QString State();
+        Q_SCRIPTABLE QString Title();
+        Q_SCRIPTABLE QString Status();
 
     signals:
         Q_SCRIPTABLE void ProgressChanged(quint64 progress);
         Q_SCRIPTABLE void TotalProgressChanged(quint64 totalProgress);
         Q_SCRIPTABLE void StateChanged(QString state);
+        Q_SCRIPTABLE void TitleChanged(QString state);
+        Q_SCRIPTABLE void StatusChanged(QString state);
 
     private:
         JobDbusPrivate* d;

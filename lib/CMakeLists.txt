@@ -207,8 +207,10 @@ cntp_sourcelist(
 
 
 if(${Qt${QT_VERSION_MAJOR}DBus_FOUND})
-    qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Manager.xml manageradaptor.h)
-    qt_add_dbus_adaptor(SOURCES jobs/com.vicr123.thelibs.tjob.Job.xml jobadaptor.h)
+    qt_generate_dbus_interface(jobs/jobdbusmanager.h)
+    qt_generate_dbus_interface(jobs/jobdbus.h)
+    qt_add_dbus_adaptor(SOURCES ${CMAKE_CURRENT_BINARY_DIR}/jobdbusmanager.xml jobs/jobdbusmanager.h JobDbusManager manageradaptor)
+    qt_add_dbus_adaptor(SOURCES ${CMAKE_CURRENT_BINARY_DIR}/jobdbus.xml jobs/jobdbus.h JobDbus jobadaptor)
 endif()
 
 cntp_sourcelist(

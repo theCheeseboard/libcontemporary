@@ -20,10 +20,6 @@ class LIBCONTEMPORARY_EXPORT tStandardJob : public tJob {
         QString titleString();
         QString statusString();
 
-    signals:
-        void titleStringChanged(QString titleString);
-        void statusStringChanged(QString statusString);
-
     private:
         tStandardJobPrivate* d;
 

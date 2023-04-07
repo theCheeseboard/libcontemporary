@@ -27,10 +27,15 @@ class tJob;
 struct JobDbusManagerPrivate;
 class JobDbusManager : public QObject {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", "com.vicr123.thelibs.tjob.Manager")
+    Q_SCRIPTABLE Q_PROPERTY(QString ApplicationName READ applicationName)
+                Q_SCRIPTABLE Q_PROPERTY(QString ApplicationDesktopEntry READ applicationDesktopEntry)
+        Q_CLASSINFO("D-Bus Interface", "com.vicr123.libcontemporary.tjob.Manager")
     public:
         explicit JobDbusManager(QObject* parent = nullptr);
         ~JobDbusManager();
+
+        QString applicationName();
+        QString applicationDesktopEntry();
 
     public slots:
         Q_SCRIPTABLE QList<QDBusObjectPath> Jobs();
