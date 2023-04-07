@@ -206,7 +206,7 @@ cntp_sourcelist(
 )
 
 
-if(${Qt${QT_VERSION_MAJOR}DBus_FOUND})
+if(${Qt${QT_VERSION_MAJOR}DBus_FOUND} AND ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     qt_generate_dbus_interface(jobs/jobdbusmanager.h)
     qt_generate_dbus_interface(jobs/jobdbus.h)
     qt_add_dbus_adaptor(SOURCES ${CMAKE_CURRENT_BINARY_DIR}/jobdbusmanager.xml jobs/jobdbusmanager.h JobDbusManager manageradaptor)
