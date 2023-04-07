@@ -33,7 +33,7 @@ QCoro::Task<tQueueGuard::GuardLock> tQueueGuard::guardQueue() {
         co_await qCoro(o, &tQueueGuardHelper::unlock);
     }
 
-    co_return std::move(GuardLock(this));
+    co_return GuardLock(this);
 }
 
 void tQueueGuard::unlock() {
