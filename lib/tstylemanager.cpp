@@ -50,6 +50,11 @@ void tStyleManager::updateStyle () {
             tApplication::applicationDirPath() + "\\icons",               // Windows
             tApplication::macOSBundlePath() + "/Contents/Resources/icons" // macOS
         });
+
+        if (qEnvironmentVariableIsSet("THELIBS_OVERRIDE_ICON_SEARCH_PATH")) {
+            QIcon::setThemeSearchPaths({ qEnvironmentVariable("THELIBS_OVERRIDE_ICON_SEARCH_PATH") });
+        }
+
         QIcon::setThemeName("contemporary");
         QIcon::setFallbackThemeName("contemporary-icons");
 
