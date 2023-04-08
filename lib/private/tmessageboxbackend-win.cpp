@@ -2,6 +2,7 @@
 #include "tapplication.h"
 #include <Windows.h>
 #include <commctrl.h>
+#include <tlogger.h>
 #include <QThread.h>
 
 #include "tmessageboxbackend-win.h"
@@ -213,8 +214,10 @@ void TaskDialogWorker::showDialog() {
 
     int closingButton;
     BOOL checkBox;
-    Q_ASSERT(SUCCEEDED(TaskDialogIndirect(&config, &closingButton, nullptr, &checkBox)));
-    emit buttonMap.value(closingButton)->buttonPressed(checkBox != FALSE);
+    if (SUCCEEDED(TaskDialogIndirect(&config, &closingButton, nullptr, &checkBox))) {
+        emit buttonMap.value(closingButton)->buttonPressed(checkBox != FALSE);
+    }
+
     emit finished();
     if (config.hMainIcon) {
         DestroyIcon(config.hMainIcon);
