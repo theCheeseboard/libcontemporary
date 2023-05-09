@@ -36,6 +36,10 @@ private:                          \
                                      \
     QString cls::type() const {      \
         return QStringLiteral(#cls); \
+    }                                \
+                                     \
+    QString cls::reason() const {    \
+        return _reason;              \
     }
 
 class LIBCONTEMPORARY_EXPORT tException : public QException {
