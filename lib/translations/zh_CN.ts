@@ -589,7 +589,7 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="109"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="154"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="155"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -600,7 +600,7 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="115"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="151"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="152"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -661,13 +661,13 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="151"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="160"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="161"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="154"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="163"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="164"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -677,27 +677,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="157"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="158"/>
         <source>Discard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="166"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="167"/>
         <source>Restore defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="169"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="170"/>
         <source>Save all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="172"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="173"/>
         <source>Yes to all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="175"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="176"/>
         <source>No to all</source>
         <translation type="unfinished"></translation>
     </message>

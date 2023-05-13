@@ -17,6 +17,8 @@ class TRange : public QObject {
         void trange_canFilter();
         void trange_canFilterWithIndex();
         void trange_canCompose();
+        void trange_canTake();
+        void trange_canSkip();
         void trange_canReturn();
 };
 

@@ -4,11 +4,9 @@
 #include <ranges/trange.h>
 
 TRange::TRange() {
-
 }
 
 TRange::~TRange() {
-
 }
 
 void TRange::trange_canIterate() {
@@ -96,24 +94,54 @@ void TRange::trange_canFilterWithIndex() {
 void TRange::trange_canCompose() {
     QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
     auto range = tRange(ints).filter([](int x) {
-        return x % 2 == 0;
-    }).map<QString>([](int x) {
-        return QString::number(x);
-    });
+                                 return x % 2 == 0;
+                             })
+                     .map<QString>([](int x) {
+                         return QString::number(x);
+                     });
 
     for (QString item : range) {
         QVERIFY(item.toInt() % 2 == 0);
     }
 }
 
+void TRange::trange_canTake() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto range = tRange(ints).take(3);
+
+    auto i = 1;
+    auto count = 0;
+    for (auto item : range) {
+        QCOMPARE(item, i);
+        i++;
+        count++;
+    }
+    QCOMPARE(count, 3);
+}
+
+void TRange::trange_canSkip() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto range = tRange(ints).skip(3);
+
+    auto i = 4;
+    auto count = 0;
+    for (auto item : range) {
+        QCOMPARE(item, i);
+        i++;
+        count++;
+    }
+    QCOMPARE(count, 7);
+}
+
 void TRange::trange_canReturn() {
     auto createRange = [] {
         QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
         auto range = tRange(ints).filter([](int x) {
-            return x % 2 == 0;
-        }).map<QString>([](int x) {
-            return QString::number(x);
-        });
+                                     return x % 2 == 0;
+                                 })
+                         .map<QString>([](int x) {
+                             return QString::number(x);
+                         });
         return range;
     };
 
