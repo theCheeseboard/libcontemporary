@@ -19,6 +19,7 @@ class TRange : public QObject {
         void trange_canCompose();
         void trange_canTake();
         void trange_canSkip();
+        void trange_canUnique();
         void trange_canReturn();
 };
 

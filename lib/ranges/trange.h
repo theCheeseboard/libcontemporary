@@ -56,6 +56,7 @@ template<typename T> class tRange {
     public:
         template<typename R> using MapFunction = std::function<const R(T)>;
         template<typename R> using MapFunctionWithIndex = std::function<const R(T, int)>;
+        template<typename R> using UniqueFunction = std::function<const R(T)>;
         using FilterFunction = std::function<bool(T)>;
         using FilterFunctionWithIndex = std::function<bool(T, int)>;
 
@@ -63,7 +64,7 @@ template<typename T> class tRange {
             _backing(new tRangeBacking<T>(list)) {
         }
 
-        tRange(QCoro::Generator<T>&& gen) :
+        tRange(QCoro::Generator<const T>&& gen) :
             _backing(new tRangeBacking<T>(std::move(gen))) {
         }
 
@@ -98,6 +99,16 @@ template<typename T> class tRange {
             return tRange(new tRangeBacking(filter_impl(filtering, _backing)));
         }
 
+        tRange<T> unique() {
+            return unique<T>([](T item) {
+                return item;
+            });
+        }
+
+        template<typename R> tRange<T> unique(UniqueFunction<R> uniqing) {
+            return tRange(new tRangeBacking(unique_impl(uniqing, _backing)));
+        }
+
         bool every(FilterFunction filtering) {
             for (auto item : *_backing) {
                 if (!filtering(item)) return false;
@@ -118,6 +129,14 @@ template<typename T> class tRange {
 
         tRange<T> skip(uint num) {
             return tRange(new tRangeBacking(skip_impl(num, _backing)));
+        }
+
+        QList<T> toList() {
+            QList<T> list;
+            for (auto item : *_backing) {
+                list.append(item);
+            }
+            return list;
         }
 
         typename QCoro::Generator<const T>::iterator begin() {
@@ -166,6 +185,17 @@ template<typename T> class tRange {
             for (auto item : *backing) {
                 if (filtering(item, i)) co_yield item;
                 i++;
+            }
+        }
+
+        template<typename R> QCoro::Generator<const T> unique_impl(UniqueFunction<R> uniqing, Backing backing) {
+            QSet<R> found;
+            for (auto item : *backing) {
+                auto uniqueIdx = uniqing(item);
+                if (!found.contains(uniqueIdx)) {
+                    co_yield item;
+                    found.insert(uniqueIdx);
+                }
             }
         }
 

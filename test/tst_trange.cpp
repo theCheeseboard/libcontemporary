@@ -133,6 +133,17 @@ void TRange::trange_canSkip() {
     QCOMPARE(count, 7);
 }
 
+void TRange::trange_canUnique() {
+    QList<int> ints({1, 1, 2, 3, 3, 3, 4, 4, 5, 6});
+    auto range = tRange(ints).unique();
+
+    auto count = 0;
+    for (auto item : range) {
+        count++;
+    }
+    QCOMPARE(count, 6);
+}
+
 void TRange::trange_canReturn() {
     auto createRange = [] {
         QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
