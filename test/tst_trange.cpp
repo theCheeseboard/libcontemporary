@@ -161,3 +161,14 @@ void TRange::trange_canReturn() {
         QVERIFY(item.toInt() % 2 == 0);
     }
 }
+
+void TRange::trange_canCast() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    tRange<double> doubles = tRange(ints).staticCast<double>();
+
+    auto count = 0;
+    for (auto item : doubles) {
+        count++;
+    }
+    QCOMPARE(count, 10);
+}

@@ -21,6 +21,7 @@ class TRange : public QObject {
         void trange_canSkip();
         void trange_canUnique();
         void trange_canReturn();
+        void trange_canCast();
 };
 
 #endif // TST_TRANGE_H

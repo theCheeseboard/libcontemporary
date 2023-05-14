@@ -41,6 +41,8 @@ template<typename T> class tRangeBacking {
             return _backing;
         }
 
+        using BackingType = T;
+
     private:
         QCoro::Generator<const T> _backing;
         bool _ran = false;
@@ -51,6 +53,12 @@ template<typename T> class tRangeBacking {
             }
         }
 };
+
+template<typename T, typename R>
+concept HasCastFunctions = requires(T t) {
+                               { t.template staticCast<R>() };
+                               { t.template objectCast<R>() };
+                           };
 
 template<typename T> class tRange {
     public:
@@ -107,6 +115,36 @@ template<typename T> class tRange {
 
         template<typename R> tRange<T> unique(UniqueFunction<R> uniqing) {
             return tRange(new tRangeBacking(unique_impl(uniqing, _backing)));
+        }
+
+        template<typename R> tRange<R> staticCast() {
+            return tRange<R>(new tRangeBacking<R>(staticCast_impl<R>(_backing)));
+        }
+
+        template<typename R>
+            requires HasCastFunctions<T, R>
+        tRange<QSharedPointer<R>> staticCast() {
+            return tRange<QSharedPointer<R>>(new tRangeBacking<QSharedPointer<R>>(staticCast_impl<R>(_backing)));
+        }
+
+        template<typename R> tRange<R> reinterpretCast() {
+            return tRange(new tRangeBacking(reinterpretCast_impl(_backing)));
+        }
+
+        template<typename R>
+            requires HasCastFunctions<T, R>
+        tRange<QSharedPointer<R>> reinterpretCast() {
+            return tRange<QSharedPointer<R>>(new tRangeBacking<QSharedPointer<R>>(reinterpretCast_impl<R>(_backing)));
+        }
+
+        template<typename R> tRange<R> objectCast() {
+            return tRange(new tRangeBacking(objectCast_impl(_backing)));
+        }
+
+        template<typename R>
+            requires HasCastFunctions<T, R>
+        tRange<QSharedPointer<R>> objectCast() {
+            return tRange<QSharedPointer<R>>(new tRangeBacking<QSharedPointer<R>>(objectCast_impl<R>(_backing)));
         }
 
         bool every(FilterFunction filtering) {
@@ -215,6 +253,48 @@ template<typename T> class tRange {
                 if (i > num) {
                     co_yield item;
                 }
+            }
+        }
+
+        template<typename R> QCoro::Generator<const R> staticCast_impl(Backing backing) {
+            for (auto item : *backing) {
+                co_yield static_cast<R>(item);
+            }
+        }
+
+        template<typename R>
+            requires HasCastFunctions<T, R>
+        QCoro::Generator<const QSharedPointer<R>> staticCast_impl(Backing backing) {
+            for (auto item : *backing) {
+                co_yield item.template staticCast<R>();
+            }
+        }
+
+        template<typename R> QCoro::Generator<const R> reinterpretCast_impl(Backing backing) {
+            for (auto item : *backing) {
+                co_yield reinterpret_cast<R>(item);
+            }
+        }
+
+        template<typename R>
+            requires HasCastFunctions<T, R>
+        QCoro::Generator<const QSharedPointer<R>> reinterpretCast_impl(Backing backing) {
+            for (auto item : *backing) {
+                co_yield item.template reinterpretCast<R>();
+            }
+        }
+
+        template<typename R> QCoro::Generator<const R> objectCast_impl(Backing backing) {
+            for (auto item : *backing) {
+                co_yield qobject_cast<R>(item);
+            }
+        }
+
+        template<typename R>
+            requires HasCastFunctions<T, R>
+        QCoro::Generator<const QSharedPointer<R>> objectCast_impl(Backing backing) {
+            for (auto item : *backing) {
+                co_yield item.template objectCast<R>();
             }
         }
 };
