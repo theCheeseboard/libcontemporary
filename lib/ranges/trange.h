@@ -56,8 +56,9 @@ template<typename T> class tRangeBacking {
 
 template<typename T, typename R>
 concept HasCastFunctions = requires(T t) {
-                               { t.template staticCast<R>() };
-                               { t.template objectCast<R>() };
+                               { t.template staticCast<R>() } -> std::same_as<QSharedPointer<R>>;
+                               { t.template reinterpretCast<R>() } -> std::same_as<QSharedPointer<R>>;
+                               { t.template objectCast<R>() } -> std::same_as<QSharedPointer<R>>;
                            };
 
 template<typename T> class tRange {
