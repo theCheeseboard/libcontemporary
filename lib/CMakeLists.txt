@@ -76,6 +76,7 @@ cntp_sourcelist(
         twindowthumbnail.cpp
         texception.cpp
         tqueueguard.cpp
+        ranges/trange.cpp
         tx11info.cpp
         tcontentsizer.cpp
         private/debuglogpopover.cpp

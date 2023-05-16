@@ -1,12 +1,17 @@
 #ifndef TRANGE_H
 #define TRANGE_H
 
+#include "texception.h"
 #include <QCoroGenerator>
 #include <QList>
 #include <QUuid>
 #include <functional>
 #include <ranges>
 #include <tlogger.h>
+
+class LIBCONTEMPORARY_EXPORT tRangeException : public tException {
+        T_EXCEPTION(tRangeException)
+};
 
 template<typename T> class tRangeBacking {
     public:
@@ -153,6 +158,19 @@ template<typename T> class tRange {
                 if (filtering(item)) return true;
             }
             return false;
+        }
+
+        T first() {
+            return this->first([](const T&) {
+                return true;
+            });
+        }
+
+        T first(FilterFunction filtering) {
+            for (auto item : *_backing) {
+                if (filtering(item)) return item;
+            }
+            throw tRangeException();
         }
 
         tRange<T> take(uint num) {

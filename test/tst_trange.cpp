@@ -162,6 +162,27 @@ void TRange::trange_canReturn() {
     }
 }
 
+void TRange::trange_canFirst() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto first = tRange(ints).first();
+
+    QCOMPARE(first, 1);
+}
+
+void TRange::trange_canFirstWithFilter() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto first = tRange(ints).first([](int i) {
+        return i > 5;
+    });
+
+    QCOMPARE(first, 6);
+}
+
+void TRange::trange_canFirstWithNoElements() {
+    QList<int> ints;
+    QVERIFY_THROWS_EXCEPTION(tRangeException, tRange(ints).first());
+}
+
 void TRange::trange_canCast() {
     QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
     tRange<double> doubles = tRange(ints).staticCast<double>();

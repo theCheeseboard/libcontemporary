@@ -21,6 +21,9 @@ class TRange : public QObject {
         void trange_canSkip();
         void trange_canUnique();
         void trange_canReturn();
+        void trange_canFirst();
+        void trange_canFirstWithFilter();
+        void trange_canFirstWithNoElements();
         void trange_canCast();
 };
 
