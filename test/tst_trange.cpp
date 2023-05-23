@@ -183,6 +183,36 @@ void TRange::trange_canFirstWithNoElements() {
     QVERIFY_THROWS_EXCEPTION(tRangeException, tRange(ints).first());
 }
 
+void TRange::trange_canReduce() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto result = tRange(ints).reduce<int>([](int next, int previousValue) {
+        return previousValue + next;
+    });
+
+    QCOMPARE(result, 55);
+}
+
+void TRange::trange_canSum() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto result = tRange(ints).sum();
+
+    QCOMPARE(result, 55);
+}
+
+void TRange::trange_canMin() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto result = tRange(ints).min();
+
+    QCOMPARE(result, 1);
+}
+
+void TRange::trange_canMax() {
+    QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    auto result = tRange(ints).max();
+
+    QCOMPARE(result, 10);
+}
+
 void TRange::trange_canCast() {
     QList<int> ints({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
     tRange<double> doubles = tRange(ints).staticCast<double>();

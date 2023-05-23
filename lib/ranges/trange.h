@@ -70,6 +70,7 @@ template<typename T> class tRange {
         template<typename R> using MapFunction = std::function<const R(T)>;
         template<typename R> using MapFunctionWithIndex = std::function<const R(T, int)>;
         template<typename R> using UniqueFunction = std::function<const R(T)>;
+        template<typename R> using ReduceFunction = std::function<const R(T, R)>;
         using FilterFunction = std::function<bool(T)>;
         using FilterFunctionWithIndex = std::function<bool(T, int)>;
 
@@ -102,6 +103,13 @@ template<typename T> class tRange {
 
         template<typename R> tRange<R> map(MapFunctionWithIndex<R> mapping) {
             return tRange<R>(new tRangeBacking(map_impl(mapping, _backing)));
+        }
+
+        template<typename R> R reduce(ReduceFunction<R> reducing, R initialValue = {}) {
+            for (auto item : *_backing) {
+                initialValue = reducing(item, initialValue);
+            }
+            return initialValue;
         }
 
         tRange<T> filter(FilterFunction filtering) {
@@ -144,6 +152,42 @@ template<typename T> class tRange {
             requires HasCastFunctions<T, R>
         tRange<QSharedPointer<R>> objectCast() {
             return tRange<QSharedPointer<R>>(new tRangeBacking<QSharedPointer<R>>(objectCast_impl<R>(_backing)));
+        }
+
+        T sum() {
+            return reduce<T>([](T next, T previousValue) {
+                return next + previousValue;
+            });
+        }
+
+        T min() {
+            struct MinHelper {
+                    T previousValue;
+                    bool isFirst;
+            };
+
+            auto result = reduce<MinHelper>([](T next, MinHelper previousValue) {
+                return MinHelper{
+                    previousValue.isFirst ? next : qMin(previousValue.previousValue, next),
+                    false};
+            },
+                {{}, true});
+            return result.previousValue;
+        }
+
+        T max() {
+            struct MaxHelper {
+                    T previousValue;
+                    bool isFirst;
+            };
+
+            auto result = reduce<MaxHelper>([](T next, MaxHelper previousValue) {
+                return MaxHelper{
+                    previousValue.isFirst ? next : qMax(previousValue.previousValue, next),
+                    false};
+            },
+                {{}, true});
+            return result.previousValue;
         }
 
         bool every(FilterFunction filtering) {

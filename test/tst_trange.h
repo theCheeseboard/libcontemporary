@@ -24,6 +24,10 @@ class TRange : public QObject {
         void trange_canFirst();
         void trange_canFirstWithFilter();
         void trange_canFirstWithNoElements();
+        void trange_canReduce();
+        void trange_canSum();
+        void trange_canMin();
+        void trange_canMax();
         void trange_canCast();
 };
 
