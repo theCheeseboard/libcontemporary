@@ -217,6 +217,14 @@ template<typename T> class tRange {
             throw tRangeException();
         }
 
+        T first(FilterFunction filtering, T defaultValue) {
+            try {
+                return first(filtering);
+            } catch (tRangeException&) {
+                return defaultValue;
+            }
+        }
+
         tRange<T> take(uint num) {
             return tRange(new tRangeBacking(take_impl(num, _backing)));
         }
