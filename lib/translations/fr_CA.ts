@@ -60,12 +60,12 @@
   <context>
     <name>DebugLogWindow</name>
     <message>
-      <translation></translation>
+      <translation>Registre de Déboguer</translation>
       <location filename="../private/debuglogwindow.ui" line="14" />
       <source>Debug Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chercher en Registre de Déboguer </translation>
       <location filename="../private/debuglogwindow.ui" line="80" />
       <source>Search Debug Log</source>
     </message>
@@ -75,7 +75,7 @@
       <source>Clear Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Filtrer par Contexte</translation>
       <location filename="../private/debuglogwindow.ui" line="183" />
       <source>Filter by Context</source>
     </message>
@@ -266,7 +266,7 @@
   <context>
     <name>QCommandLineParser</name>
     <message>
-      <translation></translation>
+      <translation>Montre l'Info du Version</translation>
       <location filename="../tapplication.cpp" line="139" />
       <source>Displays version information.</source>
     </message>
@@ -291,7 +291,7 @@
       <source>Missing value after '%1'.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Valeur inattendu après `%1'.</translation>
       <location filename="../tapplication.cpp" line="144" />
       <source>Unexpected value after '%1'.</source>
     </message>
@@ -486,7 +486,7 @@
   <context>
     <name>tCommandPaletteController</name>
     <message>
-      <translation></translation>
+      <translation>Palette de Commande</translation>
       <location filename="../tcommandpalette/tcommandpalettecontroller.cpp" line="31" />
       <source>Command Palette</source>
     </message>
@@ -494,7 +494,7 @@
   <context>
     <name>tCommandPaletteWindow</name>
     <message>
-      <translation></translation>
+      <translation>Palette de Commande</translation>
       <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="14" />
       <source>Command Palette</source>
     </message>
@@ -522,7 +522,7 @@
       <source>Sources</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Regarder le Registre de Déboguer</translation>
       <location filename="../thelpmenu.cpp" line="47" />
       <source>View Debug Log</source>
     </message>
@@ -552,7 +552,7 @@
       <source>Info</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Déboguer</translation>
       <location filename="../tlogger.cpp" line="106" />
       <source>Debug</source>
     </message>
@@ -562,7 +562,7 @@
       <source>Warning</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Grave</translation>
       <location filename="../tlogger.cpp" line="110" />
       <source>Critical</source>
     </message>
@@ -717,7 +717,7 @@
       <source>Restart</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Les plugins ajoutent le noyau et du fonctionnalité extra à %1.</translation>
       <location filename="../plugins/tpluginmanagerpane.cpp" line="14" />
       <source>Plugins add core and extra functionality to %1.</source>
     </message>
@@ -765,7 +765,7 @@
       <source>Print in Grayscale</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Double-face</translation>
       <location filename="../tprintpopover.ui" line="165" />
       <source>Double Sided</source>
     </message>
@@ -783,7 +783,7 @@
   <context>
     <name>tSettingsWindow</name>
     <message>
-      <translation></translation>
+      <translation>Paramètres</translation>
       <location filename="../tsettingswindow/tsettingswindow.ui" line="44" />
       <location filename="../tsettingswindow/tsettingswindow.cpp" line="51" />
       <source>Settings</source>
