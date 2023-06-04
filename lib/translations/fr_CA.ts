@@ -3,7 +3,7 @@
   <context>
     <name>DebugLogModel</name>
     <message>
-      <translation></translation>
+      <translation>Horodatage</translation>
       <location filename="../private/debuglogwindow.cpp" line="270" />
       <source>Timestamp</source>
     </message>
@@ -21,12 +21,12 @@
   <context>
     <name>DebugLogPopover</name>
     <message>
-      <translation></translation>
+      <translation>Déboguer l'Article du Registre</translation>
       <location filename="../private/debuglogpopover.ui" line="35" />
       <source>Debug Log Item</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Horodatage</translation>
       <location filename="../private/debuglogpopover.cpp" line="37" />
       <source>Timestamp</source>
     </message>
@@ -41,7 +41,7 @@
       <source>Severity</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Fichier</translation>
       <location filename="../private/debuglogpopover.cpp" line="40" />
       <source>File</source>
     </message>
@@ -70,7 +70,7 @@
       <source>Search Debug Log</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Effacer le Registre</translation>
       <location filename="../private/debuglogwindow.ui" line="156" />
       <source>Clear Log</source>
     </message>
@@ -126,7 +126,7 @@
       <source>Preferences...</source>
     </message>
     <message>
-      <translation>Apropos  %1</translation>
+      <translation>Au Sujet De  %1</translation>
       <location filename="../tapplication.cpp" line="135" />
       <location filename="../thelpmenu.cpp" line="48" />
       <source>About %1</source>
@@ -180,7 +180,7 @@
       <source>No to All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Abandonner</translation>
       <location filename="../private/nsalertmac.mm" line="89" />
       <source>Abort</source>
     </message>
@@ -215,7 +215,7 @@
       <source>Help</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Appliquer</translation>
       <location filename="../private/nsalertmac.mm" line="110" />
       <source>Apply</source>
     </message>
@@ -225,7 +225,7 @@
       <source>Reset</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Restaurer les Défauts</translation>
       <location filename="../private/nsalertmac.mm" line="116" />
       <source>Restore Defaults</source>
     </message>
@@ -233,7 +233,7 @@
   <context>
     <name>PluginManagementPopover</name>
     <message>
-      <translation></translation>
+      <translation>Gérer les Plugins</translation>
       <location filename="../plugins/pluginmanagementpopover.ui" line="57" />
       <source>Manage Plugins</source>
     </message>
@@ -243,22 +243,22 @@
       <source>Actions</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Activer ce Plugin</translation>
       <location filename="../plugins/pluginmanagementpopover.ui" line="107" />
       <source>Activate Plugin</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Désactiver ce Plugin</translation>
       <location filename="../plugins/pluginmanagementpopover.ui" line="114" />
       <source>Deactivate Plugin</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Quelques changements aux plugins vont pas se prendre effet avant vous redémarrer %1.</translation>
       <location filename="../plugins/pluginmanagementpopover.cpp" line="23" />
       <source>Some changes to plugins won't apply until you restart %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Redémarrer %1</translation>
       <location filename="../plugins/pluginmanagementpopover.cpp" line="24" />
       <source>Restart %1</source>
     </message>
@@ -276,7 +276,7 @@
       <source>Displays this help.</source>
     </message>
     <message>
-      <translation>Option inconnu  «%1».</translation>
+      <translation>Option inconnu  '%1'.</translation>
       <location filename="../tapplication.cpp" line="141" />
       <source>Unknown option '%1'.</source>
     </message>
@@ -286,7 +286,7 @@
       <source>Unknown options: %1.</source>
     </message>
     <message>
-      <translation>Valeur manquant après «%1».</translation>
+      <translation>Valeur manquant après '%1'.</translation>
       <location filename="../tapplication.cpp" line="143" />
       <source>Missing value after '%1'.</source>
     </message>
@@ -324,7 +324,7 @@
       <source>Form</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>ÉtiquetteDeTexte</translation>
       <location filename="../jobs/standardjobprogresswidget.ui" line="20" />
       <location filename="../jobs/standardjobprogresswidget.ui" line="27" />
       <source>TextLabel</source>
@@ -333,12 +333,12 @@
   <context>
     <name>tAboutDialog</name>
     <message>
-      <translation></translation>
+      <translation>SOFTWARE</translation>
       <location filename="../taboutdialog.ui" line="251" />
       <source>SOFTWARE</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>COPYRIGHT</translation>
       <location filename="../taboutdialog.ui" line="297" />
       <source>COPYRIGHT</source>
     </message>
@@ -357,7 +357,7 @@
       <source>Website</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Bougue de Fichier</translation>
       <location filename="../taboutdialog.cpp" line="94" />
       <source>File Bug</source>
     </message>
@@ -422,7 +422,7 @@
       <source>Unknown</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Plate-forme</translation>
       <location filename="../tapplication.cpp" line="195" />
       <source>Platform</source>
     </message>
@@ -499,7 +499,7 @@
       <source>Command Palette</source>
     </message>
     <message>
-      <translation>Qu'est-ce que vous regardez pour?</translation>
+      <translation>Qu'est-ce que vous est entrain de chercher ?</translation>
       <location filename="../tcommandpalette/tcommandpalettewindow.ui" line="128" />
       <source>What are you looking for?</source>
     </message>
@@ -512,7 +512,7 @@
       <source>%1 Help</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Bougue de Fichier</translation>
       <location filename="../thelpmenu.cpp" line="45" />
       <source>File Bug</source>
     </message>
@@ -622,12 +622,12 @@
       <source>No to All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Abandonner</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="130" />
       <source>Abort</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Réessayer</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="133" />
       <source>Retry</source>
     </message>
@@ -657,7 +657,7 @@
       <source>Help</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Appliquer</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="151" />
       <location filename="../private/tmessageboxbackend-win.cpp" line="160" />
       <source>Apply</source>
@@ -669,17 +669,17 @@
       <source>Reset</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Restaurer les Défauts</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="157" />
       <source>Restore Defaults</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Jeter</translation>
       <location filename="../private/tmessageboxbackend-win.cpp" line="157" />
       <source>Discard</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Restaurer les Défauts</translation>
       <location filename="../private/tmessageboxbackend-win.cpp" line="166" />
       <source>Restore defaults</source>
     </message>
@@ -702,17 +702,17 @@
   <context>
     <name>tPluginManagerPane</name>
     <message>
-      <translation></translation>
+      <translation>Gérer des Plugins</translation>
       <location filename="../plugins/tpluginmanagerpane.ui" line="27" />
       <source>Manage Plugins</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Activer ou désactiver les plugins</translation>
       <location filename="../plugins/tpluginmanagerpane.ui" line="30" />
       <source>Enable or disable plugins</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Redémarrer</translation>
       <location filename="../plugins/tpluginmanagerpane.ui" line="71" />
       <source>Restart</source>
     </message>
@@ -722,12 +722,12 @@
       <source>Plugins add core and extra functionality to %1.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Redémarrer %1 pour appliquer les changements aux plugins</translation>
       <location filename="../plugins/tpluginmanagerpane.cpp" line="15" />
       <source>Restart %1 to apply changes in plugins</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Plugins</translation>
       <location filename="../plugins/tpluginmanagerpane.cpp" line="27" />
       <source>Plugins</source>
     </message>
@@ -792,7 +792,7 @@
   <context>
     <name>tWindowTabber</name>
     <message>
-      <translation></translation>
+      <translation>Nouveau Onglet</translation>
       <location filename="../twindowtabber.cpp" line="60" />
       <location filename="../twindowtabber.cpp" line="61" />
       <source>New Tab</source>
