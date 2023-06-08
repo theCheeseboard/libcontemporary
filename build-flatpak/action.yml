@@ -36,13 +36,13 @@ runs:
       uses: docker/setup-qemu-action@v1
       with:
         platforms: arm64
-    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v6.1
       with:
         bundle: ${{ inputs.bundle-name }}
         manifest-path: ${{ inputs.manifest }}
         cache-key: flatpak-builder-${{ inputs.manifest }}
         arch: ${{ inputs.arch }}
-    - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v4
+    - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v6.1
       if: github.event_name != 'pull_request' && ${{ inputs.deploy }} == true
       name: "Deploy"
       with:
