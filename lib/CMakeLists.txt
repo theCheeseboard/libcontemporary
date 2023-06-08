@@ -76,6 +76,7 @@ cntp_sourcelist(
         twindowthumbnail.cpp
         texception.cpp
         tqueueguard.cpp
+        ranges/trange.cpp
         tx11info.cpp
         tcontentsizer.cpp
         private/debuglogpopover.cpp
@@ -90,7 +91,7 @@ cntp_sourcelist(
         jobs/jobbutton.cpp
         jobs/jobspopover.cpp
         jobs/standardjobprogresswidget.cpp jobs/standardjobprogresswidget.ui
-        private/errorflashwidget.cpp 
+        private/errorflashwidget.cpp
         private/errorflashwidget.ui
         plugins/tpluginmanagerpane.cpp plugins/tpluginmanagerpane.ui
         plugins/tpluginmanagerhelper.cpp
@@ -175,6 +176,7 @@ cntp_sourcelist(
         tcontentsizer.h
         texception.h
         tqueueguard.h
+        ranges/trange.h
         plugins/plugininterface.h
         plugins/tpluginmanager.h
         plugins/tpluginmanagerpane.h

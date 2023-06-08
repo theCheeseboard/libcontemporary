@@ -69,6 +69,8 @@ class LIBCONTEMPORARY_EXPORT tLogWriter {
         tLogWriter(QString context, QtMsgType severity, QString file, int line, QString function);
         ~tLogWriter();
 
+        static void setTestMode(bool testMode);
+
         tLogWriter& operator<<(const char* str);
         tLogWriter& operator<<(QString str);
         tLogWriter& operator<<(QStringList str);

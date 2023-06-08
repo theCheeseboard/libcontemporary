@@ -553,27 +553,27 @@
     </message>
     <message>
       <translation>Déboguer</translation>
-      <location filename="../tlogger.cpp" line="106" />
+      <location filename="../tlogger.cpp" line="109" />
       <source>Debug</source>
     </message>
     <message>
       <translation>Advertissement</translation>
-      <location filename="../tlogger.cpp" line="108" />
+      <location filename="../tlogger.cpp" line="111" />
       <source>Warning</source>
     </message>
     <message>
       <translation>Grave</translation>
-      <location filename="../tlogger.cpp" line="110" />
+      <location filename="../tlogger.cpp" line="113" />
       <source>Critical</source>
     </message>
     <message>
       <translation>Fatal</translation>
-      <location filename="../tlogger.cpp" line="112" />
+      <location filename="../tlogger.cpp" line="115" />
       <source>Fatal</source>
     </message>
     <message>
       <translation>Information</translation>
-      <location filename="../tlogger.cpp" line="114" />
+      <location filename="../tlogger.cpp" line="117" />
       <source>Info</source>
     </message>
   </context>
@@ -587,7 +587,7 @@
     <message>
       <translation>Sauvegarder</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="109" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="154" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="155" />
       <source>Save</source>
     </message>
     <message>
@@ -598,7 +598,7 @@
     <message>
       <translation>Ouvrer</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="115" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="151" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="152" />
       <source>Open</source>
     </message>
     <message>
@@ -659,13 +659,13 @@
     <message>
       <translation>Appliquer</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="151" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="160" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="161" />
       <source>Apply</source>
     </message>
     <message>
       <translation>Réinitialiser</translation>
       <location filename="../private/tmessageboxbackend-mac.mm" line="154" />
-      <location filename="../private/tmessageboxbackend-win.cpp" line="163" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="164" />
       <source>Reset</source>
     </message>
     <message>
@@ -675,27 +675,27 @@
     </message>
     <message>
       <translation>Jeter</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="157" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="158" />
       <source>Discard</source>
     </message>
     <message>
       <translation>Restaurer les Défauts</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="166" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="167" />
       <source>Restore defaults</source>
     </message>
     <message>
       <translation>Sauvegarder Tous</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="169" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="170" />
       <source>Save all</source>
     </message>
     <message>
       <translation>Oui à Tous</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="172" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="173" />
       <source>Yes to all</source>
     </message>
     <message>
       <translation>Non à Tous</translation>
-      <location filename="../private/tmessageboxbackend-win.cpp" line="175" />
+      <location filename="../private/tmessageboxbackend-win.cpp" line="176" />
       <source>No to all</source>
     </message>
   </context>

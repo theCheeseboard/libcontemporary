@@ -581,31 +581,31 @@
         <translation type="vanished">Thông Tin</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="106"/>
+        <location filename="../tlogger.cpp" line="109"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Gỡ Lỗi</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="108"/>
+        <location filename="../tlogger.cpp" line="111"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Cảnh Báo</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="110"/>
+        <location filename="../tlogger.cpp" line="113"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Quan Trọng</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="112"/>
+        <location filename="../tlogger.cpp" line="115"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Gây Tử</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="114"/>
+        <location filename="../tlogger.cpp" line="117"/>
         <source>Info</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Thông Tin</translation>
@@ -620,7 +620,7 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="109"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="154"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="155"/>
         <source>Save</source>
         <translation>Lưu</translation>
     </message>
@@ -631,7 +631,7 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="115"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="151"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="152"/>
         <source>Open</source>
         <translation>Mở</translation>
     </message>
@@ -692,13 +692,13 @@
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="151"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="160"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="161"/>
         <source>Apply</source>
         <translation>Áp dụng</translation>
     </message>
     <message>
         <location filename="../private/tmessageboxbackend-mac.mm" line="154"/>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="163"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="164"/>
         <source>Reset</source>
         <translation>Đặt lại</translation>
     </message>
@@ -708,27 +708,27 @@
         <translation>Khôi phục về mặc định</translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="157"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="158"/>
         <source>Discard</source>
         <translation>Loại bỏ</translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="166"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="167"/>
         <source>Restore defaults</source>
         <translation>Khôi phục về mặc định</translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="169"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="170"/>
         <source>Save all</source>
         <translation>Lưu tất cả</translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="172"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="173"/>
         <source>Yes to all</source>
         <translation>Có với tất cả</translation>
     </message>
     <message>
-        <location filename="../private/tmessageboxbackend-win.cpp" line="175"/>
+        <location filename="../private/tmessageboxbackend-win.cpp" line="176"/>
         <source>No to all</source>
         <translation>Không với tất cả</translation>
     </message>
