@@ -16,6 +16,10 @@ inputs:
   manifest:
     description: 'Path to the Flatpak manifest to build'
     required: true
+  deploy:
+    description: 'Whether to deploy the Flatpak'
+    required: false
+    default: true
 runs:
   using: "composite"
   steps:
@@ -39,7 +43,7 @@ runs:
         cache-key: flatpak-builder-${{ inputs.manifest }}
         arch: ${{ inputs.arch }}
     - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v4
-      if: github.event_name != 'pull_request'
+      if: github.event_name != 'pull_request' && ${{ inputs.deploy }} == true
       name: "Deploy"
       with:
         repository: ${{ inputs.repository }}
