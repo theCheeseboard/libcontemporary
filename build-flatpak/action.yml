@@ -43,7 +43,7 @@ runs:
         cache-key: flatpak-builder-${{ inputs.manifest }}
         arch: ${{ inputs.arch }}
     - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v6.1
-      if: github.event_name != 'pull_request' && ${{ inputs.deploy }} == true
+      if: github.event_name != 'pull_request' && inputs.deploy == true
       name: "Deploy"
       with:
         repository: ${{ inputs.repository }}
