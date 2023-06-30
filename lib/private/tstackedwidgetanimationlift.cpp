@@ -22,8 +22,8 @@ void tStackedWidgetAnimationLift::startAnimation() {
     this->newWidget()->show();
     this->newWidget()->raise();
 
-    auto* group = new QParallelAnimationGroup;
-    auto* animation = new tPropertyAnimation(this->newWidget(), "geometry");
+    auto* group = new QParallelAnimationGroup(this);
+    auto* animation = new tPropertyAnimation(this->newWidget(), "geometry", this);
     animation->setStartValue(this->newWidget()->geometry());
     animation->setEndValue(QRect(0, 0, this->parentStack()->width(), this->parentStack()->height()));
     animation->setEasingCurve(QEasingCurve::OutCubic);
@@ -37,9 +37,9 @@ void tStackedWidgetAnimationLift::startAnimation() {
     effect->setOpacity(0);
     this->newWidget()->setGraphicsEffect(effect);
 
-    auto* anim = new tPropertyAnimation(effect, "opacity");
-    anim->setStartValue((float) 0);
-    anim->setEndValue((float) 1);
+    auto* anim = new tPropertyAnimation(effect, "opacity", this);
+    anim->setStartValue(0.0);
+    anim->setEndValue(1.0);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->setDuration(250);
     group->addAnimation(anim);

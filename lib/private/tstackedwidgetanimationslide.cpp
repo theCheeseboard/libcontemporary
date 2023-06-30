@@ -28,17 +28,29 @@ void tStackedWidgetAnimationSlide::startAnimation() {
     this->newWidget()->show();
     this->newWidget()->raise();
 
-    auto* animation = new tVariantAnimation();
+    auto* newEffect = new QGraphicsOpacityEffect();
+    newEffect->setOpacity(0);
+    this->newWidget()->setGraphicsEffect(newEffect);
+
+    //    auto* oldEffect = new QGraphicsOpacityEffect();
+    //    oldEffect->setOpacity(1);
+    //    this->oldWidget()->setGraphicsEffect(oldEffect);
+
+    auto* animation = new tVariantAnimation(this);
     animation->setStartValue(0.0);
     animation->setEndValue(1.0);
-    animation->setEasingCurve(QEasingCurve::OutCubic);
-    animation->setDuration(250);
-    connect(animation, &tVariantAnimation::valueChanged, this, [this, moveLeft](QVariant value) {
+    animation->setEasingCurve(QEasingCurve::InOutExpo);
+    animation->setDuration(300);
+    connect(animation, &tVariantAnimation::valueChanged, this, [this, moveLeft, newEffect](QVariant value) {
         auto progress = value.toReal();
         this->oldWidget()->setGeometry(this->oldWidgetRect(progress));
         this->newWidget()->setGeometry(this->newWidgetRect(progress));
+        //        oldEffect->setOpacity(1 - progress);
+        newEffect->setOpacity(progress);
     });
     connect(animation, &tPropertyAnimation::finished, this, [this] {
+        this->newWidget()->setGraphicsEffect(nullptr);
+        this->oldWidget()->setGraphicsEffect(nullptr);
         this->emitDone();
         this->deleteLater();
     });
