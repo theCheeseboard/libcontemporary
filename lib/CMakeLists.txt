@@ -121,6 +121,13 @@ cntp_sourcelist(
         private/licensetextpopover.cpp private/licensetextpopover.ui
         private/tqueueguardhelper.cpp
 
+        private/tstackedwidgetanimationcontroller.cpp
+        private/tstackedwidgetanimation.cpp
+        private/tstackedwidgetanimationslidehorizontal.cpp
+        private/tstackedwidgetanimationlift.cpp
+        private/tstackedwidgetanimationfade.cpp
+        private/tstackedwidgetanimationslidevertical.cpp
+
         thelibs_icons.qrc
 
         private/tmessageboxbackend.h
@@ -205,6 +212,13 @@ cntp_sourcelist(
         private/licensetextpopover.h
         jobs/standardjobprogresswidget.h
         private/tqueueguardhelper.h
+
+        private/tstackedwidgetanimationcontroller.h
+        private/tstackedwidgetanimation.h
+        private/tstackedwidgetanimationslidehorizontal.h
+        private/tstackedwidgetanimationlift.h
+        private/tstackedwidgetanimationfade.h
+        private/tstackedwidgetanimationslidevertical.h
 )
 
 
