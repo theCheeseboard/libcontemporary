@@ -1,22 +1,22 @@
 #ifndef TSTACKEDWIDGETANIMATIONSLIDEHORIZONTAL_H
 #define TSTACKEDWIDGETANIMATIONSLIDEHORIZONTAL_H
 
-#include "tstackedwidgetanimation.h"
+#include "tstackedwidgetanimationslide.h"
 
-struct tStackedWidgetAnimationSlideHorizontalPrivate;
-class tStackedWidgetAnimationSlideHorizontal : public tStackedWidgetAnimation {
+class tStackedWidgetAnimationSlideHorizontal : public tStackedWidgetAnimationSlide {
         Q_OBJECT
     public:
         explicit tStackedWidgetAnimationSlideHorizontal(int oldIndex, int newIndex, tStackedWidget* parent);
-        ~tStackedWidgetAnimationSlideHorizontal();
-
-        void startAnimation();
-        void stopAnimation();
 
     signals:
 
     private:
-        tStackedWidgetAnimationSlideHorizontalPrivate* d;
+        bool moveLeft();
+
+        // tStackedWidgetAnimationSlide interface
+    protected:
+        QRect oldWidgetRect(double progress);
+        QRect newWidgetRect(double progress);
 };
 
 #endif // TSTACKEDWIDGETANIMATIONSLIDEHORIZONTAL_H

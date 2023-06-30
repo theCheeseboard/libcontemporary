@@ -127,6 +127,7 @@ cntp_sourcelist(
         private/tstackedwidgetanimationlift.cpp
         private/tstackedwidgetanimationfade.cpp
         private/tstackedwidgetanimationslidevertical.cpp
+        private/tstackedwidgetanimationslide.cpp
 
         thelibs_icons.qrc
 
@@ -219,6 +220,7 @@ cntp_sourcelist(
         private/tstackedwidgetanimationlift.h
         private/tstackedwidgetanimationfade.h
         private/tstackedwidgetanimationslidevertical.h
+        private/tstackedwidgetanimationslide.h
 )
 
 
