@@ -277,7 +277,7 @@ cntp_target_public_headers(libcontemporary
 set_target_properties(libcontemporary PROPERTIES
         FRAMEWORK TRUE
         MACOSX_FRAMEWORK_IDENTIFIER com.vicr123.libcontemporary
-        VERSION 6.0.0
+        VERSION 6.0.1
         TRANSLATION_SOURCES "${ALL_SOURCES};${ALL_HEADERS}"
     )
 cntp_enable_coroutines(libcontemporary)

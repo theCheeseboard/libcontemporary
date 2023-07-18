@@ -54,7 +54,7 @@
 #endif
 
 #define THE_LIBS_API_VERSION 9
-#define THE_LIBS_VERSION "6.0"
+#define THE_LIBS_VERSION "6.0.1"
 
 #ifdef QT_WIDGETS_LIB
     #define SC_DPI(pixels) \
