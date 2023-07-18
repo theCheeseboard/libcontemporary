@@ -545,8 +545,8 @@ void tApplication::installTranslators() {
         }
 #elif defined(Q_OS_LINUX)
         for (auto dir : shareDirs()) {
-            auto pluginPath = QDir(QDir("plugins").absoluteFilePath(plugin)).absoluteFilePath("translations");
-            if (translator->load(locale, "", "", QDir(dir).absoluteFilePath(pluginPath))) break;
+            auto pluginPath = QDir(QDir(QDir(dir).absoluteFilePath("plugins")).absoluteFilePath(plugin)).absoluteFilePath("translations");
+            if (translator->load(locale, "", "", pluginPath)) break;
         }
 #elif defined(Q_OS_WIN)
         Q_UNUSED(translator->load(locale, "", "", this->applicationDirPath() + "\\plugins\\" + plugin + "\\translations"));
