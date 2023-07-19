@@ -473,7 +473,7 @@ QStringList tApplication::shareDirs() {
 }
 
 QStringList tApplication::systemShareDirs() {
-    return qEnvironmentVariable("XDG_DATA_DIRS").split(":");
+    return qEnvironmentVariable("XDG_DATA_DIRS", "/usr/local/share/:/usr/share/").split(":");
 }
 
 void tApplication::setApplicationIcon(QIcon icon) {

@@ -15,10 +15,10 @@ function(cntp_init target cxx-standard)
     cntp_dotcontemporary_desktopId(${target} DESKTOPID RESOLVE_BLUEPRINT)
 
     target_include_directories(${target} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-    target_compile_definitions(${target} PUBLIC SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
-    target_compile_definitions(${target} PUBLIC SYSTEM_PREFIX_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_PREFIX}")
-    target_compile_definitions(${target} PUBLIC SYSTEM_DATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
-    target_compile_definitions(${target} PUBLIC CNTP_TARGET_NAME="${target}")
+    target_compile_definitions(${target} PRIVATE SYSTEM_LIBRARY_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+    target_compile_definitions(${target} PRIVATE SYSTEM_PREFIX_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_PREFIX}")
+    target_compile_definitions(${target} PRIVATE SYSTEM_DATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
+    target_compile_definitions(${target} PRIVATE CNTP_TARGET_NAME="${target}")
 
     cntp_asan(${target})
 
@@ -39,6 +39,8 @@ function(cntp_init_plugin parent target cxx-standard share-subdir)
     cntp_install_plugin(${parent} ${target})
 
     cntp_get_target_share_dir_name(SHARE_DIR ${parent})
+
+    target_compile_definitions(${target} PRIVATE CNTP_SHARE_DIR="${share-subdir}")
 
     set_target_properties(${target} PROPERTIES
             CNTP_DATA_SUBDIR ${SHARE_DIR}/plugins/${share-subdir}
