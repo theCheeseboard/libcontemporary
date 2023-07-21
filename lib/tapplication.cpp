@@ -19,6 +19,7 @@
  ******************************************************************************/
 
 #include "tapplication.h"
+#include "dependencyinjection/tdimanager.h"
 #include "private/translatorproxy.h"
 #include "tlogger.h"
 #include <QDir>
@@ -81,6 +82,8 @@ struct tApplicationPrivate {
 
         QSharedMemory* singleInstanceMemory = nullptr;
         QLocalServer* singleInstanceServer = nullptr;
+
+        tDIManager* diManager = nullptr;
 
         static bool isInitialised;
 
@@ -193,6 +196,8 @@ tApplication::tApplication(int& argc, char** argv) :
             break;
     }
     d->versions.append({tr("Platform"), platformString});
+
+    d->diManager = new tDIManager(this);
 
     d->applicationIcon = QIcon(":/libcontemporary-appassets/appicon.svg");
     d->isInitialised = true;
@@ -778,6 +783,10 @@ tApplication::Platform tApplication::currentPlatform() {
 
 bool tApplication::isInitialised() {
     return d->isInitialised;
+}
+
+tDIManager* tApplication::dependencies() {
+    return d->diManager;
 }
 
 QString tApplication::copyrightHolder() {

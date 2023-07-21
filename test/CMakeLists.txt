@@ -1,23 +1,29 @@
-cmake_minimum_required(VERSION 3.5)
-
-project(libcontemporary_tests LANGUAGES CXX)
-
 enable_testing()
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Test)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Test)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+function(cntp_test)
+    set(options)
+    set(oneValueArgs NAME)
+    set(multiValueArgs FILES)
+    cmake_parse_arguments(TEST_ARGS "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(target libcontemporary_tests_${TEST_ARGS_NAME})
 
-add_executable(libcontemporary_tests main.cpp
-    tst_trange.cpp tst_trange.h
-)
-add_test(NAME TestCase1 COMMAND TestCase1)
+    add_executable(${target}
+        ${TEST_ARGS_FILES}
+    )
+    add_test(NAME ${TEST_ARGS_NAME} COMMAND ${TEST_ARGS_NAME})
+    set_target_properties(${target} PROPERTIES
+        CXX_STANDARD 20
+        AUTOMOC ON
+        AUTOMOC_MOC_OPTIONS "--output-json"
+    )
 
-target_link_libraries(libcontemporary_tests PRIVATE Qt${QT_VERSION_MAJOR}::Test libcontemporary)
-target_include_directories(libcontemporary_tests PUBLIC ../lib/)
+    target_link_libraries(${target} PRIVATE Qt${QT_VERSION_MAJOR}::Test libcontemporary)
+    target_include_directories(${target} PUBLIC ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/)
+endfunction()
+
+add_subdirectory(trange)
+add_subdirectory(di)

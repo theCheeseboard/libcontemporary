@@ -110,6 +110,10 @@ cntp_sourcelist(
         tsettingswindow/tsettingspane.cpp
         tsettingswindow/tsettingswindowdelegate.cpp
 
+        dependencyinjection/tdimanager.cpp
+        dependencyinjection/didependentobject.cpp
+        dependencyinjection/disingletonobject.cpp
+
         taboutdialog.ui
         tinputdialog.ui
         tshortcuthud.ui
@@ -198,6 +202,10 @@ cntp_sourcelist(
         tcommandpalette/tcommandpaletteactionscope.h
         tcommandpalette/tcommandpalettecompositescope.h
         tcommandpalette/tcommandpalettedocumentspecificscope.h
+
+        dependencyinjection/diconcepts.h
+        dependencyinjection/tdimanager.h
+        dependencyinjection/tinjectedpointer.h
     )
 
 cntp_sourcelist(
@@ -216,11 +224,14 @@ cntp_sourcelist(
 
         private/tstackedwidgetanimationcontroller.h
         private/tstackedwidgetanimation.h
+        
         private/tstackedwidgetanimationslidehorizontal.h
         private/tstackedwidgetanimationlift.h
         private/tstackedwidgetanimationfade.h
         private/tstackedwidgetanimationslidevertical.h
         private/tstackedwidgetanimationslide.h
+        dependencyinjection/didependentobject.h
+        dependencyinjection/disingletonobject.h
 )
 
 

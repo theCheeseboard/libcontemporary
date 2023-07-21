@@ -7,8 +7,10 @@ function(cntp_init target cxx-standard)
             AUTOMOC ON
             AUTORCC ON
             AUTOUIC ON
+            AUTOMOC_MOC_OPTIONS "--output-json"
             CXX_STANDARD ${cxx-standard}
-            CXX_STANDARD_REQUIRED ON)
+            CXX_STANDARD_REQUIRED ON
+        )
             
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS LinguistTools)
 

@@ -28,6 +28,7 @@
 
 struct tApplicationPrivate;
 
+class tDIManager;
 class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         Q_OBJECT
     public:
@@ -78,6 +79,7 @@ class LIBCONTEMPORARY_EXPORT tApplication : public QApplication {
         static void ensureSingleInstance(QJsonObject launchData);
         static Platform currentPlatform();
         static bool isInitialised();
+        static tDIManager* dependencies();
 
     Q_SIGNALS:
         void openFile(QString file);
