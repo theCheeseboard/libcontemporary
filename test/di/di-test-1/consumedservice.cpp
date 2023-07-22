@@ -14,3 +14,7 @@ ConsumedService::ConsumedService(tInjectedPointer<IInnerService> test) :
 QString ConsumedService::helloWorld() {
     return this->innerService->helloWorld();
 }
+
+QObject* ConsumedService::cntp_inject_construct(QList<tInjectedPointer<QObject>>) {
+    return nullptr;
+}

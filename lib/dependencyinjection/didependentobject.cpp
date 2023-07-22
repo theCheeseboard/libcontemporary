@@ -8,6 +8,7 @@
 struct DIDependentObjectPrivate {
         QMetaObject constructible;
         QMetaMethod constructor;
+        QMetaMethod injectConstructor;
         QStringList dependencies;
 
         tDIManager* diManager;
@@ -22,12 +23,18 @@ DIDependentObject::DIDependentObject(QMetaObject constructible, tDIManager* diMa
     auto name = QString::fromUtf8(d->constructible.className());
     auto constructors = d->constructible.constructorCount();
 
+    d->injectConstructor = d->constructible.method(d->constructible.indexOfMethod("cntp_inject_construct(QList<tInjectedPointer<QObject>>)"));
     if (d->constructible.constructorCount() > 1) {
         for (auto i = 0; i < d->constructible.constructorCount(); i++) {
             //            if (d->constructible.constructor(i).tag())
         }
     } else if (d->constructible.constructorCount() == 1) {
         d->constructor = d->constructible.constructor(0);
+    }
+
+    if (!d->injectConstructor.isValid()) {
+        // The constructible has no valid constructor
+        tCritical("DIDependentObject") << "Class " << constructible.className() << " registered for dependency injection was not declared with T_INJECTABLE macro";
     }
     if (!d->constructor.isValid()) {
         // The constructible has no valid constructor
@@ -36,9 +43,7 @@ DIDependentObject::DIDependentObject(QMetaObject constructible, tDIManager* diMa
 }
 
 QSharedPointer<QObject> DIDependentObject::construct() {
-    QList<QMetaMethodArgument> args;
-    QList<QSharedPointer<QObject>> createdPointers;
-    auto arg = Q_ARG(tInjectedPointer<QObject>, tInjectedPointer<QObject>(nullptr));
+    QList<tInjectedPointer<QObject>> args;
 
     for (auto i = 0; i < d->constructor.parameterCount(); i++) {
         auto metatype = d->constructor.parameterMetaType(i);
@@ -46,11 +51,8 @@ QSharedPointer<QObject> DIDependentObject::construct() {
         if (paramName == "parent" && metatype == QMetaType::fromType<QObject>()) {
         } else {
             auto typeName = QString::fromUtf8(metatype.name());
-            auto created = metatype.create(nullptr);
             auto pointer = d->diManager->internalRequiredService("IInnerService");
-            tInjectedPointer<QObject>(pointer).propagateTo(created);
-            //            createdPointers.append(pointer);
-            args.append(QMetaMethodArgument{nullptr, metatype.name(), &created});
+            args.append(pointer);
 
             tDebug("DIDependentObject")
                 << typeName;
@@ -58,15 +60,6 @@ QSharedPointer<QObject> DIDependentObject::construct() {
     }
 
     QObject* returnValue = nullptr;
-    if (args.length() == 0) {
-        //        d->constructor.invoke(nullptr, qReturnArg(returnValue));
-        //        d->constructor.invoke(nullptr, QtPrivate::Invoke::returnArgument(QString::fromUtf8(d->constructible.className()).append("*").toUtf8().data(), returnValue));
-        returnValue = d->constructible.newInstance();
-    } else if (args.length() == 1) {
-        //        d->constructor.invoke(nullptr, qReturnArg(returnValue), args.constFirst());
-        returnValue = d->constructible.newInstance(args.first());
-    } else if (args.length() == 2) {
-        returnValue = d->constructible.newInstance(args.at(0), args.at(1));
-    }
+    d->injectConstructor.invoke(nullptr, qReturnArg(returnValue), Q_ARG(QList<tInjectedPointer<QObject>>, args));
     return QSharedPointer<QObject>(returnValue);
 }

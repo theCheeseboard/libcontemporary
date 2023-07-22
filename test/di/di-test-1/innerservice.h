@@ -3,10 +3,12 @@
 
 #include "iinnerservice.h"
 #include <QObject>
+#include <dependencyinjection/tinjectedpointer.h>
 
 class InnerService : public QObject,
                      public IInnerService {
         Q_OBJECT
+        T_INJECTABLE
     public:
         Q_SCRIPTABLE explicit InnerService();
 

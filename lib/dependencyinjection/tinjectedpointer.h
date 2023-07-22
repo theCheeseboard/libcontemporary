@@ -69,4 +69,10 @@ template<typename T> class tInjectedPointer {
         tInjectedPointerPrivate* d = nullptr;
 };
 
+Q_DECLARE_METATYPE(QList<tInjectedPointer<QObject>>)
+
+#define T_INJECTABLE \
+protected:           \
+    Q_INVOKABLE static QObject* cntp_inject_construct(QList<tInjectedPointer<QObject>> args);
+
 #endif // TINJECTEDPOINTER_H
