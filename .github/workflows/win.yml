@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
-        qt: [6.3, 6.4.2, 6.5]
+        qt: [6.4.2, 6.5]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: vicr123/libcontemporary/prepare-vars@actions
