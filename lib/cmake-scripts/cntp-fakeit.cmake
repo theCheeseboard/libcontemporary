@@ -10,4 +10,8 @@ function(cntp_fakeit target version)
     )
     FetchContent_MakeAvailable(fakeit-${version})
     target_link_libraries(${target} PRIVATE FakeIt::FakeIt-qtest)
+
+    if(MSVC)
+        target_compile_options(${target} PRIVATE "/ZI")
+    endif()
 endfunction()
