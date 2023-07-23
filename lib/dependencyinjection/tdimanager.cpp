@@ -1,6 +1,7 @@
 #include "tdimanager.h"
 
 #include "disingletonobject.h"
+#include "tinjectedpointer.h"
 #include <QMap>
 #include <tlogger.h>
 
@@ -9,8 +10,13 @@ struct tDIManagerPrivate {
 };
 
 tDIManager::tDIManager(QObject* parent) :
-    QObject{parent} {
+    tBaseDIManager{parent} {
     d = new tDIManagerPrivate();
+    tBaseDIManager::pushCurrentDIManager(this);
+}
+
+tDIManager::~tDIManager() {
+    tBaseDIManager::popCurrentDIManager();
 }
 
 void tDIManager::addSingleton(QMetaObject interface, QMetaObject implementation) {

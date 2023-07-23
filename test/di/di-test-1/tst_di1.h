@@ -12,6 +12,8 @@ class DI1 : public QObject {
 
     private slots:
         void initTestCase();
+        void di1_equality1();
+        void di1_equality2();
         void di1_helloWorld();
 
     private:

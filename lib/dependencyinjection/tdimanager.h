@@ -1,15 +1,16 @@
 #ifndef TDIMANAGER_H
 #define TDIMANAGER_H
 
-#include "tinjectedpointer.h"
+#include "tbasedimanager.h"
 #include <QObject>
 
 struct tDIManagerPrivate;
 class DIDependentObject;
-class tDIManager : public QObject {
+class tDIManager : public tBaseDIManager {
         Q_OBJECT
     public:
         explicit tDIManager(QObject* parent = nullptr);
+        ~tDIManager();
 
         void addSingleton(QMetaObject interface, QMetaObject implementation);
         template<Contemporary::Concepts::Mocd Interface, Contemporary::Concepts::IsValidImplementation<Interface> Implementation> void addSingleton() {
@@ -20,9 +21,6 @@ class tDIManager : public QObject {
         };
 
         tInjectedPointer<QObject> requiredService(QMetaObject interface);
-        template<Contemporary::Concepts::Mocd Interface> tInjectedPointer<Interface> requiredService() {
-            return this->requiredService(Interface::staticMetaObject).template reinterpretCast<Interface>();
-        }
 
     signals:
 
@@ -33,5 +31,8 @@ class tDIManager : public QObject {
     private:
         tDIManagerPrivate* d;
 };
+
+#define T_INJECTED(type, name) tInjectedPointer<type> name
+#define T_INJECT(type, name) T_INJECTED(type, name) = {}
 
 #endif // TDIMANAGER_H

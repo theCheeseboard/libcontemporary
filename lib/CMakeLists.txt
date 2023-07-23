@@ -113,6 +113,7 @@ cntp_sourcelist(
         dependencyinjection/tdimanager.cpp
         dependencyinjection/didependentobject.cpp
         dependencyinjection/disingletonobject.cpp
+        dependencyinjection/tbasedimanager.cpp
 
         taboutdialog.ui
         tinputdialog.ui
@@ -204,6 +205,7 @@ cntp_sourcelist(
         tcommandpalette/tcommandpalettedocumentspecificscope.h
 
         dependencyinjection/diconcepts.h
+        dependencyinjection/tbasedimanager.h
         dependencyinjection/tdimanager.h
         dependencyinjection/tinjectedpointer.h
     )

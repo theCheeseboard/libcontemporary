@@ -1,7 +1,7 @@
 #ifndef TINJECTEDPOINTER_H
 #define TINJECTEDPOINTER_H
 
-#include "diconcepts.h"
+#include "tbasedimanager.h"
 #include <QSharedPointer>
 
 struct tInjectedPointerPrivate {
@@ -13,6 +13,7 @@ template<typename T> class tInjectedPointer {
     public:
         tInjectedPointer() {
             d = new tInjectedPointerPrivate();
+            d->underlyingPointer = tBaseDIManager::currentDIManager()->requiredService<T>().d->underlyingPointer;
         }
 
         tInjectedPointer(QSharedPointer<QObject> underlyingPointer) {
@@ -47,7 +48,7 @@ template<typename T> class tInjectedPointer {
         }
 
         T* operator->() {
-            return reinterpret_cast<T*>(d->underlyingPointer.data());
+            return dynamic_cast<T*>(d->underlyingPointer.data());
         }
 
         tInjectedPointer<T> operator=(const tInjectedPointer<T>& other) {
@@ -55,7 +56,7 @@ template<typename T> class tInjectedPointer {
             return *this;
         }
 
-        bool operator==(const tInjectedPointer<T>& other) {
+        bool operator==(tInjectedPointer<T> other) const {
             return d->underlyingPointer == other.d->underlyingPointer;
         }
 
@@ -71,8 +72,7 @@ template<typename T> class tInjectedPointer {
 
 Q_DECLARE_METATYPE(QList<tInjectedPointer<QObject>>)
 
-#define T_INJECTABLE \
-protected:           \
-    Q_INVOKABLE static QObject* cntp_inject_construct(QList<tInjectedPointer<QObject>> args);
+#define T_INJECTED(type, name) tInjectedPointer<type> name
+#define T_INJECT(type, name) T_INJECTED(type, name) = {}
 
 #endif // TINJECTEDPOINTER_H

@@ -14,7 +14,7 @@ namespace Contemporary::Concepts {
     concept IsQObject = Inherits<Implementation, QObject> && Mocd<Implementation>;
 
     template<typename Implementation, typename Interface>
-    concept IsValidImplementation = Inherits<Implementation, Interface> && IsQObject<Implementation>;
+    concept IsValidImplementation = Inherits<Implementation, Interface> && IsQObject<Implementation> && std::default_initializable<Implementation>;
 } // namespace Contemporary::Concepts
 
 #endif // DICONCEPTS_H

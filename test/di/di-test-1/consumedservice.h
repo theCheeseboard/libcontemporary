@@ -9,9 +9,8 @@ class IInnerService;
 class ConsumedService : public QObject,
                         public IConsumedService {
         Q_OBJECT
-        T_INJECTABLE
     public:
-        explicit ConsumedService(tInjectedPointer<IInnerService> test);
+        Q_SCRIPTABLE explicit ConsumedService(T_INJECT(IInnerService, test));
 
         QString helloWorld() override;
 
