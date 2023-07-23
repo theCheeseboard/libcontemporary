@@ -209,6 +209,7 @@ cntp_sourcelist(
         dependencyinjection/tdimanager.h
         dependencyinjection/tinjectedpointer.h
         dependencyinjection/tdibaseinterface.h
+        dependencyinjection/diprovidedsingletonobject.h
     )
 
 cntp_sourcelist(

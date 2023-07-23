@@ -1,8 +1,8 @@
 #include "tst_di1.h"
 
 #include "consumedservice.h"
-#include "innerservice.h"
 #include <QtTest>
+#include <fakeit.hpp>
 
 DI1::DI1() {
     diManager = new tDIManager();
@@ -15,7 +15,9 @@ DI1::~DI1() {
 void DI1::initTestCase() {
     auto diManager = static_cast<tDIManager*>(this->diManager);
     diManager->addSingleton<IConsumedService, ConsumedService>();
-    diManager->addSingleton<IInnerService, InnerService>();
+
+    fakeit::When(Method(innerServiceMock, helloWorld)).AlwaysReturn(QStringLiteral("Hello World!"));
+    diManager->addSingleton<IInnerService>(innerServiceMock.get());
 }
 
 void DI1::di1_equality1() {

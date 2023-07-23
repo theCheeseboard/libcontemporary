@@ -1,6 +1,7 @@
 #ifndef TDIMANAGER_H
 #define TDIMANAGER_H
 
+#include "diprovidedsingletonobject.h"
 #include "tbasedimanager.h"
 #include <QObject>
 
@@ -19,6 +20,9 @@ class tDIManager : public tBaseDIManager {
         template<Contemporary::Concepts::IsQObject Implementation> void addSingleton() {
             this->addSingleton<Implementation, Implementation>();
         };
+        template<Contemporary::Concepts::IsValidInterface Interface, Contemporary::Concepts::Inherits<Interface> T> void addSingleton(T& implementation) {
+            pushDependency(Interface::staticMetaObject, new DIProvidedSingletonObject(Interface::staticMetaObject, this, implementation));
+        };
 
         tInjectedPointer<tDIBaseInterface> requiredService(QMetaObject interface);
 
@@ -30,6 +34,8 @@ class tDIManager : public tBaseDIManager {
 
     private:
         tDIManagerPrivate* d;
+
+        void pushDependency(QMetaObject interface, DIDependentObject* dependentObject);
 };
 
 #define T_INJECTED(type, name) tInjectedPointer<type> name

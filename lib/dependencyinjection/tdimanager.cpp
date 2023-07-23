@@ -20,14 +20,7 @@ tDIManager::~tDIManager() {
 }
 
 void tDIManager::addSingleton(QMetaObject interface, QMetaObject implementation) {
-    auto interfaceName = QString::fromUtf8(interface.className());
-    if (d->dependencies.contains(interfaceName)) {
-        tCritical("tDIManager") << "Attempting to register two instances of " << interfaceName;
-        return;
-    }
-
-    auto dependentObject = new DISingletonObject(implementation, this);
-    d->dependencies.insert(interfaceName, dependentObject);
+    pushDependency(interface, new DISingletonObject(implementation, this));
 }
 
 tInjectedPointer<tDIBaseInterface> tDIManager::requiredService(QMetaObject interface) {
@@ -42,4 +35,14 @@ QSharedPointer<tDIBaseInterface> tDIManager::internalRequiredService(QString int
 
     auto dependentObject = d->dependencies.value(interface);
     return dependentObject->getInstance();
+}
+
+void tDIManager::pushDependency(QMetaObject interface, DIDependentObject* dependentObject) {
+    auto interfaceName = QString::fromUtf8(interface.className());
+    if (d->dependencies.contains(interfaceName)) {
+        tCritical("tDIManager") << "Attempting to register two instances of " << interfaceName;
+        return;
+    }
+
+    d->dependencies.insert(interfaceName, dependentObject);
 }

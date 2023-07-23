@@ -1,7 +1,6 @@
 #include "consumedservice.h"
 
 #include "iinnerservice.h"
-#include "innerservice.h"
 
 ConsumedService::ConsumedService(T_INJECTED(IInnerService, test)) :
     QObject{nullptr} {

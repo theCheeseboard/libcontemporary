@@ -21,6 +21,7 @@ function(cntp_test)
         AUTOMOC_MOC_OPTIONS "--output-json"
     )
 
+    cntp_fakeit(${target} 2.4.0)
     target_link_libraries(${target} PRIVATE Qt${QT_VERSION_MAJOR}::Test libcontemporary)
     target_include_directories(${target} PUBLIC ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/)
 endfunction()
