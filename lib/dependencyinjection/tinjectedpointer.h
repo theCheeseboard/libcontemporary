@@ -11,7 +11,13 @@ struct tInjectedPointerPrivate {
 class DIDependentObject;
 template<typename T> class tInjectedPointer {
     public:
+        struct InjectToken {};
+
         tInjectedPointer() {
+            d = new tInjectedPointerPrivate();
+        }
+
+        tInjectedPointer(InjectToken injectToken) {
             d = new tInjectedPointerPrivate();
             d->underlyingPointer = tBaseDIManager::currentDIManager()->requiredService<T>().d->underlyingPointer;
         }
@@ -60,6 +66,8 @@ template<typename T> class tInjectedPointer {
             return d->underlyingPointer == other.d->underlyingPointer;
         }
 
+        constexpr const static InjectToken Inject = {};
+
     protected:
         friend DIDependentObject;
         void propagateTo(void* other) {
@@ -73,6 +81,6 @@ template<typename T> class tInjectedPointer {
 Q_DECLARE_METATYPE(QList<tInjectedPointer<QObject>>)
 
 #define T_INJECTED(type, name) tInjectedPointer<type> name
-#define T_INJECT(type, name) T_INJECTED(type, name) = {}
+#define T_INJECT(type, name) T_INJECTED(type, name) = tInjectedPointer<type>::Inject
 
 #endif // TINJECTEDPOINTER_H
