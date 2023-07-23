@@ -13,25 +13,26 @@ DI1::~DI1() {
 }
 
 void DI1::initTestCase() {
+    auto diManager = static_cast<tDIManager*>(this->diManager);
     diManager->addSingleton<IConsumedService, ConsumedService>();
     diManager->addSingleton<IInnerService, InnerService>();
 }
 
 void DI1::di1_equality1() {
-    auto consumedService = diManager->tBaseDIManager::requiredService<ConsumedService>();
-    auto consumedService2 = diManager->tBaseDIManager::requiredService<ConsumedService>();
+    auto consumedService = diManager->requiredService<ConsumedService>();
+    auto consumedService2 = diManager->requiredService<ConsumedService>();
     QCOMPARE(consumedService, consumedService2);
 }
 
 void DI1::di1_equality2() {
-    auto innerService = diManager->tBaseDIManager::requiredService<IInnerService>();
-    auto innerService2 = diManager->tBaseDIManager::requiredService<IInnerService>();
+    auto innerService = diManager->requiredService<IInnerService>();
+    auto innerService2 = diManager->requiredService<IInnerService>();
     QCOMPARE(innerService, innerService2);
 }
 
 void DI1::di1_helloWorld() {
-    auto consumedService = diManager->tBaseDIManager::requiredService<IConsumedService>();
-    auto innerService = diManager->tBaseDIManager::requiredService<IInnerService>();
+    auto consumedService = diManager->requiredService<IConsumedService>();
+    auto innerService = diManager->requiredService<IInnerService>();
 
     auto consumedHelloWorld = consumedService->helloWorld();
     auto innerHelloWorld = innerService->helloWorld();

@@ -3,7 +3,7 @@
 #include <QSharedPointer>
 
 struct DISingletonObjectPrivate {
-        QSharedPointer<QObject> object;
+        QSharedPointer<tDIBaseInterface> object;
 };
 
 DISingletonObject::DISingletonObject(QMetaObject constructible, tDIManager* diManager) :
@@ -11,7 +11,7 @@ DISingletonObject::DISingletonObject(QMetaObject constructible, tDIManager* diMa
     d = new DISingletonObjectPrivate();
 }
 
-QSharedPointer<QObject> DISingletonObject::getInstance() {
+QSharedPointer<tDIBaseInterface> DISingletonObject::getInstance() {
     if (!d->object) {
         d->object = this->construct();
     }

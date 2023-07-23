@@ -1,6 +1,7 @@
 #ifndef DIDEPENDENTOBJECT_H
 #define DIDEPENDENTOBJECT_H
 
+#include "tdibaseinterface.h"
 #include <QObject>
 
 struct DIDependentObjectPrivate;
@@ -10,10 +11,10 @@ class DIDependentObject : public QObject {
     public:
         explicit DIDependentObject(QMetaObject constructible, tDIManager* diManager);
 
-        virtual QSharedPointer<QObject> getInstance() = 0;
+        virtual QSharedPointer<tDIBaseInterface> getInstance() = 0;
 
     protected:
-        QSharedPointer<QObject> construct();
+        QSharedPointer<tDIBaseInterface> construct();
 
     signals:
 

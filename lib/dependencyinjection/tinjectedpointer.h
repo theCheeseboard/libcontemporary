@@ -5,7 +5,7 @@
 #include <QSharedPointer>
 
 struct tInjectedPointerPrivate {
-        QSharedPointer<QObject> underlyingPointer;
+        QSharedPointer<tDIBaseInterface> underlyingPointer;
 };
 
 class DIDependentObject;
@@ -16,7 +16,7 @@ template<typename T> class tInjectedPointer {
             d->underlyingPointer = tBaseDIManager::currentDIManager()->requiredService<T>().d->underlyingPointer;
         }
 
-        tInjectedPointer(QSharedPointer<QObject> underlyingPointer) {
+        tInjectedPointer(QSharedPointer<tDIBaseInterface> underlyingPointer) {
             d = new tInjectedPointerPrivate();
             d->underlyingPointer = underlyingPointer;
         }
@@ -48,7 +48,7 @@ template<typename T> class tInjectedPointer {
         }
 
         T* operator->() {
-            return dynamic_cast<T*>(d->underlyingPointer.data());
+            return static_cast<T*>(d->underlyingPointer.data());
         }
 
         tInjectedPointer<T> operator=(const tInjectedPointer<T>& other) {

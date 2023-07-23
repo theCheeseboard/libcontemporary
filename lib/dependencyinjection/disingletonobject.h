@@ -9,7 +9,7 @@ class DISingletonObject : public DIDependentObject {
     public:
         explicit DISingletonObject(QMetaObject constructible, tDIManager* diManager);
 
-        QSharedPointer<QObject> getInstance();
+        QSharedPointer<tDIBaseInterface> getInstance();
 
     signals:
 

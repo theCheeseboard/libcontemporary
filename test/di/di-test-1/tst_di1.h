@@ -17,7 +17,7 @@ class DI1 : public QObject {
         void di1_helloWorld();
 
     private:
-        tDIManager* diManager;
+        tBaseDIManager* diManager;
 };
 
 #endif // TST_DI1_H

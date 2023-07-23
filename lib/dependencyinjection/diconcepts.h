@@ -1,6 +1,7 @@
 #ifndef DICONCEPTS_H
 #define DICONCEPTS_H
 
+#include "tdibaseinterface.h"
 #include <QObject>
 
 namespace Contemporary::Concepts {
@@ -15,6 +16,10 @@ namespace Contemporary::Concepts {
 
     template<typename Implementation, typename Interface>
     concept IsValidImplementation = Inherits<Implementation, Interface> && IsQObject<Implementation> && std::default_initializable<Implementation>;
+
+    template<typename Interface>
+    concept IsValidInterface = Mocd<Interface> && Inherits<Interface, tDIBaseInterface>;
+
 } // namespace Contemporary::Concepts
 
 #endif // DICONCEPTS_H

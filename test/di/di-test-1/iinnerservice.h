@@ -3,8 +3,9 @@
 
 #include <QMetaObject>
 #include <QString>
+#include <dependencyinjection/tdibaseinterface.h>
 
-class IInnerService {
+class IInnerService : public tDIBaseInterface {
         Q_GADGET
     public:
         virtual QString helloWorld() = 0;

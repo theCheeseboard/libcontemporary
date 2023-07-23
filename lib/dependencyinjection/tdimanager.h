@@ -13,20 +13,20 @@ class tDIManager : public tBaseDIManager {
         ~tDIManager();
 
         void addSingleton(QMetaObject interface, QMetaObject implementation);
-        template<Contemporary::Concepts::Mocd Interface, Contemporary::Concepts::IsValidImplementation<Interface> Implementation> void addSingleton() {
+        template<Contemporary::Concepts::IsValidInterface Interface, Contemporary::Concepts::IsValidImplementation<Interface> Implementation> void addSingleton() {
             this->addSingleton(Interface::staticMetaObject, Implementation::staticMetaObject);
         };
         template<Contemporary::Concepts::IsQObject Implementation> void addSingleton() {
             this->addSingleton<Implementation, Implementation>();
         };
 
-        tInjectedPointer<QObject> requiredService(QMetaObject interface);
+        tInjectedPointer<tDIBaseInterface> requiredService(QMetaObject interface);
 
     signals:
 
     protected:
         friend DIDependentObject;
-        QSharedPointer<QObject> internalRequiredService(QString interface);
+        QSharedPointer<tDIBaseInterface> internalRequiredService(QString interface);
 
     private:
         tDIManagerPrivate* d;

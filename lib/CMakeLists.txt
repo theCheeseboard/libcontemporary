@@ -208,6 +208,7 @@ cntp_sourcelist(
         dependencyinjection/tbasedimanager.h
         dependencyinjection/tdimanager.h
         dependencyinjection/tinjectedpointer.h
+        dependencyinjection/tdibaseinterface.h
     )
 
 cntp_sourcelist(

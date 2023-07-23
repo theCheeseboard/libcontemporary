@@ -36,11 +36,9 @@ DIDependentObject::DIDependentObject(QMetaObject constructible, tDIManager* diMa
     }
 }
 
-QSharedPointer<QObject> DIDependentObject::construct() {
+QSharedPointer<tDIBaseInterface> DIDependentObject::construct() {
     tBaseDIManager::pushCurrentDIManager(d->diManager);
-    //    QObject* returnValue = nullptr;
-    //    d->constructor.invoke(nullptr, qReturnArg(returnValue));
     auto returnValue = d->constructible.newInstance();
     tBaseDIManager::popCurrentDIManager();
-    return QSharedPointer<QObject>(returnValue);
+    return QSharedPointer<tDIBaseInterface>(dynamic_cast<tDIBaseInterface*>(returnValue));
 }

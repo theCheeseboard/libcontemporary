@@ -30,12 +30,12 @@ void tDIManager::addSingleton(QMetaObject interface, QMetaObject implementation)
     d->dependencies.insert(interfaceName, dependentObject);
 }
 
-tInjectedPointer<QObject> tDIManager::requiredService(QMetaObject interface) {
+tInjectedPointer<tDIBaseInterface> tDIManager::requiredService(QMetaObject interface) {
     auto interfaceName = QString::fromUtf8(interface.className());
-    return tInjectedPointer<QObject>(internalRequiredService(interfaceName));
+    return tInjectedPointer<tDIBaseInterface>(internalRequiredService(interfaceName));
 }
 
-QSharedPointer<QObject> tDIManager::internalRequiredService(QString interface) {
+QSharedPointer<tDIBaseInterface> tDIManager::internalRequiredService(QString interface) {
     if (!d->dependencies.contains(interface)) {
         return {};
     }
