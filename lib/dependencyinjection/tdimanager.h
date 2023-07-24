@@ -4,6 +4,7 @@
 #include "diprovidedsingletonobject.h"
 #include "tbasedimanager.h"
 #include <QObject>
+#include <type_traits>
 
 struct tDIManagerPrivate;
 class DIDependentObject;
@@ -15,6 +16,7 @@ class LIBCONTEMPORARY_EXPORT tDIManager : public tBaseDIManager {
 
         void addSingleton(QMetaObject interface, QMetaObject implementation);
         template<Contemporary::Concepts::IsValidInterface Interface, Contemporary::Concepts::IsValidImplementation<Interface> Implementation> void addSingleton() {
+            static_assert(Contemporary::Concepts::HasTInjectedHaveDiConstructorAnnotation<Implementation>, "Object to be constructed via DI does not have constructor marked with T_DI_CONSTRUCTOR");
             this->addSingleton(Interface::staticMetaObject, Implementation::staticMetaObject);
         };
         template<Contemporary::Concepts::IsQObject Implementation> void addSingleton() {

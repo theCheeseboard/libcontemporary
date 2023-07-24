@@ -23,6 +23,11 @@ namespace Contemporary::Concepts {
     template<typename Constructible>
     concept IsConstructible = IsValidImplementation<Constructible, Constructible>;
 
+    template<typename T, typename = int>
+    concept HasTInjectedHaveDiConstructorAnnotation = requires(T t) {
+        (t.t_injected_have_di_constructor);
+    };
+
 } // namespace Contemporary::Concepts
 
 #endif // DICONCEPTS_H

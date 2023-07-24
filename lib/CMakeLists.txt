@@ -210,6 +210,7 @@ cntp_sourcelist(
         dependencyinjection/tinjectedpointer.h
         dependencyinjection/tdibaseinterface.h
         dependencyinjection/diprovidedsingletonobject.h
+        dependencyinjection/didependentobject.h
     )
 
 cntp_sourcelist(
@@ -234,7 +235,6 @@ cntp_sourcelist(
         private/tstackedwidgetanimationfade.h
         private/tstackedwidgetanimationslidevertical.h
         private/tstackedwidgetanimationslide.h
-        dependencyinjection/didependentobject.h
         dependencyinjection/disingletonobject.h
 )
 

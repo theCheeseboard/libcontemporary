@@ -6,18 +6,20 @@
 #include <dependencyinjection/tinjectedpointer.h>
 
 class IInnerService;
+struct ConsumedServicePrivate;
 class ConsumedService : public QObject,
                         public IConsumedService {
         Q_OBJECT
     public:
-        Q_SCRIPTABLE explicit ConsumedService(T_INJECT(IInnerService, test));
+        T_DI_CONSTRUCTOR explicit ConsumedService(T_INJECT(IInnerService));
+        ~ConsumedService();
 
         QString helloWorld() override;
 
     signals:
 
     private:
-        tInjectedPointer<IInnerService> innerService;
+        ConsumedServicePrivate* d;
 };
 
 #endif // CONSUMEDSERVICE_H

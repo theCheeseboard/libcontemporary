@@ -2,11 +2,20 @@
 
 #include "iinnerservice.h"
 
-ConsumedService::ConsumedService(T_INJECTED(IInnerService, test)) :
+struct ConsumedServicePrivate {
+        T_INJECTED(IInnerService);
+};
+
+ConsumedService::ConsumedService(T_INJECTED(IInnerService)) :
     QObject{nullptr} {
-    this->innerService = test;
+    d = new ConsumedServicePrivate();
+    T_INJECT_SAVE_D(IInnerService);
+}
+
+ConsumedService::~ConsumedService() {
+    delete d;
 }
 
 QString ConsumedService::helloWorld() {
-    return this->innerService->helloWorld();
+    return T_INJECTED_SERVICE(IInnerService)->helloWorld();
 }

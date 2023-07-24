@@ -57,7 +57,7 @@ template<typename T> class tInjectedPointer {
             return tInjectedPointer<CastTarget>(d->underlyingPointer);
         }
 
-        T* operator->() {
+        T* operator->() const {
             return static_cast<T*>(d->underlyingPointer.data());
         }
 
@@ -84,7 +84,13 @@ template<typename T> class tInjectedPointer {
 
 Q_DECLARE_METATYPE(QList<tInjectedPointer<QObject>>)
 
-#define T_INJECTED(type, name) tInjectedPointer<type> name
-#define T_INJECT(type, name) T_INJECTED(type, name) = tInjectedPointer<type>::Inject
+#define T_INJECTED_NAME_FROM_TYPE_NAME(type) t_injected_##type
+#define T_INJECTED_NAME(type, name) tInjectedPointer<type> name
+#define T_INJECT_NAME(type, name) T_INJECTED_NAME(type, name) = tInjectedPointer<type>::Inject
+#define T_INJECTED(type) T_INJECTED_NAME(type, T_INJECTED_NAME_FROM_TYPE_NAME(type))
+#define T_INJECT(type) T_INJECT_NAME(type, T_INJECTED_NAME_FROM_TYPE_NAME(type))
+
+#define T_INJECTED_SERVICE(type) d->T_INJECTED_NAME_FROM_TYPE_NAME(type)
+#define T_INJECT_SAVE_D(type) T_INJECTED_SERVICE(type) = T_INJECTED_NAME_FROM_TYPE_NAME(type)
 
 #endif // TINJECTEDPOINTER_H

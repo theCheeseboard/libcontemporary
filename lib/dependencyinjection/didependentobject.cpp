@@ -22,6 +22,9 @@ DIDependentObject::DIDependentObject(QMetaObject constructible, tDIManager* diMa
 QSharedPointer<tDIBaseInterface> DIDependentObject::construct() {
     tBaseDIManager::pushCurrentDIManager(d->diManager);
     auto returnValue = d->constructible.newInstance();
+    if (!returnValue) {
+        tCritical("DIDependentObject") << "Unable to construct class " << d->constructible.className() << " registered for DI";
+    }
     tBaseDIManager::popCurrentDIManager();
     return QSharedPointer<tDIBaseInterface>(dynamic_cast<tDIBaseInterface*>(returnValue));
 }
