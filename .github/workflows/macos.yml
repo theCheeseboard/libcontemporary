@@ -26,6 +26,7 @@ jobs:
         with:
           project: "danvratil/qcoro"
           commitish: ${{ steps.vars.outputs.qcoroVersion }}
+          extra-cmake-args: "-DQCORO_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF"
       - uses: actions/checkout@v1
         with:
           submodules: 'recursive'
