@@ -38,7 +38,4 @@ class tDIManager : public tBaseDIManager {
         void pushDependency(QMetaObject interface, DIDependentObject* dependentObject);
 };
 
-#define T_INJECTED(type, name) tInjectedPointer<type> name
-#define T_INJECT(type, name) T_INJECTED(type, name) = {}
-
 #endif // TDIMANAGER_H
