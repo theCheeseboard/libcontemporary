@@ -49,6 +49,10 @@ template<typename T> class tInjectedPointer {
             return tInjectedPointer<CastTarget>(d->underlyingPointer.template staticCast<CastTarget>());
         }
 
+        template<Contemporary::Concepts::Mocd CastTarget> tInjectedPointer<CastTarget> dynamicCast() {
+            return tInjectedPointer<CastTarget>(d->underlyingPointer.template dynamicCast<CastTarget>());
+        }
+
         template<Contemporary::Concepts::Mocd CastTarget> tInjectedPointer<CastTarget> reinterpretCast() {
             return tInjectedPointer<CastTarget>(d->underlyingPointer);
         }

@@ -40,3 +40,15 @@ void DI1::di1_helloWorld() {
     auto innerHelloWorld = innerService->helloWorld();
     QCOMPARE(consumedHelloWorld, innerHelloWorld);
 }
+
+void DI1::di1_construct() {
+    auto constructed = diManager->construct<ConsumedService>();
+    auto consumedService = diManager->requiredService<IConsumedService>();
+    auto innerService = diManager->requiredService<IInnerService>();
+
+    QCOMPARE_NE(constructed.dynamicCast<IConsumedService>(), consumedService);
+
+    auto constructedHelloWorld = constructed->helloWorld();
+    auto innerHelloWorld = innerService->helloWorld();
+    QCOMPARE(constructedHelloWorld, innerHelloWorld);
+}

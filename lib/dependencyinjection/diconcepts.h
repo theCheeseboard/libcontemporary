@@ -20,6 +20,9 @@ namespace Contemporary::Concepts {
     template<typename Interface>
     concept IsValidInterface = Mocd<Interface> && Inherits<Interface, tDIBaseInterface>;
 
+    template<typename Constructible>
+    concept IsConstructible = IsValidImplementation<Constructible, Constructible>;
+
 } // namespace Contemporary::Concepts
 
 #endif // DICONCEPTS_H

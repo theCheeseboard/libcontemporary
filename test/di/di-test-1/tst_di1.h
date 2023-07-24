@@ -17,6 +17,7 @@ class DI1 : public QObject {
         void di1_equality1();
         void di1_equality2();
         void di1_helloWorld();
+        void di1_construct();
 
     private:
         tBaseDIManager* diManager;
