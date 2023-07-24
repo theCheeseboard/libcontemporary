@@ -7,7 +7,7 @@
 
 struct tDIManagerPrivate;
 class DIDependentObject;
-class tDIManager : public tBaseDIManager {
+class LIBCONTEMPORARY_EXPORT tDIManager : public tBaseDIManager {
         Q_OBJECT
     public:
         explicit tDIManager(QObject* parent = nullptr);

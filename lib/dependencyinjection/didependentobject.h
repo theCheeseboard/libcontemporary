@@ -6,7 +6,7 @@
 
 struct DIDependentObjectPrivate;
 class tDIManager;
-class DIDependentObject : public QObject {
+class LIBCONTEMPORARY_EXPORT DIDependentObject : public QObject {
         Q_OBJECT
     public:
         explicit DIDependentObject(QMetaObject constructible, tDIManager* diManager);

@@ -1,7 +1,9 @@
 #ifndef TDIBASEINTERFACE_H
 #define TDIBASEINTERFACE_H
 
-class tDIBaseInterface {
+#include "../libcontemporary_global.h"
+
+class LIBCONTEMPORARY_EXPORT tDIBaseInterface {
     public:
         virtual ~tDIBaseInterface() = default;
 };

@@ -4,12 +4,13 @@
 #include "diconcepts.h"
 #include "tdibaseinterface.h"
 #include <QObject>
+#include "../libcontemporary_global.h"
 
 template<typename T> class tInjectedPointer;
 
 class DIDependentObject;
 struct tBaseDIManagerPrivate;
-class tBaseDIManager : public QObject {
+class LIBCONTEMPORARY_EXPORT tBaseDIManager : public QObject {
         Q_OBJECT
     public:
         explicit tBaseDIManager(QObject* parent = nullptr);
