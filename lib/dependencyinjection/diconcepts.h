@@ -6,10 +6,10 @@
 
 namespace Contemporary::Concepts {
     template<typename T>
-    concept Mocd = std::is_convertible<decltype(T::staticMetaObject), const QMetaObject>::value;
+    concept Mocd = std::is_convertible_v<decltype(T::staticMetaObject), const QMetaObject>;
 
     template<typename Implementation, typename Interface>
-    concept Inherits = std::is_base_of<Interface, Implementation>::value && Mocd<Implementation>;
+    concept Inherits = std::is_base_of_v<Interface, Implementation> && Mocd<Implementation>;
 
     template<typename Implementation>
     concept IsQObject = Inherits<Implementation, QObject> && Mocd<Implementation>;
