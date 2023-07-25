@@ -8,6 +8,8 @@ inputs:
 outputs:
   package:
     description: 'Output package for upload as artifact'
+  appxPackage:
+    description: 'appx format package for upload as artifact'
 runs:
   using: 'node16'
   main: 'dist/index.js'

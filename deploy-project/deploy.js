@@ -46,10 +46,29 @@ module.exports = async options => {
             break;
         }
         case "win32": {
-            let deployDir = path.resolve(outputDir, "deploy");
+            const targetDir = path.dirname(target);
+            const deployDir = path.resolve(outputDir, "deploy");
+
+            const appxManifest = path.join(targetDir, "appxmanifest.xml");
+            const appxIcon = path.join(targetDir, "appxicon.png");
+
             await io.mkdirP(deployDir);
             await io.cp(target, deployDir + "/");
-            await exec.exec("\"C:/Program Files (x86)/libcontemporary/bin/cntp-windeploy.exe\"", [deployDir])
+
+            let args = [deployDir];
+
+            if (await fs.stat(appxManifest) && await fs.stat(appxIcon)) {
+                await io.cp(appxManifest, deployDir + "/");
+                await io.cp(appxIcon, deployDir + "/");
+
+                const appxPackage = `${process.env["HOME"]}/${executableName}-appx.msix`;
+                core.setOutput("appxPackage", appxPackage);
+
+                args.push("-a");
+                args.push(appxPackage);
+            }
+
+            await exec.exec("\"C:/Program Files (x86)/libcontemporary/bin/cntp-windeploy.exe\"", args)
 
             core.setOutput("package", deployDir);
             break;
