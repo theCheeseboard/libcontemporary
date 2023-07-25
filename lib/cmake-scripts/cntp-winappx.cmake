@@ -8,6 +8,6 @@ function(cntp_winappx target appxmanifest)
 
     set(APPX_EXECUTABLE_NAME ${APPX_EXECUTABLE_NAME}.exe)
     set(APPX_ARCH x64) # TODO: Update
-    set(APPX_VERSION ${REPOVERSION_MAJOR}.${REPOVERSION_MINOR}.${REPOVERSION_REVISION}.${REPOVERSION_BUILD})
+    set(APPX_VERSION ${REPOVERSION_MAJOR}.${REPOVERSION_MINOR}.${REPOVERSION_REVISION}.0)
     configure_file(${appxmanifest} appxmanifest.xml)
 endfunction()
