@@ -3,7 +3,7 @@ description: 'Install libcontemporary'
 inputs:
   commitish:
     description: 'Branch to build'
-    default: "blueprint"
+    default: "master"
     required: false
   qcoroVersion:
     description: "QCoro version to build"
