@@ -376,19 +376,19 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="701"/>
+        <location filename="../tapplication.cpp" line="709"/>
         <source>Copyright © %1.</source>
         <translation>Toate drepturile rezervate © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="674"/>
-        <location filename="../tapplication.cpp" line="677"/>
-        <location filename="../tapplication.cpp" line="680"/>
-        <location filename="../tapplication.cpp" line="683"/>
-        <location filename="../tapplication.cpp" line="686"/>
-        <location filename="../tapplication.cpp" line="689"/>
-        <location filename="../tapplication.cpp" line="692"/>
-        <location filename="../tapplication.cpp" line="695"/>
+        <location filename="../tapplication.cpp" line="681"/>
+        <location filename="../tapplication.cpp" line="684"/>
+        <location filename="../tapplication.cpp" line="687"/>
+        <location filename="../tapplication.cpp" line="690"/>
+        <location filename="../tapplication.cpp" line="693"/>
+        <location filename="../tapplication.cpp" line="696"/>
+        <location filename="../tapplication.cpp" line="699"/>
+        <location filename="../tapplication.cpp" line="702"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Licențiat sub termenii %1</translation>
     </message>
@@ -433,42 +433,42 @@
         <translation>Platformă</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="681"/>
         <source>GNU General Public License, version 3</source>
         <translation>Licența generală publică GNU, versiunea a 3-a</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="684"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>Licența generală publică GNU, versiunea a 3-a sau mai nouă</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="687"/>
         <source>GNU General Public License, version 2</source>
         <translation>Licența generală publică GNU, versiunea a 2-a</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="690"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>Licența generală publică GNU, versiunea a 3-a sau mai nouă</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="686"/>
+        <location filename="../tapplication.cpp" line="693"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>Licența generală publică GNU Lesser, versiunea a 3-a</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="689"/>
+        <location filename="../tapplication.cpp" line="696"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>Licența generală publică GNU Lesser, versiunea a 3-a sau mai nouă</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="692"/>
+        <location filename="../tapplication.cpp" line="699"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>Licența generală publică GNU Lesser, versiunea 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="695"/>
+        <location filename="../tapplication.cpp" line="702"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>Licența generală publică GNU Lesser, versiunea a 2.1 sau mai nouă</translation>
     </message>

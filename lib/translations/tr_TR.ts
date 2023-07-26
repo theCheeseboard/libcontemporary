@@ -379,19 +379,19 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="701"/>
+        <location filename="../tapplication.cpp" line="709"/>
         <source>Copyright © %1.</source>
         <translation>Telif hakkı © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="674"/>
-        <location filename="../tapplication.cpp" line="677"/>
-        <location filename="../tapplication.cpp" line="680"/>
-        <location filename="../tapplication.cpp" line="683"/>
-        <location filename="../tapplication.cpp" line="686"/>
-        <location filename="../tapplication.cpp" line="689"/>
-        <location filename="../tapplication.cpp" line="692"/>
-        <location filename="../tapplication.cpp" line="695"/>
+        <location filename="../tapplication.cpp" line="681"/>
+        <location filename="../tapplication.cpp" line="684"/>
+        <location filename="../tapplication.cpp" line="687"/>
+        <location filename="../tapplication.cpp" line="690"/>
+        <location filename="../tapplication.cpp" line="693"/>
+        <location filename="../tapplication.cpp" line="696"/>
+        <location filename="../tapplication.cpp" line="699"/>
+        <location filename="../tapplication.cpp" line="702"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>%1 koşulları altında lisanslanmıştır.</translation>
     </message>
@@ -436,42 +436,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="681"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU Genel Kamu Lisansı, sürüm 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="684"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU Genel Kamu Lisansı, sürüm 3 veya üzeri</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="687"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU Genel Kamu Lisansı, sürüm 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="690"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU Genel Kamu Lisansı, sürüm 2 veya üzeri</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="686"/>
+        <location filename="../tapplication.cpp" line="693"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Daha Az Genel Kamu Lisansı, sürüm 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="689"/>
+        <location filename="../tapplication.cpp" line="696"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Kısıtlı Genel Kamu Lisansı, sürüm 3 veya üzeri</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="692"/>
+        <location filename="../tapplication.cpp" line="699"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Kısıtlı Genel Kamu Lisansı, sürüm 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="695"/>
+        <location filename="../tapplication.cpp" line="702"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Kısıtlı Genel Kamu Lisansı, sürüm 2.1 veya üstü</translation>
     </message>

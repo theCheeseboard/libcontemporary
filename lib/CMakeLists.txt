@@ -184,6 +184,7 @@ cntp_sourcelist(
         tcontentsizer.h
         texception.h
         tqueueguard.h
+        tsysconfigdetect.h
         ranges/trange.h
         plugins/plugininterface.h
         plugins/tpluginmanager.h

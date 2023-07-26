@@ -1,9 +1,9 @@
 include_guard()
 
 function(cntp_define_build_dirs)
-
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-        find_path(QMAKE_PATH qmake6.exe
+        find_path(QMAKE_PATH
+                NAMES qmake6.exe qmake6.bat
                 HINTS ${CMAKE_PREFIX_PATH}
                 PATH_SUFFIXES bin)
     ELSE()
@@ -14,21 +14,29 @@ function(cntp_define_build_dirs)
         message(FATAL_ERROR "Couldn't call qmake. Ensure Qt 6 is installed correctly and qmake6 is located in your PATH.")
     ENDIF()
 
-    set(QMAKE_PATH ${QMAKE_PATH}/qmake6)
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+        IF(EXISTS "${QMAKE_PATH}/qmake6.bat")
+            set(QMAKE_PATH ${QMAKE_PATH}/qmake6.bat)
+        ELSE()
+            set(QMAKE_PATH ${QMAKE_PATH}/qmake6.exe)
+        ENDIF()
+    ELSE()
+        set(QMAKE_PATH ${QMAKE_PATH}/qmake6)
+    ENDIF()
 
     execute_process(
-            COMMAND ${QMAKE_PATH} -query QT_INSTALL_PREFIX
-            RESULT_VARIABLE QT_PREFIX_RESULT
-            OUTPUT_VARIABLE QT_PREFIX_DIR
+        COMMAND ${QMAKE_PATH} -query QT_INSTALL_PREFIX
+        RESULT_VARIABLE QT_PREFIX_RESULT
+        OUTPUT_VARIABLE QT_PREFIX_DIR
     )
 
     string(STRIP "${QT_PREFIX_DIR}" QT_PREFIX_DIR)
     file(TO_CMAKE_PATH "${QT_PREFIX_DIR}" QT_PREFIX_DIR)
 
     execute_process(
-            COMMAND ${QMAKE_PATH} -query QT_INSTALL_PLUGINS
-            RESULT_VARIABLE PLUGIN_INSTALLATION_DIR_RESULT
-            OUTPUT_VARIABLE PLUGIN_INSTALLATION_DIR
+        COMMAND ${QMAKE_PATH} -query QT_INSTALL_PLUGINS
+        RESULT_VARIABLE PLUGIN_INSTALLATION_DIR_RESULT
+        OUTPUT_VARIABLE PLUGIN_INSTALLATION_DIR
     )
 
     string(STRIP "${PLUGIN_INSTALLATION_DIR}" PLUGIN_INSTALLATION_DIR)
