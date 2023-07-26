@@ -9,6 +9,8 @@ int main(int argc, char** argv) {
 
     QCommandLineParser parser;
     parser.addPositionalArgument("directory", "Directory containing application prepare for deployment");
+    parser.addOption({{"a", "architecture"}, "Architecture of libraries to deploy (defaults to x64 if not specified)", "architecture"});
+    parser.addOption({{"s", "sdk"}, "SDK version to deploy (defaults to 10.0.22000.0 if not specified)", "sdk-version"});
     QCommandLineOption helpOption = parser.addHelpOption();
     parser.parse(a.arguments());
 
@@ -25,6 +27,11 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    auto sdkVersion = QStringLiteral("10.0.22000.0");
+    if (parser.isSet("sdk")) sdkVersion = parser.value("sdk");
+
+    auto architecture = QStringLiteral("x64");
+    if (parser.isSet("architecture")) architecture = parser.value("architecture");
 
     QStringList contemporaryPath = Common::findInPaths("contemporary.dll", a.libraryPaths(), true);
     if (contemporaryPath.isEmpty()) {
@@ -57,7 +64,7 @@ int main(int argc, char** argv) {
 
     output << "Creating System Library Database...\n";
     output.flush();
-    SystemLibraryDatabase* libraryDatabase = new SystemLibraryDatabase(supportLibraryPaths);
+    SystemLibraryDatabase* libraryDatabase = new SystemLibraryDatabase(supportLibraryPaths, sdkVersion, architecture);
 
     output << "Making folder self contained\n";
     output.flush();
