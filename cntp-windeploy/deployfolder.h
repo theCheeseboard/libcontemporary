@@ -14,7 +14,7 @@ class DeployFolder : public QObject {
     Q_OBJECT
 
 public:
-    explicit DeployFolder(QString folder, QObject* parent = nullptr);
+    explicit DeployFolder(QString qtPath, QString folder, QObject* parent = nullptr);
     ~DeployFolder();
 
     enum class DeployFolderDirectories {

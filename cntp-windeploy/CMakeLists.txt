@@ -17,13 +17,16 @@ set(SOURCES
         deployfolder.cpp
         common.cpp
         systemlibrarydatabase.cpp
-        unzip.cpp)
+        unzip.cpp
+        portableexecutablefile.cpp)
 
 set(HEADERS
         deployfolder.h
         common.h
         systemlibrarydatabase.h
-        unzip.h)
+        unzip.h
+        portableexecutablefile.h
+        enums.h)
 
 add_executable(cntp-windeploy ${SOURCES} ${HEADERS})
 

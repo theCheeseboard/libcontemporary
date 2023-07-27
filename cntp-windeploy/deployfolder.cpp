@@ -18,14 +18,16 @@
 #include "unzip.h"
 
 struct DeployFolderPrivate {
+    QDir qtPath;
     QDir dir;
     QStringList processed;
     QStringList foundLibraries;
 };
 
-DeployFolder::DeployFolder(QString folder, QObject* parent) {
+DeployFolder::DeployFolder(QString qtPath, QString folder, QObject* parent) {
     d = new DeployFolderPrivate;
     d->dir = folder;
+    d->qtPath = qtPath;
 }
 
 DeployFolder::~DeployFolder() {
@@ -91,8 +93,15 @@ void DeployFolder::makeSelfContained(SystemLibraryDatabase* libraryDatabase) {
     while (!doMakeSelfContained(libraryDatabase));
 }
 void DeployFolder::copySystemPlugins(QStringList plugins) {
+    QString qmakePath = d->qtPath.absoluteFilePath("bin/qmake6.bat");
+    if (!QFile::exists(qmakePath)) {
+        qmakePath = d->qtPath.absoluteFilePath("bin/qmake6.exe");
+    }
+
     QProcess qmakeProc;
-    qmakeProc.start("qmake6", {"-query", "QT_INSTALL_PLUGINS"});
+    qmakeProc.setProgram("cmd.exe");
+    qmakeProc.setNativeArguments(QStringLiteral("/C \"%1 -query QT_INSTALL_PLUGINS\"").arg(qmakePath));
+    qmakeProc.start();
     qmakeProc.waitForFinished(-1);
     QString pluginDir = qmakeProc.readAll().trimmed();
 
