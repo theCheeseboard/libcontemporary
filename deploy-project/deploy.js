@@ -57,7 +57,11 @@ module.exports = async options => {
 
             let args = [deployDir];
 
-            if (await fs.stat(appxManifest) && await fs.stat(appxIcon)) {
+            try {
+                // Stat the files to ensure they exist
+                await fs.stat(appxManifest);
+                await fs.stat(appxIcon);
+
                 await io.cp(appxManifest, deployDir + "/");
                 await io.cp(appxIcon, deployDir + "/");
 
@@ -66,6 +70,8 @@ module.exports = async options => {
 
                 args.push("-a");
                 args.push(appxPackage);
+            } catch {
+                // If they don't exist, don't deploy an appx package
             }
 
             await exec.exec("\"C:/Program Files (x86)/libcontemporary/bin/cntp-windeploy.exe\"", args)
