@@ -38,7 +38,7 @@ module.exports = async options => {
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
-            cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
+            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
 
             if (process.env["QT_HOST_PATH"]) {
                 cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
