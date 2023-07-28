@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
     auto sdkVersion = QStringLiteral("10.0.22000.0");
     if (parser.isSet("sdk")) sdkVersion = parser.value("sdk");
 
-    auto qtPath = qEnvironmentVariable("QT_ROOT_DIR");
+    auto qtPath = qEnvironmentVariable("QT_ROOT_DIR", qEnvironmentVariable("Qt6_DIR"));
     if (parser.isSet("qt-path")) qtPath = parser.value("qt-path");
 
     QStringList libraryPaths{"/Program Files", "/Program Files (x86)"};
