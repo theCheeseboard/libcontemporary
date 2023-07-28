@@ -17,6 +17,7 @@ function(cntp_find_tool var name)
     else()
         find_program(${var} ${name} REQUIRED
             PATHS ${CNTP_TOOL_PATH}
+            PATH_SUFFIXES bin
             NO_DEFAULT_PATH
             NO_CMAKE_PATH
         )
