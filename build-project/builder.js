@@ -42,6 +42,7 @@ module.exports = async options => {
 
             if (process.env["QT_HOST_PATH"]) {
                 cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
+                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
             }
         }
 
