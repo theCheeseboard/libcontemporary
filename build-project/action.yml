@@ -11,6 +11,10 @@ inputs:
     description: 'Extra CMake args for project'
     required: false
     default: ''
+  arch:
+    description: 'Architecture of build'
+    required: false
+    default: 'x64'
 runs:
   using: 'node16'
   main: 'dist/index.js'

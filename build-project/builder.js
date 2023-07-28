@@ -38,6 +38,11 @@ module.exports = async options => {
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
+            cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
+
+            if (process.env["QT_HOST_PATH"]) {
+                cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
+            }
         }
 
         if (options.extraCmakeArgs) {
@@ -82,12 +87,14 @@ module.exports = async options => {
             console.log("Extracted properties from CMakeCache");
             console.log(JSON.stringify(properties, null, 4));
 
-            //Add required variables to the PATH
-            if (properties["CMAKE_INSTALL_PREFIX"] && properties["CMAKE_INSTALL_BINDIR"]) {
-                core.addPath(path.resolve(properties["CMAKE_INSTALL_PREFIX"], properties["CMAKE_INSTALL_BINDIR"]));
-            }
-            if (properties["BIN_INSTALL_DIR"]) {
-                core.addPath(properties["BIN_INSTALL_DIR"]);
+            //Add required variables to the PATH if needed
+            if (process.arch === options.arch) {
+                if (properties["CMAKE_INSTALL_PREFIX"] && properties["CMAKE_INSTALL_BINDIR"]) {
+                    core.addPath(path.resolve(properties["CMAKE_INSTALL_PREFIX"], properties["CMAKE_INSTALL_BINDIR"]));
+                }
+                if (properties["BIN_INSTALL_DIR"]) {
+                    core.addPath(properties["BIN_INSTALL_DIR"]);
+                }
             }
         }
     } finally {

@@ -9,6 +9,10 @@ inputs:
     description: "QCoro version to build"
     default: "v0.7.0"
     required: false
+  arch:
+    description: 'Architecture of build'
+    required: false
+    default: 'x64'
 runs:
   using: 'composite'
   steps:
@@ -20,8 +24,10 @@ runs:
         project: "danvratil/qcoro"
         commitish: ${{ inputs.qcoroVersion }}
         extra-cmake-args: "-DQCORO_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF"
+        arch: ${{ inputs.arch }}
     - uses: vicr123/libcontemporary/build-project@actions
       name: "Build libcontemporary"
       with:
         project: "vicr123/libcontemporary"
         commitish: ${{ inputs.commitish }}
+        arch: ${{ inputs.arch }}

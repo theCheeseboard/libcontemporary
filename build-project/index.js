@@ -6,9 +6,11 @@ async function run() {
     const project = core.getInput("project");
     const commitish = core.getInput("commitish");
     const extraCmakeArgs = core.getInput("extra-cmake-args");
+    const arch = core.getInput("arch");
 
     let options = {
-      project: project
+      project: project,
+      arch: arch
     };
 
     if (commitish) options.commitish = commitish;
