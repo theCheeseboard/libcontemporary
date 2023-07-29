@@ -11,7 +11,7 @@ function(cntp_define_build_dirs)
                 NAMES target_qt.conf
                 HINTS ${CMAKE_PREFIX_PATH}
                 PATH_SUFFIXES bin)
-        IF(NOT ${target_qt} STREQUAL "target_qt-NOTFOUND")
+        IF(NOT ${QT_CONF} STREQUAL "QT_CONF-NOTFOUND")
             message("Using Qt configuration file ${QT_CONF}/target_qt.conf")
             set(QMAKE_EXTRA_ARGS -qtconf "${QT_CONF}/target_qt.conf")
         ENDIF()
