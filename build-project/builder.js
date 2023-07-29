@@ -44,7 +44,7 @@ module.exports = async options => {
                 cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
                 cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/x64`);
                 cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
-                cmakeArgs.push(`-DQT_QMAKE_EXECUTABLE=${process.env["Qt6_DIR"]}\\bin\\qmake6.bat`);
+                cmakeArgs.push(`-DQT_QMAKE_EXECUTABLE=${process.env["Qt6_DIR"].replace("\\", "/")}/bin/qmake6.bat`);
             }
         }
 
