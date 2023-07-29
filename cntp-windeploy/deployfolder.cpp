@@ -95,26 +95,36 @@ void DeployFolder::makeSelfContained(SystemLibraryDatabase* libraryDatabase) {
     while (!doMakeSelfContained(libraryDatabase));
 }
 void DeployFolder::copySystemPlugins(QStringList plugins) {
-    QString qmakePath = d->hostQtPath.absoluteFilePath("bin/qmake6.exe");
+    QString pluginDir;
+    if (qEnvironmentVariableIsSet("QT_PLUGIN_PATH")) {
+        pluginDir = qEnvironmentVariable("QT_PLUGIN_PATH");
+    } else {
+        QString qmakePath = d->hostQtPath.absoluteFilePath("bin/qmake6.exe");
 
-    QStringList args{"-query", "QT_INSTALL_PLUGINS"};
-    if (d->hostQtPath != d->qtPath) {
-        args.append("-qtconf");
-        args.append(d->qtPath.absoluteFilePath("bin/target_qt.conf"));
+        QStringList args{"-query", "QT_INSTALL_PLUGINS"};
+        if (d->hostQtPath != d->qtPath) {
+            args.append("-qtconf");
+            args.append(d->qtPath.absoluteFilePath("bin/target_qt.conf"));
+        }
+
+        QProcess qmakeProc;
+        qmakeProc.setProgram(qmakePath);
+        qmakeProc.setArguments(args);
+        qmakeProc.start();
+        qmakeProc.waitForFinished(-1);
+        pluginDir = qmakeProc.readAll().trimmed();
     }
-
-    QProcess qmakeProc;
-    qmakeProc.setProgram(qmakePath);
-    qmakeProc.setArguments(args);
-    qmakeProc.start();
-    qmakeProc.waitForFinished(-1);
-    QString pluginDir = qmakeProc.readAll().trimmed();
 
     for (QString plugin : plugins) {
         QString pluginPath = QDir(pluginDir).absoluteFilePath(plugin);
         QString output = this->destinationDir(DeployFolderDirectories::QtPlugins).absoluteFilePath(plugin);
         QFileInfo(output).dir().mkpath(".");
-        QFile::copy(pluginPath, output);
+
+        if (QFile::exists(pluginPath)) {
+            QFile::copy(pluginPath, output);
+        } else {
+            QTextStream(stderr) << "Can't find plugin at " << pluginPath << ": skipping\n";
+        }
     }
 }
 
