@@ -1,15 +1,20 @@
 include_guard()
 
 function(cntp_define_build_dirs)
+    set(QMAKE_EXTRA_ARGS)
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-        if(DEFINED QT_QMAKE_EXECUTABLE)
-            cmake_path(GET QT_QMAKE_EXECUTABLE PARENT_PATH QMAKE_PATH)
-        else()
-            find_path(QMAKE_PATH
-                    NAMES qmake6.exe qmake6.bat
-                    HINTS ${CMAKE_PREFIX_PATH}
-                    PATH_SUFFIXES bin)
-        endif()
+        find_path(QMAKE_PATH
+                NAMES qmake6.exe
+                HINTS ${QT_HOST_PATH};${CMAKE_PREFIX_PATH}
+                PATH_SUFFIXES bin)
+        find_path(QT_CONF
+                NAMES target_qt.conf
+                HINTS ${CMAKE_PREFIX_PATH}
+                PATH_SUFFIXES bin)
+        IF(NOT ${target_qt} STREQUAL "target_qt-NOTFOUND")
+            message("Using Qt configuration file ${QT_CONF}/target_qt.conf")
+            set(QMAKE_EXTRA_ARGS -qtconf "${QT_CONF}/target_qt.conf")
+        ENDIF()
     ELSE()
         find_path(QMAKE_PATH qmake6)
     ENDIF()
@@ -19,17 +24,13 @@ function(cntp_define_build_dirs)
     ENDIF()
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-        IF(EXISTS "${QMAKE_PATH}/qmake6.bat")
-            set(QMAKE_PATH ${QMAKE_PATH}/qmake6.bat)
-        ELSE()
-            set(QMAKE_PATH ${QMAKE_PATH}/qmake6.exe)
-        ENDIF()
+        set(QMAKE_PATH ${QMAKE_PATH}/qmake6.exe)
     ELSE()
         set(QMAKE_PATH ${QMAKE_PATH}/qmake6)
     ENDIF()
 
     execute_process(
-        COMMAND ${QMAKE_PATH} -query QT_INSTALL_PREFIX
+        COMMAND ${QMAKE_PATH} ${QMAKE_EXTRA_ARGS} -query QT_INSTALL_PREFIX
         RESULT_VARIABLE QT_PREFIX_RESULT
         OUTPUT_VARIABLE QT_PREFIX_DIR
     )
@@ -38,7 +39,7 @@ function(cntp_define_build_dirs)
     file(TO_CMAKE_PATH "${QT_PREFIX_DIR}" QT_PREFIX_DIR)
 
     execute_process(
-        COMMAND ${QMAKE_PATH} -query QT_INSTALL_PLUGINS
+        COMMAND ${QMAKE_PATH} ${QMAKE_EXTRA_ARGS} -query QT_INSTALL_PLUGINS
         RESULT_VARIABLE PLUGIN_INSTALLATION_DIR_RESULT
         OUTPUT_VARIABLE PLUGIN_INSTALLATION_DIR
     )
