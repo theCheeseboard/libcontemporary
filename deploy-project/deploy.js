@@ -74,7 +74,9 @@ module.exports = async options => {
                 // If they don't exist, don't deploy an appx package
             }
 
-            await exec.exec("\"C:/Program Files (x86)/libcontemporary/bin/cntp-windeploy.exe\"", args)
+            let appPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/x64/bin/cntp-windeploy.exe`;
+
+            await exec.exec(`"${appPath}"`, args)
 
             core.setOutput("package", deployDir);
             break;
