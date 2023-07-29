@@ -19,15 +19,17 @@
 
 struct DeployFolderPrivate {
     QDir qtPath;
+    QDir hostQtPath;
     QDir dir;
     QStringList processed;
     QStringList foundLibraries;
 };
 
-DeployFolder::DeployFolder(QString qtPath, QString folder, QObject* parent) {
+DeployFolder::DeployFolder(QString qtPath, QString hostQtPath, QString folder, QObject* parent) {
     d = new DeployFolderPrivate;
     d->dir = folder;
     d->qtPath = qtPath;
+    d->hostQtPath = hostQtPath;
 }
 
 DeployFolder::~DeployFolder() {
@@ -93,14 +95,17 @@ void DeployFolder::makeSelfContained(SystemLibraryDatabase* libraryDatabase) {
     while (!doMakeSelfContained(libraryDatabase));
 }
 void DeployFolder::copySystemPlugins(QStringList plugins) {
-    QString qmakePath = d->qtPath.absoluteFilePath("bin/qmake6.bat");
-    if (!QFile::exists(qmakePath)) {
-        qmakePath = d->qtPath.absoluteFilePath("bin/qmake6.exe");
+    QString qmakePath = d->hostQtPath.absoluteFilePath("bin/qmake6.exe");
+
+    QStringList args{"-query", "QT_INSTALL_PLUGINS"};
+    if (d->hostQtPath != d->qtPath) {
+        args.append("-qtconf");
+        args.append(d->qtPath.absoluteFilePath("bin/target_qt.conf"));
     }
 
     QProcess qmakeProc;
-    qmakeProc.setProgram("cmd.exe");
-    qmakeProc.setNativeArguments(QStringLiteral("/C \"%1 -query QT_INSTALL_PLUGINS\"").arg(qmakePath));
+    qmakeProc.setProgram(qmakePath);
+    qmakeProc.setArguments(args);
     qmakeProc.start();
     qmakeProc.waitForFinished(-1);
     QString pluginDir = qmakeProc.readAll().trimmed();

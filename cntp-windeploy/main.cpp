@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
     parser.addPositionalArgument("directory", "Directory containing application prepare for deployment");
     parser.addOption({{"s", "sdk"}, "SDK version to deploy (defaults to 10.0.22000.0 if not specified)", "sdk-version"});
     parser.addOption({{"q", "qt-path"}, "Path to Qt installation to use", "qt-path"});
+    parser.addOption({{"h", "host-qt-path"}, "When deploying a cross-compiled application, path to Host Qt installation", "host-qt-path"});
     parser.addOption({{"l", "library-path"}, "Path to search for libraries to deploy (defaults to Program Files)", "library-path"});
     QCommandLineOption helpOption = parser.addHelpOption();
     parser.parse(a.arguments());
@@ -34,6 +35,9 @@ int main(int argc, char** argv) {
 
     auto qtPath = qEnvironmentVariable("QT_ROOT_DIR", qEnvironmentVariable("Qt6_DIR"));
     if (parser.isSet("qt-path")) qtPath = parser.value("qt-path");
+
+    auto hostQtPath = qEnvironmentVariable("Qt6_DIR");
+    if (parser.isSet("host-qt-path")) hostQtPath = parser.value("host-qt-path");
 
     QStringList libraryPaths{"/Program Files", "/Program Files (x86)"};
     if (parser.isSet("library-path")) libraryPaths = parser.values("library-path");
@@ -73,7 +77,7 @@ int main(int argc, char** argv) {
 
     output << "Copying Qt plugins\n";
     output.flush();
-    DeployFolder deployFolder(qtPath, parser.positionalArguments().first());
+    DeployFolder deployFolder(qtPath, hostQtPath, parser.positionalArguments().first());
     QFile::copy(contemporaryPath, deployFolder.destinationDir(DeployFolder::DeployFolderDirectories::QtStylePlugins).absoluteFilePath("contemporary.dll"));
 
     output << "Searching for support libraries...\n";
