@@ -5,6 +5,10 @@ inputs:
     description: 'Subdirectory for app to be deployed'
     default: "."
     required: false
+  arch:
+    description: 'Architecture of build'
+    required: false
+    default: 'x64'
 outputs:
   package:
     description: 'Output package for upload as artifact'

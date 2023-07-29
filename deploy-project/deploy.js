@@ -7,6 +7,7 @@ const fs = require("fs/promises")
 
 module.exports = async options => {
     let outputDir = path.resolve(".", "build", options.subdir);
+    const arch = options.arch;
 
     let foundFiles = (await fs.readdir(outputDir)).filter(filename => {
         switch (process.platform) {
@@ -55,7 +56,7 @@ module.exports = async options => {
             await io.mkdirP(deployDir);
             await io.cp(target, deployDir + "/");
 
-            let args = [deployDir];
+            let args = [deployDir, "-l", `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`];
 
             try {
                 // Stat the files to ensure they exist
