@@ -16,13 +16,12 @@
 #endif
 
 // System Architecture
-// MSVC
-#if defined(_M_AMD64)
+#if defined(_M_AMD64) || defined(__x86_64__)
     #define T_ARCH_X86
     #define T_ARCH_X86_64
 #endif
 
-#if defined(_M_ARM64)
+#if defined(_M_ARM64) || defined(__arch64__)
     #define T_ARCH_ARM
     #define T_ARCH_AARCH64
 #endif

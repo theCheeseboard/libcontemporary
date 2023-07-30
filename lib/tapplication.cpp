@@ -182,17 +182,19 @@ tApplication::tApplication(int& argc, char** argv) :
             platformString = tr("Microsoft Windows Store");
             break;
         case MacOS:
-#if TARGET_CPU_ARM64
-            platformString = tr("macOS - Apple Silicon");
-#elif TARGET_CPU_X86_64
-            platformString = tr("macOS - Intel");
-#endif
+            platformString = tr("macOS");
             break;
         case OtherPlatform:
             platformString = tr("Unknown");
             break;
     }
     d->versions.append({tr("Platform"), platformString});
+
+#if defined(T_ARCH_X86_64)
+    d->versions.append({tr("Architecture"), QStringLiteral("x86_64")});
+#elif defined(T_ARCH_AARCH64)
+    d->versions.append({tr("Architecture"), QStringLiteral("aarch64")});
+#endif
 
     d->applicationIcon = QIcon(":/libcontemporary-appassets/appicon.svg");
     d->isInitialised = true;
