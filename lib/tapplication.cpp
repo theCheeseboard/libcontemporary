@@ -61,53 +61,53 @@
 #endif
 
 struct tApplicationPrivate {
-    QTranslator translator;
-    QStringList pluginTranslators;
-    QStringList libraryTranslators;
-    QList<TranslatorProxy*> applicationTranslators;
-    tApplication* applicationInstance;
+        QTranslator translator;
+        QStringList pluginTranslators;
+        QStringList libraryTranslators;
+        QList<TranslatorProxy*> applicationTranslators;
+        tApplication* applicationInstance;
 
-    bool crashHandlingEnabled = false;
-    QIcon applicationIcon;
+        bool crashHandlingEnabled = false;
+        QIcon applicationIcon;
 
-    QString applicationShareDir;
-    QString genericName;
-    QPixmap aboutDialogSplashGraphic;
-    QList<QPair<QString, QString>> versions;
-    QStringList copyrightLines;
-    tApplication::KnownLicenses license = tApplication::Other;
-    QString copyrightHolder, copyrightYear;
-    QMap<tApplication::UrlType, QUrl> applicationUrls;
+        QString applicationShareDir;
+        QString genericName;
+        QPixmap aboutDialogSplashGraphic;
+        QList<QPair<QString, QString>> versions;
+        QStringList copyrightLines;
+        tApplication::KnownLicenses license = tApplication::Other;
+        QString copyrightHolder, copyrightYear;
+        QMap<tApplication::UrlType, QUrl> applicationUrls;
 
-    QSharedMemory* singleInstanceMemory = nullptr;
-    QLocalServer* singleInstanceServer = nullptr;
+        QSharedMemory* singleInstanceMemory = nullptr;
+        QLocalServer* singleInstanceServer = nullptr;
 
-    static bool isInitialised;
+        static bool isInitialised;
 
 #ifdef T_OS_UNIX_NOT_MAC
-    static void crashTrapHandler(int sig);
+        static void crashTrapHandler(int sig);
 #elif defined(Q_OS_WIN)
-    static LONG WINAPI crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo);
-    PCONTEXT crashCtx = nullptr;
+        static LONG WINAPI crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo);
+        PCONTEXT crashCtx = nullptr;
 
-    bool hasCheckedIsRunningAsUwp = false;
-    bool isRunningAsUwp = false;
+        bool hasCheckedIsRunningAsUwp = false;
+        bool isRunningAsUwp = false;
 
-    QString winClassId;
+        QString winClassId;
 #else
-    static void crashTrapHandler();
+        static void crashTrapHandler();
 #endif
 
 #ifdef Q_OS_MAC
-    tApplicationMacPrivate* privateProxy;
+        tApplicationMacPrivate* privateProxy;
 #endif
 
-    static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
-        tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
-        //        tApplication::d->oldMessageHandler(messageType, context, message);
-    }
+        static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
+            tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
+            //        tApplication::d->oldMessageHandler(messageType, context, message);
+        }
 
-    QtMessageHandler oldMessageHandler;
+        QtMessageHandler oldMessageHandler;
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
@@ -194,6 +194,8 @@ tApplication::tApplication(int& argc, char** argv) :
     d->versions.append({tr("Architecture"), QStringLiteral("x86_64")});
 #elif defined(T_ARCH_AARCH64)
     d->versions.append({tr("Architecture"), QStringLiteral("aarch64")});
+#else
+    d->versions.append({tr("Architecture"), tr("Unknown")});
 #endif
 
     d->applicationIcon = QIcon(":/libcontemporary-appassets/appicon.svg");
@@ -242,15 +244,15 @@ QStringList tApplication::exportBacktrace(void* data) {
         if (unw_get_proc_name(&cur, sym, sizeof(sym), &offset) == 0) {
             // Demangle the name depending on the current compiler
             QString functionName;
-#if defined(__GNUG__)
+    #if defined(__GNUG__)
             // We're using a gcc compiler
             int status;
             char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
             if (status == 0) functionName = QString::fromLocal8Bit(demangled);
             std::free(demangled);
-#elif defined(_MSC_VER)
-            // We're using msvc
-#endif
+    #elif defined(_MSC_VER)
+                // We're using msvc
+    #endif
 
             if (functionName == "") {
                 functionName = QString::fromLocal8Bit(sym);
@@ -264,7 +266,7 @@ QStringList tApplication::exportBacktrace(void* data) {
 #endif
 
 #ifdef Q_OS_WIN
-#ifdef T_ARCH_X86
+    #ifdef T_ARCH_X86
     const int maxNameLen = 255;
     HANDLE proc = GetCurrentProcess();
     HANDLE thread = GetCurrentThread();
@@ -307,10 +309,10 @@ QStringList tApplication::exportBacktrace(void* data) {
     }
 
     SymCleanup(proc);
-#endif
-#ifdef T_ARCH_ARM
+    #endif
+    #ifdef T_ARCH_ARM
 
-#endif
+    #endif
 #endif
     return backtrace;
 }
@@ -351,8 +353,7 @@ void tApplicationPrivate::crashTrapHandler(int sig) {
     QStringList args = {
         "--appname", "\"" + tApplication::applicationName() + "\"",
         "--apppath", "\"" + tApplication::applicationFilePath() + "\"",
-        "--bt"
-    };
+        "--bt"};
 
     QProcess* process = new QProcess();
     process->setEnvironment(QProcess::systemEnvironment());
@@ -409,8 +410,7 @@ LONG WINAPI tApplicationPrivate::crashTrapHandler(PEXCEPTION_POINTERS exceptionI
     QStringList args = {
         "--appname", "\"" + tApplication::applicationName() + "\"",
         "--apppath", "\"" + tApplication::applicationFilePath() + "\"",
-        "--bt"
-    };
+        "--bt"};
 
     QProcess* process = new QProcess();
     process->setEnvironment(QProcess::systemEnvironment());
@@ -703,8 +703,7 @@ QStringList tApplication::copyrightLines() {
         case Lgpl2_1OrLater:
             copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(wrapLicense(tr("GNU Lesser General Public License, version 2.1, or later"))));
             break;
-        case Other:
-            ;
+        case Other:;
     }
 
     if (!d->copyrightHolder.isEmpty()) {
@@ -733,13 +732,13 @@ void tApplication::ensureSingleInstance(QJsonObject launchData) {
     if (d->singleInstanceMemory->create(sharedMemoryName.length())) {
         QLocalServer::removeServer(sharedMemoryName);
         d->singleInstanceServer = new QLocalServer();
-        connect(d->singleInstanceServer, &QLocalServer::newConnection, [ = ] {
+        connect(d->singleInstanceServer, &QLocalServer::newConnection, [=] {
             QLocalSocket* socket = d->singleInstanceServer->nextPendingConnection();
-            connect(socket, &QLocalSocket::readyRead, [ = ] {
+            connect(socket, &QLocalSocket::readyRead, [=] {
                 QJsonObject obj = QJsonDocument::fromJson(socket->readAll()).object();
                 emit static_cast<tApplication*>(tApplication::instance())->singleInstanceMessage(obj);
             });
-            connect(socket, &QLocalSocket::disconnected, [ = ] {
+            connect(socket, &QLocalSocket::disconnected, [=] {
                 socket->deleteLater();
             });
         });

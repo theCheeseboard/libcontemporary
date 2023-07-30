@@ -16,12 +16,12 @@
 #endif
 
 // System Architecture
-#if defined(_M_AMD64) || defined(__x86_64__)
+#if defined(_M_AMD64) || defined(__x86_64__) || (defined(TARGET_CPU_X86_64) && !defined(TARGET_CPU_ARM64))
     #define T_ARCH_X86
     #define T_ARCH_X86_64
 #endif
 
-#if defined(_M_ARM64) || defined(__arch64__)
+#if defined(_M_ARM64) || defined(__arch64__) || defined(TARGET_CPU_ARM64)
     #define T_ARCH_ARM
     #define T_ARCH_AARCH64
 #endif

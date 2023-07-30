@@ -377,19 +377,19 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="709"/>
+        <location filename="../tapplication.cpp" line="710"/>
         <source>Copyright © %1.</source>
         <translation>பதிப்புரிமை © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="681"/>
-        <location filename="../tapplication.cpp" line="684"/>
-        <location filename="../tapplication.cpp" line="687"/>
-        <location filename="../tapplication.cpp" line="690"/>
-        <location filename="../tapplication.cpp" line="693"/>
-        <location filename="../tapplication.cpp" line="696"/>
-        <location filename="../tapplication.cpp" line="699"/>
-        <location filename="../tapplication.cpp" line="702"/>
+        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="686"/>
+        <location filename="../tapplication.cpp" line="689"/>
+        <location filename="../tapplication.cpp" line="692"/>
+        <location filename="../tapplication.cpp" line="695"/>
+        <location filename="../tapplication.cpp" line="698"/>
+        <location filename="../tapplication.cpp" line="701"/>
+        <location filename="../tapplication.cpp" line="704"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>%1இன் விதிமுறைகளின் கீழ் உரிமம் பெற்றது</translation>
     </message>
@@ -414,62 +414,73 @@
         <translation>Microsoft Windows Store</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="186"/>
         <source>macOS - Apple Silicon</source>
-        <translation>macOS - Apple Silicon</translation>
+        <translation type="vanished">macOS - Apple Silicon</translation>
+    </message>
+    <message>
+        <source>macOS - Intel</source>
+        <translation type="vanished">macOS - Intel</translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="185"/>
+        <source>macOS</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="188"/>
-        <source>macOS - Intel</source>
-        <translation>macOS - Intel</translation>
-    </message>
-    <message>
-        <location filename="../tapplication.cpp" line="192"/>
+        <location filename="../tapplication.cpp" line="198"/>
         <source>Unknown</source>
         <translation>அறியாத</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="195"/>
+        <location filename="../tapplication.cpp" line="191"/>
         <source>Platform</source>
         <translation>இயங்குதளம்</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="681"/>
+        <location filename="../tapplication.cpp" line="194"/>
+        <location filename="../tapplication.cpp" line="196"/>
+        <location filename="../tapplication.cpp" line="198"/>
+        <source>Architecture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU General Public License, பதிப்பு 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="684"/>
+        <location filename="../tapplication.cpp" line="686"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU General Public License, பதிப்பு 3, அல்லது பிறகுள்ளவை</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="687"/>
+        <location filename="../tapplication.cpp" line="689"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU General Public License, பதிப்பு 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="690"/>
+        <location filename="../tapplication.cpp" line="692"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU General Public License, பதிப்பு 2, அல்லது பிறகுள்ளவை</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="693"/>
+        <location filename="../tapplication.cpp" line="695"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Lesser General Public License, பதிப்பு 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="696"/>
+        <location filename="../tapplication.cpp" line="698"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Lesser General Public License, பதிப்பு 3, அல்லது பிறகுள்ளவை</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="699"/>
+        <location filename="../tapplication.cpp" line="701"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Lesser General Public License, பதிப்பு 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="702"/>
+        <location filename="../tapplication.cpp" line="704"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Lesser General Public License, பதிப்பு 2.1, அல்லது பிறகுள்ளவை</translation>
     </message>
