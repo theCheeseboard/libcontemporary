@@ -18,14 +18,18 @@
 #include "unzip.h"
 
 struct DeployFolderPrivate {
+    QDir qtPath;
+    QDir hostQtPath;
     QDir dir;
     QStringList processed;
     QStringList foundLibraries;
 };
 
-DeployFolder::DeployFolder(QString folder, QObject* parent) {
+DeployFolder::DeployFolder(QString qtPath, QString hostQtPath, QString folder, QObject* parent) {
     d = new DeployFolderPrivate;
     d->dir = folder;
+    d->qtPath = qtPath;
+    d->hostQtPath = hostQtPath;
 }
 
 DeployFolder::~DeployFolder() {
@@ -91,16 +95,36 @@ void DeployFolder::makeSelfContained(SystemLibraryDatabase* libraryDatabase) {
     while (!doMakeSelfContained(libraryDatabase));
 }
 void DeployFolder::copySystemPlugins(QStringList plugins) {
-    QProcess qmakeProc;
-    qmakeProc.start("qmake6", {"-query", "QT_INSTALL_PLUGINS"});
-    qmakeProc.waitForFinished(-1);
-    QString pluginDir = qmakeProc.readAll().trimmed();
+    QString pluginDir;
+    if (qEnvironmentVariableIsSet("QT_PLUGIN_PATH")) {
+        pluginDir = qEnvironmentVariable("QT_PLUGIN_PATH");
+    } else {
+        QString qmakePath = d->hostQtPath.absoluteFilePath("bin/qmake6.exe");
+
+        QStringList args{"-query", "QT_INSTALL_PLUGINS"};
+        if (d->hostQtPath != d->qtPath) {
+            args.append("-qtconf");
+            args.append(d->qtPath.absoluteFilePath("bin/target_qt.conf"));
+        }
+
+        QProcess qmakeProc;
+        qmakeProc.setProgram(qmakePath);
+        qmakeProc.setArguments(args);
+        qmakeProc.start();
+        qmakeProc.waitForFinished(-1);
+        pluginDir = qmakeProc.readAll().trimmed();
+    }
 
     for (QString plugin : plugins) {
         QString pluginPath = QDir(pluginDir).absoluteFilePath(plugin);
         QString output = this->destinationDir(DeployFolderDirectories::QtPlugins).absoluteFilePath(plugin);
         QFileInfo(output).dir().mkpath(".");
-        QFile::copy(pluginPath, output);
+
+        if (QFile::exists(pluginPath)) {
+            QFile::copy(pluginPath, output);
+        } else {
+            QTextStream(stderr) << "Can't find plugin at " << pluginPath << ": skipping\n";
+        }
     }
 }
 

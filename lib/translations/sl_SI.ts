@@ -379,19 +379,19 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="701"/>
+        <location filename="../tapplication.cpp" line="710"/>
         <source>Copyright © %1.</source>
         <translation>Avtorske pravice © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="674"/>
-        <location filename="../tapplication.cpp" line="677"/>
-        <location filename="../tapplication.cpp" line="680"/>
         <location filename="../tapplication.cpp" line="683"/>
         <location filename="../tapplication.cpp" line="686"/>
         <location filename="../tapplication.cpp" line="689"/>
         <location filename="../tapplication.cpp" line="692"/>
         <location filename="../tapplication.cpp" line="695"/>
+        <location filename="../tapplication.cpp" line="698"/>
+        <location filename="../tapplication.cpp" line="701"/>
+        <location filename="../tapplication.cpp" line="704"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Licencirano pod pogoji %1.</translation>
     </message>
@@ -416,62 +416,65 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="186"/>
-        <source>macOS - Apple Silicon</source>
+        <location filename="../tapplication.cpp" line="185"/>
+        <source>macOS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="188"/>
-        <source>macOS - Intel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tapplication.cpp" line="192"/>
+        <location filename="../tapplication.cpp" line="198"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="195"/>
+        <location filename="../tapplication.cpp" line="191"/>
         <source>Platform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="674"/>
+        <location filename="../tapplication.cpp" line="194"/>
+        <location filename="../tapplication.cpp" line="196"/>
+        <location filename="../tapplication.cpp" line="198"/>
+        <source>Architecture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="683"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU Genaralna Javna Licenca, verzija 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="677"/>
+        <location filename="../tapplication.cpp" line="686"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU Genaralna Javna Licenca, verzija 3, ali pozneje</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="680"/>
+        <location filename="../tapplication.cpp" line="689"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU Genaralna Javna Licenca, verzija 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="683"/>
+        <location filename="../tapplication.cpp" line="692"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU Genaralna Javna Licenca, verzija 2, ali pozneje</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="686"/>
+        <location filename="../tapplication.cpp" line="695"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="689"/>
+        <location filename="../tapplication.cpp" line="698"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 3, ali pozneje</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="692"/>
+        <location filename="../tapplication.cpp" line="701"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="695"/>
+        <location filename="../tapplication.cpp" line="704"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 2.1, ali pozneje</translation>
     </message>

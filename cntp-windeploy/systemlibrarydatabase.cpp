@@ -5,19 +5,33 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QProcess>
+#include "portableexecutablefile.h"
 
 struct SystemLibraryDatabasePrivate {
     QMap<QString, QString> libraries;
     QSet<QString> ignoreLibraries;
+    TargetMachine targetArch;
 };
 
-SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObject *parent) : QObject(parent) {
+SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QString sdkVersion, TargetMachine arch, QStringList deepSearchPaths, QObject* parent) : QObject(parent) {
     d = new SystemLibraryDatabasePrivate;
+    d->targetArch = arch;
 
     QSettings winSdkSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots", QSettings::NativeFormat);
 
-    //TODO: pass some of these as parameters
-    QDir winSdkPath = QDir(winSdkSettings.value("KitsRoot10").toString()).absoluteFilePath("Lib/10.0.22000.0/um/x64");
+    QString archString;
+    switch (arch) {
+        case TargetMachine::Amd64:
+            archString = "x64";
+            break;
+        case TargetMachine::Arm64:
+            archString = "arm64";
+            break;
+        default:
+            break;
+    }
+
+    QDir winSdkPath = QDir(winSdkSettings.value("KitsRoot10").toString()).absoluteFilePath(QStringLiteral("Lib/%1/um/%2").arg(sdkVersion, archString));
 
     for (auto& entry : winSdkPath.entryList(QDir::Files)) {
         d->ignoreLibraries.insert(entry.toLower());
@@ -31,9 +45,10 @@ SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObje
 
     for (QString path : searchPaths) {
         QDir dir(path);
-        for (QFileInfo libFile: dir.entryInfoList({"*.dll", "*.DLL"}, QDir::Files)) {
+        for (QFileInfo libFile : dir.entryInfoList({"*.dll", "*.DLL"}, QDir::Files)) {
             if (d->libraries.contains(libFile.fileName().toLower())) continue;
             if (!libFile.fileName().toLower().startsWith("msvc") && isInDisallowedPath(libFile.absoluteFilePath().toLower())) continue;
+            if (!isLibraryOk(libFile.absoluteFilePath())) continue;
             d->libraries.insert(libFile.fileName().toLower(), libFile.absoluteFilePath());
         }
     }
@@ -42,15 +57,14 @@ SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObje
     QProcess vsWhere;
     auto vsWherePath = QDir(qEnvironmentVariable("ProgramFiles(x86)")).absoluteFilePath("Microsoft Visual Studio/Installer/vswhere.exe");
     vsWhere.start(vsWherePath, {
-        "-prerelease", 
-        "-latest", 
-        "-products", "*", 
-        "-requires", "Microsoft.VisualStudio.Component.VC.Tools.*", 
+        "-prerelease",
+        "-latest",
+        "-products", "*",
+        "-requires", "Microsoft.VisualStudio.Component.VC.Tools.*",
         "-property", "installationPath"
     });
     vsWhere.waitForFinished(-1);
 
-    bool readingLibraries = false;
     while (vsWhere.canReadLine()) {
         auto vsPath = vsWhere.readLine().trimmed();
         auto dllRoot = QDir(vsPath).absoluteFilePath("VC/Redist/MSVC/");
@@ -58,21 +72,24 @@ SystemLibraryDatabase::SystemLibraryDatabase(QStringList extraSearchPaths, QObje
         while (iterator.hasNext()) {
             iterator.next();
 
+            if (!isLibraryOk(iterator.filePath())) continue;
+
             d->ignoreLibraries.insert(iterator.fileName().toLower());
         }
     }
 
     d->ignoreLibraries << "ucrtbase.dll"
-                       << "ucrtbased.dll";
+        << "ucrtbased.dll";
 
-    QStringList deepSearchPaths({"/Program Files", "/Program Files (x86)"});
     for (QString path : deepSearchPaths) {
         QDirIterator iterator(
-                QDir(path).absolutePath(), {"*.dll"}, QDir::Files, QDirIterator::Subdirectories);
+            QDir(path).absolutePath(), {"*.dll"}, QDir::Files, QDirIterator::Subdirectories);
         while (iterator.hasNext()) {
             iterator.next();
 
             if (d->libraries.contains(iterator.fileName().toLower())) continue;
+            if (!isLibraryOk(iterator.filePath())) continue;
+
             d->libraries.insert(iterator.fileName().toLower(), iterator.filePath());
         }
     }
@@ -87,7 +104,6 @@ QString SystemLibraryDatabase::library(QString libraryName) {
 }
 
 bool SystemLibraryDatabase::ignore(QString libraryName) {
-    //            if (IsApiSetImplemented(library.toUtf8().constData())) continue;
     if (libraryName.startsWith("api-ms") || libraryName.startsWith("ext-ms")) return true;
 
     if (d->ignoreLibraries.contains(libraryName.toLower())) return true;
@@ -103,4 +119,17 @@ bool SystemLibraryDatabase::isInDisallowedPath(QString path) {
         if (path.contains(disallowedPath)) return true;
     }
     return false;
+}
+
+bool SystemLibraryDatabase::isLibraryOk(QString libraryPath) {
+    PortableExecutableFile peFile(libraryPath);
+    if (!peFile.isValid()) {
+        return false;
+    }
+
+    if (peFile.targetMachine() != d->targetArch) {
+        return false;
+    }
+
+    return true;
 }

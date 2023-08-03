@@ -21,24 +21,14 @@
 #ifndef THELIBS_GLOBAL_H
 #define THELIBS_GLOBAL_H
 
-#include <QObject>
 #include <QSettings>
 #include <QtCore/qglobal.h>
-
-#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0) && QT_VERSION < QT_VERSION_CHECK(5, 99, 99)
-    #define T_QT_5
-#elif QT_VERSION > QT_VERSION_CHECK(6, 0, 0)
-    #define T_QT_6
-#endif
+#include "tsysconfigdetect.h"
 
 #ifdef QT_WIDGETS_LIB
     #include <QApplication>
     #include <QStyle>
     #include <QStyleFactory>
-#endif
-
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(Q_OS_ANDROID)
-    #define T_OS_UNIX_NOT_MAC
 #endif
 
 #ifdef HAVE_QT_DBUS
@@ -57,11 +47,11 @@
 #define THE_LIBS_VERSION "6.0.1"
 
 #ifdef QT_WIDGETS_LIB
-    #define SC_DPI(pixels) \
-        static_cast<int>(pixels * libContemporaryCommon::getDPIScaling())
-    #define SC_DPI_T(value, type) static_cast<type>(value * libContemporaryCommon::getDPIScaling())
-    #define SC_DPI_W(pixels, widget) static_cast<int>(pixels * libContemporaryCommon::getDPIScaling(widget))
-    #define SC_DPI_WT(value, type, widget) static_cast<type>(value * libContemporaryCommon::getDPIScaling(widget))
+#define SC_DPI(pixels) \
+    static_cast<int>(pixels * libContemporaryCommon::getDPIScaling())
+#define SC_DPI_T(value, type) static_cast<type>(value * libContemporaryCommon::getDPIScaling())
+#define SC_DPI_W(pixels, widget) static_cast<int>(pixels * libContemporaryCommon::getDPIScaling(widget))
+#define SC_DPI_WT(value, type, widget) static_cast<type>(value * libContemporaryCommon::getDPIScaling(widget))
 #endif
 
 struct libContemporaryCommonPrivate;
