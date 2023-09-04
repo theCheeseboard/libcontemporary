@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
     QStringList supportLibraryPaths;
 
     QDir rootProjectDir = deployFolder.destinationDir().absoluteFilePath("./");
-    for (QString markerFile : Common::findInPaths(".cntp-is-support-library", {rootProjectDir.absolutePath()}, true)) {
+    for (const QString &markerFile : Common::findInPaths(".cntp-is-support-library", {rootProjectDir.absolutePath()}, true)) {
         QFileInfo markerFileInfo(markerFile);
         QDir libDir = markerFileInfo.dir();
 
@@ -106,7 +106,7 @@ int main(int argc, char** argv) {
 
     output << "Creating System Library Database...\n";
     output.flush();
-    SystemLibraryDatabase* libraryDatabase = new SystemLibraryDatabase(supportLibraryPaths, sdkVersion, qt6CorePe.targetMachine(), libraryPaths);
+    auto* libraryDatabase = new SystemLibraryDatabase(supportLibraryPaths, sdkVersion, qt6CorePe.targetMachine(), libraryPaths);
 
     output << "Making folder self contained\n";
     output.flush();
