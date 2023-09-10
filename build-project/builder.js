@@ -33,12 +33,16 @@ module.exports = async options => {
             "-B", buildDir,
             "-GNinja"
         ];
+
+        let prefixPath = "/usr/lib";
         if (process.platform === "darwin") {
             cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
             cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
+            prefixPath = "/usr/local/lib";
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
             cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
+            prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`;
 
             if (process.env["QT_HOST_PATH"]) {
                 cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
@@ -99,6 +103,8 @@ module.exports = async options => {
                 }
             }
         }
+
+        core.setOutput("install-prefix", prefixPath);
     } finally {
         if (options.project !== ".") {
             await fs.rm(gitRoot, {
