@@ -2,15 +2,19 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const io = require('@actions/io');
 const fs = require('fs/promises');
+const cache = require('@actions/cache');
+const os = require("os");
 const path = require('path');
 const process = require('process');
 const clone = require('git-clone/promise');
 
 module.exports = async options => {
+    let buildFolder = "";
     let gitRoot;
     if (options.project === ".") {
         gitRoot = path.resolve(".");
     } else {
+        buildFolder = path.basename(options.project);
         gitRoot = path.resolve(".", path.basename(options.project));
 
         let gitOptions = {};
@@ -22,10 +26,21 @@ module.exports = async options => {
         await exec.exec("git", ["submodule", "update"], {
             cwd: gitRoot
         });
+
+        let tip = "";
+        await exec.exec("git", ["rev-parse", "HEAD"], {
+            listeners: {
+                stdout: data => {
+                    tip += data.toString();
+                }
+            }
+        })
+
+        buildFolder += `/${tip}`;
     }
 
     try {
-        let buildDir = path.resolve(gitRoot, "build");
+        let buildDir = path.resolve(os.tmpdir(), "build-project-action", buildFolder);
         await io.mkdirP(buildDir);
 
         let cmakeArgs = [
