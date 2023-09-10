@@ -29,6 +29,7 @@ module.exports = async options => {
 
         let tip = "";
         await exec.exec("git", ["rev-parse", "HEAD"], {
+            cwd: gitRoot,
             listeners: {
                 stdout: data => {
                     tip += data.toString();
