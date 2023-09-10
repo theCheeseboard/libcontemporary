@@ -9,12 +9,12 @@ const process = require('process');
 const clone = require('git-clone/promise');
 
 module.exports = async options => {
-    let buildFolder = "";
+    let buildFolder = options.arch;
     let gitRoot;
     if (options.project === ".") {
         gitRoot = path.resolve(".");
     } else {
-        buildFolder = path.basename(options.project);
+        buildFolder += `/${path.basename(options.project)}`;
         gitRoot = path.resolve(".", path.basename(options.project));
 
         let gitOptions = {};
@@ -37,7 +37,7 @@ module.exports = async options => {
             }
         })
 
-        buildFolder += `/${tip}`;
+        buildFolder += `/${tip.trim()}`;
     }
 
     try {
