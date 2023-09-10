@@ -43,6 +43,12 @@ module.exports = async options => {
         let buildDir = path.resolve(os.tmpdir(), "build-project-action", buildFolder);
         await io.mkdirP(buildDir);
 
+        const cacheKey = `build-project-${buildFolder}`;
+
+        if (options.project !== ".") {
+            await cache.restoreCache([buildDir], cacheKey)
+        }
+
         let cmakeArgs = [
             "-S", path.resolve(gitRoot),
             "-B", buildDir,
@@ -120,6 +126,10 @@ module.exports = async options => {
         }
 
         core.setOutput("install-prefix", prefixPath);
+
+        if (options.project !== ".") {
+            await cache.saveCache([buildDir], cacheKey);
+        }
     } finally {
         if (options.project !== ".") {
             await fs.rm(gitRoot, {
