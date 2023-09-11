@@ -182,11 +182,13 @@ bool ApplicationBundle::doMakeSelfContained() {
 
 QMultiMap<QString, QString> ApplicationBundle::otool(QString filePath) {
     if (qEnvironmentVariableIsSet("RUNNER_DEBUG")) {
-        QTextStream(stdout) << "DBG: otool -L " << filePath << "\n";
+        QTextStream(stdout) << "DBG: otool -L " << filePath << " -arch "
+                            << "all"
+                            << "\n";
     }
 
     QProcess otoolProc;
-    otoolProc.start("otool", {"-L", filePath});
+    otoolProc.start("otool", {"-L", filePath, "-arch", "all"});
     otoolProc.waitForFinished(-1);
 
     QRegularExpression architectureSearch("\\(architecture (.+)\\)");
