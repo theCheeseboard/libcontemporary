@@ -57,7 +57,13 @@ module.exports = async options => {
     }
 
     try {
-        let buildDir = path.resolve(getTemporaryDirectory(), "build-project-action", buildFolder);
+        let buildDir;
+
+        if (options.project === ".") {
+            buildDir = path.resolve(gitRoot, "build");
+        } else {
+            buildDir = path.resolve(getTemporaryDirectory(), "build-project-action", buildFolder);
+        }
         await io.mkdirP(buildDir);
 
         let cmakeArgs = [
