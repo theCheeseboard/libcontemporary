@@ -127,6 +127,10 @@ bool ApplicationBundle::doMakeSelfContained() {
         QMultiMap<QString, QString> libraries = otool(iterator.filePath());
         for (QString arch : libraries.keys()) {
             for (QString library : libraries.values(arch)) {
+                if (qEnvironmentVariableIsSet("RUNNER_DEBUG")) {
+                    QTextStream(stdout) << "DBG: processing library: " << library << "\n";
+                }
+
                 if (library.startsWith("/System/Library/") || library.startsWith("/usr/lib/") || library.startsWith("@executable_path/")) continue;
 
                 QString originalLibrary = library;
@@ -156,6 +160,10 @@ bool ApplicationBundle::doMakeSelfContained() {
 
                 lib->addLibraryPath(arch, library);
                 librariesToUpdate.insert(originalLibrary, identifier);
+
+                if (qEnvironmentVariableIsSet("RUNNER_DEBUG")) {
+                    QTextStream(stdout) << "DBG: libraries to update: " << originalLibrary << " -> " << identifier << "\n";
+                }
             }
         }
 
@@ -173,6 +181,10 @@ bool ApplicationBundle::doMakeSelfContained() {
 }
 
 QMultiMap<QString, QString> ApplicationBundle::otool(QString filePath) {
+    if (qEnvironmentVariableIsSet("RUNNER_DEBUG")) {
+        QTextStream(stdout) << "DBG: otool -L " << filePath << "\n";
+    }
+
     QProcess otoolProc;
     otoolProc.start("otool", {"-L", filePath});
     otoolProc.waitForFinished(-1);
@@ -183,6 +195,9 @@ QMultiMap<QString, QString> ApplicationBundle::otool(QString filePath) {
     QString currentArchitecture;
     while (otoolProc.canReadLine()) {
         QString line = otoolProc.readLine().trimmed();
+        if (qEnvironmentVariableIsSet("RUNNER_DEBUG")) {
+            QTextStream(stdout) << "DBG: " << line << "\n";
+        }
         QRegularExpressionMatch architectureSearchMatch = architectureSearch.match(line);
         if (architectureSearchMatch.hasMatch()) {
             currentArchitecture = architectureSearchMatch.captured(1);
@@ -194,6 +209,10 @@ QMultiMap<QString, QString> ApplicationBundle::otool(QString filePath) {
 }
 
 void ApplicationBundle::installNameTool(QString oldPath, QString newPath, QString filePath) {
+    if (qEnvironmentVariableIsSet("RUNNER_DEBUG")) {
+        QTextStream(stdout) << "DBG: install_name_tool -change " << oldPath << " " << newPath << " " << filePath;
+    }
+
     QProcess installNameToolProc;
     installNameToolProc.start("install_name_tool", {"-change", oldPath, newPath, filePath});
     installNameToolProc.waitForFinished(-1);
