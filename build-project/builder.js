@@ -94,7 +94,7 @@ module.exports = async options => {
             }
         }
 
-        const cacheKey = `build-project-${buildFolder}-${calculateSHA256(cmakeArgs.join(" "))}`;
+        const cacheKey = `build-project-${buildFolder.join("/")}-${calculateSHA256(cmakeArgs.join(" "))}`;
 
         let needBuild = true;
         if (options.project !== ".") {
