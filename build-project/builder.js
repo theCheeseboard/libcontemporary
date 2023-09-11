@@ -7,6 +7,14 @@ const os = require("os");
 const path = require('path');
 const process = require('process');
 const clone = require('git-clone/promise');
+const crypto = require('crypto');
+
+function calculateSHA256(inputString) {
+    const hashSum = crypto.createHash('sha256');
+    hashSum.update(inputString);
+
+    return hashSum.digest('hex');
+}
 
 module.exports = async options => {
     let buildFolder = options.arch;
@@ -44,12 +52,6 @@ module.exports = async options => {
         let buildDir = path.resolve(os.tmpdir(), "build-project-action", buildFolder);
         await io.mkdirP(buildDir);
 
-        const cacheKey = `build-project-${buildFolder}`;
-
-        if (options.project !== ".") {
-            await cache.restoreCache([buildDir], cacheKey)
-        }
-
         let cmakeArgs = [
             "-S", path.resolve(gitRoot),
             "-B", buildDir,
@@ -86,8 +88,21 @@ module.exports = async options => {
             }
         }
 
-        await exec.exec(`cmake`, cmakeArgs);
-        await exec.exec(`cmake`, ["--build", buildDir]);
+        const cacheKey = `build-project-${buildFolder}-${calculateSHA256(cmakeArgs.join(" "))}`;
+
+        let needBuild = true;
+        if (options.project !== ".") {
+            if (await cache.restoreCache([buildDir], cacheKey)) {
+                // The cache was restored successfully, so skip the build
+                console.log("Cache restore successful - skipping build step");
+                needBuild = false;
+            }
+        }
+
+        if (needBuild) {
+            await exec.exec(`cmake`, cmakeArgs);
+            await exec.exec(`cmake`, ["--build", buildDir]);
+        }
 
         if (process.platform === "linux") {
             //On Linux we need to escalate
