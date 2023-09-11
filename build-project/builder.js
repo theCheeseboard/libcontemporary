@@ -9,6 +9,14 @@ const process = require('process');
 const clone = require('git-clone/promise');
 const crypto = require('crypto');
 
+function getTemporaryDirectory() {
+    if (process.platform === "darwin") {
+        return path.resolve(os.homedir(), "temp");
+    } else {
+        return os.tmpdir();
+    }
+}
+
 function calculateSHA256(inputString) {
     const hashSum = crypto.createHash('sha256');
     hashSum.update(inputString);
@@ -49,7 +57,7 @@ module.exports = async options => {
     }
 
     try {
-        let buildDir = path.resolve(os.tmpdir(), "build-project-action", buildFolder);
+        let buildDir = path.resolve(getTemporaryDirectory(), "build-project-action", buildFolder);
         await io.mkdirP(buildDir);
 
         let cmakeArgs = [
