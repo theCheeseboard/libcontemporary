@@ -9,14 +9,6 @@ const process = require('process');
 const clone = require('git-clone/promise');
 const crypto = require('crypto');
 
-function getTemporaryDirectory() {
-    if (process.platform === "darwin") {
-        return path.resolve(os.homedir(), "temp");
-    } else {
-        return os.tmpdir();
-    }
-}
-
 function calculateSHA256(inputString) {
     const hashSum = crypto.createHash('sha256');
     hashSum.update(inputString);
@@ -25,12 +17,12 @@ function calculateSHA256(inputString) {
 }
 
 module.exports = async options => {
-    let buildFolder = options.arch;
+    let buildFolder = [options.arch];
     let gitRoot;
     if (options.project === ".") {
         gitRoot = path.resolve(".");
     } else {
-        buildFolder += `/${path.basename(options.project)}`;
+        buildFolder.push(path.basename(options.project));
         gitRoot = path.resolve(".", path.basename(options.project));
 
         let gitOptions = {};
@@ -53,7 +45,7 @@ module.exports = async options => {
             }
         })
 
-        buildFolder += `/${tip.trim()}`;
+        buildFolder.push(tip.trim());
     }
 
     try {
@@ -62,7 +54,7 @@ module.exports = async options => {
         if (options.project === ".") {
             buildDir = path.resolve(gitRoot, "build");
         } else {
-            buildDir = path.resolve(getTemporaryDirectory(), "build-project-action", buildFolder);
+            buildDir = path.resolve(os.tmpdir(), "build-project-action", ...buildFolder);
         }
         await io.mkdirP(buildDir);
 
