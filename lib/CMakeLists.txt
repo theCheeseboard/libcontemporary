@@ -110,6 +110,11 @@ cntp_sourcelist(
         tsettingswindow/tsettingspane.cpp
         tsettingswindow/tsettingswindowdelegate.cpp
 
+        touchbar/ttouchbar.cpp
+        touchbar/ttouchbarabstractitem.cpp
+        touchbar/ttouchbarcustomtouchbaritem.cpp
+        touchbar/ttouchbarbuttonitem.cpp
+
         taboutdialog.ui
         tinputdialog.ui
         tshortcuthud.ui
@@ -191,6 +196,12 @@ cntp_sourcelist(
         plugins/tpluginmanagerpane.h
         plugins/tpluginmanagerhelper.h
 
+        touchbar/ttouchbar.h
+        touchbar/ttouchbarabstractitem.h
+        touchbar/ttouchbarcustomtouchbaritem.h
+        touchbar/ttouchbarbuttonitem.h
+        touchbar/ttouchbar_forwarddeclares.h
+
         tsettingswindow/tsettingswindow.h
         tsettingswindow/tsettingspane.h
 
@@ -214,6 +225,9 @@ cntp_sourcelist(
         private/licensetextpopover.h
         jobs/standardjobprogresswidget.h
         private/tqueueguardhelper.h
+
+        touchbar/private/ttouchbar_p.h
+        touchbar/private/ttouchbarbuttonitem_p.h
 
         private/tstackedwidgetanimationcontroller.h
         private/tstackedwidgetanimation.h
@@ -244,6 +258,9 @@ cntp_sourcelist(
         private/tmessageboxbackend-mac.mm
         private/tapplicationmacprivate.mm
         tcommandpalette/tcommandpalettewindow-mac.mm
+        touchbar/ttouchbar_objc.mm
+        touchbar/ttouchbarcustomtouchbaritem_objc.mm
+        touchbar/ttouchbarbuttonitem_objc.mm
 )
 
 cntp_sourcelist(
@@ -286,7 +303,8 @@ cntp_sourcelist(
         private/tmessageboxbackend-qt.cpp
 )
 
-add_library(libcontemporary SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS})
+add_library(libcontemporary SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS}
+    touchbar/private/ttouchbarcustomtouchbaritem_p.h)
 cntp_init(libcontemporary 20)
 cntp_target_public_headers(libcontemporary
         DESTINATION_DIRECTORY libcontemporary
