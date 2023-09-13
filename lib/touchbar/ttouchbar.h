@@ -9,6 +9,7 @@ T_FORWARD_DECLARE_OBJC_INTERFACE(NSTouchBar);
 class tTouchBarAbstractItem;
 struct tTouchBarPrivate;
 class tTouchBarPopoverItem;
+class QAction;
 class tTouchBar : public QObject {
         Q_OBJECT
     public:
@@ -17,6 +18,9 @@ class tTouchBar : public QObject {
 
         void attach(QWidget* widget);
         void detach();
+
+        void setCustomizationIdentifier(QString customizationIdentifier);
+        QString customizationIdentifier();
 
         void addItem(tTouchBarAbstractItem* item);
         QList<tTouchBarAbstractItem*> touchBarItems();

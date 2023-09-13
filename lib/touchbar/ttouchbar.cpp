@@ -36,6 +36,15 @@ QList<tTouchBarAbstractItem*> tTouchBar::defaultItems() {
     return d->defaultTouchBarItems;
 }
 
+QString tTouchBar::customizationIdentifier() {
+    return d->customizationIdentifier;
+}
+
+void tTouchBar::setCustomizationIdentifier(QString customizationIdentifier) {
+    d->customizationIdentifier = customizationIdentifier;
+    this->invalidateTouchBar();
+}
+
 #ifndef HAVE_TOUCHBAR_IMPL
 void tTouchBar::attach(QWidget* widget) {
     Q_UNUSED(widget)

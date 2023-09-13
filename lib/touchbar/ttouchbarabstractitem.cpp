@@ -3,6 +3,7 @@
 struct tTouchBarAbstractItemPrivate {
         QString identifier;
         QString customizationLabel;
+        bool required = false;
 };
 
 tTouchBarAbstractItem::tTouchBarAbstractItem(QString identifier, QString customizationLabel, QObject* parent) :
@@ -22,4 +23,13 @@ QString tTouchBarAbstractItem::identifier() {
 
 QString tTouchBarAbstractItem::customizationLabel() {
     return d->customizationLabel;
+}
+
+void tTouchBarAbstractItem::setRequired(bool required) {
+    d->required = required;
+    emit invalidateTouchBar();
+}
+
+bool tTouchBarAbstractItem::required() {
+    return d->required;
 }

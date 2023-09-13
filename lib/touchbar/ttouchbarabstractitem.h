@@ -14,6 +14,9 @@ class tTouchBarAbstractItem : public QObject {
         QString identifier();
         QString customizationLabel();
 
+        void setRequired(bool required);
+        bool required();
+
         virtual NSTouchBarItem* makeItem() = 0;
 
     signals:

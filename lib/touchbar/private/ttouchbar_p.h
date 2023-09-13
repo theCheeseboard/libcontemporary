@@ -12,6 +12,8 @@ struct tTouchBarPrivate {
 
         QList<tTouchBarAbstractItem*> touchBarItems;
         QList<tTouchBarAbstractItem*> defaultTouchBarItems;
+
+        QString customizationIdentifier;
 };
 
 #endif // TTOUCHBAR_P_H

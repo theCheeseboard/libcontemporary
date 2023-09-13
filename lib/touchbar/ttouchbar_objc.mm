@@ -54,6 +54,12 @@
     NSTouchBar* bar = [[NSTouchBar alloc] init];
     [bar setDelegate:self];
 
+    if (self.parentTouchBar->customizationIdentifier().isEmpty()) {
+        [bar setCustomizationIdentifier:nil];
+    } else {
+        [bar setCustomizationIdentifier:self.parentTouchBar->customizationIdentifier().toNSString()];
+    }
+
     auto defaultItemIdentifiers = tRange(self.parentTouchBar->defaultItems()).reduce<NSMutableArray*>([](tTouchBarAbstractItem* item, NSMutableArray* array) {
         [array addObject:item->identifier().toNSString()];
         return array;
@@ -65,6 +71,14 @@
         return array;
     }, [[NSMutableArray alloc] init]);
     [bar setCustomizationAllowedItemIdentifiers:customizationAllowedItemIdentifiers];
+
+    auto customizationRequiredItemIdentifiers = tRange(self.parentTouchBar->touchBarItems()).filter([](tTouchBarAbstractItem* item) {
+        return item->required();
+    }).reduce<NSMutableArray*>([](tTouchBarAbstractItem* item, NSMutableArray* array) {
+        [array addObject:item->identifier().toNSString()];
+        return array;
+    }, [[NSMutableArray alloc] init]);
+    [bar setCustomizationRequiredItemIdentifiers:customizationRequiredItemIdentifiers];
 
     return bar;
 }
@@ -92,6 +106,8 @@
 
 void tTouchBar::init() {
     d->delegate = [[TTouchBarMainWindowDelegate alloc] init:this];
+
+    [NSApp setAutomaticCustomizeTouchBarMenuItemEnabled:YES];
 }
 
 void tTouchBar::invalidateTouchBar()
