@@ -2,7 +2,7 @@
 
 #ifndef HAVE_TOUCHBAR_IMPL
 tTouchBarFlexibleSpaceItem::tTouchBarFlexibleSpaceItem(QObject* parent) :
-    tTouchBarAbstractItem{QStringLiteral(""), parent} {
+    tTouchBarAbstractItem{QStringLiteral(""), QStringLiteral(""), parent} {
 }
 #endif
 

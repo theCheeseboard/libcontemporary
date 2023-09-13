@@ -2,9 +2,8 @@
 #include "private/ttouchbarcustomtouchbaritem_p.h"
 
 tTouchBarCustomTouchBarItem::tTouchBarCustomTouchBarItem(QString identifier, QString customizationLabel, QObject* parent) :
-    tTouchBarAbstractItem{identifier, parent} {
+    tTouchBarAbstractItem{identifier, customizationLabel, parent} {
     d = new tTouchBarCustomTouchBarItemPrivate();
-    d->customizationLabel = customizationLabel;
 }
 
 tTouchBarCustomTouchBarItem::~tTouchBarCustomTouchBarItem() {

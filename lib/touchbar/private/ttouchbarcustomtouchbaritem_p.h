@@ -7,8 +7,6 @@
 T_FORWARD_DECLARE_OBJC_INTERFACE(NSCustomTouchBarItem);
 
 struct tTouchBarCustomTouchBarItemPrivate {
-        QString customizationLabel;
-
         NSCustomTouchBarItem* touchBarItem = nullptr;
 };
 

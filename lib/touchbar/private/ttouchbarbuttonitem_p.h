@@ -11,11 +11,12 @@ T_FORWARD_DECLARE_OBJC_INTERFACE(NSButton);
 struct tTouchBarButtonItemPrivate {
         QString text;
         QIcon icon;
+        bool tint = true;
         bool enabled = true;
         bool visible = true;
 
         TTouchBarButtonItemInternalHandler* internalHandler;
-        NSButton* touchBarButton;
+        NSButton* touchBarButton = nullptr;
 };
 
 #endif // TTOUCHBARBUTTONITEM_P_H

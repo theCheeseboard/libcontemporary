@@ -8,10 +8,11 @@ struct tTouchBarAbstractItemPrivate;
 class tTouchBarAbstractItem : public QObject {
         Q_OBJECT
     public:
-        explicit tTouchBarAbstractItem(QString identifier, QObject* parent = nullptr);
+        explicit tTouchBarAbstractItem(QString identifier, QString customizationLabel, QObject* parent = nullptr);
         ~tTouchBarAbstractItem();
 
         QString identifier();
+        QString customizationLabel();
 
         virtual NSTouchBarItem* makeItem() = 0;
 

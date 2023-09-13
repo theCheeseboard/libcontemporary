@@ -13,8 +13,9 @@ class tTouchBarButtonItem : public tTouchBarCustomTouchBarItem {
         void setText(QString text);
         QString text();
 
-        void setIcon(QIcon icon);
+        void setIcon(QIcon icon, bool tint = true);
         QIcon icon();
+        bool tintIcon();
 
         void setEnabled(bool enabled);
         bool enabled();
@@ -29,6 +30,7 @@ class tTouchBarButtonItem : public tTouchBarCustomTouchBarItem {
         tTouchBarButtonItemPrivate* d;
 
         void init();
+        void tearDown();
         void updateTouchBarItem();
 
         // tTouchBarCustomTouchBarItem interface

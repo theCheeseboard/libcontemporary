@@ -4,6 +4,7 @@
 tTouchBarButtonItem::tTouchBarButtonItem(QString identifier, QString customizationLabel, QObject* parent) :
     tTouchBarCustomTouchBarItem{identifier, customizationLabel, parent} {
     d = new tTouchBarButtonItemPrivate();
+    d->text = customizationLabel;
 
     this->init();
 }
@@ -21,13 +22,18 @@ QString tTouchBarButtonItem::text() {
     return d->text;
 }
 
-void tTouchBarButtonItem::setIcon(QIcon icon) {
+void tTouchBarButtonItem::setIcon(QIcon icon, bool tint) {
     d->icon = icon;
+    d->tint = tint;
     this->updateTouchBarItem();
 }
 
 QIcon tTouchBarButtonItem::icon() {
     return d->icon;
+}
+
+bool tTouchBarButtonItem::tintIcon() {
+    return d->tint;
 }
 
 void tTouchBarButtonItem::setEnabled(bool enabled) {
@@ -50,6 +56,9 @@ bool tTouchBarButtonItem::visible() {
 
 #ifndef HAVE_TOUCHBAR_IMPL
 void tTouchBarButtonItem::init() {
+}
+
+void tTouchBarButtonItem::tearDown() {
 }
 
 void tTouchBarButtonItem::updateTouchBarItem() {

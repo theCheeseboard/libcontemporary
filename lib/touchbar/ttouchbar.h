@@ -1,10 +1,14 @@
 #ifndef TTOUCHBAR_H
 #define TTOUCHBAR_H
 
+#include "ttouchbar_forwarddeclares.h"
 #include <QObject>
+
+T_FORWARD_DECLARE_OBJC_INTERFACE(NSTouchBar);
 
 class tTouchBarAbstractItem;
 struct tTouchBarPrivate;
+class tTouchBarPopoverItem;
 class tTouchBar : public QObject {
         Q_OBJECT
     public:
@@ -12,6 +16,7 @@ class tTouchBar : public QObject {
         ~tTouchBar();
 
         void attach(QWidget* widget);
+        void detach();
 
         void addItem(tTouchBarAbstractItem* item);
         QList<tTouchBarAbstractItem*> touchBarItems();
@@ -20,6 +25,10 @@ class tTouchBar : public QObject {
         QList<tTouchBarAbstractItem*> defaultItems();
 
     signals:
+
+    protected:
+        friend tTouchBarPopoverItem;
+        NSTouchBar* makeTouchBar();
 
     private:
         tTouchBarPrivate* d;

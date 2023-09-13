@@ -9,7 +9,7 @@
 @interface TTouchBarMainWindowDelegate: NSResponder<NSTouchBarDelegate, NSApplicationDelegate, NSWindowDelegate>
 @property QWidget* parent;
 @property tTouchBar* parentTouchBar;
-@property (strong) NSObject *existingDelegate;
+@property (strong) id<NSWindowDelegate> existingDelegate;
 @end
 
 @implementation TTouchBarMainWindowDelegate
@@ -29,6 +29,17 @@
     auto window = [view window];
     self.existingDelegate = window.delegate; // Save current delegate for forwarding
     window.delegate = self;
+}
+
+- (void)detach {
+    auto view = reinterpret_cast<NSView*>(self.parent->winId());
+    auto window = [view window];
+    window.delegate = self.existingDelegate;
+
+    [self invalidateTouchBar];
+
+    self.parent = nullptr;
+    self.existingDelegate = nil;
 }
 
 - (void)invalidateTouchBar {
@@ -90,4 +101,14 @@ void tTouchBar::invalidateTouchBar()
 
 void tTouchBar::attach(QWidget* widget) {
     [d->delegate attachToWidget:widget->window()];
+}
+
+void tTouchBar::detach()
+{
+    [d->delegate detach];
+}
+
+NSTouchBar *tTouchBar::makeTouchBar()
+{
+    return [d->delegate makeTouchBar];
 }

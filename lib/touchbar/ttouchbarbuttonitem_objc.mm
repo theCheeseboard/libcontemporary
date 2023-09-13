@@ -30,20 +30,31 @@ void tTouchBarButtonItem::init()
     d->internalHandler = [[TTouchBarButtonItemInternalHandler alloc] init:this];
 }
 
+void tTouchBarButtonItem::tearDown()
+{
+    if (d->touchBarButton) {
+        [d->touchBarButton release];
+    }
+}
+
 void tTouchBarButtonItem::updateTouchBarItem()
 {
     if (!d->touchBarButton) {
         d->touchBarButton = [NSButton buttonWithTitle:this->text().toNSString() target:d->internalHandler action:@selector(touchBarActionClicked:)];
+        [d->touchBarButton retain];
     }
     [d->touchBarButton setTitle:this->text().toNSString()];
     [d->touchBarButton setIdentifier:this->identifier().toNSString()];
 
     if (!this->icon().isNull()) {
         auto image = this->icon().pixmap(QSize(64, 64)).toImage();
-        libContemporaryCommon::tintImage(image, Qt::white);
+        if (this->tintIcon()) libContemporaryCommon::tintImage(image, Qt::white);
         auto cgImage = image.toCGImage();
         auto nsimage = [[NSImage alloc] initWithCGImage:cgImage size:(NSSize){16, 16}];
         [d->touchBarButton setImage:nsimage];
+        [d->touchBarButton setImagePosition:NSImageOnly];
+    } else {
+        [d->touchBarButton setImagePosition:NSNoImage];
     }
 
     [d->touchBarButton setEnabled:this->enabled() ? YES : NO];

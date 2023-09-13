@@ -41,9 +41,16 @@ void tTouchBar::attach(QWidget* widget) {
     Q_UNUSED(widget)
 }
 
+void tTouchBar::detach() {
+}
+
 void tTouchBar::init() {
 }
 
 void tTouchBar::invalidateTouchBar() {
+}
+
+NSTouchBar* tTouchBar::makeTouchBar() {
+    return nullptr;
 }
 #endif
