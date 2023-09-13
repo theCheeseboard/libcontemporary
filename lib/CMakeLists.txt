@@ -117,6 +117,7 @@ cntp_sourcelist(
         touchbar/ttouchbarflexiblespaceitem.cpp
         touchbar/ttouchbarpopoveritem.cpp
         touchbar/ttouchbarsegmentedcontrolitem.cpp
+        touchbar/ttouchbarlabelitem.cpp
 
         taboutdialog.ui
         tinputdialog.ui
@@ -206,6 +207,7 @@ cntp_sourcelist(
         touchbar/ttouchbarflexiblespaceitem.h
         touchbar/ttouchbarpopoveritem.h
         touchbar/ttouchbarsegmentedcontrolitem.h
+        touchbar/ttouchbarlabelitem.h
         touchbar/ttouchbar_forwarddeclares.h
 
         tsettingswindow/tsettingswindow.h
@@ -272,6 +274,7 @@ cntp_sourcelist(
         touchbar/ttouchbarflexiblespaceitem_objc.mm
         touchbar/ttouchbarpopoveritem_objc.mm
         touchbar/ttouchbarsegmentedcontrolitem_objc.mm
+        touchbar/ttouchbarlabelitem_objc.mm
 )
 
 cntp_sourcelist(
@@ -314,7 +317,8 @@ cntp_sourcelist(
         private/tmessageboxbackend-qt.cpp
 )
 
-add_library(libcontemporary SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS})
+add_library(libcontemporary SHARED ${SOURCES} ${HEADERS} ${PRIVATE_HEADERS}
+    touchbar/private/ttouchbarlabelitem_p.h)
 cntp_init(libcontemporary 20)
 cntp_target_public_headers(libcontemporary
         DESTINATION_DIRECTORY libcontemporary

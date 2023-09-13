@@ -12,7 +12,7 @@ struct tTouchBarSegmentedControlItemPrivate {
         int currentSegment = 0;
 
         TTouchBarSegmentedControlItemInternalHandler* internalHandler;
-        NSSegmentedControl* segmentedControl;
+        NSSegmentedControl* segmentedControl = nullptr;
 };
 
 #endif // TTOUCHBARSEGMENTEDCONTROLITEM_P_H

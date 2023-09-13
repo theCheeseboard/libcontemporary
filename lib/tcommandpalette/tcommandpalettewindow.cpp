@@ -4,6 +4,7 @@
 #include "tcommandpalettecontroller.h"
 #include "tcommandpalettescope.h"
 #include "touchbar/ttouchbar.h"
+#include "touchbar/ttouchbarlabelitem.h"
 #include "touchbar/ttouchbarsegmentedcontrolitem.h"
 #include <QKeyEvent>
 #include <QPushButton>
@@ -39,6 +40,8 @@ tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controll
         scopesList.append(scope->displayName());
     }
 
+    auto touchBarLabel = new tTouchBarLabelItem(QStringLiteral("com.vicr123.libcontemporary.commandpalette.scopeslabel"), tr("Scopes:"), this);
+
     d->touchBarSegmentedControl = new tTouchBarSegmentedControlItem(QStringLiteral("com.vicr123.libcontemporary.commandpalette.scopes"), tr("Scopes"), this);
     d->touchBarSegmentedControl->setSegments(scopesList);
     connect(d->touchBarSegmentedControl, &tTouchBarSegmentedControlItem::currentSegmentChanged, this, [this](int index) {
@@ -46,6 +49,7 @@ tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controll
     });
 
     d->touchBar = new tTouchBar(this);
+    d->touchBar->addDefaultItem(touchBarLabel);
     d->touchBar->addDefaultItem(d->touchBarSegmentedControl);
     d->touchBar->attach(this);
 

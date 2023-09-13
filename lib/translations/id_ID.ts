@@ -509,7 +509,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tcommandpalette/tcommandpalettewindow.cpp" line="42"/>
+        <location filename="../tcommandpalette/tcommandpalettewindow.cpp" line="43"/>
+        <source>Scopes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tcommandpalette/tcommandpalettewindow.cpp" line="45"/>
         <source>Scopes</source>
         <translation type="unfinished"></translation>
     </message>
