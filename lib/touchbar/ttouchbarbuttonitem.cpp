@@ -52,9 +52,6 @@ bool tTouchBarButtonItem::visible() {
 void tTouchBarButtonItem::init() {
 }
 
-void tTouchBarButtonItem::teardown() {
-}
-
 void tTouchBarButtonItem::updateTouchBarItem() {
     emit invalidateTouchBar();
 }
