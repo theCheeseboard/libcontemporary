@@ -116,6 +116,7 @@ cntp_sourcelist(
         touchbar/ttouchbarbuttonitem.cpp
         touchbar/ttouchbarflexiblespaceitem.cpp
         touchbar/ttouchbarpopoveritem.cpp
+        touchbar/ttouchbarsegmentedcontrolitem.cpp
 
         taboutdialog.ui
         tinputdialog.ui
@@ -204,6 +205,7 @@ cntp_sourcelist(
         touchbar/ttouchbarbuttonitem.h
         touchbar/ttouchbarflexiblespaceitem.h
         touchbar/ttouchbarpopoveritem.h
+        touchbar/ttouchbarsegmentedcontrolitem.h
         touchbar/ttouchbar_forwarddeclares.h
 
         tsettingswindow/tsettingswindow.h
@@ -234,6 +236,7 @@ cntp_sourcelist(
         touchbar/private/ttouchbarbuttonitem_p.h
         touchbar/private/ttouchbarcustomtouchbaritem_p.h
         touchbar/private/ttouchbarpopoveritem_p.h
+        touchbar/private/ttouchbarsegmentedcontrolitem_p.h
 
         private/tstackedwidgetanimationcontroller.h
         private/tstackedwidgetanimation.h
@@ -263,12 +266,12 @@ cntp_sourcelist(
         private/nsalertmac.mm
         private/tmessageboxbackend-mac.mm
         private/tapplicationmacprivate.mm
-        tcommandpalette/tcommandpalettewindow-mac.mm
         touchbar/ttouchbar_objc.mm
         touchbar/ttouchbarcustomtouchbaritem_objc.mm
         touchbar/ttouchbarbuttonitem_objc.mm
         touchbar/ttouchbarflexiblespaceitem_objc.mm
         touchbar/ttouchbarpopoveritem_objc.mm
+        touchbar/ttouchbarsegmentedcontrolitem_objc.mm
 )
 
 cntp_sourcelist(

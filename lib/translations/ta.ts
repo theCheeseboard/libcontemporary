@@ -521,6 +521,11 @@
         <source>What are you looking for?</source>
         <translation>நீங்கள் என்ன தேடுகிறீர்கள்?</translation>
     </message>
+    <message>
+        <location filename="../tcommandpalette/tcommandpalettewindow.cpp" line="42"/>
+        <source>Scopes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>tHelpMenu</name>

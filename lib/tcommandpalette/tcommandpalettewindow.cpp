@@ -3,6 +3,8 @@
 
 #include "tcommandpalettecontroller.h"
 #include "tcommandpalettescope.h"
+#include "touchbar/ttouchbar.h"
+#include "touchbar/ttouchbarsegmentedcontrolitem.h"
 #include <QKeyEvent>
 #include <QPushButton>
 #include <QTimer>
@@ -11,6 +13,9 @@ struct tCommandPaletteWindowPrivate {
         tCommandPaletteController* controller;
         tCommandPaletteScope* currentScope = nullptr;
         QMap<tCommandPaletteScope*, QPushButton*> scopeButtons;
+
+        tTouchBar* touchBar;
+        tTouchBarSegmentedControlItem* touchBarSegmentedControl;
 };
 
 tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controller, QWidget* parent) :
@@ -21,6 +26,7 @@ tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controll
     d = new tCommandPaletteWindowPrivate();
     d->controller = controller;
 
+    QStringList scopesList;
     for (auto scope : d->controller->scopes()) {
         auto button = new QPushButton(ui->scopesWidget);
         button->setCheckable(true);
@@ -30,15 +36,24 @@ tCommandPaletteWindow::tCommandPaletteWindow(tCommandPaletteController* controll
         });
         ui->scopesLayout->addWidget(button);
         d->scopeButtons.insert(scope, button);
-
-        if (!d->currentScope) changeScope(scope);
+        scopesList.append(scope->displayName());
     }
+
+    d->touchBarSegmentedControl = new tTouchBarSegmentedControlItem(QStringLiteral("com.vicr123.libcontemporary.commandpalette.scopes"), tr("Scopes"), this);
+    d->touchBarSegmentedControl->setSegments(scopesList);
+    connect(d->touchBarSegmentedControl, &tTouchBarSegmentedControlItem::currentSegmentChanged, this, [this](int index) {
+        this->changeScope(d->controller->scopes().at(index));
+    });
+
+    d->touchBar = new tTouchBar(this);
+    d->touchBar->addDefaultItem(d->touchBarSegmentedControl);
+    d->touchBar->attach(this);
+
+    if (!d->controller->scopes().empty()) changeScope(d->controller->scopes().constFirst());
 
     this->setWindowFlag(Qt::FramelessWindowHint);
 #ifdef Q_OS_MAC
     this->setWindowFlag(Qt::Tool);
-
-    this->setupTouchBar();
 #endif
 
     ui->searchBox->setText(controller->currentQuery());
@@ -60,6 +75,7 @@ void tCommandPaletteWindow::changeScope(tCommandPaletteScope* scope) {
     scope->filter(ui->searchBox->text());
     d->scopeButtons.value(scope)->setChecked(true);
     ui->listView->setModel(d->currentScope);
+    d->touchBarSegmentedControl->setCurrentSegment(d->controller->scopes().indexOf(scope));
     emit scopeChanged(d->currentScope);
 }
 

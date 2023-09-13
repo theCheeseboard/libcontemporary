@@ -29,10 +29,6 @@ class tCommandPaletteWindow : public QDialog {
 
         tCommandPaletteController* controller();
 
-#ifdef Q_OS_MAC
-        void setupTouchBar();
-#endif
-
         // QWidget interface
     protected:
         void changeEvent(QEvent* event);
