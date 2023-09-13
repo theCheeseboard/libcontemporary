@@ -4,6 +4,7 @@ struct tTouchBarAbstractItemPrivate {
         QString identifier;
         QString customizationLabel;
         bool required = false;
+        bool isPrincipal = false;
 };
 
 tTouchBarAbstractItem::tTouchBarAbstractItem(QString identifier, QString customizationLabel, QObject* parent) :
@@ -32,4 +33,13 @@ void tTouchBarAbstractItem::setRequired(bool required) {
 
 bool tTouchBarAbstractItem::required() {
     return d->required;
+}
+
+void tTouchBarAbstractItem::setIsPrincipal(bool isPrincipal) {
+    d->isPrincipal = true;
+    emit invalidateTouchBar();
+}
+
+bool tTouchBarAbstractItem::isPrincipal() {
+    return d->isPrincipal;
 }

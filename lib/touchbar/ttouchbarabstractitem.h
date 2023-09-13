@@ -17,6 +17,9 @@ class tTouchBarAbstractItem : public QObject {
         void setRequired(bool required);
         bool required();
 
+        void setIsPrincipal(bool isPrincipal);
+        bool isPrincipal();
+
         virtual NSTouchBarItem* makeItem() = 0;
 
     signals:

@@ -54,6 +54,15 @@ bool tTouchBarButtonItem::visible() {
     return d->visible;
 }
 
+void tTouchBarButtonItem::setIsPrimary(bool isPrimary) {
+    d->isPrimary = isPrimary;
+    this->updateTouchBarItem();
+}
+
+bool tTouchBarButtonItem::isPrimary() {
+    return d->isPrimary;
+}
+
 #ifndef HAVE_TOUCHBAR_IMPL
 void tTouchBarButtonItem::init() {
 }

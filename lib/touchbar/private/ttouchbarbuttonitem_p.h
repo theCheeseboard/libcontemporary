@@ -14,6 +14,7 @@ struct tTouchBarButtonItemPrivate {
         bool tint = true;
         bool enabled = true;
         bool visible = true;
+        bool isPrimary = false;
 
         TTouchBarButtonItemInternalHandler* internalHandler;
         NSButton* touchBarButton = nullptr;

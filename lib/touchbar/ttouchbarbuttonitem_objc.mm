@@ -60,5 +60,11 @@ void tTouchBarButtonItem::updateTouchBarItem()
     [d->touchBarButton setEnabled:this->enabled() ? YES : NO];
     [d->touchBarButton setHidden:this->visible() ? NO : YES];
 
+    if (this->isPrimary()) {
+        [d->touchBarButton setKeyEquivalent:@"\r"];
+    } else {
+        [d->touchBarButton setKeyEquivalent:@""];
+    }
+
     emit invalidateTouchBar();
 }

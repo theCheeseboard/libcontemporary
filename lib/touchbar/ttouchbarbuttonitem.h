@@ -23,6 +23,9 @@ class tTouchBarButtonItem : public tTouchBarCustomTouchBarItem {
         void setVisible(bool visible);
         bool visible();
 
+        void setIsPrimary(bool isPrimary);
+        bool isPrimary();
+
     signals:
         void clicked();
 

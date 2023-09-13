@@ -80,6 +80,15 @@
     }, [[NSMutableArray alloc] init]);
     [bar setCustomizationRequiredItemIdentifiers:customizationRequiredItemIdentifiers];
 
+    auto principalItem = tRange(self.parentTouchBar->touchBarItems()).first([](tTouchBarAbstractItem* item) {
+        return item->isPrincipal();
+    }, nullptr);
+    if (principalItem) {
+        [bar setPrincipalItemIdentifier:principalItem->identifier().toNSString()];
+    } else {
+        [bar setPrincipalItemIdentifier:nil];
+    }
+
     return bar;
 }
 
