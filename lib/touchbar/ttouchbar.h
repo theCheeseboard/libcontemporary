@@ -9,6 +9,7 @@ T_FORWARD_DECLARE_OBJC_INTERFACE(NSTouchBar);
 class tTouchBarAbstractItem;
 struct tTouchBarPrivate;
 class tTouchBarPopoverItem;
+class tTouchBarGroupItem;
 class QAction;
 class tTouchBar : public QObject {
         Q_OBJECT
@@ -32,6 +33,7 @@ class tTouchBar : public QObject {
 
     protected:
         friend tTouchBarPopoverItem;
+        friend tTouchBarGroupItem;
         NSTouchBar* makeTouchBar();
 
     private:

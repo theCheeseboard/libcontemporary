@@ -119,6 +119,7 @@ cntp_sourcelist(
         touchbar/ttouchbarsegmentedcontrolitem.cpp
         touchbar/ttouchbarlabelitem.cpp
         touchbar/tcompositetouchbar.cpp
+        touchbar/ttouchbargroupitem.cpp
 
         taboutdialog.ui
         tinputdialog.ui
@@ -210,6 +211,7 @@ cntp_sourcelist(
         touchbar/ttouchbarsegmentedcontrolitem.h
         touchbar/ttouchbarlabelitem.h
         touchbar/tcompositetouchbar.h
+        touchbar/ttouchbargroupitem.h
         touchbar/ttouchbar_forwarddeclares.h
 
         tsettingswindow/tsettingswindow.h
@@ -242,6 +244,7 @@ cntp_sourcelist(
         touchbar/private/ttouchbarpopoveritem_p.h
         touchbar/private/ttouchbarsegmentedcontrolitem_p.h
         touchbar/private/ttouchbarlabelitem_p.h
+        touchbar/private/ttouchbargroupitem_p.h
 
         private/tstackedwidgetanimationcontroller.h
         private/tstackedwidgetanimation.h
@@ -278,6 +281,7 @@ cntp_sourcelist(
         touchbar/ttouchbarpopoveritem_objc.mm
         touchbar/ttouchbarsegmentedcontrolitem_objc.mm
         touchbar/ttouchbarlabelitem_objc.mm
+        touchbar/ttouchbargroupitem_objc.mm
 )
 
 cntp_sourcelist(
