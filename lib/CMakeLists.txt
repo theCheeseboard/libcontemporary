@@ -139,6 +139,7 @@ cntp_sourcelist(
         private/tstackedwidgetanimationfade.cpp
         private/tstackedwidgetanimationslidevertical.cpp
         private/tstackedwidgetanimationslide.cpp
+        touchbar/ttouchbardialogalertitem.cpp
 
         thelibs_icons.qrc
 
@@ -212,6 +213,7 @@ cntp_sourcelist(
         touchbar/ttouchbarlabelitem.h
         touchbar/tcompositetouchbar.h
         touchbar/ttouchbargroupitem.h
+        touchbar/ttouchbardialogalertitem.h
         touchbar/ttouchbar_forwarddeclares.h
 
         tsettingswindow/tsettingswindow.h

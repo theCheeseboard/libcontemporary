@@ -20,9 +20,11 @@ void tCompositeTouchBar::setCurrentTouchBar(tTouchBar* touchBar) {
     if (d->currentTouchBar) {
         d->currentTouchBar->disconnect(this);
     }
+
+    auto oldAttachedWidget = d->attachedWidget;
     this->detach();
     d->currentTouchBar = touchBar;
-    this->attach(d->attachedWidget);
+    this->attach(oldAttachedWidget);
     if (d->currentTouchBar) {
         connect(d->currentTouchBar, &tTouchBar::destroyed, this, [this] {
             this->setCurrentTouchBar(nullptr);
