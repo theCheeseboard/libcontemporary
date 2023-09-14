@@ -10,6 +10,7 @@
 @property QWidget* parent;
 @property tTouchBar* parentTouchBar;
 @property (strong) id<NSWindowDelegate> existingDelegate;
+@property bool attached;
 @end
 
 @implementation TTouchBarMainWindowDelegate
@@ -18,20 +19,26 @@
     if (self = [super init]) {
         self.parent = nullptr;
         self.parentTouchBar = parentTouchBar;
+        self.attached = false;
     }
     return self;
 }
 
 - (void)attachToWidget: (QWidget*)parentWidget {
+    if (self.attached) return;
+
     self.parent = parentWidget;
 
     auto view = reinterpret_cast<NSView*>(parentWidget->winId());
     auto window = [view window];
     self.existingDelegate = window.delegate; // Save current delegate for forwarding
     window.delegate = self;
+    self.attached = true;
 }
 
 - (void)detach {
+    if (!self.attached) return;
+
     auto view = reinterpret_cast<NSView*>(self.parent->winId());
     auto window = [view window];
     window.delegate = self.existingDelegate;
@@ -40,6 +47,7 @@
 
     self.parent = nullptr;
     self.existingDelegate = nil;
+    self.attached = false;
 }
 
 - (void)invalidateTouchBar {

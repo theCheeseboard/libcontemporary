@@ -16,8 +16,8 @@ class tTouchBar : public QObject {
         explicit tTouchBar(QObject* parent = nullptr);
         ~tTouchBar();
 
-        void attach(QWidget* widget);
-        void detach();
+        virtual void attach(QWidget* widget);
+        virtual void detach();
 
         void setCustomizationIdentifier(QString customizationIdentifier);
         QString customizationIdentifier();
