@@ -813,6 +813,14 @@
     </message>
 </context>
 <context>
+    <name>tTouchBar</name>
+    <message>
+        <location filename="../touchbar/ttouchbar_objc.mm" line="153"/>
+        <source>Customize Touch Bar...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tWindowTabber</name>
     <message>
         <location filename="../twindowtabber.cpp" line="60"/>

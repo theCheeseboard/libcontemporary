@@ -5,6 +5,7 @@
 #include "private/ttouchbar_p.h"
 #include "ranges/trange.h"
 #include <QWidget>
+#include <QMenu>
 
 @interface TTouchBarMainWindowDelegate: NSResponder<NSTouchBarDelegate, NSApplicationDelegate, NSWindowDelegate>
 @property QWidget* parent;
@@ -144,4 +145,14 @@ void tTouchBar::detach()
 NSTouchBar *tTouchBar::makeTouchBar()
 {
     return [d->delegate makeTouchBar];
+}
+
+
+void tTouchBar::addCustomizationMenuItem(QMenu *menu)
+{
+    NSMenuItem *customizeTouchBarItem = [[NSMenuItem alloc] initWithTitle:tr("Customize Touch Bar...").toNSString()
+                                                                   action:@selector(toggleTouchBarCustomizationPalette:)
+                                                            keyEquivalent:@""];
+    [customizeTouchBarItem setTarget:nil];
+    [menu->toNSMenu() addItem:customizeTouchBarItem];
 }

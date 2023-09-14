@@ -62,4 +62,7 @@ void tTouchBar::invalidateTouchBar() {
 NSTouchBar* tTouchBar::makeTouchBar() {
     return nullptr;
 }
+
+void tTouchBar::addCustomizationMenuItem(QMenu* menu) {
+}
 #endif

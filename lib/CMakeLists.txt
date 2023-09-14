@@ -119,6 +119,7 @@ cntp_sourcelist(
         touchbar/ttouchbarsegmentedcontrolitem.cpp
         touchbar/ttouchbarlabelitem.cpp
         touchbar/tcompositetouchbar.cpp
+        touchbar/ttouchbaractionitem.cpp
         touchbar/ttouchbargroupitem.cpp
 
         taboutdialog.ui
@@ -214,6 +215,7 @@ cntp_sourcelist(
         touchbar/tcompositetouchbar.h
         touchbar/ttouchbargroupitem.h
         touchbar/ttouchbardialogalertitem.h
+        touchbar/ttouchbaractionitem.h
         touchbar/ttouchbar_forwarddeclares.h
 
         tsettingswindow/tsettingswindow.h
