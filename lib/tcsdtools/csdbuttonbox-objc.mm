@@ -25,6 +25,19 @@
 #include <QWindow>
 #import <AppKit/AppKit.h>
 
+namespace CsdButtonBoxObjcMac {
+    QWidget* standardWindowButton(NSWindowButton windowButton, NSWindowStyleMask styleMask, QWidget* parent) {
+        NSButton* button = [NSWindow standardWindowButton:windowButton forStyleMask:styleMask];
+        auto widget = new QWidget(parent);
+        widget->setFixedSize(14, 16);
+
+        NSView* cv = reinterpret_cast<NSView*>(widget->winId());
+        [cv addSubview:button];
+
+        return widget;
+    }
+}
+
 void CsdButtonBoxPrivate::windowHidden() {
     if (closeWidget) {
         box->ui->macWindowControlsLayout->removeWidget(closeWidget);
@@ -44,23 +57,16 @@ void CsdButtonBoxPrivate::windowHidden() {
 void CsdButtonBoxPrivate::windowShown() {
     if (!closeWidget) {
         auto flags = this->parentWidget->window()->windowFlags();
-//        NSWindowStyleMask styleMask = [view.window styleMask];
         NSWindowStyleMask styleMask = NSWindowStyleMaskFullSizeContentView|NSWindowStyleMaskResizable|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
 
-        NSButton* closeButton = [NSWindow standardWindowButton:NSWindowCloseButton forStyleMask:styleMask];
-        closeWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(closeButton)), box);
-        closeWidget->setFixedSize(14, 16);
+        closeWidget = CsdButtonBoxObjcMac::standardWindowButton(NSWindowCloseButton, styleMask, this->parentWidget);
         box->ui->macWindowControlsLayout->addWidget(closeWidget);
 
         if (flags & Qt::WindowMinimizeButtonHint && flags & Qt::WindowMaximizeButtonHint) {
-            NSButton* minButton = [NSWindow standardWindowButton:NSWindowMiniaturizeButton forStyleMask:styleMask];
-            minWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(minButton)), box);
-            minWidget->setFixedSize(14, 16);
+            minWidget = CsdButtonBoxObjcMac::standardWindowButton(NSWindowMiniaturizeButton, styleMask, this->parentWidget);
             box->ui->macWindowControlsLayout->addWidget(minWidget);
 
-            NSButton* fsButton = [NSWindow standardWindowButton:NSWindowZoomButton forStyleMask:styleMask];
-            fsWidget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(fsButton)), box);
-            fsWidget->setFixedSize(14, 16);
+            fsWidget = CsdButtonBoxObjcMac::standardWindowButton(NSWindowZoomButton, styleMask, this->parentWidget);
             box->ui->macWindowControlsLayout->addWidget(fsWidget);
         }
     }
