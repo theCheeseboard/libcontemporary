@@ -103,6 +103,9 @@ bool tCsdGlobal::csdsEnabled() {
 }
 
 bool tCsdGlobal::recommendCsdForPlatform() {
+#ifdef Q_OS_ANDROID
+    return false;
+#endif
     return true;
 }
 
