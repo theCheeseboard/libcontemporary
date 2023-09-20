@@ -777,7 +777,7 @@ tApplication::Platform tApplication::currentPlatform() {
     }
 
     QString desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
-    if (desktop == "thedesk") {
+    if (desktop == "theDesk") {
         return TheDesk;
     } else {
         return OtherPlatform;

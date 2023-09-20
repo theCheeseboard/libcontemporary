@@ -26,6 +26,7 @@
 #include <QGraphicsBlurEffect>
 #include <QGraphicsOpacityEffect>
 #include <QPainter>
+#include <QPointer>
 #include <QTimer>
 
 #ifdef Q_OS_MAC
@@ -35,7 +36,7 @@
 
 struct tPopoverPrivate {
         QWidget* popoverWidget;
-        QWidget* parentWidget;
+        QPointer<QWidget> parentWidget;
         QFrame* verticalSeperator;
 
 #ifdef Q_OS_MAC
@@ -314,7 +315,9 @@ void tPopover::dismiss() {
         d->popoverWidget->hide();
         d->verticalSeperator->hide();
 
-        d->parentWidget->removeEventFilter(this);
+        if (d->parentWidget) {
+            d->parentWidget->removeEventFilter(this);
+        }
         d->parentWidget = nullptr;
 
         tPopoverPrivate::activePopovers.remove(d->popoverWidget);
