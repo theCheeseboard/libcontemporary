@@ -35,6 +35,10 @@ function(cntp_init target cxx-standard)
 endfunction()
 
 function(cntp_init_plugin parent target cxx-standard share-subdir)
+    if(NOT TARGET ${parent}-plugins)
+        add_custom_target(${parent}-plugins ALL)
+    endif()
+
     cntp_init(${target} ${cxx-standard})
     cntp_install_plugin(${parent} ${target})
 
@@ -46,5 +50,5 @@ function(cntp_init_plugin parent target cxx-standard share-subdir)
             CNTP_DATA_SUBDIR ${SHARE_DIR}/plugins/${share-subdir}
             CNTP_DATA_SUBDIR_WITHOUT_PARENT ${share-subdir}
             CNTP_PARENT_TARGET ${parent})
-    add_dependencies(${parent} ${target})
+    add_dependencies(${parent}-plugins ${target})
 endfunction()
