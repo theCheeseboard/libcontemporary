@@ -13,11 +13,14 @@ class tStackedWidgetAnimationLift : public tStackedWidgetAnimation {
 
         void startAnimation();
         void stopAnimation();
+        void setProgress(double progress);
 
     signals:
 
     private:
         tStackedWidgetAnimationLiftPrivate* d;
+
+        void internalSetReversed(bool reversed);
 };
 
 #endif // TSTACKEDWIDGETANIMATIONLIFT_H

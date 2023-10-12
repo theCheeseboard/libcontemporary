@@ -25,6 +25,7 @@
 #include "private/tstackedwidgetanimationlift.h"
 #include "private/tstackedwidgetanimationslidehorizontal.h"
 #include "private/tstackedwidgetanimationslidevertical.h"
+#include <QWheelEvent>
 
 class tStackedWidgetPrivate {
     public:
@@ -43,6 +44,10 @@ class tStackedWidgetPrivate {
 
         tStackedWidget* parent;
         QWidget* defaultWidget = nullptr;
+
+        bool backGestureInProgress = false;
+        int backGestureProgress = 0;
+        bool autoNavigable = false;
 };
 
 tStackedWidget::tStackedWidget(QWidget* parent) :
@@ -50,6 +55,7 @@ tStackedWidget::tStackedWidget(QWidget* parent) :
     d = new tStackedWidgetPrivate(this);
     connect(&d->animationController, &tStackedWidgetAnimationController::done, this, [this](int newIndex) {
         QStackedWidget::setCurrentIndex(newIndex);
+        widget(newIndex)->raise();
     });
 }
 
@@ -78,6 +84,10 @@ void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
     // Check if Power Stretch is on or if animations are disabled
     if (libContemporaryCommon::instance()->powerStretchEnabled() || !libContemporaryCommon::instance()->allowSystemAnimations()) {
         // Forego animations; power stretch is on
+        if (d->backGestureInProgress) {
+            d->animationController.completePartialAnimation(true);
+            d->backGestureInProgress = false;
+        }
         QStackedWidget::setCurrentIndex(index);
     } else {
         // Forcibly set the current index.
@@ -85,6 +95,13 @@ void tStackedWidget::doSetCurrentIndex(int index, Animation animation) {
         QWidget* nextWidget = widget(index);
         if (nextWidget == nullptr) {
             QStackedWidget::setCurrentIndex(index);
+        } else if (d->backGestureInProgress) {
+            if (index == currentIndex()) {
+                d->animationController.completePartialAnimation(false);
+            } else {
+                d->animationController.completePartialAnimation(true);
+            }
+            d->backGestureInProgress = false;
         } else {
             switch (animation) {
                 case None:
@@ -172,6 +189,10 @@ void tStackedWidget::setDefaultWidget(QWidget* defaultWidget) {
     }
 }
 
+void tStackedWidget::setAutoNavigable(bool autoNavigable) {
+    d->autoNavigable = autoNavigable;
+}
+
 void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
     this->setCurrentIndex(index, doAnimation ? d->anim : None);
 }
@@ -179,4 +200,38 @@ void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
 void tStackedWidget::resizeEvent(QResizeEvent* event) {
     if (d->defaultWidget) d->defaultWidget->resize(this->size());
     emit resized();
+}
+
+void tStackedWidget::wheelEvent(QWheelEvent* event) {
+    if (!d->autoNavigable) {
+        event->ignore();
+        return;
+    }
+
+    if (event->isBeginEvent() && currentIndex() != 0) {
+        d->backGestureInProgress = true;
+        d->backGestureProgress = 0;
+        d->animationController.partialStartAnimation(new tStackedWidgetAnimationSlideHorizontal(currentIndex(), currentIndex() - 1, this, false));
+        event->accept();
+    }
+
+    if (d->backGestureInProgress && (event->phase() == Qt::ScrollMomentum || event->phase() == Qt::ScrollEnd)) {
+        // Finalise the gesture
+        bool finish = d->backGestureProgress / static_cast<double>(this->width()) * 1.5 > 0.5;
+        if (event->phase() == Qt::ScrollMomentum) {
+            finish = event->pixelDelta().x() > 10;
+        }
+        this->doSetCurrentIndex(currentIndex() - finish, this->CurrentAnimation());
+        event->accept();
+        return;
+    }
+
+    if (event->pixelDelta().x() == 0) return;
+    if (d->backGestureInProgress) {
+        d->backGestureProgress += event->pixelDelta().x();
+        d->animationController.partialAnimationProgress(d->backGestureProgress / static_cast<double>(this->width()) * 1.5);
+        event->accept();
+    }
+
+    event->ignore();
 }

@@ -7,7 +7,9 @@ struct tStackedWidgetAnimationPrivate {
         QWidget* newWidget;
         tStackedWidget* parentStack;
         bool movingForwards;
+        int oldIndex;
         int newIndex;
+        bool reversed = false;
 };
 
 tStackedWidgetAnimation::tStackedWidgetAnimation(int oldIndex, int newIndex, tStackedWidget* parent) :
@@ -17,6 +19,7 @@ tStackedWidgetAnimation::tStackedWidgetAnimation(int oldIndex, int newIndex, tSt
     d->newWidget = parent->widget(newIndex);
     d->parentStack = parent;
     d->movingForwards = oldIndex < newIndex;
+    d->oldIndex = oldIndex;
     d->newIndex = newIndex;
 }
 
@@ -40,6 +43,11 @@ bool tStackedWidgetAnimation::movingForwards() {
     return d->movingForwards;
 }
 
+void tStackedWidgetAnimation::setReversed(bool reversed) {
+    d->reversed = reversed;
+    this->internalSetReversed(reversed);
+}
+
 void tStackedWidgetAnimation::emitDone() {
-    emit done(d->newIndex);
+    emit done(d->reversed ? d->oldIndex : d->newIndex);
 }

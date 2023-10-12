@@ -15,6 +15,10 @@ class tStackedWidgetAnimationController : public QObject {
         void startAnimation(tStackedWidgetAnimation* animation);
         void stopCurrentAnimation();
 
+        void partialStartAnimation(tStackedWidgetAnimation* animation);
+        void partialAnimationProgress(double progress);
+        void completePartialAnimation(bool finish);
+
     signals:
         void done(int newIndex);
 

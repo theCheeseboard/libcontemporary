@@ -4,8 +4,8 @@
 #include "tvariantanimation.h"
 #include <QWidget>
 
-tStackedWidgetAnimationSlideVertical::tStackedWidgetAnimationSlideVertical(int oldIndex, int newIndex, tStackedWidget* parent) :
-    tStackedWidgetAnimationSlide{oldIndex, newIndex, parent} {
+tStackedWidgetAnimationSlideVertical::tStackedWidgetAnimationSlideVertical(int oldIndex, int newIndex, tStackedWidget* parent, bool ease) :
+    tStackedWidgetAnimationSlide{oldIndex, newIndex, parent, ease} {
 }
 
 QRect tStackedWidgetAnimationSlideVertical::oldWidgetRect(double progress) {

@@ -6,7 +6,7 @@
 class tStackedWidgetAnimationSlideVertical : public tStackedWidgetAnimationSlide {
         Q_OBJECT
     public:
-        explicit tStackedWidgetAnimationSlideVertical(int oldIndex, int newIndex, tStackedWidget* parent);
+        explicit tStackedWidgetAnimationSlideVertical(int oldIndex, int newIndex, tStackedWidget* parent, bool ease = true);
 
     signals:
 

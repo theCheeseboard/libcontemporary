@@ -10,13 +10,6 @@ struct tStackedWidgetAnimationFadePrivate {
 tStackedWidgetAnimationFade::tStackedWidgetAnimationFade(int oldIndex, int newIndex, tStackedWidget* parent) :
     tStackedWidgetAnimation{oldIndex, newIndex, parent} {
     d = new tStackedWidgetAnimationFadePrivate();
-}
-
-tStackedWidgetAnimationFade::~tStackedWidgetAnimationFade() {
-    delete d;
-}
-
-void tStackedWidgetAnimationFade::startAnimation() {
     this->newWidget()->show();
     this->newWidget()->raise();
     this->newWidget()->resize(this->parentStack()->width(), this->parentStack()->height());
@@ -37,11 +30,26 @@ void tStackedWidgetAnimationFade::startAnimation() {
         this->emitDone();
         this->deleteLater();
     });
-    anim->start();
     d->animation = anim;
+}
+
+tStackedWidgetAnimationFade::~tStackedWidgetAnimationFade() {
+    delete d;
+}
+
+void tStackedWidgetAnimationFade::startAnimation() {
+    d->animation->start();
 }
 
 void tStackedWidgetAnimationFade::stopAnimation() {
     d->animation->stop();
     this->deleteLater();
+}
+
+void tStackedWidgetAnimationFade::setProgress(double progress) {
+    d->animation->setCurrentTime(d->animation->totalDuration() * progress);
+}
+
+void tStackedWidgetAnimationFade::internalSetReversed(bool reversed) {
+    d->animation->setDirection(reversed ? QAbstractAnimation::Backward : QAbstractAnimation::Forward);
 }

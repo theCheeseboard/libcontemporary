@@ -13,11 +13,13 @@ class tStackedWidgetAnimationFade : public tStackedWidgetAnimation {
 
         void startAnimation();
         void stopAnimation();
+        void setProgress(double progress);
 
     signals:
 
     private:
         tStackedWidgetAnimationFadePrivate* d;
+        void internalSetReversed(bool reversed);
 };
 
 #endif // TSTACKEDWIDGETANIMATIONFADE_H

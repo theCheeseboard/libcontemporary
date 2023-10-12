@@ -57,6 +57,8 @@ class LIBCONTEMPORARY_EXPORT tStackedWidget : public QStackedWidget {
 
         void setDefaultWidget(QWidget* defaultWidget);
 
+        void setAutoNavigable(bool autoNavigable);
+
     signals:
         void switchingFrame(int switchTo);
         void CurrentAnimationChanged(Animation currentAnimation);
@@ -77,6 +79,10 @@ class LIBCONTEMPORARY_EXPORT tStackedWidget : public QStackedWidget {
         void resizeEvent(QResizeEvent* event);
 
         void doSetCurrentIndex(int index, Animation animation);
+
+        // QWidget interface
+    protected:
+        void wheelEvent(QWheelEvent* event);
 };
 
 #endif // ANIMATEDSTACKEDWIDGET_H

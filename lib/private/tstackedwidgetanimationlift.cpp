@@ -10,13 +10,6 @@ struct tStackedWidgetAnimationLiftPrivate {
 tStackedWidgetAnimationLift::tStackedWidgetAnimationLift(int oldIndex, int newIndex, tStackedWidget* parent) :
     tStackedWidgetAnimation{oldIndex, newIndex, parent} {
     d = new tStackedWidgetAnimationLiftPrivate();
-}
-
-tStackedWidgetAnimationLift::~tStackedWidgetAnimationLift() {
-    delete d;
-}
-
-void tStackedWidgetAnimationLift::startAnimation() {
     this->newWidget()->setGeometry(0, this->parentStack()->height() / 8, this->parentStack()->width(), this->parentStack()->height());
 
     this->newWidget()->show();
@@ -48,11 +41,26 @@ void tStackedWidgetAnimationLift::startAnimation() {
         this->emitDone();
         this->deleteLater();
     });
-    group->start();
     d->animation = group;
+}
+
+tStackedWidgetAnimationLift::~tStackedWidgetAnimationLift() {
+    delete d;
+}
+
+void tStackedWidgetAnimationLift::startAnimation() {
+    d->animation->start();
 }
 
 void tStackedWidgetAnimationLift::stopAnimation() {
     d->animation->stop();
     this->deleteLater();
+}
+
+void tStackedWidgetAnimationLift::setProgress(double progress) {
+    d->animation->setCurrentTime(d->animation->totalDuration() * progress);
+}
+
+void tStackedWidgetAnimationLift::internalSetReversed(bool reversed) {
+    d->animation->setDirection(reversed ? QAbstractAnimation::Backward : QAbstractAnimation::Forward);
 }

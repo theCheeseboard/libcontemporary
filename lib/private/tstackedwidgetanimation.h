@@ -18,6 +18,8 @@ class tStackedWidgetAnimation : public QObject {
 
         virtual void startAnimation() = 0;
         virtual void stopAnimation() = 0;
+        virtual void setProgress(double progress) = 0;
+        void setReversed(bool reversed);
 
     signals:
         void done(int newIndex);
@@ -27,6 +29,8 @@ class tStackedWidgetAnimation : public QObject {
 
     private:
         tStackedWidgetAnimationPrivate* d;
+
+        virtual void internalSetReversed(bool reversed) = 0;
 };
 
 #endif // TSTACKEDWIDGETANIMATION_H
