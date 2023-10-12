@@ -520,6 +520,16 @@
         <source>What are you looking for?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../tcommandpalette/tcommandpalettewindow.cpp" line="43"/>
+        <source>Scopes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tcommandpalette/tcommandpalettewindow.cpp" line="45"/>
+        <source>Scopes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>tHelpMenu</name>
@@ -805,6 +815,14 @@
         <location filename="../tsettingswindow/tsettingswindow.cpp" line="51"/>
         <source>Settings</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>tTouchBar</name>
+    <message>
+        <location filename="../touchbar/ttouchbar_objc.mm" line="153"/>
+        <source>Customize Touch Bar...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

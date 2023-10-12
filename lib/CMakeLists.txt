@@ -110,6 +110,18 @@ cntp_sourcelist(
         tsettingswindow/tsettingspane.cpp
         tsettingswindow/tsettingswindowdelegate.cpp
 
+        touchbar/ttouchbar.cpp
+        touchbar/ttouchbarabstractitem.cpp
+        touchbar/ttouchbarcustomtouchbaritem.cpp
+        touchbar/ttouchbarbuttonitem.cpp
+        touchbar/ttouchbarflexiblespaceitem.cpp
+        touchbar/ttouchbarpopoveritem.cpp
+        touchbar/ttouchbarsegmentedcontrolitem.cpp
+        touchbar/ttouchbarlabelitem.cpp
+        touchbar/tcompositetouchbar.cpp
+        touchbar/ttouchbaractionitem.cpp
+        touchbar/ttouchbargroupitem.cpp
+
         taboutdialog.ui
         tinputdialog.ui
         tshortcuthud.ui
@@ -128,6 +140,7 @@ cntp_sourcelist(
         private/tstackedwidgetanimationfade.cpp
         private/tstackedwidgetanimationslidevertical.cpp
         private/tstackedwidgetanimationslide.cpp
+        touchbar/ttouchbardialogalertitem.cpp
 
         thelibs_icons.qrc
 
@@ -191,6 +204,20 @@ cntp_sourcelist(
         plugins/tpluginmanagerpane.h
         plugins/tpluginmanagerhelper.h
 
+        touchbar/ttouchbar.h
+        touchbar/ttouchbarabstractitem.h
+        touchbar/ttouchbarcustomtouchbaritem.h
+        touchbar/ttouchbarbuttonitem.h
+        touchbar/ttouchbarflexiblespaceitem.h
+        touchbar/ttouchbarpopoveritem.h
+        touchbar/ttouchbarsegmentedcontrolitem.h
+        touchbar/ttouchbarlabelitem.h
+        touchbar/tcompositetouchbar.h
+        touchbar/ttouchbargroupitem.h
+        touchbar/ttouchbardialogalertitem.h
+        touchbar/ttouchbaractionitem.h
+        touchbar/ttouchbar_forwarddeclares.h
+
         tsettingswindow/tsettingswindow.h
         tsettingswindow/tsettingspane.h
 
@@ -214,6 +241,14 @@ cntp_sourcelist(
         private/licensetextpopover.h
         jobs/standardjobprogresswidget.h
         private/tqueueguardhelper.h
+
+        touchbar/private/ttouchbar_p.h
+        touchbar/private/ttouchbarbuttonitem_p.h
+        touchbar/private/ttouchbarcustomtouchbaritem_p.h
+        touchbar/private/ttouchbarpopoveritem_p.h
+        touchbar/private/ttouchbarsegmentedcontrolitem_p.h
+        touchbar/private/ttouchbarlabelitem_p.h
+        touchbar/private/ttouchbargroupitem_p.h
 
         private/tstackedwidgetanimationcontroller.h
         private/tstackedwidgetanimation.h
@@ -243,7 +278,14 @@ cntp_sourcelist(
         private/nsalertmac.mm
         private/tmessageboxbackend-mac.mm
         private/tapplicationmacprivate.mm
-        tcommandpalette/tcommandpalettewindow-mac.mm
+        touchbar/ttouchbar_objc.mm
+        touchbar/ttouchbarcustomtouchbaritem_objc.mm
+        touchbar/ttouchbarbuttonitem_objc.mm
+        touchbar/ttouchbarflexiblespaceitem_objc.mm
+        touchbar/ttouchbarpopoveritem_objc.mm
+        touchbar/ttouchbarsegmentedcontrolitem_objc.mm
+        touchbar/ttouchbarlabelitem_objc.mm
+        touchbar/ttouchbargroupitem_objc.mm
 )
 
 cntp_sourcelist(
