@@ -11,6 +11,11 @@ elseif(FORCE_BLUEPRINT)
 else()
     find_program(CNTP_GIT_COMMAND git)
     if(CNTP_GIT_COMMAND)
+        execute_process(COMMAND ${CNTP_GIT_COMMAND} rev-parse --show-toplevel
+            OUTPUT_VARIABLE GIT_ROOT_DIR
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
         execute_process(COMMAND ${CNTP_GIT_COMMAND} tag --points-at HEAD
             OUTPUT_VARIABLE CNTP_GIT_OUTPUT
             RESULT_VARIABLE CNTP_GIT_RESULT
@@ -18,7 +23,9 @@ else()
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
         if(CNTP_GIT_RESULT EQUAL 0)
             if("${CNTP_GIT_OUTPUT}" STREQUAL "")
-                set(BLUEPRINT ON)
+                if(NOT EXISTS "${GIT_ROOT_DIR}/PKGBUILD")
+                    set(BLUEPRINT ON)
+                endif()
             endif()
         else()
             message("Cannot determine Blueprint status from Git; maybe not a Git repository?")
