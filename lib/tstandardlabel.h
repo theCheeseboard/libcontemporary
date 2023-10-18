@@ -37,6 +37,9 @@ class LIBCONTEMPORARY_EXPORT tStandardLabel : public QLabel {
         void setElideMode(ElideMode elideMode);
         ElideMode elideMode();
 
+        void setMaxSquashFactor(double maxSquashFactor);
+        double maxSquashFactor();
+
     private:
         tStandardLabelPrivate* d;
 
@@ -45,6 +48,10 @@ class LIBCONTEMPORARY_EXPORT tStandardLabel : public QLabel {
         // QWidget interface
     protected:
         void resizeEvent(QResizeEvent* event);
+
+        // QWidget interface
+    protected:
+        void paintEvent(QPaintEvent* event);
 };
 
 #endif // LIBCONTEMPORARY_TSTANDARDLABEL_H

@@ -4,11 +4,14 @@
 
 #include "tstandardlabel.h"
 
+#include <QPainter>
+
 struct tStandardLabelPrivate {
         tStandardLabel::StandardLabelType type = tStandardLabel::Normal;
 
         QString text;
         tStandardLabel::ElideMode elideMode = tStandardLabel::ElideRight;
+        double maxSquashFactor = 1.3;
 };
 
 tStandardLabel::tStandardLabel(QWidget* parent) :
@@ -59,8 +62,17 @@ tStandardLabel::ElideMode tStandardLabel::elideMode() {
     return d->elideMode;
 }
 
+void tStandardLabel::setMaxSquashFactor(double maxSquashFactor) {
+    d->maxSquashFactor = maxSquashFactor;
+    this->update();
+}
+
+double tStandardLabel::maxSquashFactor() {
+    return d->maxSquashFactor;
+}
+
 void tStandardLabel::updateText() {
-    int availableWidth = this->width();
+    int availableWidth = this->width() * d->maxSquashFactor;
     auto text = d->text;
     switch (d->elideMode) {
         case ElideRight:
@@ -80,4 +92,27 @@ void tStandardLabel::updateText() {
 
 void tStandardLabel::resizeEvent(QResizeEvent* event) {
     this->updateText();
+}
+
+void tStandardLabel::paintEvent(QPaintEvent* event) {
+    QPainter painter(this);
+    QRectF rect({0, 0}, this->size());
+    rect.adjust(this->margin(), this->margin(), -this->margin(), -this->margin());
+
+    painter.setFont(this->font());
+    auto metrics = painter.fontMetrics();
+
+    QTextOption option;
+    option.setTextDirection(this->layoutDirection());
+    option.setAlignment(this->alignment());
+
+    auto requiredWidth = metrics.horizontalAdvance(QLabel::text()) + 1;
+    if (requiredWidth > rect.width()) {
+        // We need to squish the text
+        auto scaleFactor = static_cast<double>(rect.width()) / requiredWidth;
+        painter.scale(scaleFactor, 1);
+        rect.setWidth(requiredWidth);
+    }
+
+    painter.drawText(rect, QLabel::text(), option);
 }
