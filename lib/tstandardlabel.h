@@ -10,23 +10,41 @@
 
 struct tStandardLabelPrivate;
 class LIBCONTEMPORARY_EXPORT tStandardLabel : public QLabel {
-    Q_OBJECT
+        Q_OBJECT
 
-public:
-    explicit tStandardLabel(QWidget* parent = nullptr);
-    ~tStandardLabel();
+    public:
+        explicit tStandardLabel(QWidget* parent = nullptr);
+        ~tStandardLabel();
 
-    enum StandardLabelType {
-        Normal,
-        Subtitle
-    };
+        enum StandardLabelType {
+            Normal,
+            Subtitle
+        };
 
-    StandardLabelType type();
-    void setType(StandardLabelType type);
+        enum ElideMode {
+            NoElide,
+            ElideRight,
+            ElideCenter,
+            ElideLeft
+        };
 
-private:
-    tStandardLabelPrivate* d;
+        StandardLabelType type();
+        void setType(StandardLabelType type);
+
+        void setText(QString text);
+        QString text();
+
+        void setElideMode(ElideMode elideMode);
+        ElideMode elideMode();
+
+    private:
+        tStandardLabelPrivate* d;
+
+        void updateText();
+
+        // QWidget interface
+    protected:
+        void resizeEvent(QResizeEvent* event);
 };
 
-
-#endif //LIBCONTEMPORARY_TSTANDARDLABEL_H
+#endif // LIBCONTEMPORARY_TSTANDARDLABEL_H
