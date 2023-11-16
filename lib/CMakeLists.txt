@@ -79,6 +79,8 @@ cntp_sourcelist(
         ranges/trange.cpp
         tx11info.cpp
         tcontentsizer.cpp
+        trecentslist.cpp
+        trecentslistmodel.cpp
         private/debuglogpopover.cpp
         private/debuglogwindow.cpp
         private/nativeeventfilter.cpp
@@ -198,6 +200,8 @@ cntp_sourcelist(
         texception.h
         tqueueguard.h
         tsysconfigdetect.h
+        trecentslist.h
+        trecentslistmodel.h
         ranges/trange.h
         plugins/plugininterface.h
         plugins/tpluginmanager.h
