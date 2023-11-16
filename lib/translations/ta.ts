@@ -830,6 +830,24 @@
     </message>
 </context>
 <context>
+    <name>tRecentsList</name>
+    <message>
+        <location filename="../trecentslist.cpp" line="33"/>
+        <source>Open Recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../trecentslist.cpp" line="98"/>
+        <source>No Recent Items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../trecentslist.cpp" line="111"/>
+        <source>Clear Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tSettingsWindow</name>
     <message>
         <location filename="../tsettingswindow/tsettingswindow.ui" line="44"/>

@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class QMenu;
 struct tRecentsListPrivate;
 class tRecentsList : public QObject {
         Q_OBJECT
@@ -15,9 +16,12 @@ class tRecentsList : public QObject {
         int count();
         void clear();
 
+        QMenu* recentsMenu();
+
     signals:
         void beforeUpdated();
         void updated();
+        void openRecent(QUrl url);
 
     private:
         tRecentsListPrivate* d;
