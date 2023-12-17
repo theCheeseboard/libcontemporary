@@ -348,7 +348,7 @@
       <source>About %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Уебсайт</translation>
       <location filename="../taboutdialog.cpp" line="85" />
       <source>Website</source>
     </message>
