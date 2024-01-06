@@ -18,6 +18,9 @@ function(cntp_translate target)
     qt_add_translations(${target}
         TS_FILES ${TRANSLATION_FILES}
         QM_FILES_OUTPUT_VARIABLE QM_FILES
+        LUPDATE_TARGET ${target}_lupdate
+        LRELEASE_TARGET ${target}_lrelease
+        IMMEDIATE_CALL
         SOURCES ${SOURCE_FILES}
     )
     add_dependencies(${target}_lrelease ${target}_lupdate)
