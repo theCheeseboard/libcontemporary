@@ -38,6 +38,14 @@ struct tSettingsGlobals {
 #ifndef Q_OS_WIN
                 // Set up the watcher once the event loop has started
                 QTimer::singleShot(0, [this, settings, identifier] {
+                    // Ensure the file exists before setting up a watcher on it
+                    if (!QFile::exists(settings->fileName())) {
+                        // Touch the file to ensure it exists
+                        QFile file(settings->fileName());
+                        file.open(QFile::WriteOnly | QFile::Append);
+                        file.close();
+                    }
+
                     QFileSystemWatcher* watcher = new QFileSystemWatcher();
                     watcher->moveToThread(qApp->thread());
                     QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [this, settings, watcher, identifier] {
