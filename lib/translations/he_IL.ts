@@ -96,12 +96,12 @@
     <message>
         <location filename="../private/licensetextpopover.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../private/licensetextpopover.ui" line="35"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>רישיון</translation>
     </message>
 </context>
 <context>
@@ -241,32 +241,32 @@
     <message>
         <location filename="../plugins/pluginmanagementpopover.ui" line="57"/>
         <source>Manage Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/pluginmanagementpopover.ui" line="97"/>
         <source>Actions</source>
-        <translation type="unfinished">פעולות</translation>
+        <translation>פעולות</translation>
     </message>
     <message>
         <location filename="../plugins/pluginmanagementpopover.ui" line="107"/>
         <source>Activate Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/pluginmanagementpopover.ui" line="114"/>
         <source>Deactivate Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/pluginmanagementpopover.cpp" line="23"/>
         <source>Some changes to plugins won&apos;t apply until you restart %1.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/pluginmanagementpopover.cpp" line="24"/>
         <source>Restart %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -327,24 +327,26 @@
     <message>
         <location filename="../jobs/standardjobprogresswidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../jobs/standardjobprogresswidget.ui" line="20"/>
         <location filename="../jobs/standardjobprogresswidget.ui" line="27"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>tAboutDialog</name>
     <message>
         <location filename="../taboutdialog.ui" line="251"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227"/>
         <source>SOFTWARE</source>
         <translation>תוכנה</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="297"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="228"/>
         <source>COPYRIGHT</source>
         <translation>זכויות יוצרים</translation>
     </message>
@@ -360,17 +362,17 @@
     <message>
         <location filename="../taboutdialog.cpp" line="85"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="94"/>
         <source>File Bug</source>
-        <translation type="unfinished">דווח על באג</translation>
+        <translation>דווח על באג</translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="103"/>
         <source>Sources</source>
-        <translation type="unfinished">מקורות</translation>
+        <translation>מקורות</translation>
     </message>
 </context>
 <context>
@@ -423,7 +425,7 @@
     <message>
         <location filename="../tapplication.cpp" line="185"/>
         <source>macOS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="188"/>
@@ -441,7 +443,7 @@
         <location filename="../tapplication.cpp" line="196"/>
         <location filename="../tapplication.cpp" line="198"/>
         <source>Architecture</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="683"/>
@@ -563,11 +565,13 @@
     <name>tInputDialog</name>
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="87"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="88"/>
         <source>OK</source>
         <translation>אישור</translation>
     </message>
@@ -752,73 +756,81 @@
     <message>
         <location filename="../plugins/tpluginmanagerpane.ui" line="27"/>
         <source>Manage Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/tpluginmanagerpane.ui" line="30"/>
         <source>Enable or disable plugins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/tpluginmanagerpane.ui" line="71"/>
         <source>Restart</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/tpluginmanagerpane.cpp" line="14"/>
         <source>Plugins add core and extra functionality to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/tpluginmanagerpane.cpp" line="15"/>
         <source>Restart %1 to apply changes in plugins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/tpluginmanagerpane.cpp" line="27"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>tPrintPopover</name>
     <message>
         <location filename="../tprintpopover.ui" line="172"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="201"/>
         <source>Copies</source>
         <translation>עותקים</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="117"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="195"/>
         <source>PRINT OPTIONS</source>
         <translation>אפשרויות הדפסה</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="137"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="197"/>
         <source>Print</source>
         <translation>הדפס</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="130"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="196"/>
         <source>Printer</source>
         <translation>מדפסת</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="148"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="198"/>
         <source>Page Size</source>
         <translation>גודל עמוד</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="155"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="199"/>
         <source>Print in Grayscale</source>
         <translation>הדפס בשחור-לבן</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="165"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200"/>
         <source>Double Sided</source>
         <translation>דו-צידי</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="189"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="202"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>

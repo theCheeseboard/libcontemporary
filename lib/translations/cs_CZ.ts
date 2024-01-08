@@ -340,11 +340,13 @@
     <name>tAboutDialog</name>
     <message>
         <location filename="../taboutdialog.ui" line="251"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227"/>
         <source>SOFTWARE</source>
         <translation>SOFTWARE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="297"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="228"/>
         <source>COPYRIGHT</source>
         <translation>COPYRIGHT</translation>
     </message>
@@ -563,11 +565,13 @@
     <name>tInputDialog</name>
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="87"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="88"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -784,41 +788,49 @@
     <name>tPrintPopover</name>
     <message>
         <location filename="../tprintpopover.ui" line="172"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="201"/>
         <source>Copies</source>
         <translation>Kopie</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="117"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="195"/>
         <source>PRINT OPTIONS</source>
         <translation>MOŽNOSTI TISKU</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="137"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="197"/>
         <source>Print</source>
         <translation>Tisk</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="130"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="196"/>
         <source>Printer</source>
         <translation>Tiskárna</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="148"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="198"/>
         <source>Page Size</source>
         <translation>Velikost strany</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="155"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="199"/>
         <source>Print in Grayscale</source>
         <translation>Vytisknout černobíle</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="165"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200"/>
         <source>Double Sided</source>
         <translation>Oboustranně</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="189"/>
+        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="202"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
