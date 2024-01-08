@@ -2,8 +2,8 @@
 
 ---
 <p align="center">
-<img src="https://img.shields.io/github/v/release/vicr123/the-libs?label=LATEST&style=for-the-badge">
-<img src="https://img.shields.io/github/license/vicr123/the-libs?style=for-the-badge" />
+<img src="https://img.shields.io/github/v/release/theCheeseboard/libcontemporary?label=LATEST&style=for-the-badge">
+<img src="https://img.shields.io/github/license/theCheeseboard/libcontemporary?style=for-the-badge" />
 </p>
 
 libcontemporary is a set of common classes used in the* apps.
