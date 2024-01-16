@@ -21,9 +21,9 @@
 #ifndef THELIBS_GLOBAL_H
 #define THELIBS_GLOBAL_H
 
+#include "tsysconfigdetect.h"
 #include <QSettings>
 #include <QtCore/qglobal.h>
-#include "tsysconfigdetect.h"
 
 #ifdef QT_WIDGETS_LIB
     #include <QApplication>
@@ -44,14 +44,14 @@
 #endif
 
 #define THE_LIBS_API_VERSION 9
-#define THE_LIBS_VERSION "6.0.2"
+#define THE_LIBS_VERSION "6.1"
 
 #ifdef QT_WIDGETS_LIB
-#define SC_DPI(pixels) \
-    static_cast<int>(pixels * libContemporaryCommon::getDPIScaling())
-#define SC_DPI_T(value, type) static_cast<type>(value * libContemporaryCommon::getDPIScaling())
-#define SC_DPI_W(pixels, widget) static_cast<int>(pixels * libContemporaryCommon::getDPIScaling(widget))
-#define SC_DPI_WT(value, type, widget) static_cast<type>(value * libContemporaryCommon::getDPIScaling(widget))
+    #define SC_DPI(pixels) \
+        static_cast<int>(pixels * libContemporaryCommon::getDPIScaling())
+    #define SC_DPI_T(value, type) static_cast<type>(value * libContemporaryCommon::getDPIScaling())
+    #define SC_DPI_W(pixels, widget) static_cast<int>(pixels * libContemporaryCommon::getDPIScaling(widget))
+    #define SC_DPI_WT(value, type, widget) static_cast<type>(value * libContemporaryCommon::getDPIScaling(widget))
 #endif
 
 struct libContemporaryCommonPrivate;
