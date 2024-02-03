@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <QCommandLineParser>
+#include <QProcess>
 #include "deployfolder.h"
 #include "common.h"
 #include "systemlibrarydatabase.h"
@@ -14,6 +15,11 @@ int main(int argc, char** argv) {
     parser.addOption({{"q", "qt-path"}, "Path to Qt installation to use", "qt-path"});
     parser.addOption({{"h", "host-qt-path"}, "When deploying a cross-compiled application, path to Host Qt installation", "host-qt-path"});
     parser.addOption({{"l", "library-path"}, "Path to search for libraries to deploy (defaults to Program Files)", "library-path"});
+    parser.addPositionalArgument("directory", "Directory containing application to prepare for deployment");
+    parser.addOption({
+        {"a", "appx-output"},
+        "APPX bundle output file", "appx-output"
+    });
     QCommandLineOption helpOption = parser.addHelpOption();
     parser.parse(a.arguments());
 
@@ -85,7 +91,7 @@ int main(int argc, char** argv) {
     QStringList supportLibraryPaths;
 
     QDir rootProjectDir = deployFolder.destinationDir().absoluteFilePath("./");
-    for (QString markerFile : Common::findInPaths(".cntp-is-support-library", {rootProjectDir.absolutePath()}, true)) {
+    for (const QString &markerFile : Common::findInPaths(".cntp-is-support-library", {rootProjectDir.absolutePath()}, true)) {
         QFileInfo markerFileInfo(markerFile);
         QDir libDir = markerFileInfo.dir();
 
@@ -100,11 +106,20 @@ int main(int argc, char** argv) {
 
     output << "Creating System Library Database...\n";
     output.flush();
-    SystemLibraryDatabase* libraryDatabase = new SystemLibraryDatabase(supportLibraryPaths, sdkVersion, qt6CorePe.targetMachine(), libraryPaths);
+    auto* libraryDatabase = new SystemLibraryDatabase(supportLibraryPaths, sdkVersion, qt6CorePe.targetMachine(), libraryPaths);
 
     output << "Making folder self contained\n";
     output.flush();
     deployFolder.makeSelfContained(libraryDatabase);
+
+    if (parser.isSet("appx-output")) {
+        QFile::remove(parser.value("appx-output"));
+
+        QProcess makeappxProcess;
+        makeappxProcess.setProcessChannelMode(QProcess::ForwardedChannels);
+        makeappxProcess.start("makeappx", {"pack", "/d", deployFolder.destinationDir().absolutePath(), "/p", parser.value("appx-output")});
+        makeappxProcess.waitForFinished(-1);
+    }
 
     return 0;
 }

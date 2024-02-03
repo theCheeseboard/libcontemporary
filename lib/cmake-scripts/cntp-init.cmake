@@ -1,5 +1,7 @@
 include_guard()
 
+set(CNTP_TARGET_ARCH ${CMAKE_SYSTEM_PROCESSOR} CACHE STRING "Architecture to build for")
+
 function(cntp_init target cxx-standard)
     option(CNTP_ASAN "Enable the use of AddressSanitizer" OFF)
 

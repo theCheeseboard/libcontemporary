@@ -61,6 +61,10 @@ int main(int argc, char* argv[]) {
         "Qt Resource output file", "rc-output"
     });
     parser.addOption({
+        {"p", "output-png"},
+        "PNG output file", "png-output"
+    });
+    parser.addOption({
         {"b", "blueprint"},
         "Create Blueprint style icon"
     });
@@ -173,6 +177,29 @@ int main(int argc, char* argv[]) {
         xmlWriter.writeEndElement(); // RCC
 
         rcFile.close();
+    }
+
+    if (parser.isSet("output-png")) {
+        eoutput << "Creating PNG icon";
+        CombinedIcon pngIcon;
+        pngIcon.setBaseIcon(CombinedIcon::PlatformSpecificIcon);
+        pngIcon.setIconGradientColors(color1, color2);
+        pngIcon.setGenerateBlueprintIcon(parser.isSet("blueprint"));
+        pngIcon.setOverlayIcon(overlayIcon);
+        pngIcon.setOverlayIconMac(overlayIconMac);
+
+        QSize size(256, 256);
+
+        QImage image(size, QImage::Format_ARGB32);
+        image.fill(Qt::transparent);
+
+        QPainter imagePainter(&image);
+
+        QSvgRenderer renderer(pngIcon.generatedIcon().toUtf8());
+        renderer.render(&imagePainter, QRect(QPoint(0, 0), size));
+        imagePainter.end();
+
+        image.save(parser.value("output-png"), "PNG");
     }
 
     return 0;
