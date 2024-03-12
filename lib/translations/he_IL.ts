@@ -340,13 +340,11 @@
     <name>tAboutDialog</name>
     <message>
         <location filename="../taboutdialog.ui" line="251"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="227"/>
         <source>SOFTWARE</source>
         <translation>תוכנה</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="297"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_taboutdialog.h" line="228"/>
         <source>COPYRIGHT</source>
         <translation>זכויות יוצרים</translation>
     </message>
@@ -565,13 +563,11 @@
     <name>tInputDialog</name>
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="87"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tinputdialog.h" line="88"/>
         <source>OK</source>
         <translation>אישור</translation>
     </message>
@@ -788,49 +784,41 @@
     <name>tPrintPopover</name>
     <message>
         <location filename="../tprintpopover.ui" line="172"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="201"/>
         <source>Copies</source>
         <translation>עותקים</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="117"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="195"/>
         <source>PRINT OPTIONS</source>
         <translation>אפשרויות הדפסה</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="137"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="197"/>
         <source>Print</source>
         <translation>הדפס</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="130"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="196"/>
         <source>Printer</source>
         <translation>מדפסת</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="148"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="198"/>
         <source>Page Size</source>
         <translation>גודל עמוד</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="155"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="199"/>
         <source>Print in Grayscale</source>
         <translation>הדפס בשחור-לבן</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="165"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="200"/>
         <source>Double Sided</source>
         <translation>דו-צידי</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="189"/>
-        <location filename="../../../build-libcontemporary-Chroot_6-Debug/lib/libcontemporary_autogen/include/ui_tprintpopover.h" line="202"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
