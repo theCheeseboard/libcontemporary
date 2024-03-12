@@ -1,7 +1,13 @@
 include_guard()
 
 macro(cntp_add_qml_module moduleName parentTarget)
-    qt_add_library(${parentTarget}-qmlmodule-${moduleName} STATIC)
+    cntp_add_static_module(
+        MODULE_NAME ${moduleName}
+        PARENT_TARGET ${parentTarget}
+        TARGET_NAME ${parentTarget}-qmlmodule-${moduleName}
+        NO_LINK
+    )
+
     target_link_libraries(${parentTarget}-qmlmodule-${moduleName}
         PRIVATE libcontemporary Qt::Quick Qt::QuickControls2
     )
