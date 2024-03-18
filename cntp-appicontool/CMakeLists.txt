@@ -19,11 +19,14 @@ set(SOURCES
         platformicongenerator.cpp
         main.cpp
 
+        platformgenerators/androidplatformicongenerator.cpp
+
         resources.qrc)
 
 set(HEADERS
     "combinedicon.h"
-    "platformicongenerator.h")
+    "platformicongenerator.h"
+    platformgenerators/androidplatformicongenerator.h )
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(SOURCES ${SOURCES} platformgenerators/macplatformicongenerator.cpp)

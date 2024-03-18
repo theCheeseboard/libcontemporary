@@ -6,6 +6,8 @@
     #include "platformgenerators/winplatformicongenerator.h"
 #endif
 
+#include "platformgenerators/androidplatformicongenerator.h"
+
 struct PlatformIconGeneratorPrivate {
         QString inputSvg;
         QString outputFile;
@@ -36,11 +38,15 @@ QString PlatformIconGenerator::outputFile() {
     return d->outputFile;
 }
 
-PlatformIconGenerator* PlatformIconGenerator::iconGeneratorForPlatform() {
+PlatformIconGenerator* PlatformIconGenerator::iconGeneratorForPlatform(QString platform) {
+    if (platform == "host") {
 #ifdef Q_OS_MAC
-    return new MacPlatformIconGenerator();
+        return new MacPlatformIconGenerator();
 #elif defined(Q_OS_WIN)
-    return new WinPlatformIconGenerator();
+        return new WinPlatformIconGenerator();
 #endif
+    } else if (platform == "android") {
+        return new AndroidPlatformIconGenerator();
+    }
     return nullptr;
 }

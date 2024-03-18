@@ -17,7 +17,7 @@ public:
     void setOutputFile(QString outputFile);
     QString outputFile();
 
-    static PlatformIconGenerator* iconGeneratorForPlatform();
+    static PlatformIconGenerator* iconGeneratorForPlatform(QString platform);
 
     virtual void generateIcon() = 0;
 

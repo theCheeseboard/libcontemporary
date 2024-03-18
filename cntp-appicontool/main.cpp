@@ -64,6 +64,10 @@ int main(int argc, char* argv[]) {
         {"b", "blueprint"},
         "Create Blueprint style icon"
     });
+    parser.addOption({
+        {"p", "platform"},
+        "Target platform to create icon for", "platform"
+    });
     QCommandLineOption helpOption = parser.addHelpOption();
     parser.parse(a.arguments());
 
@@ -109,7 +113,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (parser.isSet("output-svg")) {
-        eoutput << "Creating SVG icon";
+        eoutput << "Creating SVG icon\n";
 
         CombinedIcon crossPlatformSvgIcon;
         crossPlatformSvgIcon.setBaseIcon(CombinedIcon::CrossPlatformIcon);
@@ -125,8 +129,13 @@ int main(int argc, char* argv[]) {
     }
 
     if (parser.isSet("output-native")) {
-        eoutput << "Creating native icon";
-        PlatformIconGenerator* nativeGenerator = PlatformIconGenerator::iconGeneratorForPlatform();
+        auto platform = parser.value("platform").toLower();
+        if (!parser.isSet("platform")) {
+            platform = "host";
+        }
+
+        eoutput << "Creating native icon\n";
+        PlatformIconGenerator* nativeGenerator = PlatformIconGenerator::iconGeneratorForPlatform(platform);
         if (nativeGenerator) {
             CombinedIcon nativeSvgIcon;
             nativeSvgIcon.setBaseIcon(CombinedIcon::PlatformSpecificIcon);
@@ -139,12 +148,12 @@ int main(int argc, char* argv[]) {
             nativeGenerator->setOutputFile(parser.value("output-native"));
             nativeGenerator->generateIcon();
         } else {
-            eoutput << "warn: No native generator available for this platform.\n";
+            eoutput << "warn: No native generator available for platform " << platform << ".\n";
         }
     }
 
     if (parser.isSet("output-rc")) {
-        eoutput << "Creating resource files";
+        eoutput << "Creating resource files\n";
 
         CombinedIcon crossPlatformSvgIcon;
         crossPlatformSvgIcon.setBaseIcon(CombinedIcon::CrossPlatformIcon);

@@ -3,10 +3,6 @@ include_guard()
 function(cntp_app_icon targetName)
     set(singleValueArgs BASEICON BASEICON_MAC)
     cmake_parse_arguments(APP_ICON "" "${singleValueArgs}" "" ${ARGN})
-
-    IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
-        return()
-    ENDIF()
     
     get_filename_component(BASEICON_PATH "${APP_ICON_BASEICON}" REALPATH)
     get_filename_component(BASEICON_PATH_MAC "${APP_ICON_BASEICON_MAC}" REALPATH)
@@ -49,6 +45,14 @@ function(cntp_app_icon targetName)
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
+    ENDIF()
+
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+        get_target_property(ANDROID_PACKAGE_SOURCE_DIR ${targetName} QT_ANDROID_PACKAGE_SOURCE_DIR)
+
+        list(APPEND ICONTOOL_ARGS
+            -n "${ANDROID_PACKAGE_SOURCE_DIR}"
+            -p android)
     ENDIF()
 
     cntp_find_tool(CNTPAPPICONTOOL_PATH cntp-appicontool)

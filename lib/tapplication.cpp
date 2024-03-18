@@ -29,7 +29,6 @@
 #include <QLocalSocket>
 #include <QPainter>
 #include <QProcess>
-#include <QSharedMemory>
 #include <QSvgRenderer>
 #include <QSysInfo>
 #include <QThread>
@@ -49,6 +48,10 @@
 
     #include <DbgHelp.h>
     #include <appmodel.h>
+#endif
+
+#if QT_CONFIG(sharedmemory)
+    #include <QSharedMemory>
 #endif
 
 #ifdef HAVE_LIBUNWIND
@@ -79,8 +82,10 @@ struct tApplicationPrivate {
         QString copyrightHolder, copyrightYear;
         QMap<tApplication::UrlType, QUrl> applicationUrls;
 
+#if QT_CONFIG(sharedmemory)
         QSharedMemory* singleInstanceMemory = nullptr;
         QLocalServer* singleInstanceServer = nullptr;
+#endif
 
         static bool isInitialised;
 
@@ -318,6 +323,7 @@ QStringList tApplication::exportBacktrace(void* data) {
 }
 
 tApplication::~tApplication() {
+#if QT_CONFIG(sharedmemory)
     if (d->singleInstanceMemory) {
         d->singleInstanceMemory->detach();
         delete d->singleInstanceMemory;
@@ -328,6 +334,7 @@ tApplication::~tApplication() {
         // There's a race condition here...
         QThread::sleep(1);
     }
+#endif
 }
 
 void writeCrashSysInfo(QStringList& bt) {
@@ -720,13 +727,14 @@ tApplication::KnownLicenses tApplication::applicationLicense() {
 void tApplication::ensureSingleInstance(QJsonObject launchData) {
     QString sharedMemoryName = QStringList({"the-libs-single-instance", organizationName(), applicationName()}).join("_");
 
-#ifdef Q_OS_UNIX
+#if QT_CONFIG(sharedmemory)
+    #ifdef Q_OS_UNIX
     // Mitigate crashes by discarding the memory if it is not being used
     d->singleInstanceMemory = new QSharedMemory(sharedMemoryName);
     d->singleInstanceMemory->attach();
     delete d->singleInstanceMemory;
     d->singleInstanceMemory = nullptr;
-#endif
+    #endif
 
     d->singleInstanceMemory = new QSharedMemory(sharedMemoryName);
     if (d->singleInstanceMemory->create(sharedMemoryName.length())) {
@@ -755,6 +763,9 @@ void tApplication::ensureSingleInstance(QJsonObject launchData) {
 
         std::exit(0);
     }
+#else
+    // Can't ensure single instance on this platform
+#endif
 }
 
 tApplication::Platform tApplication::currentPlatform() {

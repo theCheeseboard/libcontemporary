@@ -32,6 +32,10 @@ function(cntp_init target cxx-standard)
     endif()
 
     cntp_enable_coroutines(${target})
+
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
+        cntp_init_android(${target})
+    endif()
 endfunction()
 
 function(cntp_init_plugin parent target cxx-standard share-subdir)
@@ -51,4 +55,28 @@ function(cntp_init_plugin parent target cxx-standard share-subdir)
             CNTP_DATA_SUBDIR_WITHOUT_PARENT ${share-subdir}
             CNTP_PARENT_TARGET ${parent})
     add_dependencies(${parent}-plugins ${target})
+endfunction()
+
+function(cntp_init_android target)
+    get_target_property(TARGET_TYPE ${target} TYPE)
+    if (NOT ${TARGET_TYPE} STREQUAL "MODULE_LIBRARY")
+        return()
+    endif()
+
+    get_target_property(ORIGINAL_PACKAGE_SOURCE_DIR ${target} QT_ANDROID_PACKAGE_SOURCE_DIR)
+    if (${ORIGINAL_PACKAGE_SOURCE_DIR} STREQUAL "ORIGINAL_PACKAGE_SOURCE_DIR-NOTFOUND")
+        message(FATAL_ERROR "Target ${target} does not have QT_ANDROID_PACKAGE_SOURCE_DIR defined. Create skeleton Android files and point QT_ANDROID_PACKAGE_SOURCE_DIR to the directory.")
+    endif()
+
+    set(ANDROID_FILES_DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/android-dist)
+    file(GLOB_RECURSE ANDROID_SKEL_FILES ${ORIGINAL_PACKAGE_SOURCE_DIR}/*)
+    foreach(file ${ANDROID_SKEL_FILES})
+        cmake_path(RELATIVE_PATH file BASE_DIRECTORY ${ORIGINAL_PACKAGE_SOURCE_DIR} OUTPUT_VARIABLE relFile)
+        set(destination ${ANDROID_FILES_DESTINATION}/${relFile})
+        configure_file(${file} ${destination} COPYONLY)
+    endforeach()
+
+    set_target_propertIES(${target} PROPERTIES
+        QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_FILES_DESTINATION}
+    )
 endfunction()
