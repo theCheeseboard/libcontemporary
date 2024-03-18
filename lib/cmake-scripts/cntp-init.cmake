@@ -72,6 +72,12 @@ function(cntp_init_android target)
     file(GLOB_RECURSE ANDROID_SKEL_FILES ${ORIGINAL_PACKAGE_SOURCE_DIR}/*)
     foreach(file ${ANDROID_SKEL_FILES})
         cmake_path(RELATIVE_PATH file BASE_DIRECTORY ${ORIGINAL_PACKAGE_SOURCE_DIR} OUTPUT_VARIABLE relFile)
+        cmake_path(GET relFile FILENAME filename)
+
+        if(${filename} STREQUAL "icon.png")
+            continue()
+        endif()
+
         set(destination ${ANDROID_FILES_DESTINATION}/${relFile})
         configure_file(${file} ${destination} COPYONLY)
     endforeach()
