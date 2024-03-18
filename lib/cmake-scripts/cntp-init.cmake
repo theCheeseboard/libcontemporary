@@ -82,7 +82,7 @@ function(cntp_init_android target)
         configure_file(${file} ${destination} COPYONLY)
     endforeach()
 
-    set_target_propertIES(${target} PROPERTIES
+    set_target_properties(${target} PROPERTIES
         QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_FILES_DESTINATION}
     )
 endfunction()

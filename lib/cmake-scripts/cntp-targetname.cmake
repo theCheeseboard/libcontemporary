@@ -26,4 +26,12 @@ function(cntp_target_name targetName targetReadableName)
     endif()
     target_compile_definitions(${targetName} PRIVATE
             T_APPMETA_READABLE_NAME="${TARGET_READABLE_NAME}")
+
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
+        # Also update the AndroidManifest.xml
+        get_target_property(ANDROID_PACKAGE_SOURCE_DIR ${targetName} QT_ANDROID_PACKAGE_SOURCE_DIR)
+        file(READ ${ANDROID_PACKAGE_SOURCE_DIR}/AndroidManifest.xml ANDROID_MANIFEST)
+        string(REPLACE "-- %%INSERT_APP_NAME%% --" "${TARGET_READABLE_NAME}" ANDROID_MANIFEST "${ANDROID_MANIFEST}")
+        file(WRITE ${ANDROID_PACKAGE_SOURCE_DIR}/AndroidManifest.xml "${ANDROID_MANIFEST}")
+    endif()
 endfunction()
