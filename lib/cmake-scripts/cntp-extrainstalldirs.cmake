@@ -20,7 +20,9 @@ function(cntp_retrieve_qmake_install_dir VAR_NAME QMAKE_VAR)
                 set(QMAKE_EXTRA_ARGS -qtconf "${QT_CONF}/target_qt.conf")
             ENDIF()
         ELSE()
-            find_path(QMAKE_EXECUTABLE qmake6 NO_CACHE)
+            find_path(QMAKE_EXECUTABLE qmake6
+                HINTS ${QT_HOST_PATH}
+                NO_CACHE)
         ENDIF()
 
         IF(${QMAKE_EXECUTABLE} STREQUAL "QMAKE_EXECUTABLE-NOTFOUND")
