@@ -26,6 +26,7 @@ runs:
         commitish: ${{ inputs.qcoroVersion }}
         extra-cmake-args: "-DQCORO_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DUSE_QT_VERSION=6"
         arch: ${{ inputs.arch }}
+        force-host-build: true
     - uses: vicr123/libcontemporary/build-project@actions
       name: "Build Host libcontemporary"
       if: env.LCNTP_TARGET_PLATFORM != ''
@@ -33,6 +34,7 @@ runs:
         project: "vicr123/libcontemporary"
         commitish: ${{ inputs.commitish }}
         arch: ${{ inputs.arch }}
+        force-host-build: true
     - uses: vicr123/libcontemporary/build-project@actions
       name: "Build QCoro"
       with:
