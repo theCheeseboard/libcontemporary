@@ -81,6 +81,11 @@ module.exports = async options => {
             }
         }
 
+        if (process.env["LCNTP_TARGET_PLATFORM"] == "android") {
+            cmakeArgs.push(`-DANDROID_PLATFORM=${process.env["ANDROID_PLATFORM"]}`);
+            cmakeArgs.push(`-DANDROID_ABI=${process.env["ANDROID_ABI"]}`);
+        }
+
         if (options.extraCmakeArgs) {
             for (let arg of options.extraCmakeArgs.split(" ")) {
                 if (arg === "") continue;
