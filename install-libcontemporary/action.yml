@@ -23,7 +23,7 @@ runs:
       with:
         project: "danvratil/qcoro"
         commitish: ${{ inputs.qcoroVersion }}
-        extra-cmake-args: "-DQCORO_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF"
+        extra-cmake-args: "-DQCORO_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DUSE_QT_VERSION=6"
         arch: ${{ inputs.arch }}
     - uses: vicr123/libcontemporary/build-project@actions
       name: "Build libcontemporary"
