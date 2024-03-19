@@ -6,7 +6,6 @@
 #include <QList>
 #include <QUuid>
 #include <functional>
-#include <ranges>
 #include <tlogger.h>
 
 class LIBCONTEMPORARY_EXPORT tRangeException : public tException {
@@ -61,9 +60,9 @@ template<typename T> class tRangeBacking {
 
 template<typename T, typename R>
 concept HasCastFunctions = requires(T t) {
-                               { t.template staticCast<R>() } -> std::same_as<QSharedPointer<R>>;
-                               { t.template objectCast<R>() } -> std::same_as<QSharedPointer<R>>;
-                           };
+    { t.template staticCast<R>() } -> std::same_as<QSharedPointer<R>>;
+    { t.template objectCast<R>() } -> std::same_as<QSharedPointer<R>>;
+};
 
 template<typename T> class tRange {
     public:
