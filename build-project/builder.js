@@ -84,6 +84,9 @@ module.exports = async options => {
         if (process.env["LCNTP_TARGET_PLATFORM"] == "android") {
             cmakeArgs.push(`-DANDROID_PLATFORM=${process.env["ANDROID_PLATFORM"]}`);
             cmakeArgs.push(`-DANDROID_ABI=${process.env["ANDROID_ABI"]}`);
+            cmakeArgs.push(`-DQt6_DIR=${process.env["Qt6_DIR"]}`);
+            cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
+            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
         }
 
         if (options.extraCmakeArgs) {
