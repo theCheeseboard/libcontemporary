@@ -93,6 +93,10 @@ module.exports = async options => {
             }
         }
 
+        if (process.env["LCNTP_CMAKE_TOOLCHAIN_FILE"] && !options.forceHostBuild) {
+            cmakeArgs.push(`-DCMAKE_TOOLCHAIN_FILE=${LCNTP_CMAKE_TOOLCHAIN_FILE}`);
+        }
+
         if (options.extraCmakeArgs) {
             for (let arg of options.extraCmakeArgs.split(" ")) {
                 if (arg === "") continue;
