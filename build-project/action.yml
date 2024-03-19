@@ -15,6 +15,10 @@ inputs:
     description: 'Architecture of build'
     required: false
     default: 'x64'
+  force-host-build:
+    description: 'Build project for the host system regardless of LCNTP_TARGET_PLATFORM environment variable'
+    required: false
+    default: 'false'
 outputs:
   install-prefix:
     description: "Path to installed files"

@@ -79,14 +79,18 @@ module.exports = async options => {
                 cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/x64`);
                 cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
             }
-        }
-
-        if (process.env["LCNTP_TARGET_PLATFORM"] == "android") {
-            cmakeArgs.push(`-DANDROID_PLATFORM=${process.env["ANDROID_PLATFORM"]}`);
-            cmakeArgs.push(`-DANDROID_ABI=${process.env["ANDROID_ABI"]}`);
-            cmakeArgs.push(`-DQt6_DIR=${process.env["Qt6_DIR"]}`);
-            cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
-            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
+        } else if (process.platform === 'linux') {
+            if (process.env["LCNTP_TARGET_PLATFORM"] == "android" && !options.forceHostBuild) {
+                cmakeArgs.push(`-DANDROID_PLATFORM=${process.env["ANDROID_PLATFORM"]}`);
+                cmakeArgs.push(`-DANDROID_ABI=${process.env["ANDROID_ABI"]}`);
+                cmakeArgs.push(`-DCMAKE_FIND_ROOT_PATH:=${process.env["Qt6_DIR"]};${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
+                cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
+                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
+                prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`
+            } else {
+                cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
+                prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`
+            }
         }
 
         if (options.extraCmakeArgs) {

@@ -7,10 +7,12 @@ async function run() {
     const commitish = core.getInput("commitish");
     const extraCmakeArgs = core.getInput("extra-cmake-args");
     const arch = core.getInput("arch");
+    const forceHostBuild = core.getInput("force-host-build");
 
     let options = {
       project: project,
-      arch: arch
+      arch: arch,
+      forceHostBuild: forceHostBuild === "true"
     };
 
     if (commitish) options.commitish = commitish;
