@@ -17,7 +17,12 @@ function calculateSHA256(inputString) {
 }
 
 module.exports = async options => {
-    let buildFolder = [options.arch];
+    let arch = options.arch;
+    if (process.env["LCNTP_TARGET_PLATFORM"] == "android" && !options.forceHostBuild) {
+        arch = process.env["ANDROID_ABI"];
+    }
+
+    let buildFolder = [arch];
     let gitRoot;
     if (options.project === ".") {
         gitRoot = path.resolve(".");
@@ -71,26 +76,24 @@ module.exports = async options => {
             prefixPath = "/usr/local/lib";
         } else if (process.platform === 'win32') {
             cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
-            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
-            prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`;
+            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
+            prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`;
 
             if (process.env["QT_HOST_PATH"]) {
                 cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
                 cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/x64`);
-                cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
+                cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
             }
         } else if (process.platform === 'linux') {
             if (process.env["LCNTP_TARGET_PLATFORM"] == "android" && !options.forceHostBuild) {
                 cmakeArgs.push(`-DANDROID_PLATFORM=${process.env["ANDROID_PLATFORM"]}`);
                 cmakeArgs.push(`-DANDROID_ABI=${process.env["ANDROID_ABI"]}`);
                 cmakeArgs.push(`-DCMAKE_FIND_ROOT_PATH=${process.env["Qt6_DIR"]};${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
-                cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
-                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
-                prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`
-            } else {
-                cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
-                prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`
+                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
             }
+
+            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
+            prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`
         }
 
         if (process.env["LCNTP_CMAKE_TOOLCHAIN_FILE"] && !options.forceHostBuild) {
@@ -153,7 +156,7 @@ module.exports = async options => {
             console.log(JSON.stringify(properties, null, 4));
 
             //Add required variables to the PATH if needed
-            if (process.arch === options.arch) {
+            if (process.arch === arch) {
                 if (properties["CMAKE_INSTALL_PREFIX"] && properties["CMAKE_INSTALL_BINDIR"]) {
                     core.addPath(path.resolve(properties["CMAKE_INSTALL_PREFIX"], properties["CMAKE_INSTALL_BINDIR"]));
                 }
