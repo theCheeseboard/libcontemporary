@@ -89,7 +89,8 @@ module.exports = async options => {
                 cmakeArgs.push(`-DANDROID_PLATFORM=${process.env["ANDROID_PLATFORM"]}`);
                 cmakeArgs.push(`-DANDROID_ABI=${process.env["ANDROID_ABI"]}`);
                 cmakeArgs.push(`-DCMAKE_FIND_ROOT_PATH=${process.env["Qt6_DIR"]};${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
-                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
+                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
+                cmakeArgs.push(`-DANDROID_SDK_ROOT=${process.env["ANDROID_HOME"]}`)
             }
 
             cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
