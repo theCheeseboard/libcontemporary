@@ -22,6 +22,7 @@ function(cntp_retrieve_qmake_install_dir VAR_NAME QMAKE_VAR)
         ELSE()
             find_path(QMAKE_EXECUTABLE qmake6
                 HINTS ${QT_HOST_PATH}
+                PATH_SUFFIXES bin
                 NO_CACHE)
         ENDIF()
 
