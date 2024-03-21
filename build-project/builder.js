@@ -70,36 +70,40 @@ module.exports = async options => {
         ];
 
         let prefixPath = "/usr/lib";
+        let cmakeDefines = {};
+
         if (process.platform === "darwin") {
-            cmakeArgs.push("-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64");
-            cmakeArgs.push("-DCMAKE_PREFIX_PATH=/usr/local/lib");
+            cmakeDefines["CMAKE_OSX_ARCHITECTURES"] = "arm64;x86_64";
+            cmakeDefines["CMAKE_PREFIX_PATH"] = "/usr/local/lib";
             prefixPath = "/usr/local/lib";
         } else if (process.platform === 'win32') {
-            cmakeArgs.push("-DCMAKE_BUILD_TYPE=Release");
-            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
+            cmakeDefines["CMAKE_BUILD_TYPE"] = "Release";
+            cmakeDefines["CMAKE_INSTALL_PREFIX"] = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`;
             prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`;
-
             if (process.env["QT_HOST_PATH"]) {
-                cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
-                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/x64`);
-                cmakeArgs.push(`-DCMAKE_PREFIX_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
+                cmakeDefines["QT_HOST_PATH"] = process.env["QT_HOST_PATH"];
+                cmakeDefines["CNTP_TOOL_PATH"] = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/x64`;
+                cmakeDefines["CMAKE_PREFIX_PATH"] = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`;
             }
         } else if (process.platform === 'linux') {
             if (process.env["LCNTP_TARGET_PLATFORM"] == "android" && !options.forceHostBuild) {
-                cmakeArgs.push(`-DANDROID_PLATFORM=${process.env["ANDROID_PLATFORM"]}`);
-                cmakeArgs.push(`-DANDROID_ABI=${process.env["ANDROID_ABI"]}`);
-                cmakeArgs.push(`-DCMAKE_FIND_ROOT_PATH=${process.env["Qt6_DIR"]};${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`);
-                cmakeArgs.push(`-DCNTP_TOOL_PATH=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`);
-                cmakeArgs.push(`-DANDROID_SDK_ROOT=${process.env["ANDROID_HOME"]}`)
-                cmakeArgs.push(`-DQT_HOST_PATH=${process.env["QT_HOST_PATH"]}`);
+                cmakeDefines["ANDROID_PLATFORM"] = process.env["ANDROID_PLATFORM"];
+                cmakeDefines["ANDROID_ABI"] = process.env["ANDROID_ABI"];
+                cmakeDefines["CMAKE_FIND_ROOT_PATH"] = `${process.env["Qt6_DIR"]};${process.env["RUNNER_WORKSPACE"]}/cmake-install/${process.env["ANDROID_ABI"]}`;
+                cmakeDefines["CNTP_TOOL_PATH"] = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${options.arch}`;
+                cmakeDefines["ANDROID_SDK_ROOT"] = process.env["ANDROID_HOME"];
+                cmakeDefines["QT_HOST_PATH"] = process.env["QT_HOST_PATH"];
+                cmakeDefines["QT_QMAKE_EXECUTABLE"] = `${process.env["Qt6_DIR"]}/bin/qmake`
             }
-
-            cmakeArgs.push(`-DCMAKE_INSTALL_PREFIX=${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`);
+            cmakeDefines["CMAKE_INSTALL_PREFIX"] = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`;
             prefixPath = `${process.env["RUNNER_WORKSPACE"]}/cmake-install/${arch}`
         }
-
         if (process.env["LCNTP_CMAKE_TOOLCHAIN_FILE"] && !options.forceHostBuild) {
-            cmakeArgs.push(`-DCMAKE_TOOLCHAIN_FILE=${process.env["LCNTP_CMAKE_TOOLCHAIN_FILE"]}`);
+            cmakeDefines["CMAKE_TOOLCHAIN_FILE"] = process.env["LCNTP_CMAKE_TOOLCHAIN_FILE"];
+        }
+
+        for (let define in cmakeDefines) {
+            cmakeArgs.push(`-D${define}=${cmakeDefines[define]}`);
         }
 
         if (options.extraCmakeArgs) {
