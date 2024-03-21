@@ -130,6 +130,11 @@ module.exports = async options => {
             }
         }
 
+        // Modify cmakeDefines here to take advantage of caching even when debug builds are on
+        if (core.isDebug()) {
+            cmakeDefines["CMAKE_VERBOSE_MAKEFILE"] = "ON";
+        }
+
         if (needBuild) {
             await exec.exec(`cmake`, cmakeArgs);
             await exec.exec(`cmake`, ["--build", buildDir]);
