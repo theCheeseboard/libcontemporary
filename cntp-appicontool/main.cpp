@@ -101,13 +101,19 @@ int main(int argc, char* argv[]) {
 
     QString overlayIcon, overlayIconMac;
     QFile baseIconFile(parser.value("overlay-icon"));
-    baseIconFile.open(QFile::ReadOnly);
+    if (!baseIconFile.open(QFile::ReadOnly)) {
+        eoutput << "error: " << parser.value("overlay-icon") << ": " << baseIconFile.errorString() << "\n";
+        return 1;
+    }
     overlayIcon = baseIconFile.readAll();
     baseIconFile.close();
 
     if (parser.isSet("overlay-icon-mac")) {
         QFile baseIconFile(parser.value("overlay-icon-mac"));
-        baseIconFile.open(QFile::ReadOnly);
+        if (!baseIconFile.open(QFile::ReadOnly)) {
+            eoutput << "error: " << parser.value("overlay-icon-mac") << ": " << baseIconFile.errorString() << "\n";
+            return 1;
+        }
         overlayIconMac = baseIconFile.readAll();
         baseIconFile.close();
     }
