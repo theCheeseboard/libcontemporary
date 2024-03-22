@@ -14,7 +14,6 @@ function(cntp_app_icon targetName)
 
     list(APPEND ICONTOOL_ARGS
         -i ${BASEICON_PATH}
-        -m ${BASEICON_PATH_MAC}
         -c "\"${COLOR1}:${COLOR2}\""
         -s ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOPID}.svg
         -r ${CMAKE_CURRENT_BINARY_DIR}/appicon.qrc)
@@ -22,6 +21,11 @@ function(cntp_app_icon targetName)
     list(APPEND ICONTOOL_OUTPUTS
         ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOPID}.svg
         ${CMAKE_CURRENT_BINARY_DIR}/appicon.qrc)
+
+    if(DEFINED BASEICON_PATH_MAC)
+        list(APPEND ICONTOOL_ARGS
+            -m ${BASEICON_PATH_MAC})
+    endif()
 
     if(BLUEPRINT)
         list(APPEND ICONTOOL_ARGS -b)
