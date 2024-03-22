@@ -27,11 +27,24 @@ void AndroidPlatformIconGenerator::generateIcon() {
     QDir androidDir(outputFile());
     QDir resDir(androidDir.absoluteFilePath("res"));
 
+    QMap<QString, qreal> icons = {
+        {"drawable-ldpi/icon.png",    0.75},
+        {"drawable-mdpi/icon.png",    1   },
+        {"drawable-hdpi/icon.png",    1.5 },
+        {"drawable-xhdpi/icon.png",   2   },
+        {"drawable-xxhdpi/icon.png",  3   },
+        {"drawable-xxxhdpi/icon.png", 4   }
+    };
+
     QSizeF baseline{48, 48};
-    renderPng(resDir.absoluteFilePath("drawable-ldpi/icon.png"), baseline * 0.75);
-    renderPng(resDir.absoluteFilePath("drawable-mdpi/icon.png"), baseline * 1);
-    renderPng(resDir.absoluteFilePath("drawable-hdpi/icon.png"), baseline * 1.5);
-    renderPng(resDir.absoluteFilePath("drawable-xhdpi/icon.png"), baseline * 2);
-    renderPng(resDir.absoluteFilePath("drawable-xxhdpi/icon.png"), baseline * 3);
-    renderPng(resDir.absoluteFilePath("drawable-xxxhdpi/icon.png"), baseline * 4);
+
+    for (auto i = icons.constBegin(); i != icons.constEnd(); ++i) {
+        QFileInfo fileInfo(resDir.absoluteFilePath(i.key()));
+
+        if (!fileInfo.dir().exists()) {
+            QDir::root().mkpath(fileInfo.dir().absolutePath());
+        }
+
+        renderPng(fileInfo.fileName(), baseline * i.value());
+    }
 }
