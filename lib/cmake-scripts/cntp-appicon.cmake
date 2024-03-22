@@ -22,7 +22,7 @@ function(cntp_app_icon targetName)
         ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOPID}.svg
         ${CMAKE_CURRENT_BINARY_DIR}/appicon.qrc)
 
-    if(DEFINED BASEICON_PATH_MAC)
+    if(DEFINED APP_ICON_BASEICON_MAC)
         list(APPEND ICONTOOL_ARGS
             -m ${BASEICON_PATH_MAC})
     endif()
