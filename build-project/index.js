@@ -8,11 +8,13 @@ async function run() {
     const extraCmakeArgs = core.getInput("extra-cmake-args");
     const arch = core.getInput("arch");
     const forceHostBuild = core.getInput("force-host-build");
+    const target = core.getInput("target");
 
     let options = {
       project: project,
       arch: arch,
-      forceHostBuild: forceHostBuild === "true"
+      forceHostBuild: forceHostBuild === "true",
+      target: target
     };
 
     if (commitish) options.commitish = commitish;

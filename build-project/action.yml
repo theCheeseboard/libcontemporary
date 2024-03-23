@@ -19,6 +19,10 @@ inputs:
     description: 'Build project for the host system regardless of LCNTP_TARGET_PLATFORM environment variable'
     required: false
     default: 'false'
+  target:
+    description: 'Target to build'
+    required: false
+    default: ''
 outputs:
   install-prefix:
     description: "Path to installed files"

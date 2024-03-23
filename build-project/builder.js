@@ -119,7 +119,7 @@ module.exports = async options => {
             }
         }
 
-        const cacheKey = `build-project-${buildFolder.join("/")}-${calculateSHA256(cmakeArgs.join(" "))}`;
+        const cacheKey = `build-project-target${options.target}-${buildFolder.join("/")}-${calculateSHA256(cmakeArgs.join(" "))}`;
 
         let needBuild = true;
         if (options.project !== ".") {
@@ -137,7 +137,12 @@ module.exports = async options => {
 
         if (needBuild) {
             await exec.exec(`cmake`, cmakeArgs);
-            await exec.exec(`cmake`, ["--build", buildDir]);
+
+            const buildArgs = ["--build", buildDir];
+            if (options.target) {
+                buildArgs.push("--target", options.target);
+            }
+            await exec.exec(`cmake`, buildArgs);
         }
 
         if (process.platform === "linux") {
