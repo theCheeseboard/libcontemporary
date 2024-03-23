@@ -1,0 +1,33 @@
+name: 'Install libcontemporary'
+description: 'Install libcontemporary'
+inputs:
+  commitish:
+    description: 'Branch to build'
+    default: "master"
+    required: false
+  qcoroVersion:
+    description: "QCoro version to build"
+    default: "v0.7.0"
+    required: false
+  arch:
+    description: 'Architecture of build'
+    required: false
+    default: 'x64'
+runs:
+  using: 'composite'
+  steps:
+    - uses: vicr123/libcontemporary/cpp-problem-matcher@actions
+      name: "Install C++ problem matcher"
+    - uses: vicr123/libcontemporary/build-project@actions
+      name: "Build QCoro"
+      with:
+        project: "danvratil/qcoro"
+        commitish: ${{ inputs.qcoroVersion }}
+        extra-cmake-args: "-DQCORO_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DUSE_QT_VERSION=6"
+        arch: ${{ inputs.arch }}
+    - uses: vicr123/libcontemporary/build-project@actions
+      name: "Build libcontemporary"
+      with:
+        project: "vicr123/libcontemporary"
+        commitish: ${{ inputs.commitish }}
+        arch: ${{ inputs.arch }}
