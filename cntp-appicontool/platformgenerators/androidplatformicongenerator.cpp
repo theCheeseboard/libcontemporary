@@ -45,6 +45,6 @@ void AndroidPlatformIconGenerator::generateIcon() {
             QDir::root().mkpath(fileInfo.dir().absolutePath());
         }
 
-        renderPng(fileInfo.fileName(), baseline * i.value());
+        renderPng(fileInfo.filePath(), baseline * i.value());
     }
 }
