@@ -65,6 +65,10 @@ int main(int argc, char* argv[]) {
         "PNG output file", "png-output"
     });
     parser.addOption({
+        {"w", "output-msix"},
+        "MSIX PNG output files", "msix-output"
+    });
+    parser.addOption({
         {"b", "blueprint"},
         "Create Blueprint style icon"
     });
@@ -200,6 +204,35 @@ int main(int argc, char* argv[]) {
         imagePainter.end();
 
         image.save(parser.value("output-png"), "PNG");
+    }
+
+    if (parser.isSet("output-msix")) {
+        eoutput << "Creating MSIX icons";
+
+        QDir msixDir(parser.value("output-msix"));
+
+        QDir::root().mkpath(msixDir.path());
+
+        CombinedIcon pngIcon;
+        pngIcon.setBaseIcon(CombinedIcon::PlatformSpecificIcon);
+        pngIcon.setIconGradientColors(color1, color2);
+        pngIcon.setGenerateBlueprintIcon(parser.isSet("blueprint"));
+        pngIcon.setOverlayIcon(overlayIcon);
+        pngIcon.setOverlayIconMac(overlayIconMac);
+
+        for (auto width : QList<int> {30, 44, 70, 71, 150, 310}) {
+            QSize size{width, width};
+            QImage image(size, QImage::Format_ARGB32);
+            image.fill(Qt::transparent);
+
+            QPainter imagePainter(&image);
+
+            QSvgRenderer renderer(pngIcon.generatedIcon().toUtf8());
+            renderer.render(&imagePainter, QRect(QPoint(0, 0), size));
+            imagePainter.end();
+
+            image.save(msixDir.absoluteFilePath(QStringLiteral("msix-%1.png").arg(size.width())), "PNG");
+        }
     }
 
     return 0;
