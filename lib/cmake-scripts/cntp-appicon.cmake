@@ -33,7 +33,8 @@ function(cntp_app_icon targetName)
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
         list(APPEND ICONTOOL_ARGS
-            -n ${CMAKE_CURRENT_BINARY_DIR}/native.ico)
+            -n ${CMAKE_CURRENT_BINARY_DIR}/native.ico
+            -w ${CMAKE_CURRENT_BINARY_DIR}/appxicons)
 
         list(APPEND ICONTOOL_OUTPUTS
             ${CMAKE_CURRENT_BINARY_DIR}/native.ico)
