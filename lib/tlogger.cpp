@@ -24,6 +24,10 @@
 #include <QDebug>
 #include "private/debuglogwindow.h"
 
+#ifdef Q_OS_WINDOWS
+#include <Windows.h>
+#endif
+
 struct tLoggerPrivate {
     QMutex logMutex;
     QList<tLogger::LogItem> logs;
@@ -171,7 +175,12 @@ tLogWriter::~tLogWriter() {
                 severity = "[ i ]";
         }
 
-        output << QStringLiteral("%1 %2 %3\n").arg(QDateTime::currentDateTime().toString("[hh:mm:ss]"), severity, d->templ.text);
+        auto outStr = QStringLiteral("%1 %2 %3\n").arg(QDateTime::currentDateTime().toString("[hh:mm:ss]"), severity, d->templ.text);
+        output << outStr;
+
+#ifdef Q_OS_WINDOWS
+        OutputDebugStringW(qUtf16Printable(outStr));
+#endif
     }
 
     delete d;
