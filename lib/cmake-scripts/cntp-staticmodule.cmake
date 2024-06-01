@@ -30,4 +30,22 @@ function(cntp_add_static_module)
     if(NOT ADD_STATIC_MODULE_NO_LINK)
         target_link_libraries(${ADD_STATIC_MODULE_PARENT_TARGET} PRIVATE ${ADD_STATIC_MODULE_TARGET_NAME})
     endif()
+
+    # Copy some properties over to the new target
+    _cntp_propagate_target_property(CXX_STANDARD ${ADD_STATIC_MODULE_PARENT_TARGET} ${ADD_STATIC_MODULE_TARGET_NAME})
+endfunction()
+
+function(_cntp_propagate_target_property property parentTarget childTarget)
+    cmake_language(EVAL CODE "
+      cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL _cntp_propagate_target_property_deferred ${property} ${parentTarget} ${childTarget})
+    ")
+endfunction()
+
+function(_cntp_propagate_target_property_deferred property parentTarget childTarget)
+    get_target_property(parentTargetProperty ${parentTarget} ${property})
+    if(NOT ${parentTargetProperty} STREQUAL "parentTargetProperty-NOTFOUND")
+        set_property(TARGET ${childTarget}
+            PROPERTY CXX_STANDARD ${parentTargetProperty}
+        )
+    endif()
 endfunction()
