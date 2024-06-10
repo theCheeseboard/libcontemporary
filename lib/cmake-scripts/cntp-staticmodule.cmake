@@ -18,6 +18,9 @@ function(cntp_add_static_module)
     endif()
 
     qt_add_library(${ADD_STATIC_MODULE_TARGET_NAME} STATIC)
+    set_target_properties(${ADD_STATIC_MODULE_TARGET_NAME} PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+    )
 
     if(DEFINED ADD_STATIC_MODULE_SOURCES)
         target_sources(${ADD_STATIC_MODULE_TARGET_NAME} PRIVATE ${ADD_STATIC_MODULE_SOURCES})
