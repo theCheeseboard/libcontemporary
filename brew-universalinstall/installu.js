@@ -156,6 +156,7 @@ module.exports = async function(options) {
 
         await Promise.all(bottlePaths.map(async bottlePath => {
             //Untar all bottles to the cellar
+            console.log(`Extracting path ${bottlePath}`)
             let extractStream = legacyFs.createReadStream(bottlePath).pipe(gunzip()).pipe(tar.extract(armCellar, {
                 //TODO: also detect headers and resources with a framework and filter those out
                 ignore: name => {
