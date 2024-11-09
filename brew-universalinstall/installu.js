@@ -185,7 +185,7 @@ module.exports = async function(options) {
 
         for (let library of brewFiles) {
             let rel = path.relative(armCellar, library);
-            await lipoIfRequired(library, path.resolve("/usr/local/Cellar", rel));
+            await lipoIfRequired(library, path.resolve(process.arch === "arm64" ? "/opt/homebrew/Cellar" : "/usr/local/Cellar", rel));
         }
     } finally {
         console.log(`Removing ARM homebrew`);
