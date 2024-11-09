@@ -1,0 +1,30 @@
+name: "Prepare common variables"
+description: "Prepare common variables"
+inputs:
+  qtVersion:
+    description: "Qt version"
+    default: "6.6.0"
+    required: false
+  qcoroVersion:
+    description: "QCoro version"
+    default: "v0.10.0"
+    required: false
+outputs:
+  qtVersion:
+    description: "Qt Version to use"
+    value: ${{ inputs.qtVersion }}
+  qcoroVersion:
+    description: "QCoro version to use"
+    value: ${{ inputs.qcoroVersion }}
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        echo "-- VERSIONS:"
+        echo "Qt:    $QT_VERSION"
+        echo "QCoro: $QCORO_VERSION"
+      env:
+        QT_VERSION: ${{ inputs.qtVersion }}
+        QCORO_VERSION: ${{ inputs.qcoroVersion }}
+      name: "Log Variables"
+      shell: bash

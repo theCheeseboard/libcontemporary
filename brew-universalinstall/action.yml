@@ -1,0 +1,9 @@
+name: 'Homebrew Universal Install'
+description: 'Install a Homebrew package as a universal binary'
+inputs:
+  packages:
+    description: 'Packages to install'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
