@@ -127,7 +127,7 @@ module.exports = async function(options) {
             await x86install;
 
             let armBrewOutput = "";
-            await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_monterey", pk], {
+            await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_sonoma", pk], {
                 listeners: {
                      stdout: data => {
                          armBrewOutput += data.toString();
