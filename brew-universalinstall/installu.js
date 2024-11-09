@@ -126,8 +126,10 @@ module.exports = async function(options) {
             });
             await x86install;
 
+            const bottleTag = `${process.arch === "arm64" ? "" : "arm64_"}sonoma`
+
             let armBrewOutput = "";
-            await exec.exec("brew", ["fetch", "--deps", "--bottle-tag=arm64_sonoma", pk], {
+            await exec.exec("brew", ["fetch", "--deps", `--bottle-tag=${bottleTag}`, pk], {
                 listeners: {
                      stdout: data => {
                          armBrewOutput += data.toString();
