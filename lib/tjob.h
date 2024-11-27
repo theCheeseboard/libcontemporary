@@ -25,6 +25,13 @@
 
 class LIBCONTEMPORARY_EXPORT tJob : public QObject {
         Q_OBJECT
+        Q_PROPERTY(quint64 progress READ progress NOTIFY progressChanged FINAL)
+        Q_PROPERTY(quint64 totalProgress READ totalProgress NOTIFY totalProgressChanged FINAL)
+        Q_PROPERTY(State state READ state NOTIFY stateChanged FINAL)
+        Q_PROPERTY(QString title READ titleString NOTIFY titleStringChanged FINAL)
+        Q_PROPERTY(QString status READ statusString NOTIFY statusStringChanged FINAL)
+        Q_PROPERTY(bool isTransient READ isTransient FINAL)
+        Q_PROPERTY(QUrl qmlFile READ qmlFile FINAL)
     public:
         explicit tJob(QObject* parent = nullptr);
 
@@ -38,10 +45,11 @@ class LIBCONTEMPORARY_EXPORT tJob : public QObject {
         virtual quint64 progress() = 0;
         virtual quint64 totalProgress() = 0;
         virtual State state() = 0;
-        virtual QWidget* makeProgressWidget() = 0;
+        virtual QWidget* makeProgressWidget();
         virtual QString titleString();
         virtual QString statusString();
         virtual bool isTransient();
+        virtual QUrl qmlFile();
 
     signals:
         void progressChanged(quint64 progress);

@@ -19,8 +19,17 @@
  ******************************************************************************/
 #include "tjob.h"
 
+using namespace Qt::StringLiterals;
+
+#include <QUrl>
+#include <QWidget>
+
 tJob::tJob(QObject* parent) :
     QObject(parent) {
+}
+
+QWidget* tJob::makeProgressWidget() {
+    return new QWidget();
 }
 
 QString tJob::titleString() {
@@ -33,4 +42,8 @@ QString tJob::statusString() {
 
 bool tJob::isTransient() {
     return false;
+}
+
+QUrl tJob::qmlFile() {
+    return QUrl(u"qrc:/qt/qml/com/vicr123/Contemporary/impl/StandardJobComponent.qml"_s);
 }

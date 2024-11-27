@@ -602,31 +602,31 @@
         <translation type="vanished">Thông Tin</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="109"/>
+        <location filename="../tlogger.cpp" line="113"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Gỡ Lỗi</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="111"/>
+        <location filename="../tlogger.cpp" line="115"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Cảnh Báo</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="113"/>
+        <location filename="../tlogger.cpp" line="117"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Quan Trọng</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="115"/>
+        <location filename="../tlogger.cpp" line="119"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Gây Tử</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="117"/>
+        <location filename="../tlogger.cpp" line="121"/>
         <source>Info</source>
         <comment>Severity Level</comment>
         <translation type="unfinished">Thông Tin</translation>
