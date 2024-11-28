@@ -34,7 +34,7 @@ class tPluginManager {
 #ifdef T_OS_UNIX_NOT_MAC
             searchPaths.append(QString(SYSTEM_LIBRARY_DIRECTORY).append(QStringLiteral("/%1/plugins").arg(libraryDirectory)));
             if (qEnvironmentVariableIsSet("APPDIR")) {
-                searchPaths.append(QString(qEnvironmentVariable("APPDIR")).append(QStringLiteral("/usr/lib/%1/plugins").arg(libraryDirectory)));
+                searchPaths.append(qEnvironmentVariable("APPDIR").append(QStringLiteral("/usr/lib/%1/plugins").arg(libraryDirectory)));
             }
 #elif defined(Q_OS_WIN)
             searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
@@ -48,10 +48,13 @@ class tPluginManager {
             QStringList seenPlugins;
 
             for (const QString& searchPath : searchPaths) {
+                tDebug("tPluginManager") << "Plugin search path " << searchPath;
                 QDirIterator iterator(searchPath, {"*.so", "*.dll", "*.dylib"}, QDir::NoFilter, QDirIterator::Subdirectories);
                 while (iterator.hasNext()) {
                     iterator.next();
                     if (seenPlugins.contains(iterator.fileName())) continue;
+
+                    tDebug("tPluginManager") << "Identified plugin at " + iterator.filePath();
                     QPluginLoader loader(iterator.filePath());
                     auto reg = tPluginManagerHelper::instance()->registerPlugin(loader.metaData());
                     if (!reg.uuid.isNull()) {
