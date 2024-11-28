@@ -33,6 +33,9 @@ class tPluginManager {
 
 #ifdef T_OS_UNIX_NOT_MAC
             searchPaths.append(QString(SYSTEM_LIBRARY_DIRECTORY).append(QStringLiteral("/%1/plugins").arg(libraryDirectory)));
+            if (qEnvironmentVariableIsSet("APPDIR")) {
+                searchPaths.append(QString(qEnvironmentVariable("APPDIR")).append(QStringLiteral("/usr/lib/%1/plugins").arg(libraryDirectory)));
+            }
 #elif defined(Q_OS_WIN)
             searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
             searchPaths.append(qApp->applicationDirPath() + "/plugins");
